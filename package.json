@@ -1,0 +1,58 @@
+{
+	"name": "Blocklino",
+	"version": "1.0.0",
+	"description": "environnement de développement pour langage graphique",
+	"author": "Fontaine Jean Philippe",
+	"license": "CC0-1.0",
+	"main": "electron.js",
+	"scripts": {
+		"postinstall": "electron-builder install-app-deps",
+		"start": "electron .",
+		"install": "electron-rebuild",
+		"build": "build --win",
+        "ship": "build --win -p always",
+		"pack": "electron-builder --dir",
+		"dist": "electron-builder"
+	},
+	"build": {
+		"appId": "com.electron.blocklino",
+		"asar":false,
+		"win": {
+			"target": [{"target": "nsis", "arch": "x64"}],
+			"nsis": {
+				"installerIcon": "buid/.ico",
+				"uninstallerIcon": "buid/.ico",
+				"oneClick": false,
+				"perMachine": true,
+				"deleteAppDataOnUninstall": true,
+				"allowToChangeInstallationDirectory": true,
+				"license": "LICENSE",
+				"runAfterFinish": true,
+				"include": "build/installer.nsh"
+			},
+			"icon": "build/.ico"
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/fontainejp/blocklino"
+	},
+	"keywords": [
+		"blockly",
+		"arduino",
+		"electron",
+		"electron-builder",
+		"electron-updater",
+		"serialport"
+	],
+	"devDependencies": {
+		"electron": "^1.8.4",
+		"electron-builder": "^20.29.0"
+	},
+	"dependencies": {
+		"electron-log": "^1.3.0",
+		"child_process": "^1.0.2",
+		"serialport": "^4.0.7",
+		"electron-updater": "^3.2.3"
+	}
+}
