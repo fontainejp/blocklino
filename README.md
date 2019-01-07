@@ -4,7 +4,7 @@ A mini development environment for free and open source graphic language. Progra
 
 This app works on Windows operating systems. You can [download the latest release](https://github.com/fontainejp/blocklino/releases)
 
-![blocklino Screenshots](http://lesormeaux.net/blockly-arduino/assets/img/Capture.PNG)
+![blocklino Screenshots](http://lesormeaux.net/blocklino/assets/img/Capture.PNG)
 
 ## Demo
 
@@ -42,7 +42,7 @@ and
 
 ```bash
 > git clone https://github.com/fontainejp/blocklino
-> cd blocklino
+> cd blocklino-master
 > npm install
 > npm start
 ```
@@ -54,7 +54,7 @@ The access token should have the repo scope/permission.
 Define GH_TOKEN environment variable.
 
 ```bash
-> cd blocklino
+> cd blocklino-master
 > build -p always
 ```
 

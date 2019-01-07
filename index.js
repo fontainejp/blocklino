@@ -11,10 +11,7 @@ sp.list(function(err,ports) {
 		opt.text = port.comName
 		document.getElementById('portserie').appendChild(opt)
 	})
-}) 
-function modal_v () {
-	$("#versionModal").modal("show")
-}
+})
 window.addEventListener('load', function load(event) {
 	document.getElementById('versionapp').textContent = " version " + appVersion
 	$('#portserie').mouseover(function(event) {
@@ -22,7 +19,7 @@ window.addEventListener('load', function load(event) {
 			var nbCom = localStorage.getItem("nb_com"), menu_com = document.getElementById('portserie'), menu_opt = menu_com.getElementsByTagName('option')
 			if(ports.length != nbCom){
 				while(menu_opt[1]) {
-					menu_com.removeChild(menu_opt[1]);
+					menu_com.removeChild(menu_opt[1])
 				}
 				ports.forEach(function(port){
 					var opt = document.createElement('option')
@@ -44,63 +41,61 @@ window.addEventListener('load', function load(event) {
 		}
 		ipcRenderer.send("prompt", "")		
 	}
-	//setTimeout(modal_v, 5000)
 	document.getElementById('btn_factory').onclick = function(event) {
 		ipcRenderer.send("factory", "")	
 	}
 	document.getElementById('btn_verify').onclick = function(event) {
-		var file = './compilation/ino/sketch.ino'
+		var file_ino = './compilation/ino/sketch.ino'
 		var data = $('#pre_previewArduino').text()
 		var carte = profile.defaultBoard['build']
-		var cmd = 'verify.bat ' + carte
-		fs.appendFile(file, data, (err) => {
+		var cmd_verify = 'verify.bat ' + carte
+		fs.appendFile(file_ino, data, function(err){
 			if (err) return console.log(err)
-		});
+		})
 		document.getElementById('messageDIV').style.color = '#000000'
-		document.getElementById('messageDIV').textContent = 'vérification : en cours...'
-		exec(cmd , {cwd: './compilation'} , (err, stdout, stderr) => {
+		document.getElementById('messageDIV').innerHTML = 'Vérification <i class="fa fa-spinner fa-pulse fa-1_5x fa-fw"></i>'
+		exec(cmd_verify , {cwd: './compilation'} , function(err, stdout, stderr){
 			if (stderr) {
 				document.getElementById('messageDIV').style.color = '#ff0000'
 				document.getElementById('messageDIV').textContent = stderr
-				fs.unlink(file, function(err){
+				fs.unlink(file_ino, function(err){
 					if(err) return console.log(err)
 				}) 
 				return
 			}
 			document.getElementById('messageDIV').style.color = '#009000'
-			document.getElementById('messageDIV').textContent = 'vérification : OK'
-			fs.unlink(file, function(err){
+			document.getElementById('messageDIV').textContent = 'Vérification : OK'
+			fs.unlink(file_ino, function(err){
 				if(err) return console.log(err)
 			}) 
 		})
 	}
 	document.getElementById('btn_flash').onclick = function(event) {
-		var file = './compilation/build/sketch.ino.hex'
-		var carte = document.getElementById('boards').value
+		var file_hex = './compilation/build/sketch.ino.hex'
 		var com = document.getElementById('portserie').value
+		var avr_speed=profile.defaultBoard['speed']
+		var avr_cpu=profile.defaultBoard['cpu']
+		var avr_prog=profile.defaultBoard['prog']
+		var cmd_flash = 'flash.bat ' + avr_cpu + ' ' + avr_prog + ' '+ com + ' ' + avr_speed
 		if (com=="com"){
 			document.getElementById('messageDIV').style.color = '#000000'
 			document.getElementById('messageDIV').textContent = 'Sélectionner un port !!!'
 			return
 		}
-		var avr_speed=profile.defaultBoard['speed']
-		var avr_cpu=profile.defaultBoard['cpu']
-		var avr_prog=profile.defaultBoard['prog']
-		var cmd = 'flash.bat ' + avr_cpu + ' ' + avr_prog + ' '+ com + ' ' + avr_speed
 		document.getElementById('messageDIV').style.color = '#000000'
-		document.getElementById('messageDIV').textContent = 'téléversement : en cours...'
-		exec(cmd , {cwd: './compilation'} , (err, stdout, stderr) => {
+		document.getElementById('messageDIV').innerHTML = 'Téléversement <i class="fa fa-spinner fa-pulse fa-1_5x fa-fw"></i>'
+		exec(cmd_flash , {cwd: './compilation'} , function(err, stdout, stderr){
 			if (err) {
 				document.getElementById('messageDIV').style.color = '#ff0000'
 				document.getElementById('messageDIV').textContent = err
-				fs.unlink(file, function(err){
+				fs.unlink(file_hex, function(err){
 					if(err) return console.log(err)
 				}) 
 				return
 			}
 			document.getElementById('messageDIV').style.color = '#009000'
-			document.getElementById('messageDIV').textContent = 'téléversement : OK'
-			fs.unlink(file, function(err){
+			document.getElementById('messageDIV').textContent = 'Téléversement : OK'
+			fs.unlink(file_hex, function(err){
 				if(err) return console.log(err)
 			}) 
 		})
@@ -110,9 +105,9 @@ window.addEventListener('load', function load(event) {
 	}
 	ipcRenderer.on('saved-ino', function(event, path){
 		var code = $('#pre_previewArduino').text()
-		fs.appendFile(path, code, (err) => {
+		fs.appendFile(path, code, function(err){
 			if (err) return console.log(err)
-		});
+		})
 	})
 	document.getElementById('btn_saveXML').onclick = function(event) {
 		ipcRenderer.send('save-bloc')
@@ -121,7 +116,7 @@ window.addEventListener('load', function load(event) {
 		var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace)
 		var toolbox = window.localStorage.toolbox
 		if (!toolbox) {
-			toolbox = $("#toolboxes").val();
+			toolbox = $("#toolboxes").val()
 		}
 		if (toolbox) {
 			var newel = document.createElement("toolbox")
@@ -135,14 +130,14 @@ window.addEventListener('load', function load(event) {
 			}
 		}
 		var code = Blockly.Xml.domToPrettyText(xml)
-		fs.appendFile(path, code, (err) => {
+		fs.appendFile(path, code, function(err){
 			if (err) return console.log(err)
-		});
+		})
 	})
 	ipcRenderer.on('information', function(event, text) {
-		var container = document.getElementById('messages');
-		var message = document.createElement('div');
-		message.innerHTML = text;
-		container.appendChild(message);
+		var container = document.getElementById('messages')
+		var message = document.createElement('div')
+		message.innerHTML = text
+		container.appendChild(message)
 	})
 })

@@ -1,6 +1,6 @@
 {
 	"name": "Blocklino",
-	"version": "1.0.0",
+	"version": "1.1.2",
 	"description": "environnement de développement pour langage graphique",
 	"author": "Fontaine Jean Philippe",
 	"license": "CC0-1.0",
@@ -20,17 +20,17 @@
 		"win": {
 			"target": [{"target": "nsis", "arch": "x64"}],
 			"nsis": {
-				"installerIcon": "buid/.ico",
-				"uninstallerIcon": "buid/.ico",
+				"installerIcon": "buid/install.ico",
+				"uninstallerIcon": "buid/uninstall.ico",
 				"oneClick": false,
 				"perMachine": true,
 				"deleteAppDataOnUninstall": true,
 				"allowToChangeInstallationDirectory": true,
 				"license": "LICENSE",
 				"runAfterFinish": true,
-				"include": "build/installer.nsh"
+				"include": "build/installer.nsi"
 			},
-			"icon": "build/.ico"
+			"icon": "build/app.ico"
 		}
 	},
 	"repository": {

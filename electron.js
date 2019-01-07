@@ -89,22 +89,22 @@ ipcMain.on('save-bloc', function(event) {
 		event.sender.send('saved-bloc', filename)
 	})
 })
-autoUpdater.on('checking-for-update', () => {
+autoUpdater.on('checking-for-update', function(){
 	sendStatusToWindow('Checking for update...')
 })
-autoUpdater.on('update-available', (info) => {
+autoUpdater.on('update-available', function(info){
 	sendStatusToWindow('Update available.')
 })
-autoUpdater.on('update-not-available', (info) => {
+autoUpdater.on('update-not-available', function(info){
 	sendStatusToWindow('Update not available.')
 })
-autoUpdater.on('error', (err) => {
+autoUpdater.on('error', function(err){
 	sendStatusToWindow('Error in auto-updater. ' + err)
 })
-autoUpdater.on('download-progress', (progressObj) => {
+autoUpdater.on('download-progress', function(progressObj){
 	sendStatusToWindow('Downloaded : ' + progressObj.percent + ' %')
 })
-autoUpdater.on('update-downloaded', (info) => {
+autoUpdater.on('update-downloaded', function(info){
     sendStatusToWindow('Update downloaded')
 })
 module.exports.refresh = refresh
