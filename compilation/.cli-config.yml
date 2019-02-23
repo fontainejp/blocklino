@@ -1,0 +1,4 @@
+proxy_type: auto
+sketchbook_path: .\sketchbook
+arduino_data: .\
+board_manager: null

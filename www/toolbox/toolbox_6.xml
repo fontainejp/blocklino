@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolbox>
+	<parametre id="defaultCategories">CAT_LOGIC,CAT_MATH,CAT_TEXT,CAT_ARDUINO,CAT_ARDUINO_IN,CAT_ARDUINO_TIME,CAT_actionneur,CAT_ultrason</parametre>
+    <category name="CAT_LOGIC" colour="#727272">
+		<block type="controls_if">
+			<mutation else="1"></mutation>
+		</block>
+	</category>
+    <category name="CAT_MATH" colour="#00cc00">
+        <block type="math_number"></block>
+		<block type="inout_angle_maths"></block>
+        <block type="logic_compare"></block>
+    </category>
+    <category name="CAT_TEXT" colour="#FD6C9E">
+		<block type="text"></block>
+	</category>
+    <category name="CAT_ARDUINO" colour="#4a235a">
+		<block type="base_loop"></block>
+	</category>
+	<category name="CAT_ARDUINO_IN" colour="#787746">
+			<block type="inout_analog_read"></block>
+	</category>	
+	<category name="CAT_ARDUINO_TIME" colour="#bbbbbb">
+			<block type="base_delay"></block>
+	</category>
+	<category name="CAT_actionneur" colour="#00929F">	
+		<category name="CAT_del" colour="#00929F">
+			<block type="digital_write"></block>
+			<block type="bargraphe"></block>
+			<block type="bargraphe_allume"></block>
+		</category>
+		<category name="CAT_DFRobot_SHIELD_LCDKEYPAD" colour="#00929F">
+			<block type="lcd_i2c"></block>
+			<block type="LCD_Keypad_Shield_DFR_09"></block>
+			<block type="LCD_Keypad_Shield_DFR_09_lc"></block>
+			<block type="LCD_Keypad_Shield_DFR_09_RAZ"></block>
+		</category>
+		<category name="CAT_servo" colour="#00929F">
+			<block type="servo_move"></block>
+		</category>
+	</category>
+	<category name="CAT_ultrason" colour="#00929F">
+		<block type="inout_bp"></block>
+		<block type="dht11"></block>
+		<block type="cap615"></block>
+	</category>
+</toolbox>

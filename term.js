@@ -16,18 +16,6 @@ window.addEventListener('load', function load(event) {
 		var window = remote.getCurrentWindow() 
 		window.close()
 	}
-	document.getElementById('btn_max').onclick = function(event) {
-		var window = remote.getCurrentWindow()
-		if(window.isMaximized()){
-            window.unmaximize()
-        }else{
-            window.maximize()
-        }
-	}
-	document.getElementById('btn_min').onclick = function(event) {
-		var window = remote.getCurrentWindow()
-		window.minimize()
-	}
 	document.getElementById('btn_connect').onclick = function(event) {
 		var SerialPort = require("serialport")
 		var moniteur = document.getElementById('fenetre_term')

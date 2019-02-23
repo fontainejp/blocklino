@@ -13,8 +13,4 @@ window.addEventListener('load', function load(event) {
             window.maximize()
         }
 	}
-	document.getElementById('btn_min').onclick = function(event) {
-		var window = remote.getCurrentWindow()
-		window.minimize()
-	}
 })

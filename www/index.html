@@ -1,0 +1,236 @@
+<html>
+<head>
+	<link rel="icon" type="image/png" href="media/icon.png" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>BLOCKLINO - environnement de développement pour langage graphique</title>
+	<!-- JavaScript -->
+	<script type="text/javascript" src="js/blockly.min.js"></script>
+	<script type="text/javascript" src="js/type.js"></script>
+	<script type="text/javascript" src="js/types.js"></script>
+	<script type="text/javascript" src="js/typings.js"></script>
+	<script type="text/javascript" src="js/generate.js"></script>
+	<script type="text/javascript" src="js/blocklino.js"></script>
+	<script type="text/javascript" src="js/boards.js"></script>
+	<script src="js/jquery.min.2.1.3.js" onload="window.$ = window.jQuery = module.exports;"></script>
+	<script type="text/javascript" src="js/bootstrap.min.3.3.6.js"></script>
+	<script type="text/javascript" src="js/prettify.min.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/blockly_blocs.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/arduino_blocs.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/arduino_generateurs.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/blockly_generateurs.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/actionneur.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/html.js"></script>
+	<script type="text/javascript" src="js/typing.js"></script>
+	<script type="text/javascript" src="lang/code.js"></script>
+	<script type="text/javascript">	$(window).load(function() {	$(".loading").fadeOut("slow");});</script>
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.3.3.6.css"/>
+	<link rel="stylesheet" type="text/css" href="css/blocklino.css"/>
+	<link rel="stylesheet" type="text/css" href="css/prettify.min.css"/>
+</head>
+<body onload="BlocklyDuino.init()">
+	<div class="loading"></div>
+	<div id="toptitle">
+		<div id="title">
+            <span><img src="media/icon.png"/> BLOCKLINO - environnement de développement pour langage graphique</span>
+		</div>
+        <div id="title-bar-btns">
+			<button id="btn_min" type="button" class="btn btn-minmax"><span class="fa fa-minimize fa-lg"></span></button>
+			<button id="btn_max" type="button" class="btn btn-minmax"><span class="fa fa-maximize fa-lg"></span></button>
+			<button id="btn_quit" type="button" class="btn btn-quit"><span class="fa fa-times fa-1_75x"></span></button>
+        </div>
+	</div>
+	<div id="header">
+		<div id="btn_all" >
+				<button id="btn_new" class="btn btn-arduino-rect" data-toggle="tooltip" data-placement="bottom" title=" Nouveau ">
+					<span class="fa fa-file fa-fw"></span>
+				</button>
+				<button id="btn_fakeload" class="btn btn-arduino-rect" data-toggle="tooltip" data-placement="bottom" title=" Ouvrir ">
+					<span class="fa fa-folder-open fa-lg fa-fw"></span>
+				</button>
+				<input type="file" id="load" accept=".bloc,.xml" style="display: none;" />
+				<button id="btn_saveXML" class='btn btn-arduino-rect' data-toggle="tooltip" data-placement="bottom" title=" Enregistrer les blocs ">
+					<span class="fa fa-cloud-download fa-lg fa-fw"></span>
+				</button>
+				<span style="color:white;font-size:20"> | </span>
+				<button id="btn_example" class="btn btn-arduino" data-toggle="modal" data-target="#exampleModal"  data-toggle="tooltip" data-placement="bottom" title=" Exemples ">
+					<span class="fa fa-file-text fa-fw"> </span>
+				</button>
+				<button id="btn_factory" class="btn btn-arduino" data-toggle="tooltip" data-placement="bottom" title=" Fabriquer ses propres blocs ">
+					<span class="fa fa-industry fa-lg fa-fw"></span>
+				</button>
+				<button id="btn_term" class='btn btn-arduino' data-toggle="tooltip" data-placement="bottom" title=" Moniteur série ">
+					<span class="fa fa-search fa-lg fa-fw"> </span>
+				</button>
+				<button id="btn_config" class="btn btn-arduino" data-toggle="modal" data-target="#configModal" data-toggle="tooltip" data-placement="bottom" title=" Modifier la langue et les blocs disponibles ">
+					<span class="fa fa-cog fa-lg fa-fw"></span>
+				</button>
+				<span style="color:white;font-size:4">|</span>
+				<button id="btn_about" class="btn btn-arduino" data-toggle="modal" data-target="#aboutModal" data-toggle="tooltip" data-placement="bottom" title=" à propos ">
+					<span class="fa fa-user fa-lg fa-fw"></span>
+				</button>
+				<span style="color:white;font-size:4">|</span>
+			<select id="boards" onchange="BlocklyDuino.change_card();">
+				<optgroup label="Arduino">
+					<option value="leonardo" >Léonardo</option>
+					<option value="mega" >Méga 2560</option>
+					<option value="micro" >Micro</option>
+					<option value="mini" >Mini</option>
+					<option value="nano" >Nano</option>
+					<option value="pro" >Pro ou Pro Mini</option>
+					<option value="uno" >Uno</option>
+					<option value="yun" >Yun</option>
+				</optgroup>
+				<optgroup label="DAGU">
+					<option value="atmegang" >RS027</option>
+					<option value="pro" >RS040</option>
+				</optgroup>
+				<optgroup label="ESP8266">
+					<option value="nodemcuv2" >wemos LoLin v3</option>
+				</optgroup>
+			</select>
+			<select id="portserie" onchange="BlocklyDuino.save_com();"></select>
+			<span style="color:white;font-size:4">|</span>
+			<button id="btn_verify" class="btn btn-arduino" data-toggle="modal" data-target="#message">
+				<span class="fa fa-check fa-1_5x fa-fw"> </span>
+			</button>
+			<button id="btn_flash" class='btn btn-arduino' data-toggle="modal" data-target="#message">
+				<span class="fa fa-arrow-right fa-1_5x fa-fw"> </span>
+			</button>
+			<span id="survol" style="color:#727272"></span>
+		</div>
+		<div id="btn_group" class="btn-group" role="group">
+			<button id="btn_undo" class="btn btn-default" style="color: #727272;">
+				<span class="fa fa-undo"> </span>
+			</button>
+			<button id="btn_redo" class="btn btn-default" style="color: #727272;">
+				<span class="fa fa-repeat"> </span>
+			</button>
+			<button id="btn_print" class="btn btn-default" style="color: #727272;">
+				<span class="fa fa-camera"> </span>
+			</button>
+			<button id="btn_preview" class="btn btn-default">
+				<span class="fa fa-code"> </span>
+			</button>
+		</div>
+	</div>
+	<div id="divBody">
+		<div id="content_blocks" class="tab-pane active" style="position: relative;">
+			<div id="toggle" class="modal-content" style="display: none;">
+				<pre id="pre_previewArduino"></pre>
+				<button id="btn_saveino" class="btn btn-default">
+					<span class="fa fa-floppy-o"> </span>
+				</button>
+			</div>
+		</div>
+	</div>
+	<!-- message modal -->
+	<div class="modal fade" id="message" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body" >
+					<div id = "messageDIV"></div>
+				</div>  
+			</div>
+		</div>
+	</div>
+	<!-- about modal -->
+	<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
+			<span class="fa fa-user fa-2x" class="modal-title" id="aboutModalLabel"></span>
+		  </div>
+		  <div class="modal-body">
+			<span id="aboutBody"></span>
+			<br /><span class="fa fa-calendar-check-o" id="versionapp"></span><br />
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<!-- example modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
+			<span class="fa fa-file-text fa-2x" class="modal-title" id="exampleModalLabel"></span>
+		  </div>
+		  <div class="modal-body">
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<tbody id="includedContent"></tbody>
+				</table>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<!-- toolbox config modal -->
+	<div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
+				<span class="fa fa-cog fa-2x" class="modal-title"  id="configModalLabel"></span>
+			</div>
+			<div class="modal-body">
+				<label id="span_languageMenu"></label>
+				<select id="languageMenu"></select><br/><br/>
+				<div id="divToolbox">
+					<label id="labelToolboxDefinition"></label>
+					<select id="toolboxes">
+						<option value="toolbox_6">Cycle 3</option>
+						<option value="toolbox_arduino_all" selected="selected">Cycle 4</option>
+						<option value="toolbox_6">Lycée</option>
+					</select>
+				</div>
+			</div>
+		  <input type="checkbox" name="select_all" id="select_all"/> <span id="span_select_all"> </span>
+		  <div class="modal-body" id="modal-body-config"></div>
+		  <div class="modal-footer">
+			<button id="btn_valid_config" type="button" class="btn btn-primary"></button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<!-- variable modal -->
+	<div class="modal fade" id="variableModal" tabindex="-1" role="dialog" aria-labelledby="variableModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body" id="modal-body-variableModal">
+					<div class="form-group">
+						<label ><div id = "variableModalLabel" class="modal-title"></div></label>
+						<div class="input-group input-group-md icon-addon addon-md">
+							<input type="text" class="form-control" id="var_name">
+							<span class="input-group-btn">
+								<button id="btn_variable" type="button" class="btn btn-info" data-dismiss="modal"></button>
+							</span>
+						</div>
+					</div>
+				</div>  
+			</div>
+		</div>
+	</div>
+	<!-- version modal -->
+	<div class="modal fade" id="versionModal" tabindex="-1" role="dialog" aria-labelledby="versionModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
+			<span class="fa fa-download fa-2x" class="modal-title" id="versionModalLabel"></span>
+		  </div>
+		  <div class="modal-body">
+			Une mise à jour est disponible !<br/><br/>
+			<button id="btn_version" type="button" class="btn btn-sm btn-default">Télécharger et installer</button>
+			<br/><br/>
+			<div id="messages"></div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+</body>
+<script>require('../resources/app.asar/index.js')</script>
+<script>require('../resources/app.asar/factory.js')</script>
+</html>
