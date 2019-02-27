@@ -1,29 +1,33 @@
 {
  "name": "Blocklino",
- "version": "1.1.2",
+ "version": "1.2.0",
  "description": "environnement de développement pour langage graphique",
  "author": "Fontaine Jean Philippe",
  "license": "CC0-1.0",
  "main": "electronApp.js",
  "keywords": [
-		"blockly",
-		"arduino",
-		"ESP8266",
-		"electron",
+		"blockly","BLOCKLY",
+		"arduino","ARDUINO",
+		"esp8266","ESP8266",
+		"electron","ELECTRON",
 		"electron-builder",
 		"electron-log",
 		"electron-updater",
-		"serialport"
+		"serialport","SERIALPORT"
  ],
  "scripts": {
   "postinstall": "electron-builder install-app-deps",
   "start": "electron .",
-  "build": "build --win",
-  "publish": "build --win -p always"
+  "compile": "build --win --ia32",
+  "release": "build --win --ia32 -p always"
  },
  "build": {
   "appId": "com.electron.blocklino",
   "asar": true,
+  "directories": {
+    "buildResources": "./build",
+	"output": "../../../../dist"
+  },
   "nsis": {
    "installerIcon": "build/install.ico",
    "uninstallerIcon": "build/uninstall.ico",
@@ -58,8 +62,7 @@
  },
  "devDependencies": {
   "electron": "^2.0.17",
-  "electron-builder": "^20.29.0",
-  "electron-rebuild": "^1.8.2"
+  "electron-builder": "^20.29.0"
  },
  "dependencies": {
   "ajv": "^6.9.1",

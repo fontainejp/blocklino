@@ -176,6 +176,7 @@ window.addEventListener('load', function load(event) {
 		})
 	})
 	ipcRenderer.on('information', function(event, text) {
+		$("#versionModal").modal("show")
 		var container = document.getElementById('messages')
 		var message = document.createElement('div')
 		message.innerHTML = text
