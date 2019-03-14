@@ -1,4 +1,4 @@
-const { ipcRenderer } = require("electron")
+const { ipcRenderer, shell } = require("electron")
 const { exec, execSync } = require('child_process')
 const sp = require('serialport')
 const fs = require('fs')
@@ -16,9 +16,47 @@ function clear_sketchbook() {
 	})
 }
 window.addEventListener('load', function load(event) {
+	$('#btn_forum').on('click', function() {
+		shell.openExternal('http://blockly.technologiescollege.fr/forum/')
+	})
+	$('#btn_site').on('click', function() {
+		shell.openExternal('http://lesormeaux.net/blocklino/start.html')
+	})
+	$('#btn_contact').on('click', function() {
+		shell.openExternal('mailto:jean-philippe.fontaine@ac-rouen.fr')
+	})
 	var messageDiv = document.getElementById('messageDIV')
+	var checkBox = document.getElementById("verifyUpdate")
 	clear_sketchbook()
 	localStorage.setItem("verif",false)
+	$.ajax({
+	    cache: false,
+	    url: "../config.json",
+	    dataType: "json",
+	    success : function(data) {
+			$.each(data, function(i, update){
+				if (update=="true") {
+					$('#verifyUpdate').prop('checked', true)
+					checkBox.dispatchEvent(new Event('change'))
+					ipcRenderer.send("version", "")
+				} else {
+					$('#verifyUpdate').prop('checked', false)
+					checkBox.dispatchEvent(new Event('change'))
+				}
+			})
+		}
+	})
+	checkBox.addEventListener('change', function(event){
+		if (event.target.checked) {
+			fs.writeFile('config.json', '{ "update": "true" }', function(err){
+				if (err) return console.log(err)
+			})
+		} else {
+			fs.writeFile('config.json', '{ "update": "false" }', function(err){
+				if (err) return console.log(err)
+			})
+		}
+	})
 	var portserie = document.getElementById('portserie')
 	sp.list(function(err,ports) {
 		var opt = document.createElement('option')
@@ -42,7 +80,11 @@ window.addEventListener('load', function load(event) {
 		}
 	})
 	var file_ino = '.\\compilation\\sketchbook\\sketchbook.ino'
-	document.getElementById('versionapp').textContent = " version " + appVersion
+	document.getElementById('versionapp').textContent = " BLOCKLINO v" + appVersion
+	document.getElementById('btn_version').onclick = function(event) {
+		$('#aboutModal').modal('hide')
+		ipcRenderer.send("version", "")
+	}
 	$('#portserie').mouseover(function(event){
 		sp.list(function(err,ports) {
 			var nb_com = localStorage.getItem("nb_com"), menu_opt = portserie.getElementsByTagName('option')
@@ -146,40 +188,42 @@ window.addEventListener('load', function load(event) {
 	}
 	ipcRenderer.on('saved-ino', function(event, path){
 		var code = $('#pre_previewArduino').text()
-		fs.writeFile(path, code, function(err){
-			if (err) return console.log(err)
-		})
+		if (path === null) {
+			return
+		} else {
+			fs.writeFile(path, code, function(err){
+				if (err) return console.log(err)
+			})
+		}
+		
 	})
 	document.getElementById('btn_saveXML').onclick = function(event) {
 		ipcRenderer.send('save-bloc')
 	}
 	ipcRenderer.on('saved-bloc', function(event, path){
-		var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace)
-		var toolbox = localStorage.getItem("toolbox")
-		if (!toolbox) {
-			toolbox = $("#toolboxes").val()
-		}
-		if (toolbox) {
-			var newel = document.createElement("toolbox")
-			newel.appendChild(document.createTextNode(toolbox))
-			xml.insertBefore(newel, xml.childNodes[0])
-		}
-		var toolboxids = localStorage.getItem("toolboxids")
-		if (toolboxids === undefined || toolboxids === "") {
-			if ($('#defaultCategories').length) {
-				toolboxids = $('#defaultCategories').html()
+		if (path === null) {
+			return
+		} else {
+			var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace)
+			var toolbox = localStorage.getItem("toolbox")
+			if (!toolbox) {
+				toolbox = $("#toolboxes").val()
 			}
+			if (toolbox) {
+				var newel = document.createElement("toolbox")
+				newel.appendChild(document.createTextNode(toolbox))
+				xml.insertBefore(newel, xml.childNodes[0])
+			}
+			var toolboxids = localStorage.getItem("toolboxids")
+			if (toolboxids === undefined || toolboxids === "") {
+				if ($('#defaultCategories').length) {
+					toolboxids = $('#defaultCategories').html()
+				}
+			}
+			var code = Blockly.Xml.domToPrettyText(xml)
+			fs.writeFile(path, code, function(err){
+				if (err) return console.log(err)
+			})
 		}
-		var code = Blockly.Xml.domToPrettyText(xml)
-		fs.writeFile(path, code, function(err){
-			if (err) return console.log(err)
-		})
-	})
-	ipcRenderer.on('information', function(event, text) {
-		$("#versionModal").modal("show")
-		var container = document.getElementById('messages')
-		var message = document.createElement('div')
-		message.innerHTML = text
-		container.appendChild(message)
 	})
 })

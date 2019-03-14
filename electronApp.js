@@ -1,17 +1,11 @@
 const {electron, ipcMain, app, BrowserWindow, globalShortcut, dialog} = require('electron')
 const { autoUpdater } = require("electron-updater")
-const log = require('electron-log');
 const path = require('path')
 let mainWindow
 let termWindow
 let factoryWindow
-autoUpdater.logger = log
-autoUpdater.logger.transports.file.level = 'info'
-log.info('App starting...')
-function sendStatusToWindow(text) {
-  log.info(text);
-  mainWindow.webContents.send('information', text);
-}
+autoUpdater.autoDownload = false
+autoUpdater.logger = null
 function createWindow () {
 	mainWindow = new BrowserWindow({width:1240,height:700,icon:'www/media/icon.png',frame:false,movable:true})
 	if (process.platform == 'win32' && process.argv.length >= 2) {
@@ -52,7 +46,6 @@ function refresh(mainWindow = BrowserWindow.getFocusedWindow()) {
 }
 app.on('ready',  function () {
 	createWindow()
-	autoUpdater.checkForUpdatesAndNotify();
 	globalShortcut.register('CmdOrCtrl+I', open_console)
 	globalShortcut.register('F8', open_console)
 	globalShortcut.register('CmdOrCtrl+R', refresh)
@@ -69,47 +62,69 @@ app.on('window-all-closed', function () {
 		app.quit()
 	}
 })
+ipcMain.on("version", function () {
+	autoUpdater.checkForUpdates()  
+})
 ipcMain.on("prompt", function () {
 	createTerm()  
-});
+})
 ipcMain.on("factory", function () {
 	createfactory()       
-});
+})
 ipcMain.on('save-ino', function(event) {
-	const options = {
+	dialog.showSaveDialog(mainWindow,{
 		title: 'Enregistrer au format INO',
+		defaultPath: 'Sketch',
 		filters: [{ name: 'Arduino', extensions: ['ino'] }]
-	}
-	dialog.showSaveDialog(options, function(filename){
+	},
+	function(filename){
 		event.sender.send('saved-ino', filename)
 	})
 })
 ipcMain.on('save-bloc', function(event) {
-	const options = {
+	dialog.showSaveDialog(mainWindow,{
 		title: 'Enregistrer au format BLOC',
+		defaultPath: 'Programme',
 		filters: [{ name: 'Blocklino', extensions: ['bloc'] }]
-	}
-	dialog.showSaveDialog(options, function(filename){
+	},
+	function(filename){
 		event.sender.send('saved-bloc', filename)
 	})
 })
-autoUpdater.on('checking-for-update', function(){
-	sendStatusToWindow('Checking for update...')
+autoUpdater.on('error', function(error) {
+	dialog.showErrorBox('Error: ', error == null ? "unknown" : (error.stack || error).toString())
 })
-autoUpdater.on('update-available', function(info){
-	sendStatusToWindow('Update available.')
+autoUpdater.on('update-available', function() {
+	dialog.showMessageBox(mainWindow,{
+		type: 'none',
+		title: 'Mise à jour',
+		message: "Une nouvelle version est disponible, voulez-vous la télécharger et l'installer maintenant ?",
+		buttons: ['oui', 'non'],
+		cancelId: 1,
+		noLink: true
+	},
+	function(buttonIndex)  {
+		if (buttonIndex === 0) {
+			autoUpdater.downloadUpdate()
+		}
+		else {
+			return
+		}
+	})
 })
-autoUpdater.on('update-not-available', function(info){
-	sendStatusToWindow('Update not available.')
+autoUpdater.on('update-not-available', function() {
+	dialog.showMessageBox(mainWindow,{
+		title: 'Mise à jour',
+		message: 'Votre version est à jour.'
+	})
 })
-autoUpdater.on('error', function(err){
-	sendStatusToWindow('Error in auto-updater. ' + err)
-})
-autoUpdater.on('download-progress', function(progressObj){
-	sendStatusToWindow('Downloaded : ' + progressObj.percent + ' %')
-})
-autoUpdater.on('update-downloaded', function(info){
-    sendStatusToWindow('Update downloaded')
+autoUpdater.on('update-downloaded', function() {
+	dialog.showMessageBox(mainWindow,{
+		title: 'Mise à jour',
+		message: "Téléchargement terminé, l'application va s'installer puis redémarrer..."
+	}, function() {
+		setImmediate(() => autoUpdater.quitAndInstall())
+	})
 })
 module.exports.open_console = open_console
 module.exports.refresh = refresh
