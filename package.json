@@ -25,7 +25,7 @@
   "asar": true,
   "directories": {
    "buildResources": "./build",
-   "output": "../../../dist"
+   "output": "../dist"
   },
   "nsis": {
    "installerIcon": "build/install.ico",
@@ -61,13 +61,13 @@
   "url": "https://github.com/fontainejp/blocklino"
  },
  "devDependencies": {
-  "electron": "^2.0.17",
-  "electron-builder": "^20.29.0"
+  "electron": "^1.8.8",
+  "electron-builder": "^20.38.5"
  },
  "dependencies": {
-  "ajv": "^6.9.1",
+  "ajv": "^6.9.2",
   "child_process": "^1.0.2",
-  "electron-updater": "^3.2.3",
+  "electron-updater": "^4.0.0",
   "serialport": "^4.0.7"
  }
 }

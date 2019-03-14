@@ -52,18 +52,6 @@ BlocklyDuino.renderArduinoCodePreview = function() {
 		$('#pre_previewArduino').html(prettyPrintOne($('#pre_previewArduino').html(), 'cpp'));
 	}
 };
-/*BlocklyDuino.parse_url = function() {
-	var search=window.location.search;
-	search=search.replace('?','');
-	var data = search.split('&');
-	var temp = [];
-	var params = {};
-	for( var i = 0; i < data.length; i++ ) {
-	   temp = data[i].split( '=' );
-	   params[ temp[0] ] = temp[1]; 
-	}
-	return params;
-};*/
 BlocklyDuino.getStringParamFromUrl = function(name, defaultValue) {
   var val = location.search.match(new RegExp('[?&]' + name + '=([^&]+)'));
   return val ? decodeURIComponent(val[1].replace(/\+/g, '%20')) : defaultValue;
@@ -170,6 +158,14 @@ BlocklyDuino.Redo = function () {
   Blockly.mainWorkspace.undo(1);
 };
 BlocklyDuino.bindFunctions = function() {
+	$('.modal-child').on('show.bs.modal', function () {
+		var modalParent = $(this).attr('data-modal-parent');
+		$(modalParent).css('opacity', 0);
+	}); 
+	$('.modal-child').on('hidden.bs.modal', function () {
+		var modalParent = $(this).attr('data-modal-parent');
+		$(modalParent).css('opacity', 1);
+	});
 	$('#btn_new').on("click", BlocklyDuino.discard);
 	$('#btn_undo').on("click", BlocklyDuino.Undo);
 	$('#btn_redo').on("click", BlocklyDuino.Redo);
@@ -321,18 +317,12 @@ BlocklyDuino.buildExamples = function() {
 				$.each(data, function(i, example){
 					if (example.visible) {
 						var line = "<tr>"
-								   + "<td><a href='?url=./examples/"+example.source_url+"'>"
-								   + example.source_text
-								   + "</a></td>"
 								   + "<td>"
-								   + "<a href='./examples/"+example.image+"' target=_blank>"
-								   + "<img class='vignette' src='./examples/"+example.image+"'>"
-								   + "</a>"
+								   + "<a href='?url=./examples/"+example.source_url+"'>" + example.source_text + "</a>"
 								   + "</td>"
 								   + "<td>"
-								   + "<a href='./examples/"+example.link_url+"' target=_blank>"
-								   + example.link_text
-								   + "</a>"
+								   + "<a href='"+example.link_url+"' data-toggle='modal'>"
+								   + "<img class='vignette' src='./examples/"+example.image+"'></a>"
 								   + "</td>"
 								   + "</tr>";
 						$("#includedContent").append(line);

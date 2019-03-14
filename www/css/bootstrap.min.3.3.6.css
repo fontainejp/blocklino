@@ -112,12 +112,12 @@ h4{
             transform: rotate(360deg); }
 }
 .fa-lg {
-  font-size: 1.2em;
+  font-size: 1.25em;
   line-height: 0.75em;
   vertical-align: -15%;
 }
 .fa-1_5x {
-  font-size: 1.3em;
+  font-size: 1.5em;
 }
 .fa-1_75x {
   font-size: 1.75em;
@@ -137,7 +137,7 @@ h4{
 .fa-times:before{content:"\f00d"}
 .fa-calendar-check-o:before {content: "\f274"}
 .fa-arrow-right:before {content: "\f061"}
-.fa-question-circle:before {content: "\f059"}
+.fa-question:before {content: "\f128"}
 .fa-camera:before {content: "\f030"}
 .fa-code:before {content: "\f121"}
 .fa-repeat:before{content:"\f01e"}
@@ -147,7 +147,7 @@ h4{
 .fa-file:before{content:"\f15b"}
 .fa-folder-open:before{content:"\f07c"}
 .fa-cog:before{content:"\f013"}
-.fa-user:before{content:"\f007"}
+.fa-github:before{content:"\f09b"}
 .fa-check:before{content:"\f00c"}
 .fa-envelope:before{content:"\f0e0"}
 .fa-terminal:before{content:"\f120"}
@@ -157,3 +157,5 @@ h4{
 .fa-maximize:before{content:"\f2d0"}
 .fa-download:before{content:"\f019"}
 .fa-spinner:before{content:"\f110"}
+.fa-comments:before{content:"\f086"}
+.fa-puzzle:before{content:"\f12e"}

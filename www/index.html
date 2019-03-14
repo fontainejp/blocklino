@@ -2,7 +2,7 @@
 <head>
 	<link rel="icon" type="image/png" href="media/icon.png" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>BLOCKLINO - environnement de développement pour langage graphique</title>
+	<title> BLOCKLINO </title>
 	<!-- JavaScript -->
 	<script type="text/javascript" src="js/blockly.min.js"></script>
 	<script type="text/javascript" src="js/type.js"></script>
@@ -32,7 +32,7 @@
 	<div class="loading"></div>
 	<div id="toptitle">
 		<div id="title">
-            <span><img src="media/icon.png"/> BLOCKLINO - environnement de développement pour langage graphique</span>
+            <span><img src="media/icon.png"/> BLOCKLINO </span>
 		</div>
         <div id="title-bar-btns">
 			<button id="btn_min" type="button" class="btn btn-minmax"><span class="fa fa-minimize fa-lg"></span></button>
@@ -57,17 +57,17 @@
 					<span class="fa fa-file-text fa-fw"> </span>
 				</button>
 				<button id="btn_factory" class="btn btn-arduino" data-toggle="tooltip" data-placement="bottom" title=" Fabriquer ses propres blocs ">
-					<span class="fa fa-industry fa-lg fa-fw"></span>
+					<span class="fa fa-industry fa-fw"></span>
 				</button>
 				<button id="btn_term" class='btn btn-arduino' data-toggle="tooltip" data-placement="bottom" title=" Moniteur série ">
-					<span class="fa fa-search fa-lg fa-fw"> </span>
+					<span class="fa fa-search fa-fw"> </span>
 				</button>
 				<button id="btn_config" class="btn btn-arduino" data-toggle="modal" data-target="#configModal" data-toggle="tooltip" data-placement="bottom" title=" Modifier la langue et les blocs disponibles ">
 					<span class="fa fa-cog fa-lg fa-fw"></span>
 				</button>
 				<span style="color:white;font-size:4">|</span>
 				<button id="btn_about" class="btn btn-arduino" data-toggle="modal" data-target="#aboutModal" data-toggle="tooltip" data-placement="bottom" title=" à propos ">
-					<span class="fa fa-user fa-lg fa-fw"></span>
+					<span class="fa fa-question fa-lg fa-fw"></span>
 				</button>
 				<span style="color:white;font-size:4">|</span>
 			<select id="boards" onchange="BlocklyDuino.change_card();">
@@ -140,21 +140,41 @@
 		<div class="modal-content">
 		  <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
-			<span class="fa fa-user fa-2x" class="modal-title" id="aboutModalLabel"></span>
+			<span class="fa fa-2x" class="modal-title" id="aboutModalLabel"></span>
 		  </div>
 		  <div class="modal-body">
-			<span id="aboutBody"></span>
-			<br /><span class="fa fa-calendar-check-o" id="versionapp"></span><br />
+			<div class="container-fluid">
+				<div class="row">
+				  <div class="col-md-4"><img src="media/logo.png" style="width:128px; height:128px;"/></div>
+				  <div class="col-md-8">
+					<span class="fa fa-lg" id="versionapp"></span><br /><br />
+					<span id="aboutBody"></span><br /><br />
+				  	<button id="btn_site" class="btn btn-default" style="color: #727272;">
+						<span class="fa fa-puzzle" > Le site </span>
+					</button>
+				  	<button id="btn_forum" class="btn btn-default" style="color: #727272;">
+						<span class='fa fa-comments'> Le Forum </span>
+					</button>
+				  	<button id="btn_contact" class="btn btn-default" style="color: #727272;">
+						<span class='fa fa-envelope'> Contact </span>
+					</button>
+				  </div>
+				</div>
+			</div>
+		  </div>
+		  <div class="modal-footer">
+			<input type="checkbox" id="verifyUpdate"> Rechercher les mises à jour au démarrage<br />
+			<button id="btn_version" type="button" class="btn btn-xs btn-default">Vérifier maintenant</button><br />
 		  </div>
 		</div>
 	  </div>
 	</div>
 	<!-- example modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="exampleModal" >
 	  <div class="modal-dialog modal-lg">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
+			<button type="button" class="close" data-dismiss="modal" ><span aria-hidden="true">&#215;</span></button>
 			<span class="fa fa-file-text fa-2x" class="modal-title" id="exampleModalLabel"></span>
 		  </div>
 		  <div class="modal-body">
@@ -166,6 +186,104 @@
 		  </div>
 		</div>
 	  </div>
+	</div>
+	<!-- modal_rvb -->
+	<div id="modal_rvb" class="modal modal-child" data-modal-parent="#exampleModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&#215;</button>
+					<span class="fa fa-file-text fa-2x" class="modal-title" > faire clignoter la DEL en Rouge, Vert et Bleu</span>
+				</div>
+				<div class="modal-body">
+					<img src="examples/rvb/rvb.png" style="height:512px"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- modal_bp -->
+	<div id="modal_bp" class="modal modal-child" data-modal-parent="#exampleModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&#215;</button>
+					<span class="fa fa-file-text fa-2x" class="modal-title" > faire clignoter une DEL avec un bouton poussoir</span>
+				</div>
+				<div class="modal-body">
+					<img src="examples/bp/bp.png" style="height:418px"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- modal_buzzer -->
+	<div id="modal_buzzer" class="modal modal-child" data-modal-parent="#exampleModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&#215;</button>
+					<span class="fa fa-file-text fa-2x" class="modal-title" > jouer 'joyeux anniversaire'</span>
+				</div>
+				<div class="modal-body">
+					<img src="examples/buzzer/buzzer.png" style="height:512px;"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- modal_matrice -->
+	<div id="modal_matrice" class="modal modal-child" data-modal-parent="#exampleModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&#215;</button>
+					<span class="fa fa-file-text fa-2x" class="modal-title" > faire un smiley avec une matrice de DEL</span>
+				</div>
+				<div class="modal-body">
+					<img src="examples/matrice/matrice.png" style="height:385px"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- modal_ligne -->
+	<div id="modal_ligne" class="modal modal-child" data-modal-parent="#exampleModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&#215;</button>
+					<span class="fa fa-file-text fa-2x" class="modal-title" > actionner un moteur si une ligne noire est détectée</span>
+				</div>
+				<div class="modal-body">
+					<img src="examples/ligne/ligne.png" style="height:512px"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- modal_hum -->
+	<div id="modal_hum" class="modal modal-child" data-modal-parent="#exampleModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&#215;</button>
+					<span class="fa fa-file-text fa-2x" class="modal-title" > afficher l'humidité et la température sur un écran LCD</span>
+				</div>
+				<div class="modal-body">
+					<img src="examples/hum/hum.png" style="height:512px"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- modal_potar -->
+	<div id="modal_potar" class="modal modal-child" data-modal-parent="#exampleModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&#215;</button>
+					<span class="fa fa-file-text fa-2x" class="modal-title" > commander un servomoteur avec un potentiomètre</span>
+				</div>
+				<div class="modal-body">
+					<img src="examples/potar/potar.png" style="height:512px"/>
+				</div>
+			</div>
+		</div>
 	</div>
 	<!-- toolbox config modal -->
 	<div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
@@ -212,23 +330,6 @@
 				</div>  
 			</div>
 		</div>
-	</div>
-	<!-- version modal -->
-	<div class="modal fade" id="versionModal" tabindex="-1" role="dialog" aria-labelledby="versionModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
-			<span class="fa fa-download fa-2x" class="modal-title" id="versionModalLabel"></span>
-		  </div>
-		  <div class="modal-body">
-			Une mise à jour est disponible !<br/><br/>
-			<button id="btn_version" type="button" class="btn btn-sm btn-default">Télécharger et installer</button>
-			<br/><br/>
-			<div id="messages"></div>
-		  </div>
-		</div>
-	  </div>
 	</div>
 </body>
 <script>require('../resources/app.asar/index.js')</script>
