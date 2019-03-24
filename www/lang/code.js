@@ -2,10 +2,9 @@
 
 var Code = {};
 Code.LANGUAGE_NAME = {
-		  //'en': 'English',
-		  //'es': 'Español',
-		  'fr': 'Français'
-		};
+	'fr': 'Français',
+	'en': 'English'
+};
 Code.LANGUAGE_RTL = ['ar', 'fa', 'he'];
 Code.getLang = function() {
   var lang = BlocklyDuino.getStringParamFromUrl('lang', '');
@@ -43,32 +42,44 @@ Code.initLanguage = function() {
     }
     languageMenu.append(option);
   }
-  $('#aboutBody').html(MSG['aboutBody']);
+  $('#aboutBody').text(MSG['aboutBody']);
+  $('#aboutModalLabel').text(MSG['aboutModalLabel']);
+  $('#configModalLabel').text(MSG['configModalLabel']);
+  $('#versionModalLabel').text(MSG['versionModalLabel']); 
+  $('#exampleModalLabel').text(MSG['exampleModalLabel']); 
+  $('#variableModalLabel').text(MSG['variableModalLabel']);
+  $('#variablebody').text(MSG['variablebody']);
+  $('#labelToolboxDefinition').text(MSG['labelToolboxDefinition']); 
+  $('#survol').text(MSG['survol']);
   $('#span_about').text(MSG['span_about']);
   $('#span_example').text(MSG['span_example']);
-  $('#aboutModalLabel').text(MSG['aboutModalLabel']);
   $('#span_connect_serial').text(MSG['span_connect_serial']);
-  $('#configModalLabel').text(MSG['configModalLabel']);
   $('#span_select_all').text(MSG['span_select_all']);
+  $('#span_languageMenu').text(MSG['span_languageMenu']);
+  $('#span_blocklino').text(MSG['span_blocklino']);
+  $('#span_update').text(MSG['span_update']);
+  $('#span_verify_update').text(MSG['span_verify_update']);
+  $('#span_site').text(MSG['span_site']);
+  $('#span_forum').text(MSG['span_forum']);
+  $('#span_contact').text(MSG['span_contact']);
   $('#btn_close_config').text(MSG['btn_close']);
   $('#btn_valid_config').text(MSG['btn_valid']);
   $('#btn_close_msg').text(MSG['btn_close']);
   $('#btn_valid_msg').text(MSG['btn_valid']);
-  $('#versionModalLabel').text(MSG['versionModalLabel']); 
-  $('#exampleModalLabel').text(MSG['exampleModalLabel']); 
-  $('#labelToolboxDefinition').text(MSG['labelToolboxDefinition']); 
-  $('#survol').text(MSG['survol']);
-  $('#span_languageMenu').text(MSG['span_languageMenu']);
   $('#btn_variable').text(MSG['btn_variable']);
-  $('#variableModalLabel').text(MSG['variableModalLabel']);
-  $('#variablebody').text(MSG['variablebody']);
-  $('#msg_ajax_ko').text(MSG['msg_ajax_ko']);
-  $('#span_ajax_msg').text(MSG['span_ajax_msg']); 
   $('#btn_preview').attr('title', MSG['btn_preview']);
   $('#btn_saveino').attr('title', MSG['btn_saveino']);   
   $('#btn_print').attr('title', MSG['btn_print']);
-  $('#btn_undo').attr('title', MSG['span_undo']);
-  $('#btn_redo').attr('title', MSG['span_redo']);
+  $('#btn_undo').attr('title', MSG['btn_undo']);
+  $('#btn_redo').attr('title', MSG['btn_redo']);
+  $('#btn_new').attr('title', MSG['btn_new']);
+  $('#btn_saveXML').attr('title', MSG['btn_saveXML']);
+  $('#btn_fakeload').attr('title', MSG['btn_fakeload']);
+  $('#btn_term').attr('title', MSG['btn_term']);
+  $('#btn_factory').attr('title', MSG['btn_factory']);
+  $('#btn_config').attr('title', MSG['btn_config']);
+  $('#btn_about').attr('title', MSG['btn_about']);
+  $('#btn_example').attr('title', MSG['btn_example']);
   $("xml").find("category").each(function() {
 	if (!$(this).attr('id')) {
 	  $(this).attr('id', $(this).attr('name'));

@@ -32,7 +32,7 @@
 	<div class="loading"></div>
 	<div id="toptitle">
 		<div id="title">
-            <span><img src="media/icon.png"/> BLOCKLINO </span>
+            <span><img src="media/icon.png"/><span id="span_blocklino"></span></span>
 		</div>
         <div id="title-bar-btns">
 			<button id="btn_min" type="button" class="btn btn-minmax"><span class="fa fa-minimize fa-lg"></span></button>
@@ -42,31 +42,31 @@
 	</div>
 	<div id="header">
 		<div id="btn_all" >
-				<button id="btn_new" class="btn btn-arduino-rect" data-toggle="tooltip" data-placement="bottom" title=" Nouveau ">
+				<button id="btn_new" class="btn btn-arduino-rect">
 					<span class="fa fa-file fa-fw"></span>
 				</button>
-				<button id="btn_fakeload" class="btn btn-arduino-rect" data-toggle="tooltip" data-placement="bottom" title=" Ouvrir ">
+				<button id="btn_fakeload" class="btn btn-arduino-rect">
 					<span class="fa fa-folder-open fa-lg fa-fw"></span>
 				</button>
 				<input type="file" id="load" accept=".bloc,.xml" style="display: none;" />
-				<button id="btn_saveXML" class='btn btn-arduino-rect' data-toggle="tooltip" data-placement="bottom" title=" Enregistrer les blocs ">
+				<button id="btn_saveXML" class="btn btn-arduino-rect">
 					<span class="fa fa-cloud-download fa-lg fa-fw"></span>
 				</button>
 				<span style="color:white;font-size:20"> | </span>
-				<button id="btn_example" class="btn btn-arduino" data-toggle="modal" data-target="#exampleModal"  data-toggle="tooltip" data-placement="bottom" title=" Exemples ">
+				<button id="btn_example" class="btn btn-arduino" data-toggle="modal" data-target="#exampleModal">
 					<span class="fa fa-file-text fa-fw"> </span>
 				</button>
-				<button id="btn_factory" class="btn btn-arduino" data-toggle="tooltip" data-placement="bottom" title=" Fabriquer ses propres blocs ">
+				<button id="btn_factory" class="btn btn-arduino">
 					<span class="fa fa-industry fa-fw"></span>
 				</button>
-				<button id="btn_term" class='btn btn-arduino' data-toggle="tooltip" data-placement="bottom" title=" Moniteur série ">
+				<button id="btn_term" class="btn btn-arduino">
 					<span class="fa fa-search fa-fw"> </span>
 				</button>
-				<button id="btn_config" class="btn btn-arduino" data-toggle="modal" data-target="#configModal" data-toggle="tooltip" data-placement="bottom" title=" Modifier la langue et les blocs disponibles ">
+				<button id="btn_config" class="btn btn-arduino" data-toggle="modal" data-target="#configModal">
 					<span class="fa fa-cog fa-lg fa-fw"></span>
 				</button>
 				<span style="color:white;font-size:4">|</span>
-				<button id="btn_about" class="btn btn-arduino" data-toggle="modal" data-target="#aboutModal" data-toggle="tooltip" data-placement="bottom" title=" à propos ">
+				<button id="btn_about" class="btn btn-arduino" data-toggle="modal" data-target="#aboutModal">
 					<span class="fa fa-question fa-lg fa-fw"></span>
 				</button>
 				<span style="color:white;font-size:4">|</span>
@@ -150,21 +150,21 @@
 					<span class="fa fa-lg" id="versionapp"></span><br /><br />
 					<span id="aboutBody"></span><br /><br />
 				  	<button id="btn_site" class="btn btn-default" style="color: #727272;">
-						<span class="fa fa-puzzle" > Le site </span>
+						<span class="fa fa-puzzle" id="span_site"></span>
 					</button>
 				  	<button id="btn_forum" class="btn btn-default" style="color: #727272;">
-						<span class='fa fa-comments'> Le Forum </span>
+						<span class='fa fa-comments' id="span_forum"></span>
 					</button>
 				  	<button id="btn_contact" class="btn btn-default" style="color: #727272;">
-						<span class='fa fa-envelope'> Contact </span>
+						<span class='fa fa-envelope' id="span_contact"></span>
 					</button>
 				  </div>
 				</div>
 			</div>
 		  </div>
 		  <div class="modal-footer">
-			<input type="checkbox" id="verifyUpdate"> Rechercher les mises à jour au démarrage<br />
-			<button id="btn_version" type="button" class="btn btn-xs btn-default">Vérifier maintenant</button><br />
+			<input type="checkbox" id="verifyUpdate"><span id="span_update"></span><br />
+			<button id="btn_version" type="button" class="btn btn-xs btn-default"><span id="span_verify_update"></span></button><br />
 		  </div>
 		</div>
 	  </div>
@@ -191,10 +191,6 @@
 	<div id="modal_rvb" class="modal modal-child" data-modal-parent="#exampleModal">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&#215;</button>
-					<span class="fa fa-file-text fa-2x" class="modal-title" > faire clignoter la DEL en Rouge, Vert et Bleu</span>
-				</div>
 				<div class="modal-body">
 					<img src="examples/rvb/rvb.png" style="height:512px"/>
 				</div>
@@ -205,10 +201,6 @@
 	<div id="modal_bp" class="modal modal-child" data-modal-parent="#exampleModal">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&#215;</button>
-					<span class="fa fa-file-text fa-2x" class="modal-title" > faire clignoter une DEL avec un bouton poussoir</span>
-				</div>
 				<div class="modal-body">
 					<img src="examples/bp/bp.png" style="height:418px"/>
 				</div>
@@ -219,10 +211,6 @@
 	<div id="modal_buzzer" class="modal modal-child" data-modal-parent="#exampleModal">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&#215;</button>
-					<span class="fa fa-file-text fa-2x" class="modal-title" > jouer 'joyeux anniversaire'</span>
-				</div>
 				<div class="modal-body">
 					<img src="examples/buzzer/buzzer.png" style="height:512px;"/>
 				</div>
@@ -233,10 +221,6 @@
 	<div id="modal_matrice" class="modal modal-child" data-modal-parent="#exampleModal">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&#215;</button>
-					<span class="fa fa-file-text fa-2x" class="modal-title" > faire un smiley avec une matrice de DEL</span>
-				</div>
 				<div class="modal-body">
 					<img src="examples/matrice/matrice.png" style="height:385px"/>
 				</div>
@@ -247,10 +231,6 @@
 	<div id="modal_ligne" class="modal modal-child" data-modal-parent="#exampleModal">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&#215;</button>
-					<span class="fa fa-file-text fa-2x" class="modal-title" > actionner un moteur si une ligne noire est détectée</span>
-				</div>
 				<div class="modal-body">
 					<img src="examples/ligne/ligne.png" style="height:512px"/>
 				</div>
@@ -261,10 +241,6 @@
 	<div id="modal_hum" class="modal modal-child" data-modal-parent="#exampleModal">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&#215;</button>
-					<span class="fa fa-file-text fa-2x" class="modal-title" > afficher l'humidité et la température sur un écran LCD</span>
-				</div>
 				<div class="modal-body">
 					<img src="examples/hum/hum.png" style="height:512px"/>
 				</div>
@@ -275,10 +251,6 @@
 	<div id="modal_potar" class="modal modal-child" data-modal-parent="#exampleModal">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&#215;</button>
-					<span class="fa fa-file-text fa-2x" class="modal-title" > commander un servomoteur avec un potentiomètre</span>
-				</div>
 				<div class="modal-body">
 					<img src="examples/potar/potar.png" style="height:512px"/>
 				</div>

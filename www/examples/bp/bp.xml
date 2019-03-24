@@ -14,38 +14,32 @@
           </block>
         </value>
         <statement name="DO0">
-          <block type="inout_digital_write" id="@E{k_gSTi!$7#)[]IqrJ">
+          <block type="digital_write" id="UTxXKBX0.!1)530!jGy8">
+            <field name="STAT">HIGH</field>
             <value name="PIN">
               <block type="math_number" id="d^J,bSO6F008m$+9%Vwc">
                 <field name="NUM">8</field>
               </block>
             </value>
-            <value name="STAT">
-              <block type="inout_onoff" id="B(R0b=y)~Zye^%r!x]g$">
-                <field name="BOOL">LOW</field>
-              </block>
-            </value>
             <next>
               <block type="base_delay" id="_KX`klif}7yeP?4LDWsE">
+                <field name="unite">m</field>
                 <value name="DELAY_TIME">
                   <block type="math_number" id="$DsJYo%@Ub-^A+5e3C~$">
                     <field name="NUM">250</field>
                   </block>
                 </value>
                 <next>
-                  <block type="inout_digital_write" id=":HNsKsF$K3?`~N~}-UHV">
+                  <block type="digital_write" id="v@cqHRCflSETXWILC%=p">
+                    <field name="STAT">LOW</field>
                     <value name="PIN">
-                      <block type="math_number" id="l.(xh+I1qJ.+IOBJwJv)">
+                      <block type="math_number" id="h_!JOKm$cnP`n=0+sZYn">
                         <field name="NUM">8</field>
-                      </block>
-                    </value>
-                    <value name="STAT">
-                      <block type="inout_onoff" id="2/Aj7m|?bK_L9`Cwy.O4">
-                        <field name="BOOL">HIGH</field>
                       </block>
                     </value>
                     <next>
                       <block type="base_delay" id="f/Wh1*V3h^c%qc%K+aT7">
+                        <field name="unite">m</field>
                         <value name="DELAY_TIME">
                           <block type="math_number" id="HdX6H*e._:Mo6m-HYmOw">
                             <field name="NUM">250</field>
@@ -60,15 +54,11 @@
           </block>
         </statement>
         <statement name="ELSE">
-          <block type="inout_digital_write" id="Ak+=2#39gRh.zH!PqkTh">
+          <block type="digital_write" id="!k2rO(.H+u[{M{PoKqpV">
+            <field name="STAT">LOW</field>
             <value name="PIN">
-              <block type="math_number" id="|XBu8{6|xmnWH^UA#`vZ">
+              <block type="math_number" id="L7+Jg|EvaJou%}e*Q{W$">
                 <field name="NUM">8</field>
-              </block>
-            </value>
-            <value name="STAT">
-              <block type="inout_onoff" id="?e$KLgTn0eu=,:Q=Zo58">
-                <field name="BOOL">LOW</field>
               </block>
             </value>
           </block>

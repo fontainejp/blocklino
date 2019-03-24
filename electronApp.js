@@ -1,9 +1,9 @@
-const {electron, ipcMain, app, BrowserWindow, globalShortcut, dialog} = require('electron')
-const { autoUpdater } = require("electron-updater")
-const path = require('path')
-let mainWindow
-let termWindow
-let factoryWindow
+var {electron, ipcMain, app, BrowserWindow, globalShortcut, dialog} = require('electron')
+var { autoUpdater } = require("electron-updater")
+var path = require('path')
+var mainWindow
+var termWindow
+var factoryWindow
 autoUpdater.autoDownload = false
 autoUpdater.logger = null
 function createWindow () {

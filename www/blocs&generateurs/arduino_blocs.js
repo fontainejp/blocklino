@@ -207,7 +207,7 @@ Blockly.Blocks["base_define"]={
 				blocks.push(BlocklyDuino.workspace.blockDB_[blockID]);
 			}
 		}
-		if(blocks.length>1) this.setDisabled(true)}//BlocklyDuino.workspace.undo(false)}
+		if(blocks.length>1) BlocklyDuino.workspace.undo(false)}
 };
 Blockly.Blocks["base_code"]={init:function(){
         this.setHelpUrl(Blockly.Msg.HELPURL);

@@ -98,9 +98,7 @@ BlocklyDuino.load = function (event) {
 				return;
 			}
 			var count = BlocklyDuino.workspace.getAllBlocks().length;
-			if (count && confirm(MSG['xmlLoad'])) {
-				BlocklyDuino.workspace.clear();
-			}
+			BlocklyDuino.workspace.clear();
 			Blockly.Xml.domToWorkspace(xml,BlocklyDuino.workspace);
 			BlocklyDuino.renderContent();
 			var elem = xml.getElementsByTagName("toolbox")[0];

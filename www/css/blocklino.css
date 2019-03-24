@@ -8,6 +8,7 @@ body {
 	margin: 0;
 }
 #divfenetre {
+	background-color: #fff;
     position: absolute;
     top: 45px;
     bottom: 0px;
@@ -87,6 +88,7 @@ body {
 	width: 100%;
 }
 #blockly_l{
+	background-color: #fff;
 	float:left;
 	height:100%;
 	width:50%;

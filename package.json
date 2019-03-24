@@ -1,6 +1,6 @@
 {
  "name": "Blocklino",
- "version": "1.2.0",
+ "version": "1.3.0",
  "description": "environnement de développement pour langage graphique",
  "author": "Fontaine Jean Philippe",
  "license": "CC0-1.0",
@@ -38,7 +38,7 @@
    "include": "build/blocklino.nsh"
   },
   "win": {
-   "target": ["nsis", "portable"],
+   "target": ["nsis", "portable", "zip"],
    "icon": "build/app.ico"
   },
   "fileAssociations": {
@@ -54,16 +54,29 @@
    "README.md",
    "LICENSE.md",
    "config.json"
-  ]
+  ],
+  "extraResources": [
+   "dev-app-update.yml",
+   "app-update.yml"
+  ],
+  "publish": [{
+    "provider": "github",
+    "repo": "blocklino",
+	"owner": "fontainejp",
+	"releaseType": "release"	
+  }]
  },
- "repository": {
-  "type": "git",
-  "url": "https://github.com/fontainejp/blocklino"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fontainejp/blocklino"
+  },
+ "bugs": {
+  "url": "https://github.com/fontainejp/blocklino/issues"
  },
  "devDependencies": {
-  "electron": "^1.8.8",
-  "electron-builder": "^20.38.5"
- },
+    "electron": "^1.8.8",
+    "electron-builder": "^20.38.5"
+  },
  "dependencies": {
   "ajv": "^6.9.2",
   "child_process": "^1.0.2",

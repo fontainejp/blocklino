@@ -1,12 +1,12 @@
-const { ipcRenderer, shell } = require("electron")
-const { exec, execSync } = require('child_process')
-const sp = require('serialport')
-const fs = require('fs')
-const appVersion = window.require('electron').remote.app.getVersion()
+var { ipcRenderer, shell } = require("electron")
+var { exec, execSync } = require('child_process')
+var sp = require('serialport')
+var fs = require('fs')
+var appVersion = window.require('electron').remote.app.getVersion()
 function clear_sketchbook() {
 	var path = './compilation/sketchbook/'
 	fs.readdir(path, function(err, files) {
-		for (const file of files) {
+		for (var file of files) {
 			if (err) throw err
 			fs.unlink(path + file, function (err) {
 				if (err) throw err;
@@ -61,7 +61,7 @@ window.addEventListener('load', function load(event) {
 	sp.list(function(err,ports) {
 		var opt = document.createElement('option')
 		opt.value = "com"
-		opt.text = "Choisir le port"
+		opt.text = Blockly.Msg.com1
 		portserie.appendChild(opt)
 		ports.forEach(function(port) {
 			if (port.vendorId){
@@ -115,7 +115,7 @@ window.addEventListener('load', function load(event) {
 		if (com=="com"){
 			$("#message").modal("show")
 			messageDiv.style.color = '#000000'
-			messageDiv.innerHTML = 'Sélectionner un port !!! <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>'
+			messageDiv.innerHTML = Blockly.Msg.com2 + '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>'
 			return
 		}
 		ipcRenderer.send("prompt", "")		
@@ -132,13 +132,13 @@ window.addEventListener('load', function load(event) {
 			if (err) return console.log(err)
 		})
 		messageDiv.style.color = '#000000'
-		messageDiv.innerHTML = 'Vérification <i class="fa fa-spinner fa-pulse fa-1_5x fa-fw"></i>'
+		messageDiv.innerHTML = Blockly.Msg.check + '<i class="fa fa-spinner fa-pulse fa-1_5x fa-fw"></i>'
 		exec(cmd_verify , {cwd: './compilation'} , function(err, stdout, stderr){
 			if (stderr) {
 				rech=RegExp('token')
 				if (rech.test(stderr)){
 					messageDiv.style.color = '#ff0000'
-					messageDiv.innerHTML = 'ERREUR :<br />Blocs non connectés<button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
+					messageDiv.innerHTML = Blockly.Msg.error + '<button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
 				} else {
 					messageDiv.style.color = '#ff0000'
 					messageDiv.innerHTML = err.toString()+'<button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
@@ -146,7 +146,7 @@ window.addEventListener('load', function load(event) {
 				return
 			}
 			messageDiv.style.color = '#009000'
-			messageDiv.innerHTML = 'Vérification : OK <button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
+			messageDiv.innerHTML = Blockly.Msg.check + ': OK <button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
 		})
 		localStorage.setItem("verif",true)
 	}
@@ -160,26 +160,26 @@ window.addEventListener('load', function load(event) {
 		var cmd_flash = 'cli upload -p ' + com + ' --fqbn ' + prog + ':' + carte + ' .\\sketchbook'
 		if (com=="com"){
 			messageDiv.style.color = '#000000'
-			messageDiv.innerHTML = 'Sélectionner un port !!! <button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
+			messageDiv.innerHTML = Blockly.Msg.com2 + '<button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
 			return
 		}
 		if (verif=="false") {
 			messageDiv.style.color = '#000000'
-			messageDiv.innerHTML = 'Vérification <i class="fa fa-spinner fa-pulse fa-1_5x fa-fw"></i>'
+			messageDiv.innerHTML = Blockly.Msg.check + '<i class="fa fa-spinner fa-pulse fa-1_5x fa-fw"></i>'
 			fs.writeFileSync(file_ino, data)
 			execSync(cmd_verify , {cwd: './compilation'})
 		}
 		messageDiv.style.color = '#000000'
-		messageDiv.innerHTML = 'Téléversement <i class="fa fa-spinner fa-pulse fa-1_5x fa-fw"></i>'
+		messageDiv.innerHTML = Blockly.Msg.upload + '<i class="fa fa-spinner fa-pulse fa-1_5x fa-fw"></i>'
 		exec(cmd_flash , {cwd: './compilation'} , function(err, stdout, stderr){
 			if (err) {
 				messageDiv.style.color = '#ff0000'
-				messageDiv.innerHTML = err.toString()+'<button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
+				messageDiv.innerHTML = err.toString() + '<button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
 				clear_sketchbook()
 				return
 			}
 			messageDiv.style.color = '#009000'
-			messageDiv.innerHTML = 'Téléversement : OK <button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
+			messageDiv.innerHTML = Blockly.Msg.upload + ': OK <button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
 			clear_sketchbook()
 		})
 	}

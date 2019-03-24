@@ -1,4 +1,4 @@
-const remote = require('electron').remote 
+var remote = require('electron').remote 
 
 window.addEventListener('load', function load(event) {
 	document.getElementById('btn_envoi').disabled=true
@@ -18,11 +18,13 @@ window.addEventListener('load', function load(event) {
 	}
 	document.getElementById('btn_connect').onclick = function(event) {
 		var SerialPort = require("serialport")
+		var Readline = require('@serialport/parser-readline')
+		var parser = s_p.pipe(new Readline({ delimiter: '\r\n' }))
 		var moniteur = document.getElementById('fenetre_term')
 		var vit = document.getElementById('vitesse').value
 		var baud = parseInt(vit)
 		var _com = localStorage.getItem("com")
-		s_p = new SerialPort(_com,{baudrate:baud,parser:SerialPort.parsers.readline("\n")})
+		s_p = new SerialPort(_com,{baudRate:baud})
 		document.getElementById('btn_connect').disabled=true
 		document.getElementById('btn_envoi').disabled=false
 		s_p.on('open', function(){
