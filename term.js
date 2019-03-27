@@ -7,7 +7,7 @@ window.addEventListener('load', function load(event) {
 	}
 	document.getElementById('btn_envoi').onclick = function(event) {
 		var entree = document.getElementById('schbox').value
-		if (s_p.isOpen()) {
+		if (s_p.isOpen) {
 			document.getElementById('fenetre_term').innerHTML += entree+"<br />"
 			s_p.write(entree)
 		}
@@ -19,12 +19,12 @@ window.addEventListener('load', function load(event) {
 	document.getElementById('btn_connect').onclick = function(event) {
 		var SerialPort = require("serialport")
 		var Readline = require('@serialport/parser-readline')
-		var parser = s_p.pipe(new Readline({ delimiter: '\r\n' }))
 		var moniteur = document.getElementById('fenetre_term')
 		var vit = document.getElementById('vitesse').value
 		var baud = parseInt(vit)
 		var _com = localStorage.getItem("com")
 		s_p = new SerialPort(_com,{baudRate:baud})
+		var parser = s_p.pipe(new Readline({ delimiter: '\r\n' }))
 		document.getElementById('btn_connect').disabled=true
 		document.getElementById('btn_envoi').disabled=false
 		s_p.on('open', function(){
