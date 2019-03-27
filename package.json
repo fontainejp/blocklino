@@ -6,11 +6,16 @@
  "license": "CC0-1.0",
  "main": "electronApp.js",
  "keywords": [
-  "blockly","BLOCKLY",
-  "arduino","ARDUINO",
-  "esp8266","ESP8266",
-  "electron","ELECTRON",
-  "serialport","SERIALPORT",
+  "blockly",
+  "BLOCKLY",
+  "arduino",
+  "ARDUINO",
+  "esp8266",
+  "ESP8266",
+  "electron",
+  "ELECTRON",
+  "serialport",
+  "SERIALPORT",
   "electron-builder",
   "electron-updater"
  ],
@@ -38,7 +43,11 @@
    "include": "build/blocklino.nsh"
   },
   "win": {
-   "target": ["nsis", "portable", "zip"],
+   "target": [
+    "portable",
+    "nsis",
+    "zip"
+   ],
    "icon": "build/app.ico"
   },
   "fileAssociations": {
@@ -59,28 +68,30 @@
    "dev-app-update.yml",
    "app-update.yml"
   ],
-  "publish": [{
+  "publish": [
+   {
     "provider": "github",
     "repo": "blocklino",
-	"owner": "fontainejp",
-	"releaseType": "release"	
-  }]
+    "owner": "fontainejp",
+    "releaseType": "release"
+   }
+  ]
  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/fontainejp/blocklino"
-  },
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/fontainejp/blocklino"
+ },
  "bugs": {
   "url": "https://github.com/fontainejp/blocklino/issues"
  },
  "devDependencies": {
-    "electron": "^1.8.8",
-    "electron-builder": "^20.38.5"
-  },
+  "electron": "4.1.1",
+  "electron-builder": "20.39.0"
+ },
  "dependencies": {
-  "ajv": "^6.9.2",
-  "child_process": "^1.0.2",
-  "electron-updater": "^4.0.0",
-  "serialport": "^4.0.7"
+  "ajv": "6.10.0",
+  "child_process": "1.0.2",
+  "electron-updater": "4.0.6",
+  "serialport": "7.1.4"
  }
 }

@@ -97,7 +97,6 @@ BlocklyDuino.load = function (event) {
 				alert(MSG['xmlError']+'\n' + e);
 				return;
 			}
-			var count = BlocklyDuino.workspace.getAllBlocks().length;
 			BlocklyDuino.workspace.clear();
 			Blockly.Xml.domToWorkspace(xml,BlocklyDuino.workspace);
 			BlocklyDuino.renderContent();
