@@ -47,7 +47,22 @@ and
 > npm start
 ```
 
-### Build and Publish 
+### Build 
+
+You can use electron-builder to pack your electron app in zip, nsis (Installer), portable (portable app without installation) formats.
+
+```bash
+> cd blocklino-master
+> build --win --ia32
+```
+or 
+
+```bash
+> cd blocklino-master
+> npm run compiler
+```
+
+### Publish
 
 GitHub personal access token is required. You can generate it [here](https://github.com/settings/tokens/new).
 The access token should have the repo scope/permission.
@@ -55,7 +70,13 @@ Define GH_TOKEN environment variable.
 
 ```bash
 > cd blocklino-master
-> build -p always
+> build --win --ia32 -p -always
+```
+or
+
+```bash
+> cd blocklino-master
+> npm run publier
 ```
 
 ## Links
