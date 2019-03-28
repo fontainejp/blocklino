@@ -83,7 +83,6 @@ or
 
 Tools without which nothing would not have been possible :
 
-- [Electron](https://electronjs.org/)
 - [Node.js](https://nodejs.org/fr/)
 - [Blockly@rduino](https://github.com/technologiescollege/Blockly-at-rduino)
 - [BlocklyDuino](https://github.com/BlocklyDuino/BlocklyDuino)
