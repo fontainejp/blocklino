@@ -7,6 +7,12 @@ body {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	margin: 0;
 }
+#div_var {
+    position: absolute;
+	text-align: center;
+    top: 45px;
+	margin: 10px
+}
 #divfenetre {
 	background-color: #fff;
     position: absolute;

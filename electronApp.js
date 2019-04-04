@@ -4,10 +4,13 @@ var path = require('path')
 var mainWindow
 var termWindow
 var factoryWindow
+var promptWindow
+var promptOptions
+var promptAnswer
 autoUpdater.autoDownload = false
 autoUpdater.logger = null
 function createWindow () {
-	mainWindow = new BrowserWindow({width:1240,height:700,icon:'www/media/icon.png',frame:false,movable:true})
+	mainWindow = new BrowserWindow({width: 1240, height: 700, icon: 'www/media/icon.png', frame: false, movable: true})
 	if (process.platform == 'win32' && process.argv.length >= 2) {
 		mainWindow.loadURL(path.join(__dirname, '../../www/index.html?url='+process.argv[1]))
 	} else {
@@ -19,7 +22,7 @@ function createWindow () {
 	})
 }
 function createTerm() {
-	termWindow = new BrowserWindow({width:640,height:560,'parent':mainWindow,resizable:false,movable:true,frame:false,modal:true}) 
+	termWindow = new BrowserWindow({width: 640, height: 560, 'parent': mainWindow, resizable: false, movable: true, frame: false, modal: true}) 
 	termWindow.loadURL(path.join(__dirname, "../../www/term.html"))
 	termWindow.setMenu(null)
 	termWindow.on('closed', function () { 
@@ -27,11 +30,20 @@ function createTerm() {
 	})
 }
 function createfactory() {
-	factoryWindow = new BrowserWindow({width:1066,height:640,'parent':mainWindow,resizable:true,movable:true,frame:false})
+	factoryWindow = new BrowserWindow({width: 1066, height: 640, 'parent': mainWindow, resizable: true, movable: true, frame: false})
 	factoryWindow.loadURL(path.join(__dirname, "../../www/factory.html"))
 	factoryWindow.setMenu(null)
 	factoryWindow.on('closed', function () { 
 		factoryWindow = null 
+	})
+}
+function promptModal(options, callback) {
+	promptOptions = options
+	promptWindow = new BrowserWindow({width:360, height: 135, 'parent': mainWindow, resizable: false, movable: true, frame: false, modal: true})
+	promptWindow.loadURL(path.join(__dirname, "../../www/modalVar.html"))
+	promptWindow.on('closed', function () { 
+		promptWindow = null 
+		callback(promptAnswer)
 	})
 }
 function open_console(mainWindow = BrowserWindow.getFocusedWindow()) {
@@ -71,7 +83,21 @@ ipcMain.on("prompt", function () {
 ipcMain.on("factory", function () {
 	createfactory()       
 })
-ipcMain.on('save-ino', function(event) {
+ipcMain.on("openDialog", function (event, data) {
+    event.returnValue = JSON.stringify(promptOptions, null, '')
+})
+ipcMain.on("closeDialog", function (event, data) {
+	promptAnswer = data
+})
+ipcMain.on("modalVar", function (event, arg) {
+	promptModal(
+		{"label": arg, "value": "", "ok": "OK"}, 
+	    function(data) {
+	       event.returnValue = data
+        }
+	)       
+})
+ipcMain.on('save-ino', function (event) {
 	dialog.showSaveDialog(mainWindow,{
 		title: 'Enregistrer au format INO',
 		defaultPath: 'Sketch',
@@ -81,7 +107,7 @@ ipcMain.on('save-ino', function(event) {
 		event.sender.send('saved-ino', filename)
 	})
 })
-ipcMain.on('save-bloc', function(event) {
+ipcMain.on('save-bloc', function (event) {
 	dialog.showSaveDialog(mainWindow,{
 		title: 'Enregistrer au format BLOC',
 		defaultPath: 'Programme',
