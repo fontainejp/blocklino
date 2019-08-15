@@ -448,18 +448,39 @@ Blockly.Arduino["bargraphe"]=function(block){
     return ""
 };
 //////////////
-Blockly.Blocks["bargraphe_allume"]={init:function(){
-        this.appendValueInput("del", "Number").appendField(Blockly.Msg.bargraphe_allume);
-        this.setPreviousStatement(true, null);
-        this.setNextStatement(true, null);
-        this.setColour("#00929F");
-        this.setTooltip(Blockly.Msg.bargraphe_allume_tooltip);
-        this.setHelpUrl("http://wiki.seeed.cc/Grove-LED_Bar/");
-    }
+Blockly.Blocks["pixel_init"]={init:function(){
+	this.appendDummyInput()
+		.appendField(new Blockly.FieldImage("data:image/jpeg;base64,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", 32, 32))
+		.appendField(Blockly.Msg.pixel1);
+	this.appendValueInput("num", "Number").appendField(Blockly.Msg.pixel1);
+	this.appendValueInput("pin", "Number").appendField(Blockly.Msg.pixel1);
+    this.setColour("#00929F");
+    this.setTooltip(Blockly.Msg.pixel_tooltip);
+    this.setHelpUrl("http://wiki.seeed.cc/Grove-LED_Bar/")}
 };
-Blockly.Arduino["bargraphe_allume"]=function(block){
-    var level=Blockly.Arduino.valueToCode(block, 'del', Blockly.Arduino.ORDER_ATOMI);
-    return "SetLevel(" + level + ");\n"
+Blockly.Arduino["pixel_init"]=function(block){
+    var pin=Blockly.Arduino.valueToCode(block, "broche", Blockly.Arduino.ORDER_ASSIGNMENT);
+	var number=Blockly.Arduino.valueToCode(block, "num", Blockly.Arduino.ORDER_ASSIGNMENT);
+    Blockly.Arduino.includes_["pixels"]="#include <NeoPixel.h>";
+    Blockly.Arduino.definitions_["pixels"]="Adafruit_NeoPixel pixels_" + pin + " = Adafruit_NeoPixel(" + number + ", " + pin + ", NEO_GRB + NEO_KHZ800);";
+    Blockly.Arduino.setups_["pixels"]="pixels_" + pin + ".begin();";
+    return ""
+};
+Blockly.Blocks["pixel_setcolor"]={init:function(){
+	this.appendValueInput("num", "Number").appendField(Blockly.Msg.pixel1);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#00929F");
+    this.setTooltip(Blockly.Msg.pixel_tooltip);
+    this.setHelpUrl("http://wiki.seeed.cc/Grove-LED_Bar/")}
+};
+Blockly.Arduino["pixel_setcolor"]=function(block){
+    var pin=Blockly.Arduino.valueToCode(block, "broche", Blockly.Arduino.ORDER_ASSIGNMENT);
+	var number=Blockly.Arduino.valueToCode(block, "num", Blockly.Arduino.ORDER_ASSIGNMENT);
+    Blockly.Arduino.includes_["pixels"]="#include <NeoPixel.h>";
+    Blockly.Arduino.definitions_["pixels"]="Adafruit_NeoPixel pixels_" + pin + " = Adafruit_NeoPixel(" + number + ", " + pin + ", NEO_GRB + NEO_KHZ800);";
+    Blockly.Arduino.setups_["pixels"]="pixels_" + pin + ".begin();";
+    return ""
 };
   //////////////
  /*  moteur  */

@@ -78,6 +78,8 @@
 			<block type="bargraphe_allume"></block>
 			<block type="rvb_init"></block>
 			<block type="rvb_set"></block>
+			<block type="pixel_init"></block>
+			<block type="pixel_setcolor"></block>
 		</category>
 		<category name="CAT_ARDUINO_matrice8x8" colour="#00929F">
 			<block type="matrice8x8_init"></block>

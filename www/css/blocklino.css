@@ -97,12 +97,12 @@ body {
 	background-color: #fff;
 	float:left;
 	height:100%;
-	width:50%;
+	width:55%;
 }
 #blockly_r{
 	float:right;
 	height:100%;
-	width:50%;
+	width:45%;
 }
 #btn_all {
 	position: absolute;
