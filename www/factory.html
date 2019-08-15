@@ -39,10 +39,15 @@
 				<div id="preview" style="position:absolute"></div>
 			</div>
 			<div style="height:3%"> Aspect visuel :</div>
-			<div style="height:31%">
+			<div style="height:30%">
 				<pre id="languagePre" style="border:#ddd 1px solid; overflow:auto"></pre>
 			</div>
-			<div style="height:3%"> Codes générés :</div>
+			<div style="height:4%">
+				<select id="language_generator">
+					<option value="Arduino">Codes générés : Arduino</option>
+					<option value="Python">Codes générés : Python</option>
+				</select>
+			</div>
 			<div style="height:30%">
 				<pre id="generatorPre" style="border:#ddd 1px solid; overflow:auto"></pre>
 			</div>
@@ -81,5 +86,5 @@
 		</category>
 	</xml>
 </body>
-<script>require('../resources/app.asar/factory.js')</script>
+<script>require('../resources/app/factory.js')</script>
 </html>

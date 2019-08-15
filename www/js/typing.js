@@ -88,9 +88,6 @@ Blockly.Blocks.text_isEmpty.getBlockType = function() {
 Blockly.Blocks.millis.getBlockType = function() {
 	return Blockly.Types.LARGE_NUMBER;
 };
-Blockly.Blocks.inout_pulsein.getBlockType = function() {
-	return Blockly.Types.LARGE_NUMBER;
-};
 Blockly.Blocks.base_delay.getBlockType = function() {
 	return Blockly.Types.NUMBER;
 };

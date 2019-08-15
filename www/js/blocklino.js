@@ -6,50 +6,40 @@ BlocklyDuino.selectedCard = "uno";
 BlocklyDuino.workspace = null;
 
 BlocklyDuino.init = function() {
-	BlocklyDuino.loadToolboxDefinition();
 	Code.initLanguage();
-	var card = window.localStorage.card;
-	if (card===undefined) {
-		window.localStorage.card = BlocklyDuino.selectedCard;
-		document.getElementById("boards").value = BlocklyDuino.selectedCard;
-		profile["defaultBoard"]=profile[BlocklyDuino.selectedCard]
-	} else {
-		BlocklyDuino.selectedCard = card;
-		document.getElementById("boards").value = card;
-		profile["defaultBoard"]=profile[card];
-	}
-	window.localStorage.toolbox = BlocklyDuino.selectedToolbox;
-	window.localStorage.toolboxids = '';
+	BlocklyDuino.loadConfig();
 	BlocklyDuino.workspace = Blockly.inject('content_blocks',{grid:{snap:true},sounds:false,media:'media/',toolbox:BlocklyDuino.buildToolbox(),zoom:{controls:true,wheel:true}});
 	BlocklyDuino.bindFunctions();
-	BlocklyDuino.renderContent();
+	BlocklyDuino.workspace.render();
 	BlocklyDuino.workspace.addChangeListener(BlocklyDuino.renderArduinoCodePreview);
+	BlocklyDuino.loadFile();
+	window.addEventListener('unload', BlocklyDuino.backupBlocks, false);
+};
+BlocklyDuino.loadFile = function () {
 	var urlFile = BlocklyDuino.getStringParamFromUrl('url', '');
 	var loadOnce = null;
 	try {loadOnce = window.localStorage.loadOnceBlocks;} catch (e) {}
 	if (urlFile) {
 		$.get( urlFile, function( data ) {
-	        BlocklyDuino.loadBlocks(data );
-			}, 'text');
+	        BlocklyDuino.loadBlocks(data )
+			}, 'text')
 	} else {
-		BlocklyDuino.loadBlocks();
+		BlocklyDuino.loadBlocks()
 	}
-	window.addEventListener('unload', BlocklyDuino.backupBlocks, false);
 };
 BlocklyDuino.save_com = function () {
 	$("#portserie").blur();
 	var com=$("#portserie").val();
 	window.localStorage.com = com;
 };
-BlocklyDuino.renderContent = function() {
-	BlocklyDuino.workspace.render();
-	$(".blocklyTreeSeparator").removeAttr("style");
-	$(".blocklyToolboxDiv").show();
-};
 BlocklyDuino.renderArduinoCodePreview = function() {
-	$('#pre_previewArduino').text(Blockly.Arduino.workspaceToCode(BlocklyDuino.workspace));
-	if (typeof prettyPrintOne == 'function') {
+	var prog = window.localStorage.prog;
+	if (prog != "python") {
+		$('#pre_previewArduino').text(Blockly.Arduino.workspaceToCode(BlocklyDuino.workspace));
 		$('#pre_previewArduino').html(prettyPrintOne($('#pre_previewArduino').html(), 'cpp'));
+	} else {
+		$('#pre_previewArduino').text(Blockly.Python.workspaceToCode(BlocklyDuino.workspace));
+		$('#pre_previewArduino').html(prettyPrintOne($('#pre_previewArduino').html(), 'py'));
 	}
 };
 BlocklyDuino.getStringParamFromUrl = function(name, defaultValue) {
@@ -99,7 +89,7 @@ BlocklyDuino.load = function (event) {
 			}
 			BlocklyDuino.workspace.clear();
 			Blockly.Xml.domToWorkspace(xml,BlocklyDuino.workspace);
-			BlocklyDuino.renderContent();
+			BlocklyDuino.workspace.render();
 			var elem = xml.getElementsByTagName("toolbox")[0];
 			if (elem != undefined) {
 				var node = elem.childNodes[0];
@@ -120,32 +110,71 @@ BlocklyDuino.backupBlocks = function () {
     window.localStorage.loadOnceBlocks = text;
   }
 };
+BlocklyDuino.loadConfig = function () {
+	var card = window.localStorage.card;
+	if (card===undefined) {
+		window.localStorage.card = BlocklyDuino.selectedCard;
+		window.localStorage.prog = profile[BlocklyDuino.selectedCard].prog;
+		window.localStorage.toolbox = BlocklyDuino.selectedToolbox;
+		$("#boards").val(BlocklyDuino.selectedCard);
+		$('#arduino_card_mini_picture').attr("src", profile[BlocklyDuino.selectedCard]['picture']);
+		$("#toolboxes").val(BlocklyDuino.selectedToolbox);
+		BlocklyDuino.loadToolboxDefinition(BlocklyDuino.selectedToolbox)
+	} else {
+		var toolbox = window.localStorage.toolbox;
+		BlocklyDuino.selectedToolbox = toolbox;
+		$("#boards").val(card);
+		$('#arduino_card_mini_picture').attr("src", profile[card]['picture']);
+		$("#toolboxes").val(toolbox);
+		BlocklyDuino.loadToolboxDefinition(toolbox)
+	}
+};
 BlocklyDuino.change_card = function () {
 	BlocklyDuino.backupBlocks();
-	var old_card=window.localStorage.card;
+	var card = window.localStorage.card;
+	var toolbox = window.localStorage.toolbox;
 	$("#boards").blur();
-	var new_card=$("#boards").val();
-	if (window.profile[new_card].cpu!=window.profile[old_card].cpu) {
-		if (window.confirm(MSG['arduino_card']+window.profile[new_card].description+' ?')){
-			BlocklyDuino.workspace.clear();
+	var new_card = $("#boards").val();
+	var new_prog = window.profile[new_card].prog;
+	if (window.profile[new_card].cpu != window.profile[card].cpu) {
+		if (window.confirm(MSG['arduino_card'] + window.profile[new_card].description + ' ?')){
+			if (new_prog != "python") {
+				$('#btn_preview').attr('title', MSG['btn_preview_ino']);
+				$('#btn_saveino').attr('title', MSG['btn_save_ino']);
+				var new_toolbox = "toolbox_arduino_all";
+				window.localStorage.prog = new_prog;
+				window.localStorage.toolbox = new_toolbox;
+				BlocklyDuino.workspace.clear();
+				BlocklyDuino.loadToolboxDefinition(new_toolbox);
+				Blockly.getMainWorkspace().updateToolbox(BlocklyDuino.buildToolbox());
+				BlocklyDuino.workspace.render()
+			} else {
+				$('#btn_preview').attr('title', MSG['btn_preview_py']);
+				$('#btn_saveino').attr('title', MSG['btn_save_py']);
+				if ( window.profile[new_card].cpu == "cortexM0" ) {
+					var new_toolbox = "toolbox_microbit";
+				} else {
+					var new_toolbox = "toolbox_lycee";
+				}					
+				window.localStorage.prog = new_prog;
+				window.localStorage.toolbox = new_toolbox;
+				BlocklyDuino.workspace.clear();
+				BlocklyDuino.loadToolboxDefinition(new_toolbox);
+				Blockly.getMainWorkspace().updateToolbox(BlocklyDuino.buildToolbox());
+				BlocklyDuino.workspace.render()
+			}
 		} else {
-			$("#boards").val(old_card);
+			$("#boards").val(card);
 			return
 		}
 	}
-	window.localStorage.card=new_card;
-	profile["defaultBoard"]=profile[new_card];
+	window.localStorage.card = new_card
 };
 BlocklyDuino.discard = function () {
   var count = BlocklyDuino.workspace.getAllBlocks().length;
-  if (count < 2 || window.confirm(MSG['discard'])) {
+  if (count < 4 || window.confirm(MSG['discard'])) {
     BlocklyDuino.workspace.clear();
-	var search = window.location.search;
-    var newsearch = search.replace(/([?&]url=)[^&]*/, '');
-	window.history.pushState(search, "Title", newsearch);
-    BlocklyDuino.renderContent();
-	search = search.replace(/([?&]url=)[^&]*/, '');
-	window.location = window.location.protocol + '//' + window.location.host + window.location.pathname + search;
+    BlocklyDuino.workspace.render();
   }
 };
 BlocklyDuino.Undo = function () {
@@ -272,33 +301,25 @@ BlocklyDuino.buildToolbox = function() {
 	return xmlValue;
 };
 BlocklyDuino.loadToolboxDefinition = function(toolboxFile) {
-	if (!toolboxFile) {
-		toolboxFile = window.localStorage.toolbox;
-	}
-	if (!toolboxFile) {
-		toolboxFile = BlocklyDuino.selectedToolbox;
-	}
-	$("#toolboxes").val(toolboxFile);
-	$.ajax( {
+	$.ajax({
 		type: "GET",
 		url: "./toolbox/" + toolboxFile + ".xml",
 		dataType: "xml",
 		async : false
-	}).done(function(data) {
-		var toolboxXml = '<xml id="toolbox" style="display: none">';
-		toolboxXml += $(data).find('toolbox').html();
-		toolboxXml += '</xml>';
+	}).done(function(data){
+		var toolboxXml = '<xml id="toolbox" style="display: none">' + $(data).find('toolbox').html() + '</xml>';
 		$("#toolbox").remove();
 		$('body').append(toolboxXml);	
 		$("xml").find("category").each(function() {
 			if (!$(this).attr('id')) {
 				$(this).attr('id', $(this).attr('name'));
-				$(this).attr('name', Blockly.Msg[$(this).attr('name')]);
+				$(this).attr('name', Blockly.Msg[$(this).attr('name')])
 			}
-		});
+		})
 	}).fail(function(data) {
-		$("#toolbox").remove();
-	});			
+		$("#toolbox").remove()
+	});
+	window.localStorage.toolboxids = ''	
 };
 BlocklyDuino.changeToolboxDefinition =  function (){
 	BlocklyDuino.loadToolboxDefinition($("#toolboxes").val());
@@ -310,97 +331,128 @@ BlocklyDuino.buildExamples = function() {
 	    url: "./examples/examples.json",
 	    dataType: "json",
 	    success :  function(data) {
-				$("#includedContent").empty();
-				$.each(data, function(i, example){
-					if (example.visible) {
-						var line = "<tr>"
-								   + "<td>"
-								   + "<a href='?url=./examples/"+example.source_url+"'>" + example.source_text + "</a>"
-								   + "</td>"
-								   + "<td>"
-								   + "<a href='"+example.link_url+"' data-toggle='modal'>"
-								   + "<img class='vignette' src='./examples/"+example.image+"'></a>"
-								   + "</td>"
-								   + "</tr>";
-						$("#includedContent").append(line);
-					}
-				});
-			}
-		});
+			$("#includedContent").empty();
+			$.each(data, function(i, example){
+				if (example.visible) {
+					var line = "<tr><td>"
+							   + "<a href='?url=./examples/"+example.source_url+"'>" + example.source_text + "</a>"
+							   + "</td><td>"
+							   + "<a href='"+example.link_url+"' data-toggle='modal'>"
+							   + "<img class='vignette' src='./examples/"+example.image+"'></a>"
+							   + "</td></tr>";
+					$("#includedContent").append(line);
+				}
+			});
+		}
+	});
 };
 Blockly.Variables.flyoutCategory = function(workspace) {
-  var variableList = workspace.variableList;
-  variableList.sort(goog.string.caseInsensitiveCompare);
-  var xmlList = [];
-  var button = goog.dom.createDom('button');
-  button.setAttribute('text', Blockly.Msg.NEW_VARIABLE);
-  button.setAttribute('callbackKey', 'CREATE_VARIABLE');
-  Blockly.registerButtonCallback('CREATE_VARIABLE', function(button) {
-    Blockly.Variables.createVariable(button.getTargetWorkspace());
-  });
-  xmlList.push(button);
-  if (variableList.length > 0) {
-    if (Blockly.Blocks['variables_set_init']) {
-		var block = goog.dom.createDom('block');
-		block.setAttribute('type', 'variables_set_init');
-		block.setAttribute('gap', 8);
-		var field = goog.dom.createDom('field', null, variableList[0]);
-		field.setAttribute('name', 'VAR');
-		block.appendChild(field);
-		xmlList.push(block);
-    }
-    if (Blockly.Blocks['variables_set']) {
-    	var block = goog.dom.createDom('block');
-    	block.setAttribute('type', 'variables_set');
-    	block.setAttribute('gap', 8);
-		var field = goog.dom.createDom('field', null, variableList[0]);
-		field.setAttribute('name', 'VAR');
-		block.appendChild(field);
-    	xmlList.push(block);
-    }
-	if (Blockly.Blocks['math_change']) {
-    	var block = goog.dom.createDom('block');
-    	block.setAttribute('type', 'math_change');
-    	block.setAttribute('gap', 8);
-		var field = goog.dom.createDom('field', null, variableList[0]);
-		field.setAttribute('name', 'VAR');
-		block.appendChild(field);
-		xmlList.push(block);
-    }
-	if (Blockly.Blocks['variables_const']) {
-		var block = goog.dom.createDom('block');
-		block.setAttribute('type', 'variables_const');
-		block.setAttribute('gap', 8);
-		var field = goog.dom.createDom('field', null, variableList[0]);
-		field.setAttribute('name', 'VAR');
-		block.appendChild(field);
-		xmlList.push(block);
-	}
-    if (Blockly.Blocks['base_define_const']) {
-		var block = goog.dom.createDom('block');
-		block.setAttribute('type', 'base_define_const');
-		if (Blockly.Blocks['variables_get']) {
-			block.setAttribute('gap', 16);
+	var variableList = workspace.variableList;
+	variableList.sort(goog.string.caseInsensitiveCompare);
+	var xmlList = [];
+	var button = goog.dom.createDom('button');
+	button.setAttribute('text', Blockly.Msg.NEW_VARIABLE);
+	button.setAttribute('callbackKey', 'CREATE_VARIABLE');
+	Blockly.registerButtonCallback('CREATE_VARIABLE', function(button) {
+		Blockly.Variables.createVariable(button.getTargetWorkspace());
+	});
+	xmlList.push(button);
+	if (variableList.length > 0) {
+		if (window.localStorage.prog!="python") {
+			if (Blockly.Blocks['variables_set_init']) {
+				var block = goog.dom.createDom('block');
+				block.setAttribute('type', 'variables_set_init');
+				block.setAttribute('gap', 8);
+				var field = goog.dom.createDom('field', null, variableList[0]);
+				field.setAttribute('name', 'VAR');
+				block.appendChild(field);
+				xmlList.push(block);
+			}
+			if (Blockly.Blocks['variables_set']) {
+				var block = goog.dom.createDom('block');
+				block.setAttribute('type', 'variables_set');
+				block.setAttribute('gap', 8);
+				var field = goog.dom.createDom('field', null, variableList[0]);
+				field.setAttribute('name', 'VAR');
+				block.appendChild(field);
+				xmlList.push(block);
+			}
+			if (Blockly.Blocks['math_change']) {
+				var block = goog.dom.createDom('block');
+				block.setAttribute('type', 'math_change');
+				block.setAttribute('gap', 8);
+				var field = goog.dom.createDom('field', null, variableList[0]);
+				field.setAttribute('name', 'VAR');
+				block.appendChild(field);
+				xmlList.push(block);
+			}
+			if (Blockly.Blocks['variables_const']) {
+				var block = goog.dom.createDom('block');
+				block.setAttribute('type', 'variables_const');
+				block.setAttribute('gap', 8);
+				var field = goog.dom.createDom('field', null, variableList[0]);
+				field.setAttribute('name', 'VAR');
+				block.appendChild(field);
+				xmlList.push(block);
+			}
+			if (Blockly.Blocks['base_define_const']) {
+				var block = goog.dom.createDom('block');
+				block.setAttribute('type', 'base_define_const');
+				if (Blockly.Blocks['variables_get']) {
+					block.setAttribute('gap', 16);
+				}
+				var field = goog.dom.createDom('field', null, variableList[0]);
+				field.setAttribute('name', 'VAR');
+				block.appendChild(field);
+				xmlList.push(block);
+			}
+			for (var i = 0; i < variableList.length; i++) {
+			  if (Blockly.Blocks['variables_get']) {
+				var block = goog.dom.createDom('block');
+				block.setAttribute('type', 'variables_get');
+				if (Blockly.Blocks['variables_set']) {
+				  block.setAttribute('gap', 8);
+				}
+				var field = goog.dom.createDom('field', null, variableList[i]);
+				field.setAttribute('name', 'VAR');
+				block.appendChild(field);
+				xmlList.push(block);
+			  }
+			}
+		} else {
+			if (Blockly.Blocks['variables_set']) {
+				var block = goog.dom.createDom('block');
+				block.setAttribute('type', 'variables_set');
+				block.setAttribute('gap', 8);
+				var field = goog.dom.createDom('field', null, variableList[0]);
+				field.setAttribute('name', 'VAR');
+				block.appendChild(field);
+				xmlList.push(block);
+			}
+			if (Blockly.Blocks['math_change']) {
+				var block = goog.dom.createDom('block');
+				block.setAttribute('type', 'math_change');
+				block.setAttribute('gap', 8);
+				var field = goog.dom.createDom('field', null, variableList[0]);
+				field.setAttribute('name', 'VAR');
+				block.appendChild(field);
+				xmlList.push(block);
+			}
+			for (var i = 0; i < variableList.length; i++) {
+			  if (Blockly.Blocks['variables_get']) {
+				var block = goog.dom.createDom('block');
+				block.setAttribute('type', 'variables_get');
+				if (Blockly.Blocks['variables_set']) {
+				  block.setAttribute('gap', 8);
+				}
+				var field = goog.dom.createDom('field', null, variableList[i]);
+				field.setAttribute('name', 'VAR');
+				block.appendChild(field);
+				xmlList.push(block);
+			  }
+			}
 		}
-		var field = goog.dom.createDom('field', null, variableList[0]);
-		field.setAttribute('name', 'VAR');
-		block.appendChild(field);
-		xmlList.push(block);
 	}
-    for (var i = 0; i < variableList.length; i++) {
-      if (Blockly.Blocks['variables_get']) {
-        var block = goog.dom.createDom('block');
-        block.setAttribute('type', 'variables_get');
-        if (Blockly.Blocks['variables_set']) {
-          block.setAttribute('gap', 8);
-        }
-        var field = goog.dom.createDom('field', null, variableList[i]);
-        field.setAttribute('name', 'VAR');
-        block.appendChild(field);
-        xmlList.push(block);
-      }
-    }
-  }
   return xmlList;
 };
 BlocklyDuino.workspace_capture = function() {
@@ -430,4 +482,11 @@ BlocklyDuino.workspace_capture = function() {
 		document.body.appendChild(a);
 		a.click();
 	}	
+};
+BlocklyDuino.cardPicture_change = function() {
+	if ($("#pinout").val()) {
+		$('#arduino_card_mini_picture').attr("src", profile[$("#pinout").val()]['picture']);
+	} else {
+		$('#arduino_card_mini_picture').attr("src", "");
+	}
 };

@@ -37,13 +37,15 @@ Code.initLanguage = function() {
     var tuple = languages[i];
     var lang = tuple[tuple.length - 1];
     var option = new Option(tuple[0], lang);
-    if (lang == Code.LANG) {
-      option.selected = true;
-    }
+    if (lang == Code.LANG) option.selected = true;
     languageMenu.append(option);
   }
   $('#aboutBody').text(MSG['aboutBody']);
   $('#aboutModalLabel').text(MSG['aboutModalLabel']);
+  $('#cardLabel').text(MSG['cardLabel']);
+  $('#aboutcardLabel').text(MSG['aboutcardLabel']);
+  $('#aboutusbLabel').text(MSG['aboutusbLabel']);
+  $('#usbLabel').text(MSG['usbLabel']);
   $('#configModalLabel').text(MSG['configModalLabel']);
   $('#versionModalLabel').text(MSG['versionModalLabel']); 
   $('#exampleModalLabel').text(MSG['exampleModalLabel']); 
@@ -67,8 +69,14 @@ Code.initLanguage = function() {
   $('#btn_close_msg').text(MSG['btn_close']);
   $('#btn_valid_msg').text(MSG['btn_valid']);
   $('#btn_variable').text(MSG['btn_variable']);
-  $('#btn_preview').attr('title', MSG['btn_preview']);
-  $('#btn_saveino').attr('title', MSG['btn_saveino']);   
+  var prog = window.localStorage.prog;
+  if (prog != "python") {
+	$('#btn_preview').attr('title', MSG['btn_preview_ino']);
+	$('#btn_saveino').attr('title', MSG['btn_save_ino']) 
+  } else {
+	$('#btn_preview').attr('title', MSG['btn_preview_py']);
+	$('#btn_saveino').attr('title', MSG['btn_save_py']);   
+  }
   $('#btn_print').attr('title', MSG['btn_print']);
   $('#btn_undo').attr('title', MSG['btn_undo']);
   $('#btn_redo').attr('title', MSG['btn_redo']);

@@ -1,4 +1,4 @@
-var remote = require('electron').remote 
+const remote = require('electron').remote 
 
 window.addEventListener('load', function load(event) {
 	document.getElementById('btn_quit').onclick = function(event) {

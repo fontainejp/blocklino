@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <toolbox>
-	<parametre id="defaultCategories">CAT_LOGIC,CAT_MATH,CAT_TEXT,CAT_TAB,CAT_VARIABLES,CAT_FUNCTIONS,CAT_LOOPS,CAT_ARDUINO,CAT_ARDUINO_IN,CAT_ARDUINO_TIME,CAT_actionneur,CAT_ultrason,CAT_com,CAT_iot,CAT_STOCKAGE</parametre>
+	<parametre id="defaultCategories">CAT_LOGIC,CAT_MATH,CAT_TEXT,CAT_TAB,CAT_VARIABLES,CAT_FUNCTIONS,CAT_ARDUINO,CAT_ARDUINO_IN,CAT_ARDUINO_TIME,CAT_actionneur,CAT_ultrason,CAT_com,CAT_STOCKAGE</parametre>
     <category name="CAT_LOGIC" colour="#727272">
 		<block type="controls_if"></block>
-		<block type="controls_switch"></block>
         <block type="controls_repeat_ext"></block>
         <block type="controls_whileUntil"></block>
         <block type="controls_flow_statements"></block>
 		<block type="inout_onoff"></block>
         <block type="logic_operation"></block>
 		<block type="controls_for"></block>
+		<block type="controls_switch"></block>
         <block type="logic_negate"></block>
         <block type="logic_null"></block>
 	</category>
@@ -36,7 +36,6 @@
     </category>
 	<category name="CAT_TAB" colour="#804000">
 		<block type="creer_tableau"></block>
-		<block type="creer_liste"></block>
 		<block type="array_create_with"></block>
 		<block type="fixer_tableau"></block>
 		<block type="array_getIndex"></block>
@@ -44,7 +43,6 @@
     </category>
     <category name="CAT_VARIABLES" custom="VARIABLE" colour="#FFA500"></category>
     <category name="CAT_FUNCTIONS" custom="PROCEDURE" colour="#FF0000"></category>
-	<sep></sep>
     <category name="CAT_ARDUINO" colour="#4a235a">
 		<block type="base_begin"></block>
 		<block type="base_loop"></block>
@@ -80,14 +78,15 @@
 			<block type="rvb_set"></block>
 			<block type="pixel_init"></block>
 			<block type="pixel_setcolor"></block>
+			<block type="pixel_show"></block>
+			<block type="pixel_setbrightness"></block>
 		</category>
 		<category name="CAT_ARDUINO_matrice8x8" colour="#00929F">
-			<block type="matrice8x8_init"></block>
-			<block type="matrice8x8_symbole"></block>
+			<block type="matrice_init"></block>
+			<block type="matrice_symbole"></block>
 			<block type="matrice8x8_aff"></block>
 			<block type="matrice8x8_efface"></block>
 			<block type="matrice8x8_del"></block>
-			<block type="binaire"></block>
 		</category>
 		<category name="CAT_DFRobot_SHIELD_LCDKEYPAD" colour="#00929F">
 			<block type="lcd_i2c"></block>
@@ -112,38 +111,42 @@
 			<block type="servo_rot_continue_param"></block>
 		</category>
 		<category name="CAT_DFPLAYER" colour="#00929F">
+			<block type="play"></block>
+			<block type="tone"></block>
+			<block type="notone"></block>
 			<block type="lp2i_mp3_init"></block>
-			<block type="lp2i_mp3_volume"></block>
-			<block type="lp2i_mp3_next"></block>
-			<block type="lp2i_mp3_prev"></block>
-			<block type="lp2i_mp3_pause"></block>
 			<block type="lp2i_mp3_play"></block>
 			<block type="lp2i_mp3_play_track"></block>
-			<block type="beep"></block>
-			<block type="tone"></block>
-			<block type="play"></block>
-			<block type="notone"></block>
+			<block type="lp2i_mp3_pause"></block>
+			<block type="lp2i_mp3_next"></block>
+			<block type="lp2i_mp3_prev"></block>
+			<block type="lp2i_mp3_volume"></block>
 		</category>	
 	</category>
 	<category name="CAT_ultrason" colour="#00929F">
 		<category name="CAT_numerique" colour="#00929F">
 			<block type="inout_bp"></block>
-			<block type="inter"></block>
+			<block type="mc005"></block>
 			<block type="block_sensitif"></block>
 			<block type="block_anticollision"></block>
 			<block type="suiveur_ligne"></block>
 			<block type="block_pir"></block>
 			<block type="block_feu"></block>
+			<block type="inter"></block>
 		</category>
 		<category name="CAT_analogique" colour="#00929F">
-			<block type="lm35"></block>
 			<block type="dht11"></block>
-			<block type="cap615"></block>
-			<block type="grove_ldr"></block>
+			<block type="dht22"></block>
+			<block type="BME280"></block>
+			<block type="BME280_pressure"></block>
+			<block type="VL53L0X"></block>
+			<block type="VL53L0X_distance"></block>
 			<block type="ultrason"></block>
 			<block type="ultrason_distance"></block>
-			<block type="cap661"></block>
+			<block type="grove_ldr"></block>
+			<block type="cap615"></block>
 			<block type="potentiometre"></block>
+			<block type="cap661"></block>
 		</category>
 	</category>
 	<category name="CAT_com" colour="#006000">
@@ -153,6 +156,7 @@
 			<block type="serial_available"></block>
 			<block type="serial_read"></block>
 			<block type="serial_line"></block>
+			<block type="serial_tab"></block>
 		</category>
 		<category name="CAT_ARDUINO_COMM_SOFTSERIAL" colour="#006000">
 			<block type="soft_init"></block>
@@ -160,41 +164,12 @@
 			<block type="soft_available"></block>
 			<block type="soft_read"></block>
 			<block type="serial_line"></block>
+			<block type="serial_tab"></block>
 		</category>
 		<category name="CAT_bluetooth" colour="#006000">
+			<block type="bluetooth_init"></block>
 			<block type="bluetooth_a"></block>
 			<block type="bluetooth_b"></block>
-		</category>
-	</category>
-	<category name="CAT_iot" colour="#000000">
-		<category name="CAT_wifi" colour="#000000">
-			<block type="esp8266_init"></block>
-			<block type="esp8266_send"></block>
-			<block type="esp8266_wait_server"></block>
-			<block type="esp8266_send_html"></block>
-			<block type="esp8266_request_indexof"></block>
-			<block type="esp8266_wait_client"></block>
-		</category>
-		<category name="CAT_html" colour="#000000">
-			<block type="title"></block>
-			<block type="header"></block>
-			<block type="paragraph"></block>
-			<block type="table"></block>
-			<block type="form"></block>
-			<block type="input"></block>
-			<block type="label"></block>
-			<block type="image"></block>
-			<block type="emptytext"></block>
-			<block type="textmod"></block>
-			<block type="link"></block>
-			<block type="tablerow"></block>
-			<block type="tableheading"></block>
-			<block type="tabledata"></block>
-			<block type="args"></block>
-			<block type="textalign"></block>
-			<block type="color"></block>
-			<block type="bgcolor"></block>
-			<block type="border"></block>
 		</category>
 	</category>
 	<category name="CAT_STOCKAGE" colour="#154360">	

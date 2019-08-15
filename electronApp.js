@@ -29,6 +29,14 @@ function createTerm() {
 		termWindow = null 
 	})
 }
+function createRepl() {
+	termWindow = new BrowserWindow({width: 640, height: 515, 'parent': mainWindow, resizable: false, movable: true, frame: false, modal: true}) 
+	termWindow.loadURL(path.join(__dirname, "../../www/repl.html"))
+	termWindow.setMenu(null)
+	termWindow.on('closed', function () { 
+		termWindow = null 
+	})
+}
 function createfactory() {
 	factoryWindow = new BrowserWindow({width: 1066, height: 640, 'parent': mainWindow, resizable: true, movable: true, frame: false})
 	factoryWindow.loadURL(path.join(__dirname, "../../www/factory.html"))
@@ -47,38 +55,31 @@ function promptModal(options, callback) {
 	})
 }
 function open_console(mainWindow = BrowserWindow.getFocusedWindow()) {
-	if (mainWindow) {
-		mainWindow.webContents.toggleDevTools()
-	}
+	if (mainWindow) mainWindow.webContents.toggleDevTools()
 }
 function refresh(mainWindow = BrowserWindow.getFocusedWindow()) {
-	if (mainWindow) {
-		mainWindow.webContents.reloadIgnoringCache()
-	}
+	if (mainWindow) mainWindow.webContents.reloadIgnoringCache()
 }
 app.on('ready',  function () {
 	createWindow()
-	globalShortcut.register('CmdOrCtrl+I', open_console)
 	globalShortcut.register('F8', open_console)
-	globalShortcut.register('CmdOrCtrl+R', refresh)
 	globalShortcut.register('F5', refresh)
 })
 app.on('activate', function () {
-	if (mainWindow === null) {
-		createWindow()
-	}
+	if (mainWindow === null) createWindow()
 })
 app.on('window-all-closed', function () {
 	globalShortcut.unregisterAll()
-	if (process.platform !== 'darwin') {
-		app.quit()
-	}
+	if (process.platform !== 'darwin') app.quit()
 })
 ipcMain.on("version", function () {
 	autoUpdater.checkForUpdates()  
 })
 ipcMain.on("prompt", function () {
 	createTerm()  
+})
+ipcMain.on("repl", function () {
+	createRepl()  
 })
 ipcMain.on("factory", function () {
 	createfactory()       
@@ -99,22 +100,42 @@ ipcMain.on("modalVar", function (event, arg) {
 })
 ipcMain.on('save-ino', function (event) {
 	dialog.showSaveDialog(mainWindow,{
-		title: 'Enregistrer au format INO',
-		defaultPath: 'Sketch',
+		title: 'Enregistrer au format .INO',
+		defaultPath: 'Programme',
 		filters: [{ name: 'Arduino', extensions: ['ino'] }]
 	},
 	function(filename){
 		event.sender.send('saved-ino', filename)
 	})
 })
+ipcMain.on('save-py', function (event) {
+	dialog.showSaveDialog(mainWindow,{
+		title: 'Enregistrer au format .PY',
+		defaultPath: 'Programme',
+		filters: [{ name: 'python', extensions: ['py'] }]
+	},
+	function(filename){
+		event.sender.send('saved-py', filename)
+	})
+})
 ipcMain.on('save-bloc', function (event) {
 	dialog.showSaveDialog(mainWindow,{
-		title: 'Enregistrer au format BLOC',
+		title: 'Enregistrer au format .BLOC',
 		defaultPath: 'Programme',
 		filters: [{ name: 'Blocklino', extensions: ['bloc'] }]
 	},
 	function(filename){
 		event.sender.send('saved-bloc', filename)
+	})
+})
+ipcMain.on('save-csv', function (event) {
+	dialog.showSaveDialog(mainWindow,{
+		title: 'Exporter les données au format CSV',
+		defaultPath: 'Programme',
+		filters: [{ name: 'donnees', extensions: ['csv'] }]
+	},
+	function(filename){
+		event.sender.send('saved-csv', filename)
 	})
 })
 autoUpdater.on('error', function(error) {
@@ -149,7 +170,9 @@ autoUpdater.on('update-downloaded', function() {
 		title: 'Mise à jour',
 		message: "Téléchargement terminé, l'application va s'installer puis redémarrer..."
 	}, function() {
-		setImmediate(() => autoUpdater.quitAndInstall())
+		setImmediate(function(){
+			autoUpdater.quitAndInstall()
+		})
 	})
 })
 module.exports.open_console = open_console

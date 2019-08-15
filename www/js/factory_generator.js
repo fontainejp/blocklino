@@ -197,11 +197,11 @@ function getTypesFrom_(block, name) {
 function updateGenerator() {
   function makeVar(root, name) {
     name = name.toLowerCase().replace(/\W/g, '_');
-    return '  var ' + root + '_' + name;
+    return '    var ' + root + name;
   }
-  var language = 'JavaScript';
+  var language_generator = document.getElementById('language_generator').value;
   var code = [];
-  code.push("Blockly.Arduino['" + blockType +"']=function(block){");
+  code.push("Blockly." + language_generator + "['" + blockType + "']=function(block){");
   var rootBlock = getRootBlock();
   if (rootBlock) {
     var blocks = rootBlock.getDescendants();
@@ -212,52 +212,59 @@ function updateGenerator() {
       switch (block.type) {
         case 'field_input':
           var name = block.getFieldValue('FIELDNAME');
-          code.push(makeVar('text', name) + " = block.getFieldValue('" + name + "');");
+          code.push(makeVar('value', name) + " = block.getFieldValue('" + name + "');");
           break;
         case 'field_math':
           var name = block.getFieldValue('FIELDNAME');
-          code.push(makeVar('math', name) + " = block.getFieldValue('" + name + "');");
+          code.push(makeVar('value', name) + " = block.getFieldValue('" + name + "');");
           break;
         case 'field_angle':
           var name = block.getFieldValue('FIELDNAME');
-          code.push(makeVar('angle', name) + " = block.getFieldValue('" + name + "');");
+          code.push(makeVar('value', name) + " = block.getFieldValue('" + name + "');");
           break;
         case 'field_dropdown':
           var name = block.getFieldValue('FIELDNAME');
-          code.push(makeVar('dropdown', name) + " = block.getFieldValue('" + name + "');");
+          code.push(makeVar('value', name) + " = block.getFieldValue('" + name + "');");
           break;
         case 'field_checkbox':
           var name = block.getFieldValue('FIELDNAME');
-          code.push(makeVar('checkbox', name) + " = block.getFieldValue('" + name + "') == 'TRUE';");
+          code.push(makeVar('value', name) + " = block.getFieldValue('" + name + "') == 'TRUE';");
           break;
         case 'field_colour':
           var name = block.getFieldValue('FIELDNAME');
-          code.push(makeVar('colour', name) + " = block.getFieldValue('" + name + "');");
+          code.push(makeVar('value', name) + " = block.getFieldValue('" + name + "');");
           break;
         case 'field_variable':
           var name = block.getFieldValue('FIELDNAME');
-          code.push(makeVar('variable', name) + " = Blockly.Arduino.variableDB_.getName(block.getFieldValue('" + name + "'), Blockly.Variables.NAME_TYPE);");
+          code.push(makeVar('value', name) + " = Blockly." + language_generator + ".variableDB_.getName(block.getFieldValue('" + name + "'), Blockly.Variables.NAME_TYPE);");
           break;
         case 'input_value':
           var name = block.getFieldValue('INPUTNAME');
-          code.push(makeVar('value', name) + " = Blockly.Arduino.valueToCode(block, '" + name + "', Blockly.Arduino.ORDER_ATOMIC);");
+          code.push(makeVar('value', name) + " = Blockly." + language_generator + ".valueToCode(block, '" + name + "', Blockly." + language_generator + ".ORDER_ATOMIC);");
           break;
         case 'input_statement':
           var name = block.getFieldValue('INPUTNAME');
-          code.push(makeVar('statements', name) + " = Blockly.Arduino.statementToCode(block, '" + name + "');");
+          code.push(makeVar('value', name) + " = Blockly." + language_generator + ".statementToCode(block, '" + name + "');");
           break;
       }
     }
-	code.push("    Blockly.Arduino.includes_[] = 'code des bibliotheque';");
-	code.push("    Blockly.Arduino.variables_[] = 'code des variables';");
-	code.push("    Blockly.Arduino.definitions_[] = 'code des instances';");
-	code.push("    Blockly.Arduino.userFunctions_[] = 'code des fonctions';");
-    code.push("    Blockly.Arduino.setups_[]='placer ici le code du setup()';");
-	code.push("    var code = 'placer ici le code du loop()';");
+	if (language_generator=="Arduino") {
+		code.push("    Blockly." + language_generator + ".includes_[] = 'code des bibliotheques';");
+		code.push("    Blockly." + language_generator + ".variables_[] = 'code des variables';");
+		code.push("    Blockly." + language_generator + ".definitions_[] = 'code des instances';");
+		code.push("    Blockly." + language_generator + ".userFunctions_[] = 'code des fonctions';");
+		code.push("    Blockly." + language_generator + ".setups_[]='placer ici le code du setup()';");
+		code.push("    var code = 'placer ici le code du loop()';");
+	} else {
+		code.push("    Blockly." + language_generator + ".imports_[] = 'code des bibliotheques'");
+		code.push("    Blockly." + language_generator + ".definitions_[] = 'code des bibliotheques'");
+		code.push("    Blockly." + language_generator + ".userFunctions_[] = 'code des fonctions'");
+		code.push("    var code = 'placer ici le reste du code'");
+	}
     if (rootBlock.getFieldValue('CONNECTIONS') == 'LEFT') {
-      code.push("    return [code, Blockly.Arduino.ORDER_ATOMIC];");
+      code.push("    return [code, Blockly." + language_generator + ".ORDER_ATOMIC];");
     } else {
-      code.push("    return code;");
+      code.push("    return code");
     }
   }
   code.push("};");
@@ -271,7 +278,7 @@ function updatePreview() {
       previewWorkspace.dispose();
     }
     var rtl = newDir == 'rtl';
-    previewWorkspace = Blockly.inject('preview',{rtl: rtl,media: 'media/',sounds:false,scrollbars: true});
+    previewWorkspace = Blockly.inject('preview',{rtl: rtl, media: 'media/', sounds: false, scrollbars: true});
     oldDir = newDir;
   }
   previewWorkspace.clear();
@@ -285,7 +292,7 @@ function updatePreview() {
   }
   var format = 'JavaScript';
   eval(code);
-  var previewBlock = Blockly.Block.obtain(previewWorkspace, blockType);
+  var previewBlock = previewWorkspace.newBlock(blockType);
   delete Blockly.Blocks[blockType];
   previewBlock.initSvg();
   previewBlock.render();
@@ -325,13 +332,14 @@ function init() {
   onresize();
   window.addEventListener('resize', onresize);
   var toolbox = document.getElementById('toolbox_factory');
-  mainWorkspace = Blockly.inject('blockly',{toolbox: toolbox, media: 'media/',sounds:false});
-  var rootBlock = Blockly.Block.obtain(mainWorkspace, 'factory_base');
+  mainWorkspace = Blockly.inject('blockly',{toolbox: toolbox, media: 'media/', sounds: false});
+  var rootBlock = mainWorkspace.newBlock('factory_base');
   rootBlock.initSvg();
   rootBlock.render();
   rootBlock.setMovable(false);
   rootBlock.setDeletable(false);
   mainWorkspace.addChangeListener(onchange);
   document.getElementById('direction').addEventListener('change', updatePreview);
+  document.getElementById('language_generator').addEventListener('change', updateGenerator);
 }
 window.addEventListener('load', init);

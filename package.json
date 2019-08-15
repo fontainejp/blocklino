@@ -1,6 +1,6 @@
 {
  "name": "Blocklino",
- "version": "1.3.2",
+ "version": "1.4.0",
  "description": "environnement de développement pour langage graphique",
  "author": "Fontaine Jean Philippe",
  "license": "CC0-1.0",
@@ -10,6 +10,8 @@
   "BLOCKLY",
   "arduino",
   "ARDUINO",
+  "esp32",
+  "ESP32",
   "esp8266",
   "ESP8266",
   "electron",
@@ -17,7 +19,15 @@
   "serialport",
   "SERIALPORT",
   "electron-builder",
-  "electron-updater"
+  "electron-updater",
+  "PYTHON",
+  "python",
+  "PYFLAKES",
+  "pyflakes",
+  "ampy",
+  "AMPY",
+  "microbit",
+  "MICROBIT"
  ],
  "scripts": {
   "postinstall": "electron-builder install-app-deps",

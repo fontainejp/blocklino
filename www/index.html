@@ -8,7 +8,8 @@
 	<script type="text/javascript" src="js/type.js"></script>
 	<script type="text/javascript" src="js/types.js"></script>
 	<script type="text/javascript" src="js/typings.js"></script>
-	<script type="text/javascript" src="js/generate.js"></script>
+	<script type="text/javascript" src="js/generate_python.js"></script>
+	<script type="text/javascript" src="js/generate_cpp.js"></script>
 	<script type="text/javascript" src="js/blocklino.js"></script>
 	<script type="text/javascript" src="js/boards.js"></script>
 	<script src="js/jquery.min.2.1.3.js" onload="window.$ = window.jQuery = module.exports;"></script>
@@ -16,12 +17,18 @@
 	<script type="text/javascript" src="js/prettify.min.js"></script>
 	<script type="text/javascript" src="blocs&generateurs/blockly_blocs.js"></script>
 	<script type="text/javascript" src="blocs&generateurs/arduino_blocs.js"></script>
-	<script type="text/javascript" src="blocs&generateurs/arduino_generateurs.js"></script>
-	<script type="text/javascript" src="blocs&generateurs/blockly_generateurs.js"></script>
-	<script type="text/javascript" src="blocs&generateurs/actionneur.js"></script>
-	<script type="text/javascript" src="blocs&generateurs/html.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/arduino_generateurs_cpp.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/arduino_generateurs_python.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/blockly_generateurs_cpp.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/blockly_generateurs_python.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/_actionneur.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/_capteur.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/_html.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/_microbit.js"></script>
 	<script type="text/javascript" src="js/typing.js"></script>
 	<script type="text/javascript" src="lang/code.js"></script>
+	<script type="text/javascript" src="js/hexlify.js"></script>
+	<script type="text/javascript" src="js/intel-hex.browser.js"></script>
 	<script type="text/javascript">	$(window).load(function() {	$(".loading").fadeOut("slow");});</script>
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.3.3.6.css"/>
@@ -69,35 +76,43 @@
 				<button id="btn_about" class="btn btn-arduino" data-toggle="modal" data-target="#aboutModal">
 					<span class="fa fa-question fa-lg fa-fw"></span>
 				</button>
+				<span style="color: white; font-size: 4">|</span>
+				<button id="btn_card" class="btn btn-arduino-rect" data-toggle="modal" data-target="#card" style="margin-top: -2px; border-top-right-radius: 0px; border-bottom-right-radius: 0px;">
+					<span class="fa fa-microchip fa-fw" > </span>
+				</button>	
+				<select style="margin-left: -3px; height: 30px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-left-width: 0px;" id="boards" onchange="BlocklyDuino.change_card();">
+					<optgroup label="C / C++">
+						<option value="leonardo" >Arduino Léonardo</option>
+						<option value="mega" >Arduino Méga 2560</option>
+						<option value="micro" >Arduino Micro</option>
+						<option value="mini" >Arduino Mini</option>
+						<option value="nano" >Arduino Nano</option>
+						<option value="pro8" >Arduino Pro ou Pro Mini 3.3V</option>
+						<option value="uno" >Arduino Uno</option>
+						<option value="yun" >Arduino Yun</option>
+						<option value="atmegang" >DAGU RS027</option>
+						<option value="pro16" >DAGU RS040</option>
+					</optgroup>
+					<optgroup label="Python">
+						<option value="esp8266" >ESP 8266</option>
+						<option value="esp32" >ESP 32</option>
+						<option value="microbit" >micro:bit</option>
+						<option value="pyboard" >Pyboard</option>
+					</optgroup>
+				</select>
 				<span style="color:white;font-size:4">|</span>
-			<select id="boards" onchange="BlocklyDuino.change_card();">
-				<optgroup label="Arduino">
-					<option value="leonardo" >Léonardo</option>
-					<option value="mega" >Méga 2560</option>
-					<option value="micro" >Micro</option>
-					<option value="mini" >Mini</option>
-					<option value="nano" >Nano</option>
-					<option value="pro" >Pro ou Pro Mini</option>
-					<option value="uno" >Uno</option>
-					<option value="yun" >Yun</option>
-				</optgroup>
-				<optgroup label="DAGU">
-					<option value="atmegang" >RS027</option>
-					<option value="pro" >RS040</option>
-				</optgroup>
-				<optgroup label="ESP8266">
-					<option value="nodemcuv2" >wemos LoLin v3</option>
-				</optgroup>
-			</select>
-			<select id="portserie" onchange="BlocklyDuino.save_com();"></select>
-			<span style="color:white;font-size:4">|</span>
-			<button id="btn_verify" class="btn btn-arduino" data-toggle="modal" data-target="#message">
-				<span class="fa fa-check fa-1_5x fa-fw"> </span>
-			</button>
-			<button id="btn_flash" class='btn btn-arduino' data-toggle="modal" data-target="#message">
-				<span class="fa fa-arrow-right fa-1_5x fa-fw"> </span>
-			</button>
-			<span id="survol" style="color:#727272"></span>
+				<button id="btn_usb" class="btn btn-arduino-rect" data-toggle="modal" data-target="#usb" style="margin-top: -2px; border-top-right-radius: 0px; border-bottom-right-radius: 0px;">
+					<span class="fa fa-usb fa-fw" > </span>
+				</button>	
+				<select style="margin-left: -4px; height: 30px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-left-width: 0px;" id="portserie" onchange="BlocklyDuino.save_com();"></select>
+				<span style="color:white;font-size:4">|</span>
+				<button id="btn_verify" class="btn btn-arduino" data-toggle="modal" data-target="#message">
+					<span class="fa fa-check fa-1_5x fa-fw"> </span>
+				</button>
+				<button id="btn_flash" class='btn btn-arduino' data-toggle="modal" data-target="#message">
+					<span class="fa fa-arrow-right fa-1_5x fa-fw"> </span>
+				</button>
+				<span id="survol" style="color:#727272"></span>
 		</div>
 		<div id="btn_group" class="btn-group" role="group">
 			<button id="btn_undo" class="btn btn-default" style="color: #727272;">
@@ -169,6 +184,35 @@
 		</div>
 	  </div>
 	</div>
+	<!-- toolbox config modal -->
+	<div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
+				<span class="fa fa-cog fa-2x" class="modal-title"  id="configModalLabel"></span>
+			</div>
+			<div class="modal-body">
+				<label id="span_languageMenu"></label>
+				<select id="languageMenu"></select><br/><br/>
+				<div id="divToolbox">
+					<label id="labelToolboxDefinition"></label>
+					<select id="toolboxes">
+						<option value="toolbox_6">Débutant</option>
+						<option value="toolbox_arduino_all" selected="selected">Confirmé</option>
+						<option value="toolbox_microbit">Expert</option>
+						<option value="toolbox_lycee">Maître</option>
+					</select>
+				</div>
+			</div>
+		  <input type="checkbox" name="select_all" id="select_all"/> <span id="span_select_all"> </span>
+		  <div class="modal-body" id="modal-body-config"></div>
+		  <div class="modal-footer">
+			<button id="btn_valid_config" type="button" class="btn btn-primary"></button>
+		  </div>
+		</div>
+	  </div>
+	</div>
 	<!-- example modal -->
 	<div class="modal fade" id="exampleModal" >
 	  <div class="modal-dialog modal-lg">
@@ -183,6 +227,52 @@
 					<tbody id="includedContent"></tbody>
 				</table>
 			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<!-- CARD modal -->
+	<div class="modal fade" id="card" >
+	  <div class="modal-dialog modal-md">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" ><span aria-hidden="true">&#215;</span></button>
+			<span class="fa fa-microchip fa-2x" class="modal-title" id="cardLabel"></span>
+		  </div>
+		  <div class="modal-body">
+			<div class="arduino_card_mini_picture_div">
+				<img id="arduino_card_mini_picture" width="250px"/>
+			</div>
+			<select size="16" multiple id="pinout" onchange="BlocklyDuino.cardPicture_change();">
+				<optgroup label="C / C++">
+					<option value="leonardo" >Arduino Léonardo</option>
+					<option value="mega" >Arduino Méga 2560</option>
+					<option value="micro" >Arduino Micro</option>
+					<option value="mini" >Arduino Mini</option>
+					<option value="nano" >Arduino Nano</option>
+					<option value="pro8" >Arduino Pro ou Pro Mini 3.3V</option>
+					<option value="uno" >Arduino Uno</option>
+					<option value="yun" >Arduino Yun</option>
+					<option value="atmegang" >DAGU RS027</option>
+					<option value="pro16" >DAGU RS040</option>
+				</optgroup>
+				<optgroup label="Python">
+					<option value="esp8266" >ESP 8266</option>
+					<option value="esp32" >ESP 32</option>
+					<option value="microbit" >micro:bit</option>
+					<option value="pyboard" >Pyboard</option>
+				</optgroup>
+			</select>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<!-- USB modal -->
+	<div class="modal fade" id="usb" >
+	  <div class="modal-dialog modal-sm">
+		<div class="modal-content">	
+		  <div class="modal-body">
+			<span id="aboutusbLabel"></span>
 		  </div>
 		</div>
 	  </div>
@@ -257,35 +347,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- toolbox config modal -->
-	<div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
-				<span class="fa fa-cog fa-2x" class="modal-title"  id="configModalLabel"></span>
-			</div>
-			<div class="modal-body">
-				<label id="span_languageMenu"></label>
-				<select id="languageMenu"></select><br/><br/>
-				<div id="divToolbox">
-					<label id="labelToolboxDefinition"></label>
-					<select id="toolboxes">
-						<option value="toolbox_6">Cycle 3</option>
-						<option value="toolbox_arduino_all" selected="selected">Cycle 4</option>
-						<option value="toolbox_6">Lycée</option>
-					</select>
-				</div>
-			</div>
-		  <input type="checkbox" name="select_all" id="select_all"/> <span id="span_select_all"> </span>
-		  <div class="modal-body" id="modal-body-config"></div>
-		  <div class="modal-footer">
-			<button id="btn_valid_config" type="button" class="btn btn-primary"></button>
-		  </div>
-		</div>
-	  </div>
-	</div>
 </body>
-<script>require('../resources/app.asar/index.js')</script>
-<script>require('../resources/app.asar/factory.js')</script>
+<script>require('../resources/app/index.js')</script>
+<script>require('../resources/app/factory.js')</script>
 </html>

@@ -1,34 +1,28 @@
 var { ipcRenderer, shell } = require("electron")
-var { exec, execSync } = require('child_process')
+var { exec } = require('child_process')
 var sp = require('serialport')
 var fs = require('fs')
 var appVersion = window.require('electron').remote.app.getVersion()
-function clear_sketchbook() {
-	var path = './compilation/sketchbook/'
-	fs.readdir(path, function(err, files) {
-		for (var file of files) {
-			if (err) throw err
-			fs.unlink(path + file, function (err) {
-				if (err) throw err;
-			})
-		}
-		localStorage.setItem("verif",false)
-	})
-}
+
 window.addEventListener('load', function load(event) {
-	$('#btn_forum').on('click', function() {
-		shell.openExternal('http://blockly.technologiescollege.fr/forum/')
-	})
-	$('#btn_site').on('click', function() {
-		shell.openExternal('http://lesormeaux.net/blocklino/start.html')
-	})
-	$('#btn_contact').on('click', function() {
-		shell.openExternal('mailto:jean-philippe.fontaine@ac-rouen.fr')
-	})
+	function uploadOK(){
+		messageDiv.style.color = '#009000'
+		messageDiv.innerHTML = Blockly.Msg.upload + ': OK' + quitDiv
+	}
+	var quitDiv = '<button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
 	var messageDiv = document.getElementById('messageDIV')
 	var checkBox = document.getElementById("verifyUpdate")
-	clear_sketchbook()
+	var portserie = document.getElementById('portserie')
 	localStorage.setItem("verif",false)
+	$('#btn_forum').on('click', function(){
+		shell.openExternal('http://blockly.technologiescollege.fr/forum/')
+	})
+	$('#btn_site').on('click', function(){
+		shell.openExternal('http://lesormeaux.net/blocklino/start.html')
+	})
+	$('#btn_contact').on('click', function(){
+		shell.openExternal('mailto:jean-philippe.fontaine@ac-rouen.fr')
+	})
 	$.ajax({
 	    cache: false,
 	    url: "../config.json",
@@ -57,8 +51,7 @@ window.addEventListener('load', function load(event) {
 			})
 		}
 	})
-	var portserie = document.getElementById('portserie')
-	sp.list(function(err,ports) {
+	sp.list(function(err,ports){
 		var opt = document.createElement('option')
 		opt.value = "com"
 		opt.text = Blockly.Msg.com1
@@ -79,9 +72,8 @@ window.addEventListener('load', function load(event) {
 			localStorage.setItem("com","com")
 		}
 	})
-	var file_ino = '.\\compilation\\sketchbook\\sketchbook.ino'
 	document.getElementById('versionapp').textContent = " BLOCKLINO v" + appVersion
-	document.getElementById('btn_version').onclick = function(event) {
+	document.getElementById('btn_version').onclick = function(event){
 		$('#aboutModal').modal('hide')
 		ipcRenderer.send("version", "")
 	}
@@ -110,81 +102,149 @@ window.addEventListener('load', function load(event) {
 			}
 		})
 	})
-	document.getElementById('btn_term').onclick = function(event) {
-		var com = portserie.value
-		if (com=="com"){
+	document.getElementById('btn_term').onclick = function(event){
+		if (portserie.value=="com"){
 			$("#message").modal("show")
 			messageDiv.style.color = '#000000'
-			messageDiv.innerHTML = Blockly.Msg.com2 + '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>'
+			messageDiv.innerHTML = Blockly.Msg.com2 + quitDiv
 			return
 		}
-		ipcRenderer.send("prompt", "")		
+		if (localStorage.getItem("prog") == "python") { ipcRenderer.send("repl", "") } else { ipcRenderer.send("prompt", "") }
 	}
-	document.getElementById('btn_factory').onclick = function(event) {
+	document.getElementById('btn_factory').onclick = function(event){
 		ipcRenderer.send("factory", "")	
 	}
-	document.getElementById('btn_verify').onclick = function(event) {
+	document.getElementById('btn_verify').onclick = function(event){
 		var data = $('#pre_previewArduino').text()
-		var carte = profile.defaultBoard['build']
-		var prog = profile.defaultBoard['prog']
-		var cmd_verify = 'cli compile --fqbn ' + prog + ':' + carte + ' .\\sketchbook'
-		fs.writeFile(file_ino, data, function(err){
-			if (err) return console.log(err)
-		})
+		var carte = localStorage.getItem('card')
+		var prog = localStorage.getItem('prog')
+		var com = portserie.value
 		messageDiv.style.color = '#000000'
 		messageDiv.innerHTML = Blockly.Msg.check + '<i class="fa fa-spinner fa-pulse fa-1_5x fa-fw"></i>'
-		exec(cmd_verify , {cwd: './compilation'} , function(err, stdout, stderr){
-			if (stderr) {
-				rech=RegExp('token')
-				if (rech.test(stderr)){
-					messageDiv.style.color = '#ff0000'
-					messageDiv.innerHTML = Blockly.Msg.error + '<button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
-				} else {
-					messageDiv.style.color = '#ff0000'
-					messageDiv.innerHTML = err.toString()+'<button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
+		if (prog == "python") {
+			fs.writeFile('./compilation/python/py/sketch.py', data, function(err){
+				if (err) return console.log(err)
+			})
+			exec('python -m pyflakes ./py/sketch.py', {cwd:"./compilation/python"}, function(err, stdout, stderr){
+				if (stderr) {
+					rech=RegExp('token')
+					if (rech.test(stderr)){
+						messageDiv.style.color = '#ff0000'
+						messageDiv.innerHTML = Blockly.Msg.error + quitDiv
+					} else {
+						messageDiv.style.color = '#ff0000'
+						messageDiv.innerHTML = err.toString() + quitDiv
+					}
+					return
 				}
-				return
-			}
-			messageDiv.style.color = '#009000'
-			messageDiv.innerHTML = Blockly.Msg.check + ': OK <button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
-		})
+				messageDiv.style.color = '#009000'
+				messageDiv.innerHTML = Blockly.Msg.check + ': OK' + quitDiv
+			})
+		} else {
+			fs.writeFile('./compilation/arduino/ino/sketch.ino', data, function(err){
+				if (err) return console.log(err)
+			})
+			exec('verify.bat ' + carte, {cwd:'./compilation/arduino'}, function(err, stdout, stderr){
+				if (stderr) {
+					rech=RegExp('token')
+					if (rech.test(stderr)){
+						messageDiv.style.color = '#ff0000'
+						messageDiv.innerHTML = Blockly.Msg.error + quitDiv
+					} else {
+						messageDiv.style.color = '#ff0000'
+						messageDiv.innerHTML = err.toString() + quitDiv
+					}
+					return
+				}
+				messageDiv.style.color = '#009000'
+				messageDiv.innerHTML = Blockly.Msg.check + ': OK' + quitDiv
+			})
+		}
 		localStorage.setItem("verif",true)
 	}
-	document.getElementById('btn_flash').onclick = function(event) {
-		var verif = localStorage.getItem("verif")
+	document.getElementById('btn_flash').onclick = function(event){
 		var data = $('#pre_previewArduino').text()
-		var carte = profile.defaultBoard['build']
-		var prog = profile.defaultBoard['prog']
-		var cmd_verify = 'cli compile --fqbn ' + prog + ':' + carte + ' .\\sketchbook'
-		var com = portserie.value
-		var cmd_flash = 'cli upload -p ' + com + ' --fqbn ' + prog + ':' + carte + ' .\\sketchbook'
-		if (com=="com"){
+		var carte = localStorage.getItem('card')
+		var prog = profile[carte].prog
+		var speed = profile[carte].speed
+		var cpu = profile[carte].cpu
+		var com = portserie.value 
+		if ( com == "com" ){
 			messageDiv.style.color = '#000000'
-			messageDiv.innerHTML = Blockly.Msg.com2 + '<button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
+			messageDiv.innerHTML = Blockly.Msg.com2 + quitDiv
 			return
 		}
-		if (verif=="false") {
+		if ( localStorage.getItem('verif') == "false" ){
 			messageDiv.style.color = '#000000'
-			messageDiv.innerHTML = Blockly.Msg.check + '<i class="fa fa-spinner fa-pulse fa-1_5x fa-fw"></i>'
-			fs.writeFileSync(file_ino, data)
-			execSync(cmd_verify , {cwd: './compilation'})
+			messageDiv.innerHTML = Blockly.Msg.verif + quitDiv
+			return
 		}
 		messageDiv.style.color = '#000000'
 		messageDiv.innerHTML = Blockly.Msg.upload + '<i class="fa fa-spinner fa-pulse fa-1_5x fa-fw"></i>'
-		exec(cmd_flash , {cwd: './compilation'} , function(err, stdout, stderr){
-			if (err) {
-				messageDiv.style.color = '#ff0000'
-				messageDiv.innerHTML = err.toString() + '<button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
-				clear_sketchbook()
-				return
+		if ( prog == "python" ) {
+			if ( cpu == "cortexM0" ) {
+				var cheminFirmware = "./compilation/python/firmware.hex"
+				var fullHexStr = ""
+				exec('wmic logicaldisk get volumename', function(err, stdout){
+					if (err) return console.log(err)
+					localStorage.setItem("volumename", stdout.split('\r\r\n').map(value => value.trim()))
+				})
+				exec('wmic logicaldisk get name', function(err, stdout){
+					if (err) return console.log(err)
+					localStorage.setItem("name", stdout.split('\r\r\n').map(value => value.trim()))
+				})
+				var volume = localStorage.getItem("volumename")
+				var drive = localStorage.getItem("name")
+				var volumeN = volume.split(',')
+				var driveN = drive.split(',')
+				var count = volumeN.length
+				var disk = ""
+				for (var i = 0 ; i < count ; i++) {
+					if (volumeN[i]=="MICROBIT") disk = driveN[i]
+				}
+				if (disk!="") {
+					fs.readFile(cheminFirmware, function(err, firmware){
+						firmware = String(firmware)
+						fullHexStr = upyhex.injectPyStrIntoIntelHex(firmware, data)
+						fs.writeFile(disk + '\sketch.hex', fullHexStr, function(err){
+							if (err) {
+								messageDiv.style.color = '#ff0000'
+								messageDiv.innerHTML = err.toString() + quitDiv
+							}
+						})
+					})
+					setTimeout(uploadOK, 7000)
+				} else {
+					messageDiv.style.color = '#000000'
+					messageDiv.innerHTML = 'Connecter la carte microBit !' + quitDiv
+				}
+			} else {
+				exec( 'python -m ampy -p ' + com + ' -b 115200 -d 1 run --no-output ./py/sketch.py', {cwd: "./compilation/python"} , function(err, stdout, stderr){
+					if (err) {
+						messageDiv.style.color = '#ff0000'
+						messageDiv.innerHTML = err.toString() + quitDiv
+						return
+					}
+					uploadOK()
+				})
 			}
-			messageDiv.style.color = '#009000'
-			messageDiv.innerHTML = Blockly.Msg.upload + ': OK <button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
-			clear_sketchbook()
-		})
+		} else {
+			exec('flash.bat ' + cpu + ' ' + prog + ' '+ com + ' ' + speed, {cwd: './compilation/arduino'} , function(err, stdout, stderr){
+				if (err) {
+					messageDiv.style.color = '#ff0000'
+					messageDiv.innerHTML = err.toString() + quitDiv
+					return
+				}
+				uploadOK()
+			})
+		}
+		localStorage.setItem("verif",false)
 	}
-	document.getElementById('btn_saveino').onclick = function(event) {
-		ipcRenderer.send('save-ino')
+	document.getElementById('btn_saveino').onclick = function(event){
+		if (localStorage.getItem("prog") == "python") { ipcRenderer.send('save-py') } else { ipcRenderer.send('save-ino') }
+	}
+	document.getElementById('btn_saveXML').onclick = function(event){
+		ipcRenderer.send('save-bloc')
 	}
 	ipcRenderer.on('saved-ino', function(event, path){
 		var code = $('#pre_previewArduino').text()
@@ -195,11 +255,17 @@ window.addEventListener('load', function load(event) {
 				if (err) return console.log(err)
 			})
 		}
-		
 	})
-	document.getElementById('btn_saveXML').onclick = function(event) {
-		ipcRenderer.send('save-bloc')
-	}
+	ipcRenderer.on('saved-py', function(event, path){
+		var code = $('#pre_previewArduino').text()
+		if (path === null) {
+			return
+		} else {
+			fs.writeFile(path, code, function(err){
+				if (err) return console.log(err)
+			})
+		}
+	})
 	ipcRenderer.on('saved-bloc', function(event, path){
 		if (path === null) {
 			return
