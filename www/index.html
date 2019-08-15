@@ -240,8 +240,8 @@
 			<span class="fa fa-microchip fa-2x" class="modal-title" id="cardLabel"></span>
 		  </div>
 		  <div class="modal-body">
-			<div class="arduino_card_mini_picture_div">
-				<img id="arduino_card_mini_picture" width="250px"/>
+			<div class="arduino_card_mini_picture_div" style="height: 516px">
+				<img id="arduino_card_mini_picture"/>
 			</div>
 			<select size="16" multiple id="pinout" onchange="BlocklyDuino.cardPicture_change();">
 				<optgroup label="C / C++">
@@ -263,6 +263,16 @@
 					<option value="pyboard" >Pyboard</option>
 				</optgroup>
 			</select>
+			<br/><br/>
+			Connecteur : ...<br/>
+			Tension d'alimentation : ...<br/>
+			CPU : ...<br/>
+			E/S Numérique : ...<br/>
+			Entrée analogique : ...<br/>
+			Sortie analogique : ...<br/>
+			Mémoire flash : ...<br/> 
+			RAM : ...<br/>
+			EEPROM : ...<br/><br/>
 		  </div>
 		</div>
 	  </div>
