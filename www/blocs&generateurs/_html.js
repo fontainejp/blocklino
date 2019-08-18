@@ -4,36 +4,31 @@ goog.require("Blockly.Blocks");
   ////////////
  /*  html  */
 ////////////
-Blockly.Blocks['title'] = {
+Blockly.Blocks['emptyVar'] = {
     init: function() {
         this.jsonInit({
-            "message0": '<title> %1 </title>',
+            "message0": '%1',
             "args0": [
                 {
-                    "type": "field_input",
-                    "name": "value",
-                    "text": "Titre de l'onglet"
+                    "type": "field_variable",
+                    "name": "VAR",
+                    "variable": Blockly.Msg.VARIABLES_GET_ITEM
                 }
             ],
-            "previousStatement": "header",
-            "nextStatement": "header",
-            "colour": "#000000",
-            "tooltip": "Title tag",
-            "helpUrl": "https://www.w3schools.com/tags/tag_title.asp"
+            "previousStatement": null,
+            "nextStatement": null,
+            "colour": "#FFA500"
         });
     }
 };
-Blockly.Arduino['title'] = function(block) {
+Blockly.Arduino['emptyVar'] = function(block) {
     var value = block.getFieldValue('value');
-    var code = 'client.println("<meta charset=\\"UTF-8\\">");\n';
-    code += 'client.println("<title>'+looseEscape(value)+'</title>");\n';
+    var code = '<meta charset=\\"UTF-8\\">");\n';
+    code += '<title>'+looseEscape(value)+'</title>");\n';
     return code
 };
-Blockly.Python['title'] = function(block) {
-    var value = block.getFieldValue('value');
-    var code = '<meta charset=\"UTF-8\">\n';
-    code += '<title>'+looseEscape(value)+'</title>\n';
-    return code
+Blockly.Python['emptyVar'] = function(block) {
+    return "'''+ "+Blockly.Python.variableDB_.getName(block.getFieldValue("VAR"), Blockly.Variables.NAME_TYPE)+" +'''"
 };
 //////////////
 Blockly.Blocks['emptytext'] = {
@@ -49,9 +44,7 @@ Blockly.Blocks['emptytext'] = {
             ],
             "previousStatement": "textcontainer",
             "nextStatement": "textcontainer",
-            "colour": "#FD6C9E",
-            "tooltip": "Text",
-            "helpUrl": ""
+            "colour": "#FD6C9E"
         });
     }
 };
@@ -93,9 +86,7 @@ Blockly.Blocks['textmod'] = {
             ],
             "previousStatement": "textcontainer",
             "nextStatement": "textcontainer",
-            "colour": "#727272",
-            "tooltip": "Text modifier - used to achieve formatting effects with text",
-            "helpUrl": "https://www.w3schools.com/html/html_formatting.asp"
+            "colour": "#FD6C9E"
         });
     }
 };
@@ -128,21 +119,19 @@ Blockly.Blocks['paragraph'] = {
             ],
             "previousStatement": "html",
             "nextStatement": "html",
-            "colour": "#000000",
-            "tooltip": "Paragraph tag",
-            "helpUrl": "https://www.w3schools.com/tags/tag_p.asp"
+            "colour": "#000000"
         });
     }
 };
 Blockly.Arduino['paragraph'] = function(block) {
     var statements_content = Blockly.Arduino.statementToCode(block, 'content');
     var block_modifier = Blockly.Arduino.statementToCode(block, 'modifier');
-    return 'client.println("<p' + block_modifier + '>' + statements_content + '</p>");\n'
+    return '<p' + block_modifier + '>' + statements_content + '</p>");\n'
 };
 Blockly.Python['paragraph'] = function(block) {
     var statements_content = Blockly.Python.statementToCode(block, 'content');
     var block_modifier = Blockly.Python.statementToCode(block, 'modifier');
-    return 'client.println("<p' + block_modifier + '>' + statements_content + '</p>");\n'
+    return '<p' + block_modifier + '>' + statements_content + '</p>\n'
 };
 //////////////
 Blockly.Blocks['header'] = {
@@ -169,9 +158,7 @@ Blockly.Blocks['header'] = {
             ],
             "previousStatement": "html",
             "nextStatement": "html",
-            "colour": "#000000",
-            "tooltip": "Header tag",
-            "helpUrl": "https://www.w3schools.com/tags/tag_hn.asp"
+            "colour": "#000000"
         });
     }
 };
@@ -179,13 +166,13 @@ Blockly.Arduino['header'] = function(block) {
     var statements_content = Blockly.Arduino.statementToCode(block, 'content');
     var header_size = block.getFieldValue("size");
     var block_modifier = Blockly.Arduino.statementToCode(block, 'modifier', Blockly.Arduino.ORDER_ATOMIC);
-    return 'client.println("<h' + header_size + block_modifier + '>' + statements_content + '</h' + header_size + '>");\n'
+    return '<h' + header_size + block_modifier + '>' + statements_content + '</h' + header_size + '>");\n'
 };
 Blockly.Python['header'] = function(block) {
     var statements_content = Blockly.Python.statementToCode(block, 'content');
     var header_size = block.getFieldValue("size");
     var block_modifier = Blockly.Python.statementToCode(block, 'modifier', Blockly.Arduino.ORDER_ATOMIC);
-    return 'client.println("<h' + header_size + block_modifier + '>' + statements_content + '</h' + header_size + '>");\n'
+    return '<h' + header_size + block_modifier + '>' + statements_content + '</h' + header_size + '>\n'
 };
 //////////////
 Blockly.Blocks['link'] = {
@@ -209,9 +196,7 @@ Blockly.Blocks['link'] = {
             ],
             "previousStatement": "textcontainer",
             "nextStatement": "textcontainer",
-            "colour": "#727272",
-            "tooltip": "Paragraph tag",
-            "helpUrl": "https://www.w3schools.com/tags/tag_p.asp"
+            "colour": "#FD6C9E"
         });
     }
 };
@@ -225,7 +210,7 @@ Blockly.Python['link'] = function(block){
     var text = Blockly.Python.statementToCode(block, 'content');
     var link = URLInput(block.getFieldValue('target'));
     var block_modifier = Blockly.Python.statementToCode(block, 'modifier', Blockly.Python.ORDER_ATOMIC);
-    return '<a href=\\"' + link + '\\" target=\\"_blank\\"' + block_modifier + '>' + text + '</a>'
+    return '<a href=\"' + link + '\" target=\"_blank\"' + block_modifier + '>' + text + '</a>'
 };
 //////////////
 Blockly.Blocks['table'] = {
@@ -246,21 +231,19 @@ Blockly.Blocks['table'] = {
             ],
             "previousStatement": "html",
             "nextStatement": "html",
-            "colour": "#000000",
-            "tooltip": "Table tag",
-            "helpUrl": "https://www.w3schools.com/tags/tag_table.asp"
+            "colour": "#727272"
         });
     }
 };
 Blockly.Arduino['table'] = function(block){
     var content = Blockly.Arduino.statementToCode(block, 'content');
     var block_modifier = Blockly.Arduino.statementToCode(block, 'modifier', Blockly.Arduino.ORDER_ATOMIC);
-    return 'client.println("<table' + block_modifier + '>' + content + '</table>");\n'
+    return '<table' + block_modifier + '>' + content + '</table>");\n'
 };
 Blockly.Python['table'] = function(block){
     var content = Blockly.Python.statementToCode(block, 'content');
     var block_modifier = Blockly.Python.statementToCode(block, 'modifier', Blockly.Python.ORDER_ATOMIC);
-    return 'client.println("<table' + block_modifier + '>' + content + '</table>");\n'
+    return '<table' + block_modifier + '>\n' + content + '</table>\n'
 };
 //////////////
 Blockly.Blocks['tablerow'] = {
@@ -281,9 +264,7 @@ Blockly.Blocks['tablerow'] = {
             ],
             "previousStatement": "table",
             "nextStatement": "table",
-            "colour": "#727272",
-            "tooltip": "Table row tag",
-            "helpUrl": "https://www.w3schools.com/tags/tag_tr.asp"
+            "colour": "#727272"
         });
     }
 };
@@ -295,7 +276,7 @@ Blockly.Arduino['tablerow'] = function(block){
 Blockly.Python['tablerow'] = function(block){
     var content = Blockly.Python.statementToCode(block, 'content');
     var block_modifier = Blockly.Python.statementToCode(block, 'modifier', Blockly.Arduino.ORDER_ATOMIC);
-    return '<tr' + block_modifier + '>' + content + '</tr>'
+    return '<tr' + block_modifier + '>' + content + '</tr>\n'
 };
 //////////////
 Blockly.Blocks['tableheading'] = {
@@ -316,9 +297,7 @@ Blockly.Blocks['tableheading'] = {
             ],
             "previousStatement": "tablerow",
             "nextStatement": "tablerow",
-            "colour": "#727272",
-            "tooltip": "Table heading tag",
-            "helpUrl": "https://www.w3schools.com/tags/tag_th.asp"
+            "colour": "#727272"
         });
     }
 };
@@ -330,7 +309,7 @@ Blockly.Arduino['tableheading'] = function(block){
 Blockly.Python['tableheading'] = function(block){
     var content = Blockly.Python.statementToCode(block, 'content');
     var block_modifier = Blockly.Python.statementToCode(block, 'modifier', Blockly.Python.ORDER_ATOMIC);
-    return '<th' + block_modifier + '>' + content + '</th>'
+    return '<th' + block_modifier + '>' + content + '</th>\n'
 };
 //////////////
 Blockly.Blocks['tabledata'] = {
@@ -351,9 +330,7 @@ Blockly.Blocks['tabledata'] = {
             ],
             "previousStatement": "tablerow",
             "nextStatement": "tablerow",
-            "colour": "#727272",
-            "tooltip": "Table data tag",
-            "helpUrl": "https://www.w3schools.com/tags/tag_td.asp"
+            "colour": "#727272"
         });
     }
 };
@@ -371,33 +348,28 @@ Blockly.Python['tabledata'] = function(block){
 Blockly.Blocks['image'] = {
     init: function() {
         this.jsonInit({
-            "message0": '<img src=%1 > %2',
+            "message0": '<img src=%1 >',
             "args0": [
                 {
                     "type": "field_input",
                     "name": "source",
-                    "text": "http://"
-                },
-                {
-                    "type": "input_dummy"
+                    "text": "http://lesormeaux.net/img/puzzle-piece.png"
                 }
             ],
             "previousStatement": "html",
             "nextStatement": "html",
-            "colour": "#000000",
-            "tooltip": "Image tag",
-            "helpUrl": "https://www.w3schools.com/tags/tag_img.asp"
+            "colour": "#000000"
         });
     }
 };
 Blockly.Arduino['image'] = function(block){
     var source = block.getFieldValue('source');
-    var code = 'client.println("<img src=\\"' + URLInput(source) + '\\">");\n';
+    var code = '<img src=\\"' + URLInput(source) + '\\">");\n';
     return code
 };
 Blockly.Python['image'] = function(block){
     var source = block.getFieldValue('source');
-    var code = 'client.println("<img src=\\"' + URLInput(source) + '\\">");\n';
+    var code = '<img src=\"' + URLInput(source) + '\">\n';
     return code
 };
 //////////////
@@ -416,9 +388,7 @@ Blockly.Blocks['args'] = {
                 }
             ],
             "colour": "#00CC00",
-            "output": "attributes",
-            "tooltip": "Additional attributes",
-            "helpUrl": "https://www.w3schools.com/html/html_attributes.asp"
+            "output": "attributes"
         });
     }
 };
@@ -428,7 +398,7 @@ Blockly.Arduino['args'] = function(block) {
 };
 Blockly.Python['args'] = function(block) {
     var code = Blockly.Python.statementToCode(block, 'content');
-    return 'style=\\"' + code + '\\"'
+    return 'style=\"' + code + '\"'
 };
 //////////////
 Blockly.Blocks['color'] = {
@@ -439,15 +409,13 @@ Blockly.Blocks['color'] = {
                 {
                     "type": "field_colour",
                     "name": "value",
-                    "colour": "#339999"
+                    "colour": "#FF0000"
 
                 }
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": "#00CC00",
-            "tooltip": "CSS Color",
-            "helpUrl": "https://www.w3schools.com/cssref/pr_text_color.asp"
+            "colour": "#00CC00"
         });
     }
 };
@@ -457,7 +425,7 @@ Blockly.Arduino['color'] = function(block){
 };
 Blockly.Python['color'] = function(block){
     var color = block.getFieldValue('value');
-    return 'color : ' + color + ' ; '
+    return 'color: ' + color + '; '
 };
 //////////////
 Blockly.Blocks['bgcolor'] = {
@@ -473,9 +441,7 @@ Blockly.Blocks['bgcolor'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": "#00CC00",
-            "tooltip": "CSS Background-Color",
-            "helpUrl": "https://www.w3schools.com/css/css_background.asp"
+            "colour": "#00CC00"
         });
     }
 };
@@ -485,7 +451,7 @@ Blockly.Arduino['bgcolor'] = function(block){
 };
 Blockly.Python['bgcolor'] = function(block){
     var color = block.getFieldValue('value');
-    return 'background-color : ' + color + ' ; '
+    return 'background-color: ' + color + '; '
 };
 //////////////
 Blockly.Blocks['textalign'] = {
@@ -505,9 +471,7 @@ Blockly.Blocks['textalign'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": "#00CC00",
-            "tooltip": "CSS Text-align",
-            "helpUrl": "https://www.w3schools.com/cssref/pr_text_text-align.asp"
+            "colour": "#00CC00"
         })
     }
 };
@@ -517,7 +481,7 @@ Blockly.Arduino['textalign'] = function(block){
 };
 Blockly.Python['textalign'] = function(block){
     var value = block.getFieldValue('value');
-    return 'text-align : ' + value + ' ; '
+    return 'text-align: ' + value + '; '
 };
 //////////////
 Blockly.Blocks['border'] = {
@@ -528,7 +492,7 @@ Blockly.Blocks['border'] = {
                 {
                     "type": "field_number",
                     "name": "width",
-                    "value": 5,
+                    "value": 2,
                     "min": 1
                 },
                 {
@@ -561,9 +525,7 @@ Blockly.Blocks['border'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": "#00CC00",
-            "tooltip": "CSS Border",
-            "helpUrl": "https://www.w3schools.com/css/css_border.asp"
+            "colour": "#00CC00"
         });
     }
 };
@@ -577,13 +539,13 @@ Blockly.Python['border'] = function(block){
     var width = fullEscape(block.getFieldValue('width'));
     var type =  block.getFieldValue('type');
     var color = block.getFieldValue('color');
-    return 'border : ' + width + 'px ' + type + ' ' + color + ' ; '
+    return 'border: ' + width + 'px ' + type + ' ' + color + '; '
 };
 //////////////
 Blockly.Blocks['input'] = {
     init: function() {
         this.jsonInit({
-            "message0": '<input type=%1 value=%2 name=%3 >',
+            "message0": '<input type=%1 value=%2 >',
             "args0": [
                 {
                     "type": "field_dropdown",
@@ -594,37 +556,23 @@ Blockly.Blocks['input'] = {
                     "type": "field_input",
                     "name": "value",
                     "text": ""
-                },
-                {
-                    "type": "field_input",
-                    "name": "name",
-                    "text": ""
-                },
-                {
-                    "type": "input_dummy"
                 }
             ],
             "previousStatement": "form",
             "nextStatement": "form",
-            "colour": "#000000",
-            "tooltip": "Input tag",
-            "helpUrl": "https://www.w3schools.com/tags/tag_input.asp"
+            "colour": "#154360"
         });
     }
 };
 Blockly.Arduino['input'] = function(block){
     var type = block.getFieldValue('type');
     var value = looseEscape(block.getFieldValue('value'));
-    var name = looseEscape(block.getFieldValue('name'));
-    var block_modifier = Blockly.Arduino.statementToCode(block, 'modifier', Blockly.Arduino.ORDER_ATOMIC);
-    return '<input type=\\"' + type + '\\" value=\\"' + value + '\\" name=\\"' + name + '\\"' + block_modifier + '>';
+    return '<input type=\\"' + type + '\\" value=\\"' + value + '\\" name=\\"' + value + '\\">';
 };
 Blockly.Python['input'] = function(block){
     var type = block.getFieldValue('type');
     var value = looseEscape(block.getFieldValue('value'));
-    var name = looseEscape(block.getFieldValue('name'));
-    var block_modifier = Blockly.Python.statementToCode(block, 'modifier', Blockly.Arduino.ORDER_ATOMIC);
-    return '<input type=\\"' + type + '\\" value=\\"' + value + '\\" name=\\"' + name + '\\"' + block_modifier + '>';
+    return '<input type=\"' + type + '\" value=\"' + value + '\" name=\"' + value + '\">\n';
 };
 //////////////
 Blockly.Blocks['form'] = {
@@ -643,9 +591,7 @@ Blockly.Blocks['form'] = {
                     "options": [["GET","GET"],["POST","POST"],["PUT","PUT"]]
                 },
 				{
-                    "type": "input_value",
-                    "name": "modifier",
-					"check": "attributes"
+                    "type": "input_dummy"
                 },
                 {
                     "type": "input_statement",
@@ -655,9 +601,7 @@ Blockly.Blocks['form'] = {
             ],
             "previousStatement": "html",
             "nextStatement": "html",
-            "colour": "#000000",
-            "tooltip": "button tag",
-            "helpUrl": "https://www.w3schools.com/tags/tag_img.asp"
+            "colour": "#154360"
         });
     }
 };
@@ -666,44 +610,47 @@ Blockly.Arduino['form'] = function(block){
 	var method = block.getFieldValue('method');
     var content = Blockly.Arduino.statementToCode(block, 'content');
     var block_modifier = Blockly.Arduino.statementToCode(block, 'modifier', Blockly.Arduino.ORDER_ATOMIC);
-    return 'client.println("<form action=\\"' + action + '\\" method=\\"' + method + '\\" ' + block_modifier + '>' + content + '</form>");\n'
+    return '<form action=\\"' + action + '\\" method=\\"' + method + '\\" ' + block_modifier + '>' + content + '</form>");\n'
 };
 Blockly.Python['form'] = function(block){
 	var action = block.getFieldValue('action');
 	var method = block.getFieldValue('method');
     var content = Blockly.Python.statementToCode(block, 'content');
     var block_modifier = Blockly.Python.statementToCode(block, 'modifier', Blockly.Python.ORDER_ATOMIC);
-    return 'client.println("<form action=\\"' + action + '\\" method=\\"' + method + '\\" ' + block_modifier + '>' + content + '</form>");\n'
+    return '<form action=\"' + action + '\" method=\"' + method + '\" ' + block_modifier + '>\n' + content + '</form>\n'
 };
 //////////////
 Blockly.Blocks['label'] = {
     init: function() {
         this.jsonInit({
-            "message0": '<label> %1 </label>',
+            "message0": '<label for=%1> %2 </label>',
             "args0": [
                 {
                     "type": "field_input",
+                    "name": "for",
+                    "text": ""
+                },
+				{
+                    "type": "field_input",
                     "name": "value",
-                    "text": "un label"
+                    "text": ""
                 }
             ],
             "previousStatement": "form",
             "nextStatement": "form",
-            "colour": "#000000",
-            "tooltip": "button tag",
-            "helpUrl": "https://www.w3schools.com/tags/tag_img.asp"
+            "colour": "#154360"
         });
     }
 };
 Blockly.Arduino['label'] = function(block){
     var content = block.getFieldValue('value');
-    var block_modifier = Blockly.Arduino.statementToCode(block, 'modifier', Blockly.Arduino.ORDER_ATOMIC);
-    return '<label' + block_modifier + '>' + content + '</label>'
+    var for_value = block.getFieldValue('for');
+    return '<label for=' + for_value + '>' + content + '</label>\n'
 };
 Blockly.Python['label'] = function(block){
     var content = block.getFieldValue('value');
-    var block_modifier = Blockly.Python.statementToCode(block, 'modifier', Blockly.Python.ORDER_ATOMIC);
-    return '<label' + block_modifier + '>' + content + '</label>'
+    var for_value = block.getFieldValue('for');
+    return '<label for="' + for_value + '">' + content + '</label>\n'
 };
 //////////////
 Blockly.Blocks['br'] = {
@@ -717,9 +664,7 @@ Blockly.Blocks['br'] = {
             ],
             "previousStatement": null,
             "nextStatement": null,
-            "colour": "#FD6C9E",
-            "tooltip": "button tag",
-            "helpUrl": "https://www.w3schools.com/tags/tag_img.asp"
+            "colour": "#000000"
         });
     }
 };
@@ -727,7 +672,7 @@ Blockly.Arduino['br'] = function(block){
     return '<br>'
 };
 Blockly.Python['br'] = function(block){
-    return '<br>'
+    return '<br>\n'
 };
   ////////////////
  /*  function  */

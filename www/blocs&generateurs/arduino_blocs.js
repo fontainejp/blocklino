@@ -509,10 +509,6 @@ Blockly.Blocks["esp8266_init"]={init:function(){
 	this.appendDummyInput().setAlign(Blockly.ALIGN_RIGHT)
 		.appendField(Blockly.Msg.esp8266_10)
 		.appendField(new Blockly.FieldDropdown(Blockly.Msg.esp8266_9,function(option){this.sourceBlock_.updateShape1_(option)}), "staticdynamic");
-	this.appendDummyInput().setAlign(Blockly.ALIGN_RIGHT).appendField(Blockly.Msg.esp8266_2)
-		.appendField(new Blockly.FieldTextInput("monWIFI"),"SSID");
-	this.appendDummyInput().setAlign(Blockly.ALIGN_RIGHT).appendField(Blockly.Msg.esp8266_3)
-		.appendField(new Blockly.FieldTextInput("123456789"),"KEY");
 	this.appendDummyInput().setAlign(Blockly.ALIGN_RIGHT).appendField(new Blockly.FieldDropdown(Blockly.Msg.esp8266_7,function(option){this.sourceBlock_.updateShape2_(option)}), "clientserveur");
     this.setPreviousStatement(false);
     this.setNextStatement(false);
@@ -566,19 +562,24 @@ Blockly.Blocks["esp8266_init"]={init:function(){
 Blockly.Blocks["esp8266_send"]={init:function(){
     this.setColour("#154360");
     this.setHelpUrl(Blockly.Msg.esp8266_url);
-    this.appendValueInput("message").appendField("envoyer");
+    this.appendDummyInput().appendField("envoyer la page HTML");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip(Blockly.Msg.esp8266_init_tooltip)}
 };
-Blockly.Blocks["esp8266_send_html"]={init:function(){
+Blockly.Blocks["esp8266_start"]={init:function(){
     this.setColour("#154360");
     this.setHelpUrl(Blockly.Msg.esp8266_url);
-    this.appendDummyInput().appendField("envoyer un page HTML");
-	this.appendStatementInput("HEAD").appendField("<head>");
-	this.appendStatementInput("BODY").appendField("<body>");
+    this.appendDummyInput().appendField("démarrer le serveur");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
+    this.setTooltip(Blockly.Msg.esp8266_init_tooltip)}
+};
+Blockly.Blocks["esp8266_html"]={init:function(){
+    this.setColour("#154360");
+    this.setHelpUrl(Blockly.Msg.esp8266_url);
+    this.appendDummyInput().appendField("HTML :").appendField(new Blockly.FieldTextInput("ma page"),"HEAD");
+	this.appendStatementInput("BODY");
     this.setTooltip(Blockly.Msg.esp8266_init_tooltip)}
 };
 Blockly.Blocks["esp8266_wait_server"]={init:function(){
@@ -598,7 +599,7 @@ Blockly.Blocks["esp8266_wait_client"]={init:function(){
     this.setNextStatement(true);
     this.setTooltip(Blockly.Msg.esp8266_init_tooltip)}
 };
-Blockly.Blocks["esp8266_request_indexof"]={
+Blockly.Blocks["esp8266_request_find"]={
 	init:function(){
         this.appendValueInput("CASE0").setAlign(Blockly.ALIGN_RIGHT).appendField("si dans la requête on trouve");
         this.appendStatementInput("DO0").setAlign(Blockly.ALIGN_RIGHT).appendField(Blockly.Msg.CONTROLS_IF_MSG_THEN);

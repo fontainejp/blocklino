@@ -16,7 +16,7 @@ Blockly.Blocks['mc005']={init:function() {
 };
 Blockly.Arduino['mc005'] = function(block) {
 	var value_pin = Blockly.Arduino.valueToCode(block, 'pin', Blockly.Arduino.ORDER_ATOMIC);
-    Blockly.Arduino.setups_["setup_input_" + value_pin]="pinMode(" + value_pin + ");";
+    Blockly.Arduino.setups_["setup_input_" + value_pin]="pinMode(" + value_pin + ", INPUT);";
 	var code = "digitalRead(" + value_pin + ") == LOW" ;
 	return [code, Blockly.Arduino.ORDER_ATOMIC];
 };

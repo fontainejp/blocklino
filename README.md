@@ -14,7 +14,7 @@ You can link directly to examples :
 * [make default LED blink](http://lesormeaux.net/blocklino/index.html?url=./examples/blink/blink.xml) 
 * [control LED Matrix](http://lesormeaux.net/blocklino/index.html?url=./examples/matrice/matrice.xml) 
 
-Or watch the [video demo](http://)
+Or watch the [video demo](https://www.youtube.com/watch?v=XqfNAjnf6_8)
 
 ## How to Use
 

@@ -159,39 +159,34 @@ Blockly.Python["bluetooth_b"]==function(){return''};
 Blockly.Python['esp8266_init']=function(block){
 	var mode=block.getFieldValue("clientserveur");
 	var adressage=block.getFieldValue("staticdynamic");
-	var reseau=block.getFieldValue("SSID");
-	var cle=block.getFieldValue("KEY");
 	Blockly.Python.imports_["network"]="import network";
 	if (adressage=="static"){
-		var ipabc=block.getFieldValue("IPa")+","+block.getFieldValue("IPb")+","+block.getFieldValue("IPc");
+		var ipabc=block.getFieldValue("IPa")+"."+block.getFieldValue("IPb")+"."+block.getFieldValue("IPc")+".";
 		var ipd=block.getFieldValue("IPd");
 		var passerelle=block.getFieldValue("GATEWAY");
-		var masque=block.getFieldValue("MASKa")+","+block.getFieldValue("MASKb")+","+block.getFieldValue("MASKc")+","+block.getFieldValue("MASKd");
-		Blockly.Python.userFunctions_["networkS"] = 'wifi = network.WLAN(network.STA_IF)\nwifi.active(True)\nwifi.ifconfig(("'+ipabc+ipd+'","'+ipabc+passerelle+'","'+masque+'")\nwifi.connect("'+reseau+'","'+cle+'");\nwhile wifi.isconnected() == False:\n  pass\n';
+		var masque=block.getFieldValue("MASKa")+"."+block.getFieldValue("MASKb")+"."+block.getFieldValue("MASKc")+"."+block.getFieldValue("MASKd");
+		Blockly.Python.definitions_["networkS"] = 'wifi = network.WLAN(network.STA_IF)\nwifi.active(True)\nwifi.ifconfig(("'+ipabc+ipd+'","'+masque+'","'+ipabc+passerelle+'","'+ipabc+passerelle+'"))\nwifi.connect("fontaine", "Ph1loctete")\nwhile wifi.isconnected() == False:\n  pass\n';
 	} else {
-		Blockly.Python.userFunctions_["networkD"] = 'wifi = network.WLAN(network.STA_IF)\nwifi.active(True)\nwifi.connect("'+reseau+'","'+cle+'")\nwhile wifi.isconnected() == False:\n  pass\n';
+		Blockly.Python.definitions_["networkD"] = 'wifi = network.WLAN(network.STA_IF)\nwifi.active(True)\nwifi.connect("fontaine", "Ph1loctete")\nwhile wifi.isconnected() == False:\n  pass\n';
 	}
 	if (mode=="serveur"){
+		Blockly.Python.imports_["socket"]="import socket";
 		var port=Blockly.Python.valueToCode(block, "V0", Blockly.Python.ORDER_ATOMIC);
-		Blockly.Python.definitions_["esp8266"] += 'WiFiServer server(' + port + ');\n';
-		Blockly.Python.userFunctions_["esp8266"] += '  server.begin();\n';
+		Blockly.Python.definitions_["server"] = 'server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nserver.bind(("",'+port+'))\nserver.listen(5)';
 	}
 	return "" ;
 };
 Blockly.Python['esp8266_send']=function(block){
-	var data=Blockly.Python.valueToCode(block, 'message', Blockly.Python.ORDER_ATOMIC);
-	var code = 'client.println("HTTP/1.1 200 OK");\nclient.println("Content-Type: text/html");\nclient.println("");\nclient.println("<!DOCTYPE HTML>");\n';
-	code += 'client.println("<html>");\nclient.println(' + data + ');\nclient.println("</html>");\n';
-	return code
+	return "client.send(ma_page())\nclient.close()\n"
 };
-Blockly.Python['esp8266_send_html']=function(block){
-	var htmlhead=Blockly.Python.statementToCode(block, 'HEAD');
+Blockly.Python['esp8266_start']=function(block){
+	return "client, addr = server.accept()\n"
+};
+Blockly.Python['esp8266_html']=function(block){
+	var htmlhead=block.getFieldValue('HEAD');
 	var htmlbody=Blockly.Python.statementToCode(block, "BODY");
-    var code = 'client.println("HTTP/1.1 200 OK");\nclient.println("Content-Type: text/html; charset=UTF-8");\nclient.println("");\nclient.println("<!DOCTYPE HTML>");\n';
-	code += 'client.println("<html>");\nclient.println("<head>");\n' + htmlhead + 'client.println("</head>");\n';
-	code += 'client.println("<body>");\n' + htmlbody + 'client.println("</body>");\nclient.println("</html>");\n';
-	code += 'delay(1);\nclient.stop();\n' ;
-	return code
+	Blockly.Python.userFunctions_['ma_page'] = "def ma_page():\n  return '''<html>\n  <head>\n    <title>"+htmlhead+"</title>\n    <meta http-equiv=\"Content-Type\" content=\"texte/html; charset=UTF-8\">\n  </head>\n  <body>\n"+htmlbody+"  </body>\n  </html>'''";
+	return ''
 };
 Blockly.Python['esp8266_wait_server']=function(block){
 	return 'WiFiClient client = server.available();\nif (!client) return;\nwhile (!client.available()) { delay(1); }\nchar request = client.read();\nclient.flush();\n'
@@ -201,15 +196,15 @@ Blockly.Python['esp8266_wait_client']=function(block){
 	var port=Blockly.Python.valueToCode(block, "port", Blockly.Python.ORDER_ATOMIC);
 	return 'if (!client.connect(' + host + ',' + port + ')) { delay(1000) ; return }.\nwhile (client.available()){ String reponse = client.read(); };\n'
 };
-Blockly.Python["esp8266_request_indexof"]=function(block){
+Blockly.Python["esp8266_request_find"]=function(block){
     var n=0;
     var argument=Blockly.Python.valueToCode(block, "CASE" + n, Blockly.Python.ORDER_NONE);
     var branch=Blockly.Python.statementToCode(block, "DO" + n);
-	var code='if (request.indexOf(' + argument + ') != -1) {\n' + branch + '}\n';
+	var code='request = client.recv(1024)\nrequest = str(request)\nif request.find(' + argument + ') == 6):\n' + branch;
 	for (n=1; n <= block.casebreakCount_; n++) {
         argument=Blockly.Python.valueToCode(block, "CASE" + n, Blockly.Python.ORDER_NONE);
         branch=Blockly.Python.statementToCode(block, "DO" + n);
-        code += 'if (request.indexOf(' + argument + ') != -1) {\n' + branch + '}\n'
+        code += 'if request.find(' + argument + ') == 6):\n' + branch
     }
 	return code
 };

@@ -166,26 +166,26 @@
 		<category name="CAT_wifi" colour="#154360">
 			<block type="esp8266_init"></block>
 			<block type="esp8266_send"></block>
-			<block type="esp8266_wait_server"></block>
-			<block type="esp8266_send_html"></block>
-			<block type="esp8266_request_indexof"></block>
-			<block type="esp8266_wait_client"></block>
+			<block type="esp8266_html"></block>
+			<block type="esp8266_start"></block>
+			<block type="esp8266_request_find"></block>
 		</category>
 		<category name="CAT_html" colour="#000000">
-			<block type="title"></block>
-			<block type="header"></block>
-			<block type="paragraph"></block>
-			<block type="table"></block>
-			<block type="form"></block>
-			<block type="input"></block>
-			<block type="label"></block>
-			<block type="image"></block>
 			<block type="emptytext"></block>
 			<block type="textmod"></block>
 			<block type="link"></block>
+			<block type="emptyVar"></block>
+			<block type="br"></block>
+			<block type="header"></block>
+			<block type="paragraph"></block>
+			<block type="image"></block>
+			<block type="table"></block>
 			<block type="tablerow"></block>
 			<block type="tableheading"></block>
 			<block type="tabledata"></block>
+			<block type="form"></block>
+			<block type="input"></block>
+			<block type="label"></block>
 			<block type="args"></block>
 			<block type="textalign"></block>
 			<block type="color"></block>
