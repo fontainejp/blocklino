@@ -37,7 +37,7 @@
  },
  "build": {
   "appId": "com.electron.blocklino",
-  "asar": true,
+  "asar": false,
   "directories": {
    "buildResources": "./build",
    "output": "../dist"
