@@ -7,11 +7,11 @@ Blockly.Blocks['mc005']={init:function() {
     this.appendValueInput("pin")
         .setCheck("Number")
         .appendField(new Blockly.FieldImage("data:image/png;base64,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", 40, 21))
-        .appendField("présence détectée sur la broche");
+        .appendField(Blockly.Msg.mc005);
     this.setInputsInline(false);
     this.setOutput(true);
     this.setColour("#00929f");
-    this.setTooltip('ce bloc sert à...');
+    this.setTooltip(Blockly.Msg.mc005_tooltip);
     this.setHelpUrl('http://www.mon-club-elec.fr/pmwiki_reference_arduino/pmwiki.php?n=Main.ReferenceMaxi')}
 };
 Blockly.Arduino['mc005'] = function(block) {
@@ -33,13 +33,13 @@ Blockly.Blocks['inter']={init:function() {
     this.appendValueInput("pin")
         .setCheck("Number")
         .appendField(new Blockly.FieldImage("data:image/png;base64,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", 20, 48))
-        .appendField("interrupteur sur")
+        .appendField(Blockly.Msg.inter)
         .appendField(new Blockly.FieldDropdown(Blockly.Msg.on_off), "state")
         .appendField("connecté à la broche");
     this.setInputsInline(false);
     this.setOutput(true);
     this.setColour("#00929f");
-    this.setTooltip('ce bloc sert à...');
+    this.setTooltip(Blockly.Msg.inter_tooltip);
     this.setHelpUrl('http://www.mon-club-elec.fr/pmwiki_reference_arduino/pmwiki.php?n=Main.ReferenceMaxi')}
 };
 Blockly.Arduino['inter'] = function(block) {
@@ -112,7 +112,7 @@ Blockly.Blocks["dht11"]={init:function(){
         this.setColour("#00929F");
         this.setHelpUrl("http://nagashur.com/blog/2013/06/18/lire-la-valeur-dune-sonde-de-temperature-et-d%E2%80%99hygrometrie-dht11/");
         this.setOutput(true, "Number");
-        this.setTooltip(Blockly.Msg.dht_tooltip)}
+        this.setTooltip(Blockly.Msg.dht11_tooltip)}
 };
 Blockly.Arduino["dht11"]=function(block){
     var dropdown_pin=Blockly.Arduino.valueToCode(block, "PIN", Blockly.Arduino.ORDER_ATOMIC);
@@ -152,7 +152,7 @@ Blockly.Blocks["dht22"]={init:function(){
         this.setColour("#00929F");
         this.setHelpUrl("http://nagashur.com/blog/2013/06/18/lire-la-valeur-dune-sonde-de-temperature-et-d%E2%80%99hygrometrie-dht11/");
         this.setOutput(true, "Number");
-        this.setTooltip(Blockly.Msg.dht_tooltip)}
+        this.setTooltip(Blockly.Msg.dht22_tooltip)}
 };
 Blockly.Arduino["dht22"]=function(block){
     var dropdown_pin=Blockly.Arduino.valueToCode(block, "PIN", Blockly.Arduino.ORDER_ATOMIC);
@@ -478,11 +478,10 @@ Blockly.Python["cap661"]=function(){return''};
 Blockly.Blocks["BME280"]={init:function(){
     this.appendDummyInput()
 		.appendField(new Blockly.FieldImage("data:image/png;base64,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", 45, 36))
-		.appendField("pression atmosphérique");
+		.appendField(Blockly.Msg.bme280);
+    this.setHelpUrl("");
     this.setColour("#00929F");
-    this.setHelpUrl("http://");
-    this.setOutput(true, "Number");
-    this.setTooltip("retourne ")}
+    this.setTooltip(Blockly.Msg.bme280_tooltip)}
 };
 Blockly.Arduino["BME280"]=function(block){
     Blockly.Arduino.includes_["bme280"]='#include <BME280.h>';
@@ -500,11 +499,11 @@ Blockly.Python["BME280"]=function(block){
 };
 //////////////
 Blockly.Blocks["BME280_pressure"]={init:function(){
-    this.appendDummyInput().appendField("pression atmosphérique");
+    this.appendDummyInput().appendField(Blockly.Msg.bme280_pressure);
     this.setColour("#00929F");
-    this.setHelpUrl("http://");
+    this.setHelpUrl("");
     this.setOutput(true, "Number");
-    this.setTooltip("retourne la pression atmosphérique")}
+    this.setTooltip(Blockly.Msg.bme280_pressure_tooltip)}
 };
 Blockly.Arduino["BME280_pressure"]=function(block){
     var code="bme.readFloatPressure()";
@@ -517,16 +516,16 @@ Blockly.Python["BME280_pressure"]=function(block){
 Blockly.Blocks["VL53L0X"]={init:function(){
     this.appendDummyInput()
 		.appendField(new Blockly.FieldImage("data:image/png;base64,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", 40, 36))
-		.appendField("détecteur à laser");
+		.appendField(Blockly.Msg.VL53L0X);
     this.setColour("#00929F");
-    this.setHelpUrl("http://");
-    this.setTooltip("VL530X :")}
+    this.setHelpUrl("");
+    this.setTooltip(Blockly.Msg.VL53L0X_tooltip)}
 };
 Blockly.Arduino["VL53L0X"]=function(block){
+	Blockly.Arduino.includes_["wire"]='#include <Wire.h>';
     Blockly.Arduino.includes_["VL53L0X"]='#include <VL53L0X.h>';
-	Blockly.Arduino.variables_["VL53L0X"]="VL53L0X cpt = VL53L0X();";
-	Blockly.Arduino.setups_["VL53L0X"]='cpt.begin();';
-    return "VL53L0X_RangingMeasurementData_t mesure;"
+	Blockly.Arduino.variables_["VL53L0X"]="VL53L0X cpt;";
+	Blockly.Arduino.setups_["VL53L0X"]='Wire.begin();\n  cpt.init();\n  cpt.setTimeout(500);\n  cpt.startContinuous();'
 };
 Blockly.Python["VL53L0X"]=function(block){
     Blockly.Python.imports_["VL53L0X"]='import VL53L0X';
@@ -536,14 +535,14 @@ Blockly.Python["VL53L0X"]=function(block){
 };
 //////////////
 Blockly.Blocks["VL53L0X_distance"]={init:function(){
-    this.appendDummyInput().appendField("distance mesurée par laser");
+    this.appendDummyInput().appendField(Blockly.Msg.VL53L0X_distance);
     this.setColour("#00929F");
-    this.setHelpUrl("http://");
+    this.setHelpUrl("");
     this.setOutput(true, "Number");
-    this.setTooltip("retourne ")}
+    this.setTooltip(Blockly.Msg.VL53L0X_distance_tooltip)}
 };
 Blockly.Arduino["VL53L0X_distance"]=function(block){
-    var code="mesure.RangeMilliMeter";
+    var code="cpt.readRangeContinuousMillimeters()";
     return [code, Blockly.Arduino.ORDER_ATOMIC]
 };
 Blockly.Python["VL53L0X_distance"]=function(block){

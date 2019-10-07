@@ -73,6 +73,7 @@
 	<category name="CAT_ultrason" colour="#00929F">
 		<block type="io_isButtonPressed"></block>
 		<block type="sensors_getAcceleration"></block>
+		<block type="sensors_calibrate"></block>
 		<block type="sensors_getMagneticForce"></block>
 		<block type="sensors_getLight"></block>
 		<block type="sensors_getTemperature"></block>

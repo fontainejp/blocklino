@@ -454,6 +454,19 @@ Blockly.Python['sensors_getMagneticForce'] = function(block) {
 	return ['compass.heading()', Blockly.Python.ORDER_ATOMIC]
 };
 //////////////
+Blockly.Blocks['sensors_calibrate']={init:function() {
+	this.jsonInit({
+		"message0": "calibrer de la boussole",
+        "colour": "#00929F",
+        "tooltip": "Pour calibrer la boussole, inclinez la cartet pour déplacer le point au centre jusqu'à ce que vous ayez rempli la totalité de l’écran",
+        "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
+	})
+}};
+Blockly.Python['sensors_calibrate'] = function(block) {
+	Blockly.Python.definitions_["calibrate"] = "compass.calibrate()";
+	return ''
+};
+//////////////
 Blockly.Blocks['sensors_getTemperature']={init:function() {
 	this.jsonInit({
 		message0: "température de la carte",

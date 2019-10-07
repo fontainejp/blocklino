@@ -20,7 +20,10 @@ var profile = {
 		build: "",
 		cpu: "cortexM0",
 		speed: "115200",
-		prog: "python"
+		prog: "python",
+		usb: "micro USB",
+		voltage: "3,3V",
+		inout: "20"
 	},
 	esp32: {
 	    description: "ESP32",
@@ -38,7 +41,10 @@ var profile = {
 		build: "",
 		cpu: "esp32",
 		speed: "115200",
-		prog: "python"
+		prog: "python",
+		usb: "micro USB",
+		voltage: "3,3V",
+		inout: "34"
 	},
 	esp8266: {
 	    description: "ESP8266",
@@ -56,7 +62,10 @@ var profile = {
 		build: "",
 		cpu: "esp8266",
 		speed: "115200",
-		prog: "python"
+		prog: "python",
+		usb: "micro USB",
+		voltage: "3,3V",
+		inout: "11"
 	},
 	pyboard: {
 	    description: "pyBoard",
@@ -74,7 +83,10 @@ var profile = {
 		build: "",
 		cpu: "cortexM4",
 		speed: "115200",
-		prog: "python"
+		prog: "python",
+		usb: "micro USB",
+		voltage: "3,3V",
+		inout: "29"
 	},
 	pro8: {
 	    description: "Arduino Pro Mini 3.3V atMega328",
@@ -92,7 +104,10 @@ var profile = {
 		build: "pro8",
 		cpu: "atmega328p",
 		speed: "57600",
-		prog: "arduino"
+		prog: "arduino",
+		usb: "",
+		voltage: "3,3V",
+		inout: "20"
 	},
 	pro16: {
 	    description: "Dagu RS040 / Pro ou Pro Mini",
@@ -110,7 +125,13 @@ var profile = {
 		build: "pro16",
 		cpu: "atmega328p",
 		speed: "57600",
-		prog: "arduino"
+		prog: "arduino",
+		usb: "mini USB",
+		voltage: "5V",
+		inout: "20",
+		usb: "mini USB",
+		voltage: "5V",
+		inout: "20"
 	},
 	atmegang: {
 	    description: "Dagu rs027",
@@ -128,7 +149,10 @@ var profile = {
 		build: "atmegang",
 		cpu: "atmega8",
 		speed: "19200",
-		prog: "arduino"
+		prog: "arduino",
+		usb: "mini USB",
+		voltage: "5V",
+		inout: "20"
 	},
 	nano: {
 	    description: "Arduino Nano",
@@ -146,7 +170,10 @@ var profile = {
 		build: "nano",
 		cpu: "atmega328p",
 		speed: "57600",
-		prog: "arduino"
+		prog: "arduino",
+		usb: "mini USB",
+		voltage: "5V",
+		inout: "20"
 	},
 	mini: {
 	    description: "Arduino Mini",
@@ -164,7 +191,10 @@ var profile = {
 		build: "mini",
 		cpu: "atmega328p",
 		speed: "115200",
-		prog: "arduino"
+		prog: "arduino",
+		usb: "",
+		voltage: "5V",
+		inout: "20"
 	},
 	micro: {
 	    description: "Arduino Micro",
@@ -181,7 +211,10 @@ var profile = {
 		build: "micro",
 		cpu: "atmega32u4",
 		speed: "57600",
-		prog: "avr109"
+		prog: "avr109",
+		usb: "micro USB",
+		voltage: "5V",
+		inout: "20"
 	},
 	yun: {
 	    description: "Arduino Yun",
@@ -199,7 +232,10 @@ var profile = {
 		build: "yun",
 		cpu: "atmega32u4",
 		speed: "57600",
-		prog: "avr109"
+		prog: "avr109",
+		usb: "micro USB",
+		voltage: "5V",
+		inout: "20"
 	},
 	leonardo: {
 	    description: "Arduino Léonardo",
@@ -217,7 +253,10 @@ var profile = {
 		build: "leonardo",
 		cpu: "atmega32u4",
 		speed: "57600",
-		prog: "avr109"
+		prog: "avr109",
+		usb: "micro USB",
+		voltage: "5V",
+		inout: "20"
 	},
 	uno: {
 	    description: "Arduino Uno",
@@ -235,7 +274,10 @@ var profile = {
 		build: "uno",
 		cpu: "atmega328p",
 		speed: "115200",
-		prog: "arduino"
+		prog: "arduino",
+		usb: "USB B",
+		voltage: "5V",
+		inout: "20"
 	},
 	mega:{
 		description: "Arduino Méga 2560 / ADK",
@@ -253,6 +295,9 @@ var profile = {
 		build: "mega",
 		cpu: "atmega2560",
 		speed: "115200",
-		prog: "wiring"
+		prog: "wiring",
+		usb: "USB B",
+		voltage: "5V",
+		inout: "70"
 	}
 };

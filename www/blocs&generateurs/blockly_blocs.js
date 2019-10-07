@@ -1185,12 +1185,12 @@ Blockly.Blocks["intervalle"] = {
 Blockly.Blocks["list_create"]={
 	init: function() {
 		this.appendValueInput("list")
-			.appendField("définir la liste").appendField(new Blockly.FieldVariable(Blockly.Msg.VARIABLES_GET_ITEM), 'VAR').appendField("avec")
+			.appendField(Blockly.Msg.LISTS_CREATE1).appendField(new Blockly.FieldVariable(Blockly.Msg.VARIABLES_GET_ITEM), 'VAR').appendField(Blockly.Msg.LISTS_CREATE2)
 		this.setInputsInline(false);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setColour(Blockly.Blocks.tab.HUE);
-        this.setTooltip("permet de créer une liste avec le nombre d'éléments désiré");
+        this.setTooltip(Blockly.Msg.LISTS_CREATE_TOOLTIP);
         this.setHelpUrl(Blockly.Msg.HELPURL);
         this.contextMenuMsg_ = Blockly.Msg.VARIABLES_SET_CREATE_GET
     },
@@ -1202,7 +1202,7 @@ Blockly.Blocks["list_create"]={
 };
 Blockly.Blocks["list_append"]={
 	init: function() { this.jsonInit({
-        "message0": 'ajouter %1 à la fin de %2',
+        "message0": Blockly.Msg.LISTS_append,
         "args0": [
             {
                     "type": "input_value",
@@ -1218,7 +1218,7 @@ Blockly.Blocks["list_append"]={
         "previousStatement": null,
         "nextStatement": null,
         "colour": Blockly.Blocks.tab.HUE,
-        "tooltip": Blockly.Msg.ARRAY_append_tooltip,
+        "tooltip": Blockly.Msg.LISTS_append_TOOLTIP,
         "helpUrl": Blockly.Msg.ARRAY_append_url
     })},
     contextMenuType_: "variables_get",
@@ -1229,7 +1229,7 @@ Blockly.Blocks["list_append"]={
 };
 Blockly.Blocks["list_size"] = {
     init: function() {
-        this.appendDummyInput().appendField("taille de ").appendField(new Blockly.FieldVariable(Blockly.Msg.VARIABLES_GET_ITEM), 'VAR');
+        this.appendDummyInput().appendField(Blockly.Msg.ARRAY_dim).appendField(new Blockly.FieldVariable(Blockly.Msg.VARIABLES_GET_ITEM), 'VAR');
         this.setOutput(true);
         this.setInputsInline(true);
         this.setColour(Blockly.Blocks.tab.HUE);
@@ -1240,13 +1240,13 @@ Blockly.Blocks["list_size"] = {
 Blockly.Blocks["list_set"] = {
     init: function() {
 		this.appendValueInput("index")
-			.appendField("mettre l'élément");
+			.appendField(Blockly.Msg.LISTS_SET_INDEX_SET);
 		this.appendDummyInput()
-        	.appendField("de ")
+        	.appendField(Blockly.Msg.LISTS_of)
 			.appendField(new Blockly.FieldVariable(Blockly.Msg.VARIABLES_GET_ITEM), 'VAR');
         this.appendValueInput("value")
 			.setAlign(Blockly.ALIGN_RIGHT)
-			.appendField("à");
+			.appendField(Blockly.Msg._AT);
         this.setInputsInline(true);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
@@ -1264,9 +1264,9 @@ Blockly.Blocks["list_set"] = {
 Blockly.Blocks["list_get"] = {
     init: function() {
 		this.appendValueInput("index")
-		.appendField("l'élément");
+		.appendField(Blockly.Msg.LISTS_GET);
         this.appendDummyInput()
-			.appendField("de ")
+			.appendField(Blockly.Msg.LISTS_of)
 			.appendField(new Blockly.FieldVariable(Blockly.Msg.VARIABLES_GET_ITEM), 'VAR');
 		this.setOutput(true);
         this.setInputsInline(true);

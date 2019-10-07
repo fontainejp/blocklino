@@ -7,11 +7,12 @@ Code.LANGUAGE_NAME = {
 };
 Code.LANGUAGE_RTL = ['ar', 'fa', 'he'];
 Code.getLang = function() {
-  var lang = BlocklyDuino.getStringParamFromUrl('lang', '');
-  if (Code.LANGUAGE_NAME[lang] === undefined) {
-    lang = 'fr';
+  var lang = window.localStorage.lang;
+  if (lang === undefined) {
+    lang = 'fr'
+	window.localStorage.lang = lang;
   }
-  return lang;
+  return lang
 };
 Code.isRtl = function() {
   return Code.LANGUAGE_RTL.indexOf(Code.LANG) != -1;
@@ -77,9 +78,11 @@ Code.initLanguage = function() {
 	$('#btn_preview').attr('title', MSG['btn_preview_py']);
 	$('#btn_saveino').attr('title', MSG['btn_save_py']);   
   }
+  $('#btn_copy').attr('title', MSG['btn_copy']);
   $('#btn_print').attr('title', MSG['btn_print']);
   $('#btn_undo').attr('title', MSG['btn_undo']);
   $('#btn_redo').attr('title', MSG['btn_redo']);
+  $('#btn_search').attr('title', MSG['btn_search']);
   $('#btn_new').attr('title', MSG['btn_new']);
   $('#btn_saveXML').attr('title', MSG['btn_saveXML']);
   $('#btn_fakeload').attr('title', MSG['btn_fakeload']);

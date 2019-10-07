@@ -98,6 +98,16 @@ ipcMain.on("modalVar", function (event, arg) {
         }
 	)       
 })
+ipcMain.on('save-bin', function (event) {
+	dialog.showSaveDialog(mainWindow,{
+		title: 'Exporter les binaires',
+		defaultPath: 'Programme.hex',
+		filters: [{ name: 'Binaires', extensions: ['hex']}]
+	},
+	function(filename){
+		event.sender.send('saved-bin', filename)
+	})
+})
 ipcMain.on('save-ino', function (event) {
 	dialog.showSaveDialog(mainWindow,{
 		title: 'Enregistrer au format .INO',

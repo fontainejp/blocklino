@@ -378,9 +378,9 @@ Blockly.Blocks['field_variable'] = { init: function() {
     this.setColour("#00cc00");
     this.appendDummyInput()
         .appendField('variable')
-        .appendField(new Blockly.FieldTextInput('DATA'), 'TEXT')
+        .appendField(new Blockly.FieldTextInput('item'), 'TEXT')
         .appendField(',')
-        .appendField(new Blockly.FieldTextInput('_variable'), 'FIELDNAME');
+        .appendField(new Blockly.FieldTextInput('NAME'), 'FIELDNAME');
     this.setPreviousStatement(true, 'Field');
     this.setNextStatement(true, 'Field');
     this.setTooltip('Dropdown menu for variable names.');
