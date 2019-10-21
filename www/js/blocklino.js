@@ -324,17 +324,17 @@ BlocklyDuino.bindFunctions = function() {
 		$("#toggle").toggle("slide");
 	});
 	$('#btn_verify').mouseover(function() {
-		document.getElementById("survol").textContent = "VERIFIER";
+		document.getElementById("survol").textContent = "VERIFY";
 	}).mouseout(function() {
 		document.getElementById("survol").textContent = "";
 	});
 	$('#btn_flash').mouseover(function() {
-		document.getElementById("survol").textContent = "TELEVERSER";
+		document.getElementById("survol").textContent = "UPLOAD";
 	}).mouseout(function() {
 		document.getElementById("survol").textContent = "";
 	});
 	$('#btn_bin').mouseover(function() {
-		document.getElementById("survol").textContent = "EXPORTER LES BINAIRES";
+		document.getElementById("survol").textContent = "EXPORT BINARY";
 	}).mouseout(function() {
 		document.getElementById("survol").textContent = "";
 	});
