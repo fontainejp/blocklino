@@ -1,8 +1,7 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="fr">
 <head>
-	<link rel="icon" type="image/png" href="media/icon.png" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta charset="utf-8" />
 	<title> BLOCKLINO </title>
 	<!-- JavaScript -->
 	<script type="text/javascript" src="js/blockly.min.js"></script>
@@ -27,15 +26,34 @@
 	<script type="text/javascript" src="blocs&generateurs/_capteur.js"></script>
 	<script type="text/javascript" src="blocs&generateurs/_html.js"></script>
 	<script type="text/javascript" src="blocs&generateurs/_microbit.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/factory/add.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/arduino_conversion_blocs.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/Addon_Arduino.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/Bitwise_operators_blocs.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/Fresnel_serial_console.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/Fresnel_LCD.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/SPI_blocs.js"></script>	
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/DHTxx.js"></script>	
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/SHT1x.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/BQ27441.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/FresnelMotor.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/table_XY_makeblock.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/servomotor.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/SCS15_Servo.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/Grove_I2C_mini_motor_driver.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/Grove_I2C_motor_driver.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/I2C.js"></script>
+	<script type="text/javascript" src="blocs&generateurs/FRESNEL/Ethernet.js"></script>
 	<script type="text/javascript" src="js/typing.js"></script>
 	<script type="text/javascript" src="lang/code.js"></script>
 	<script type="text/javascript" src="js/hexlify.js"></script>
 	<script type="text/javascript" src="js/intel-hex.browser.js"></script>
-	<script type="text/javascript" src="js/ace.js"></script>
-	<script type="text/javascript" src="js/ext-language_tools.js"></script>
+	<script type="text/javascript" src="js/ace/ace.js"></script>
+	<script type="text/javascript" src="js/ace/ext-language_tools.js"></script>
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.3.3.6.css"/>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.toggle.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/fontawesome.css"/>
 	<link rel="stylesheet" type="text/css" href="css/blocklino.css"/>
 	<link rel="stylesheet" type="text/css" href="css/prettify.min.css"/>
 </head>
@@ -43,7 +61,7 @@
 	<div class="loading"></div>
 	<div id="toptitle">
 		<div id="title">
-            <span><img src="media/icon.png"/><span id="span_blocklino"></span></span>
+            <img src="media/icon.png"/><span id="span_blocklino"></span>
 		</div>
         <div id="title-bar-btns">
 			<button id="btn_min" type="button" class="btn btn-minmax"><span class="fa fa-minimize fa-lg"></span></button>
@@ -73,6 +91,9 @@
 				<button id="btn_example" class="btn btn-arduino" data-toggle="modal" data-target="#exampleModal">
 					<span class="fa fa-file-text fa-fw"></span>
 				</button>
+				<!--button id="btn_html" class="btn btn-arduino">
+					<span class="fa fa-html5 fa-lg fa-fw"></span>
+				</button-->
 				<button id="btn_factory" class="btn btn-arduino">
 					<span class="fa fa-industry fa-fw"></span>
 				</button>
@@ -111,7 +132,7 @@
 					</optgroup>
 				</select>
 				<span style="color:white;font-size:4">|</span>
-				<button id="btn_usb" class="btn btn-arduino-rect" data-toggle="modal" data-target="#usb" style="margin-top: -2px; border-top-right-radius: 0px; border-bottom-right-radius: 0px;">
+				<button id="btn_usb" class="btn btn-arduino-rect" style="margin-top: -2px; border-top-right-radius: 0px; border-bottom-right-radius: 0px;">
 					<span class="fa fa-usb fa-fw"></span>
 				</button>	
 				<select style="margin-left: -4px; height: 30px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-left-width: 0px;" id="portserie" onchange="BlocklyDuino.save_com();"></select>
@@ -159,7 +180,7 @@
 				</div>
 			</div>
 		</div>
-		<div role="tabpanel" id="content_code" class="tab-pane fade">#entrer votre code ici</div>
+		<div role="tabpanel" id="content_code" class="tab-pane fade"></div>
 	</div>
 	<!-- message modal -->
 	<div class="modal fade" id="message" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
@@ -217,19 +238,35 @@
 			<div class="modal-body">
 				<label id="span_languageMenu"></label>
 				<select id="languageMenu"></select><br><br>
+				<label id="span_theme"></label>
+				<select id="theme">
+					<option value="monokai">Sombre</option>
+					<option value="sqlserver" selected="selected">Clair</option>
+				</select><br><br>
+				<label id="span_fontsize"></label>
+				<select id="fontsize">
+					<option value="12px">12</option>
+					<option value="14px" selected="selected">14</option>
+					<option value="16px">16</option>
+					<option value="18px">18</option>
+					<option value="20px">20</option>
+					<option value="22px">22</option>
+				</select><br><br>
 				<div id="divToolbox">
 					<label id="labelToolboxDefinition"></label>
 					<select id="toolboxes">
 						<option value="toolbox_6">Débutant</option>
-						<option value="toolbox_arduino_all" selected="selected">Confirmé</option>
-						<option value="toolbox_microbit">Expert</option>
-						<option value="toolbox_lycee">Maître</option>
+						<option value="toolbox_arduino_all" selected="selected">Initié</option>
+						<option value="toolbox_microbit">Confirmé</option>
+						<option value="toolbox_lycee">Expert</option>
+						<option value="toolbox_fresnel_all">Maître</option>
 					</select>
 				</div>
 			</div>
 		  <input type="checkbox" name="select_all" id="select_all"/> <span id="span_select_all"> </span>
 		  <div class="modal-body" id="modal-body-config"></div>
 		  <div class="modal-footer">
+			<button id="btn_reset" type="button" class="btn btn-danger">Vider le cache</button>
 			<button id="btn_valid_config" type="button" class="btn btn-primary"></button>
 		  </div>
 		</div>
@@ -286,25 +323,15 @@
 				</optgroup>
 			</select>
 			<br><br>
-			Connecteur : ...<br>
-			Tension d'alimentation : ...<br>
-			CPU : ...<br>
-			E/S Numérique : ...<br>
-			Entrée analogique : ...<br>
-			Sortie analogique : ...<br>
-			Mémoire flash : ...<br> 
-			RAM : ...<br>
-			EEPROM : ...<br><br>
-		  </div>
-		</div>
-	  </div>
-	</div>
-	<!-- USB modal -->
-	<div class="modal fade" id="usb" >
-	  <div class="modal-dialog modal-sm">
-		<div class="modal-content">	
-		  <div class="modal-body">
-			<span id="aboutusbLabel"></span>
+			<span id="span_card_connect" style="text-decoration:underline;"></span><span id="card_connect" style="font-weight:bold;"></span><br>
+			<span id="span_card_voltage" style="text-decoration:underline;"></span><span id="card_voltage" style="font-weight:bold;"></span><br>
+			<span id="span_card_cpu" style="text-decoration:underline;"></span><span id="card_cpu" style="font-weight:bold;"></span><br>
+			<span id="span_card_inout" style="text-decoration:underline;"></span><span id="card_inout" style="font-weight:bold;"></span><br>
+			<span id="span_card_in_anal" style="text-decoration:underline;"></span><span id="card_in_anal" style="font-weight:bold;"></span><br>
+			<span id="span_card_out_anal" style="text-decoration:underline;"></span><span id="card_out_anal"style="font-weight:bold;"></span><br>
+			<span id="span_card_flash" style="text-decoration:underline;"></span><span id="card_flash" style="font-weight:bold;"></span><br>
+			<span id="span_card_ram" style="text-decoration:underline;"></span><span id="card_ram" style="font-weight:bold;"></span><br>
+			<span id="span_card_eeprom" style="text-decoration:underline;"></span><span id="card_eeprom" style="font-weight:bold;"></span><br>
 		  </div>
 		</div>
 	  </div>
@@ -387,7 +414,6 @@
     editor.setTheme("ace/theme/sqlserver");
 	editor.session.setTabSize(2);
 	editor.setShowPrintMargin(false);
-	require('../resources/app/index.js');
-	require('../resources/app/factory.js');
+	require('../resources/app/index.js')
 </script>
 </html>

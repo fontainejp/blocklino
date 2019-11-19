@@ -1,6 +1,6 @@
 {
  "name": "Blocklino",
- "version": "1.5.0",
+ "version": "1.6.0",
  "description": "environnement de développement pour langage graphique",
  "author": "Fontaine Jean Philippe",
  "license": "CC0-1.0",
@@ -22,10 +22,6 @@
   "electron-updater",
   "PYTHON",
   "python",
-  "PYFLAKES",
-  "pyflakes",
-  "ampy",
-  "AMPY",
   "microbit",
   "MICROBIT"
  ],
@@ -54,8 +50,8 @@
   },
   "win": {
    "target": [
-    "portable",
     "nsis",
+    "portable",
     "zip"
    ],
    "icon": "build/app.ico"
@@ -102,6 +98,7 @@
   "ajv": "6.10.0",
   "child_process": "1.0.2",
   "electron-updater": "4.0.6",
-  "serialport": "7.1.4"
+  "serialport": "7.1.4",
+  "tableify": "1.1.0"
  }
 }

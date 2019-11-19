@@ -1,0 +1,76 @@
+@CHARSET "UTF-8";
+body {
+	background-color: #fff;
+	height: 100%,
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	margin: 0
+}
+#toptitle {
+    -webkit-app-region: drag;
+	height: 41px;
+	text-align: center;
+	line-height: 41px;
+	vertical-align: middle;
+	background-color: #5cb85c;
+	padding: none;
+	margin: 0px
+}
+#title {
+	position: fixed;
+	top: 5px;
+	left: 5px;
+	color: white
+}
+#title-bar-btns {
+	-webkit-app-region: no-drag;
+	position: fixed;
+	right: 0px
+}
+#btn_group {
+	float: right;
+	right: 5px;
+	z-index: 10
+}
+#container {
+	background-color: #fff;
+    position: absolute;
+    top: 45px;
+	left: 5px;
+    bottom: 0px;
+    width: 99%;
+}
+#blocklyDiv{
+	height:95%
+}
+#blockly_l{
+	background-color: #fff;
+	float:left;
+	width:60%;
+	height:99%
+}
+#blockly_r{
+	float:right;
+	height:99%;
+	width:40%
+}
+.btn-minmaxgreen { 
+  color: #fff; 
+  width: 40px;
+  height: 40px;
+  background-color: #5cb85c; 
+  border-color: #5cb85c; 
+  line-height: 0px;
+  padding:0;
+}
+.btn-quitgreen { 
+  color: #fff; 
+  width: 40px;
+  height: 40px;
+  background-color: #5cb85c; 
+  border-color: #5cb85c; 
+  line-height: 0px;
+  padding:0;
+}
+.blocklyToolboxDiv {
+	opacity: 0.8 
+}

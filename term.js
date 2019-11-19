@@ -3,20 +3,20 @@ var remote = require('electron').remote
 var fs = require('fs')
 
 window.addEventListener('load', function load(event) {
+	var window = remote.getCurrentWindow() 
 	var connexion = false
 	document.getElementById('btn_envoi').disabled=true
-	document.getElementById('btn_efface').onclick = function(event) {
+	document.getElementById('btn_efface').onclick = function() {
 		document.getElementById('fenetre_term').textContent = ''
 	}
-	document.getElementById('btn_envoi').onclick = function(event) {
+	document.getElementById('btn_envoi').onclick = function() {
 		var entree = document.getElementById('schbox').value
 		if (s_p.isOpen) {
 			document.getElementById('fenetre_term').innerHTML += entree+"<br>"
 			s_p.write(entree)
 		}
 	}
-	document.getElementById('btn_quit').onclick = function(event) {
-		var window = remote.getCurrentWindow() 
+	document.getElementById('btn_quit').onclick = function() {
 		window.close()
 	}
 	document.getElementById('btn_connect').onclick = function(event) {

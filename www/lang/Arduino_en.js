@@ -2,6 +2,9 @@
 goog.provide ( 'Blockly.Msg.fr');
 goog.require ( 'Blockly.Msg');
 // Electron window
+Blockly.Msg.survol_check = "CHECK";
+Blockly.Msg.survol_flash = "UPLOAD";
+Blockly.Msg.survol_bin = "EXPORT binaries"; 
 Blockly.Msg.com1 = "Choose the port";
 Blockly.Msg.com2 = "Select a port!" ;
 Blockly.Msg.check = "Check";
@@ -153,6 +156,8 @@ Blockly.Msg.pir_tooltip = "HC-SR501: \nreturns true (false) if a presence is (is
 Blockly.Msg.feu_tooltip = "CAP168: \nreturns true (false) if a flame is (is not) detected";
 Blockly.Msg.presence_tooltip = "CAP711: \nreturns true (false) if a contact has (did not) take place";
 Blockly.Msg.appui_tooltip = "CAP831: \nreturns true (false) if a support is (is not) detected";
+Blockly.Msg.CAP661="pulses on pin";
+Blockly.Msg.CAP661_TOOLTIP="returns the number of slots (full + hollow) of the encoder wheel";
 // bluetooth
 Blockly.Msg.bluetooth1 = "if the data received by bluetooth";
 Blockly.Msg.bluetooth1_tooltip = "bluetooth data reception \nconnecting module HC-06 to pins 0 and 1 \net cross Rx and Tx pins";
@@ -358,3 +363,9 @@ Blockly.Msg.SSERIAL_Write_tooltip = "Send data to the software port";
 Blockly.Msg.SSERIAL_Read_tooltip = "returns the first byte of incoming data available in the software port, or -1 if no data is available";
 Blockly.Msg.SSERIAL_Available = "amount of data on the software port";
 Blockly.Msg.SSERIAL_Available_tooltip = "returns the number of available bytes in the software port queue, or 0 if nothing is available";
+// storage
+Blockly.Msg.STOCK1="store the data";
+Blockly.Msg.STOCK2="at the address";
+Blockly.Msg.STOCK_TOOLTIP="allows to write a data (8 bits or a byte) in the EEPROM, to the indicated address \nATmega328p and ATmega32u4 -> 1024 bytes \nATmega2560 -> 4096 bytes";
+Blockly.Msg.STOCK3="data stored at the address";
+Blockly.Msg.STOCK3_TOOLTIP="returns the data stored at the specified address (8 bits or one byte) \nATmega328p and ATmega32u4 -> 1024 bytes \nATmega2560 -> 4096 bytes";

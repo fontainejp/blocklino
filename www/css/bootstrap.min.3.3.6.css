@@ -30,50 +30,36 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
 .show > .btn-secondary.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5);
 }
-.btn-minmax { 
-  color: #666666; 
-  width: 40px;
-  height: 40px;
-  background-color: #008080; 
-  border-color: #008080; 
-  line-height: 0px;
-  padding:0;
+.btn-orange {
+  color: #fff;
+  background-color: #FFA500;
+  border-color: #FFA500;
 }
-.btn-quit { 
-  color: #d9534f; 
-  width: 40px;
-  height: 40px;
-  background-color: #008080; 
-  border-color: #008080; 
-  line-height: 0px;
-  padding:0;
+.btn-orange:hover {
+  color: #fff;
+  background-color: #FFB611;
+  border-color: #FFB611;
 }
-.btn-minmaxBlue { 
-  color: #666666; 
-  width: 40px;
-  height: 40px;
-  background-color: #5bc0de; 
-  border-color: #5bc0de; 
-  line-height: 0px;
-  padding:0;
+.btn-orange:focus, .btn-orange.focus {
+  color: #fff;
+  background-color: #FFB611;
+  border-color: #FFB611;
+  box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5);
 }
-.btn-quitBlue { 
-  color: #d9534f; 
-  width: 40px;
-  height: 40px;
-  background-color: #5bc0de; 
-  border-color: #5bc0de; 
-  line-height: 0px;
-  padding:0;
+.btn-orange.disabled, .btn-orange:disabled {
+  color: #fff;
+  background-color: #FFA500;
+  border-color: #FFA500;
 }
-.btn-quitGray { 
-  color: #d9534f; 
-  width: 40px;
-  height: 40px;
-  background-color: #b8b8b8; 
-  border-color: #b8b8b8; 
-  line-height: 0px;
-  padding:0;
+.btn-orange:not(:disabled):not(.disabled):active, .btn-orange:not(:disabled):not(.disabled).active,
+.show > .btn-orange.dropdown-toggle {
+  color: #fff;
+  background-color: #FFA500;
+  border-color: #FFB611;
+}
+.btn-orange:not(:disabled):not(.disabled):active:focus, .btn-orange:not(:disabled):not(.disabled).active:focus,
+.show > .btn-orange.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5);
 }
 .btn-arduino { 
   color: #727272; 
@@ -116,96 +102,3 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
 h4{
 	margin-left: 5px;
 }
-.fa ,
-.fas{
-  display: inline-block;
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.fa-spin {
-  -webkit-animation: fa-spin 2s infinite linear;
-          animation: fa-spin 2s infinite linear;
-}
-.fa-pulse {
-  -webkit-animation: fa-spin 1s infinite steps(8);
-          animation: fa-spin 1s infinite steps(8);
-}
-@-webkit-keyframes fa-spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg); }
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg); }
-}
-@keyframes fa-spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg); }
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg); }
-}
-.fa-lg {
-  font-size: 1.25em;
-  line-height: 0.75em;
-  vertical-align: -15%;
-}
-.fa-1_5x {
-  font-size: 1.5em;
-}
-.fa-1_75x {
-  font-size: 1.75em;
-}
-.fa-2x {
-  font-size: 2em;
-}
-.fa-3x {
-  font-size: 3em;
-}
-.fa-fw {
-  width: 1.28571429em;
-  text-align: center;
-}
-.fa-inverse {color: #ffffff;}
-.fa-industry:before{content:"\f275"}
-.fa-times:before{content:"\f00d"}
-.fa-calendar-check-o:before {content: "\f274"}
-.fa-arrow-right:before {content: "\f061"}
-.fa-question:before {content: "\f128"}
-.fa-camera:before {content: "\f030"}
-.fa-code:before {content: "\f121"}
-.fa-repeat:before{content:"\f01e"}
-.fa-undo:before{content:"\f0e2"}
-.fa-cloud-download:before{content:"\f0ed"}
-.fa-file-text:before{content:"\f15c"}
-.fa-file:before{content:"\f15b"}
-.fa-folder-open:before{content:"\f07c"}
-.fa-cog:before{content:"\f013"}
-.fa-github:before{content:"\f09b"}
-.fa-check:before{content:"\f00c"}
-.fa-envelope:before{content:"\f0e0"}
-.fa-terminal:before{content:"\f120"}
-.fa-floppy-o:before{content:"\f0c7"}
-.fa-search:before{content:"\f002"}
-.fa-minimize:before{content:"\f2d1"}
-.fa-maximize:before{content:"\f2d0"}
-.fa-download:before{content:"\f019"}
-.fa-spinner:before{content:"\f110"}
-.fa-comments:before{content:"\f086"}
-.fa-puzzle:before{content:"\f12e"}
-.fa-eject:before{content:"\f052"}
-.fa-pause:before{content:"\f04c"}
-.fa-play:before{content:"\f04b"}
-.fa-eraser:before{content:"\f12d"}
-.fa-chevron-right:before{content:"\f054"}
-.fa-microchip:before{content:"\f2db"}
-.fa-usb:before{content:"\f287"}
-.fa-graduation:before{content:"\f19d"}
-.fa-binoculars:before{content:"\f1e5"}
-.fa-files-o:before{content:"\f0c5"}
-.fa-code-fork:before{content:"\f126"}

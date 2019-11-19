@@ -1,4 +1,5 @@
 var { ipcRenderer, shell, clipboard } = require("electron")
+var remote = require('electron').remote
 var { exec } = require('child_process')
 var sp = require('serialport')
 var fs = require('fs')
@@ -6,6 +7,7 @@ var path = require('path')
 var appVersion = window.require('electron').remote.app.getVersion()
 
 window.addEventListener('load', function load(event) {
+	var window = remote.getCurrentWindow() 
 	var quitDiv = '<button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
 	var checkBox = document.getElementById('verifyUpdate')
 	var portserie = document.getElementById('portserie')
@@ -16,53 +18,6 @@ window.addEventListener('load', function load(event) {
 		messageDiv.style.color = '#009000'
 		messageDiv.innerHTML = Blockly.Msg.upload + ': OK' + quitDiv
 	}
-	$('#btn_forum').on('click', function(){
-		shell.openExternal('http://blockly.technologiescollege.fr/forum/')
-	})
-	$('#btn_site').on('click', function(){
-		shell.openExternal('http://lesormeaux.net/blocklino/start.html')
-	})
-	$('#btn_contact').on('click', function(){
-		shell.openExternal('mailto:jean-philippe.fontaine@ac-rouen.fr')
-	})
-	$('#portserie').mouseover(function(){
-		sp.list(function(err,ports) {
-			var nb_com = localStorage.getItem("nb_com"), menu_opt = portserie.getElementsByTagName('option')
-			if(ports.length > nb_com){
-				ports.forEach(function(port){
-					if (port.vendorId){
-						var opt = document.createElement('option')
-						opt.value = port.comName
-						opt.text = port.comName
-						portserie.appendChild(opt)
-						localStorage.setItem("com",port.comName)
-					}
-				})
-				localStorage.setItem("nb_com",ports.length)
-				localStorage.setItem("com",portserie.options[1].value)
-			}
-			if(ports.length < nb_com){
-				while(menu_opt[1]) {
-					portserie.removeChild(menu_opt[1])
-				}
-				localStorage.setItem("com","com")
-				localStorage.setItem("nb_com",ports.length)
-			}
-		})
-	})
-	$('#btn_copy').on('click', function(){
-		clipboard.writeText($('#pre_previewArduino').text())
-	})
-	$('#btn_bin').on('click', function(){
-		if (localStorage.getItem('verif') == "false"){
-			$("#message").modal("show")
-			messageDiv.style.color = '#000000'
-			messageDiv.innerHTML = Blockly.Msg.verif + quitDiv
-			return
-		}
-		localStorage.setItem("verif",false)
-		ipcRenderer.send('save-bin') 
-	})
 	$.ajax({
 	    cache: false,
 	    url: "../config.json",
@@ -112,6 +67,66 @@ window.addEventListener('load', function load(event) {
 			localStorage.setItem("com","com")
 		}
 	})
+	$('#btn_quit').on('click', function(){
+		window.close()
+	})
+	$('#btn_max').on('click', function(){
+		if(window.isMaximized()){
+			window.unmaximize()
+		} else {
+			window.maximize()
+		}
+	})
+	$('#btn_min').on('click', function(){
+		window.minimize()
+	})
+	$('#btn_forum').on('click', function(){
+		shell.openExternal('http://blockly.technologiescollege.fr/forum/')
+	})
+	$('#btn_site').on('click', function(){
+		shell.openExternal('http://lesormeaux.net/blocklino/start.html')
+	})
+	$('#btn_contact').on('click', function(){
+		shell.openExternal('mailto:jean-philippe.fontaine@ac-rouen.fr')
+	})
+	$('#portserie').mouseover(function(){
+		sp.list(function(err,ports) {
+			var nb_com = localStorage.getItem("nb_com"), menu_opt = portserie.getElementsByTagName('option')
+			if(ports.length > nb_com){
+				ports.forEach(function(port){
+					if (port.vendorId){
+						var opt = document.createElement('option')
+						opt.value = port.comName
+						opt.text = port.comName
+						portserie.appendChild(opt)
+						localStorage.setItem("com",port.comName)
+					}
+				})
+				localStorage.setItem("nb_com",ports.length)
+				localStorage.setItem("com",portserie.options[1].value)
+			}
+			if(ports.length < nb_com){
+				while(menu_opt[1]) {
+					portserie.removeChild(menu_opt[1])
+				}
+				localStorage.setItem("com","com")
+				localStorage.setItem("nb_com",ports.length)
+			}
+		})
+	})
+	$('#btn_copy').on('click', function(){
+		clipboard.writeText($('#pre_previewArduino').text())
+	})
+	$('#btn_bin').on('click', function(){
+		if (localStorage.getItem('verif') == "false"){
+			$("#message").modal("show")
+			messageDiv.style.color = '#000000'
+			messageDiv.innerHTML = Blockly.Msg.verif + quitDiv
+			return
+		}
+		localStorage.setItem("verif",false)
+		ipcRenderer.send('save-bin') 
+	})
 	$('#btn_version').on('click', function(){
 		$('#aboutModal').modal('hide')
 		ipcRenderer.send("version", "")
@@ -125,8 +140,11 @@ window.addEventListener('load', function load(event) {
 		}
 		if (localStorage.getItem("prog") == "python") { ipcRenderer.send("repl", "") } else { ipcRenderer.send("prompt", "") }
 	})
+	$('#btn_html').on('click', function(){
+		ipcRenderer.send("html", "")	
+	})
 	$('#btn_factory').on('click', function(){
-		ipcRenderer.send("factory", "")	
+		ipcRenderer.send("factory", "")
 	})
 	$('#btn_verify').on('click', function(){
 		if (localStorage.getItem('content') == "off") {
@@ -181,7 +199,11 @@ window.addEventListener('load', function load(event) {
 		localStorage.setItem("verif",true)
 	})
 	$('#btn_flash').on('click', function(){
-		var data = $('#pre_previewArduino').text()
+		if (localStorage.getItem('content') == "off") {
+			var data = editor.getValue()
+		} else {
+			var data = $('#pre_previewArduino').text()
+		}
 		var carte = localStorage.getItem('card')
 		var prog = profile[carte].prog
 		var speed = profile[carte].speed
@@ -268,6 +290,13 @@ window.addEventListener('load', function load(event) {
 			if (localStorage.getItem("prog") == "python") { ipcRenderer.send('save-py') } else { ipcRenderer.send('save-ino') }
 		}
 	})
+	$('#btn_usb').on('click', function(){
+		ipcRenderer.send("usb", "")
+	})
+	$('#btn_reset').on('click', function(){
+		localStorage.clear()
+		ipcRenderer.send("reload", "")
+	})
 	ipcRenderer.on('saved-ino', function(event, path){
 		var code = $('#pre_previewArduino').text()
 		if (path === null) {
@@ -343,5 +372,20 @@ window.addEventListener('load', function load(event) {
 			fs.copyFile('./compilation/arduino/build/sketch.ino.hex', res[0]+'.hex', (err) => {if (err) throw err})
 			fs.copyFile('./compilation/arduino/ino/sketch.ino', res[0]+'.ino', (err) => {if (err) throw err})
 		}
+	})
+	ipcRenderer.on('saved-png', function(event, path){
+		if (path === null) {
+			return
+		} else {
+			code 
+			fs.writeFile(path, code, function(err){
+				if (err) return console.log(err)
+			})
+		}
+	})
+	ipcRenderer.on('BlockAdded', function(event, bloc){
+		BlocklyDuino.workspace.clear()
+		BlocklyDuino.workspace.newBlock(bloc)
+		ipcRenderer.send("reload", "")
 	})
 })

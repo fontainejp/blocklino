@@ -1,0 +1,55 @@
+@CHARSET "UTF-8";
+#divfenetre {
+	background-color: #fff;
+    position: absolute;
+    top: 45px;
+    bottom: 0px;
+    width: 100%
+}
+#title-bar {
+    -webkit-app-region: drag;
+	height: 41px;
+	text-align: center;
+	line-height: 41px;
+	vertical-align: middle;
+	background-color: #5bc0de;
+	padding: none;
+	margin: 0px
+}
+#title {
+	position: fixed;
+	top: 0px;
+	left: 6px;
+	color:white
+}
+#title-bar-btns {
+	-webkit-app-region: no-drag;
+	position: fixed;
+	right: 0px
+}
+#fenetre_term{
+	width: 630px;
+	height: 415px;
+	border: 1px solid #ccc;
+	padding:0px 5px 5px 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	border-radius: 5px;
+	overflow: auto
+}
+#header {
+    position: absolute;
+    top: 40px;
+	background: #fff;
+	height: 40px;
+    width: 100%
+}
+.btn-quitBlue { 
+  color: #fff; 
+  width: 40px;
+  height: 40px;
+  background-color: #5bc0de; 
+  border-color: #5bc0de; 
+  line-height: 0px;
+  padding:0;
+}

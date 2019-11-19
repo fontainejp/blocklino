@@ -10,6 +10,12 @@ BlocklyDuino.init = function() {
 	Code.initLanguage();
 	BlocklyDuino.loadConfig();
 	BlocklyDuino.workspace = Blockly.inject('content_blocks',{grid:{snap:true},sounds:false,media:'media/',toolbox:BlocklyDuino.buildToolbox(),zoom:{controls:true,wheel:true}});
+	var bTD = document.getElementsByClassName('blocklyToolboxDiv');
+	if ($("#toolboxes").val()=="toolbox_fresnel_all") {
+		bTD[0].style.width = "290px"
+	} else {
+		bTD[0].style.width = "160px"
+	}
 	BlocklyDuino.bindFunctions();
 	BlocklyDuino.workspace.render();
 	BlocklyDuino.workspace.addChangeListener(BlocklyDuino.renderArduinoCodePreview);
@@ -176,14 +182,26 @@ BlocklyDuino.loadConfig = function() {
 		$("#boards").val(BlocklyDuino.selectedCard);
 		$('#arduino_card_mini_picture').attr("src", profile[BlocklyDuino.selectedCard]['picture']);
 		$("#toolboxes").val(BlocklyDuino.selectedToolbox);
-		BlocklyDuino.loadToolboxDefinition(BlocklyDuino.selectedToolbox)
+		BlocklyDuino.loadToolboxDefinition(BlocklyDuino.selectedToolbox);
+		/*var bTD = document.getElementsByClassName('blocklyToolboxDiv');
+		if ($("#toolboxes").val()=="toolbox_fresnel_all") {
+			bTD[0].style.width = "290px"
+		} else {
+			bTD[0].style.width = "160px"
+		}*/
 	} else {
 		var toolbox = window.localStorage.toolbox;
 		BlocklyDuino.selectedToolbox = toolbox;
 		$("#boards").val(card);
 		$('#arduino_card_mini_picture').attr("src", profile[card]['picture']);
 		$("#toolboxes").val(toolbox);
-		BlocklyDuino.loadToolboxDefinition(toolbox)
+		BlocklyDuino.loadToolboxDefinition(toolbox);
+		/*var bTD = document.getElementsByClassName('blocklyToolboxDiv');
+		if ($("#toolboxes").val()=="toolbox_fresnel_all") {
+			bTD[0].style.width = "290px"
+		} else {
+			bTD[0].style.width = "160px"
+		}*/
 	}
 	if (content===undefined) {
 		window.localStorage.content = BlocklyDuino.content;
@@ -246,11 +264,21 @@ BlocklyDuino.change_card = function() {
 	window.localStorage.card = new_card
 };
 BlocklyDuino.discard = function() {
-  var count = BlocklyDuino.workspace.getAllBlocks().length;
-  if (count < 4 || window.confirm(MSG['discard'])) {
-    BlocklyDuino.workspace.clear();
-    BlocklyDuino.workspace.render();
-  }
+	if (localStorage.getItem('content') == "off") {
+		if (window.confirm(MSG['discard'])) {
+			if (window.localStorage.prog == "python") {
+				editor.setValue("# python 3.7.2",1)
+			} else {
+				editor.setValue("void setup() {\n\n}\n\nvoid loop() {\n\n}",1)
+			}
+		}
+	} else {
+		var count = BlocklyDuino.workspace.getAllBlocks().length;
+		if (count < 4 || window.confirm(MSG['discard'])) {
+			BlocklyDuino.workspace.clear();
+			BlocklyDuino.workspace.render();
+		}
+	}
 };
 BlocklyDuino.Undo = function() {
 	if (localStorage.getItem("content") == "on") {
@@ -324,17 +352,17 @@ BlocklyDuino.bindFunctions = function() {
 		$("#toggle").toggle("slide");
 	});
 	$('#btn_verify').mouseover(function() {
-		document.getElementById("survol").textContent = "VERIFIER";
+		document.getElementById("survol").textContent = Blockly.Msg.survol_check;
 	}).mouseout(function() {
 		document.getElementById("survol").textContent = "";
 	});
 	$('#btn_flash').mouseover(function() {
-		document.getElementById("survol").textContent = "TELEVERSER";
+		document.getElementById("survol").textContent = Blockly.Msg.survol_flash;
 	}).mouseout(function() {
 		document.getElementById("survol").textContent = "";
 	});
 	$('#btn_bin').mouseover(function() {
-		document.getElementById("survol").textContent = "EXPORTER LES BINAIRES";
+		document.getElementById("survol").textContent = Blockly.Msg.survol_bin;
 	}).mouseout(function() {
 		document.getElementById("survol").textContent = "";
 	});
@@ -346,6 +374,14 @@ BlocklyDuino.bindFunctions = function() {
 		BlocklyDuino.loadToolboxDefinition(BlocklyDuino.selectedToolbox);
 	});
 	$('#load').on("change", BlocklyDuino.load);
+	$('#fontsize').on("change", function(){
+		document.getElementById('content_code').style.fontSize = $(this).val();
+		//window.localStorage.size = $(this).val();
+	});
+	$('#theme').on("change", function(){
+		editor.setTheme('ace/theme/' + $(this).val());
+		//window.localStorage.theme = $(this).val();
+	});
 	$('#btn_fakeload').on("click", function() {
 		$('#load').click()
 	});
@@ -393,7 +429,7 @@ BlocklyDuino.openConfigToolbox = function() {
 BlocklyDuino.changeToolbox = function() {
 	BlocklyDuino.backupBlocks();
 	var toolboxIds = [];
-	window.localStorage.lang = $('#languageMenu').val();
+	var new_lang = $('#languageMenu').val();
 	$('#modal-body-config input:checkbox[id^=checkbox_]').each(function() {
 		if (this.checked == true) {
 			var xmlid = this.id;
@@ -403,7 +439,17 @@ BlocklyDuino.changeToolbox = function() {
 	window.localStorage.toolboxids = toolboxIds;
 	Blockly.getMainWorkspace().updateToolbox(BlocklyDuino.buildToolbox());
 	BlocklyDuino.workspace.render();
-	$('#configModal').modal('hide')
+	$('#configModal').modal('hide');
+	var bTD = document.getElementsByClassName('blocklyToolboxDiv');
+	if ($("#toolboxes").val()=="toolbox_fresnel_all") {
+		bTD[0].style.width = "290px"
+	} else {
+		bTD[0].style.width = "160px"
+	}
+	if (new_lang != window.localStorage.lang){
+		window.localStorage.lang = new_lang;
+		window.location = window.location.href
+	}
 };
 BlocklyDuino.buildToolbox = function() {
 	var loadIds = window.localStorage.toolboxids;
@@ -608,8 +654,10 @@ BlocklyDuino.workspace_capture = function() {
 };
 BlocklyDuino.cardPicture_change = function() {
 	if ($("#pinout").val()) {
-		$('#arduino_card_mini_picture').attr("src", profile[$("#pinout").val()]['picture'])
-	} else {
-		$('#arduino_card_mini_picture').attr("src", "")
+		$('#arduino_card_mini_picture').attr("src", profile[$("#pinout").val()]['picture']);
+		document.getElementById("card_connect").textContent=profile[$("#pinout").val()]['usb'];
+		document.getElementById("card_cpu").textContent=profile[$("#pinout").val()]['cpu'];
+		document.getElementById("card_voltage").textContent=profile[$("#pinout").val()]['voltage'];
+		document.getElementById("card_inout").textContent=profile[$("#pinout").val()]['inout'];
 	}
 };

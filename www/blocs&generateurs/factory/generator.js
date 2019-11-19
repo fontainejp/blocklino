@@ -74,13 +74,15 @@ function formatJavaScript(code, rootBlock) {
   }
   var colourBlock = rootBlock.getInputTargetBlock('COLOUR');
   if (colourBlock && !colourBlock.disabled) {
-    var hue = parseInt(colourBlock.getFieldValue('HUE'), 10);
-    code.push('    this.setColour(' + hue + ');');
+    var hue = colourBlock.getFieldValue('HUE');
+	if (hue[0]=="#") {
+	code.push("    this.setColour('" + hue + "')}");
+	} else {
+	code.push("    this.setColour(" + hue + ")}");
+	}
   } else {
-	  code.push('    this.setColour("#00929f");');
+  code.push("    this.setColour('#00929f')}");
   }
-  code.push("    this.setTooltip('ce bloc sert à...');");
-  code.push("    this.setHelpUrl('https://tinyurl.com/ychsbjt7')}");
   code.push("};");
 }
 function connectionLineJs_(functionName, typeName) {
@@ -249,26 +251,36 @@ function updateGenerator() {
       }
     }
 	if (language_generator=="Arduino") {
-		code.push("    Blockly." + language_generator + ".includes_[] = 'code des bibliotheques';");
-		code.push("    Blockly." + language_generator + ".variables_[] = 'code des variables';");
-		code.push("    Blockly." + language_generator + ".definitions_[] = 'code des instances';");
-		code.push("    Blockly." + language_generator + ".userFunctions_[] = 'code des fonctions';");
-		code.push("    Blockly." + language_generator + ".setups_[]='placer ici le code du setup()';");
-		code.push("    var code = 'placer ici le code du loop()';");
+		code.push("    Blockly." + language_generator + ".includes_['lib'] = '#include <lib.h>;';");
+		code.push("    Blockly." + language_generator + ".variables_['var'] = 'int var;';");
+		code.push("    Blockly." + language_generator + ".definitions_['inst'] = 'inst instance;';");
+		code.push("    Blockly." + language_generator + ".userFunctions_['func'] = 'void func(){return 0};';");
+		code.push("    Blockly." + language_generator + ".setups_['setup'] = 'code du setup();';");
+		if (rootBlock.getFieldValue('CONNECTIONS') == 'LEFT') {
+			code.push("    var code = 'code du loop()';");
+			code.push("    return [code, Blockly." + language_generator + ".ORDER_ATOMIC];");
+		} else {
+			code.push("    var code = 'code du loop();';");
+			code.push("    return code");
+		}
 	} else {
-		code.push("    Blockly." + language_generator + ".imports_[] = 'code des bibliotheques'");
-		code.push("    Blockly." + language_generator + ".definitions_[] = 'code des bibliotheques'");
-		code.push("    Blockly." + language_generator + ".userFunctions_[] = 'code des fonctions'");
-		code.push("    var code = 'placer ici le reste du code'");
+		code.push("    Blockly." + language_generator + ".imports_['lib'] = 'import lib';");
+		code.push("    Blockly." + language_generator + ".definitions_['inst'] = 'inst instance';");
+		code.push("    Blockly." + language_generator + ".userFunctions_['func'] = 'def func():\\n  return 0';");
+		code.push("    var code = 'placer ici le reste du code';");
+		if (rootBlock.getFieldValue('CONNECTIONS') == 'LEFT') {
+			code.push("    return [code, Blockly." + language_generator + ".ORDER_ATOMIC];");
+		}
 	}
-    if (rootBlock.getFieldValue('CONNECTIONS') == 'LEFT') {
-      code.push("    return [code, Blockly." + language_generator + ".ORDER_ATOMIC];");
-    } else {
-      code.push("    return code");
-    }
   }
   code.push("};");
-  injectCode(code, 'generatorPre');
+  editor.session.setMode("ace/mode/javascript");
+  editor.setOptions({
+	enableBasicAutocompletion: true,
+	enableSnippets: true,
+	enableLiveAutocompletion: true
+  })
+  editor.setValue(code.join('\n'),1);
 }
 var oldDir = null;
 function updatePreview() {
@@ -326,9 +338,9 @@ function init() {
   var onresize = function(e) {
     for (var i = 0, expand; expand = expandList[i]; i++) {
       expand.style.width = (expand.parentNode.offsetWidth - 2) + 'px';
-      expand.style.height = (expand.parentNode.offsetHeight - 2) + 'px';
+      expand.style.height = (expand.parentNode.offsetHeight - 2) + 'px'
     }
-  };
+  }
   onresize();
   window.addEventListener('resize', onresize);
   var toolbox = document.getElementById('toolbox_factory');

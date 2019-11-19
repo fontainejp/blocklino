@@ -185,7 +185,7 @@ Blockly.Python['esp8266_start']=function(block){
 Blockly.Python['esp8266_html']=function(block){
 	var htmlhead=block.getFieldValue('HEAD');
 	var htmlbody=Blockly.Python.statementToCode(block, "BODY");
-	Blockly.Python.userFunctions_['ma_page'] = "def ma_page():\n  return '''<html>\n  <head>\n    <title>"+htmlhead+"</title>\n    <meta http-equiv=\"Content-Type\" content=\"texte/html; charset=UTF-8\">\n  </head>\n  <body>\n"+htmlbody+"  </body>\n  </html>'''";
+	Blockly.Python.userFunctions_['ma_page'] = "def ma_page():\n  return '''<!DOCTYPE HTML>\n  <html lang=\"fr\">\n  <head>\n    <title>"+htmlhead+"</title>\n    <meta charset=\"UTF-8\">\n  </head>\n  <body>\n"+htmlbody+"  </body>\n  </html>'''";
 	return ''
 };
 Blockly.Python['esp8266_wait_server']=function(block){

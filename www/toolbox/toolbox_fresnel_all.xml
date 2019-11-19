@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolbox>
+ 	<parametre id="defaultCategories">CAT_LOGIC,CAT_MATH,CAT_BITWISE,CAT_TEXT,CAT_TAB,CAT_VARIABLES,CAT_ARDUINO_CONVERSION,CAT_FUNCTIONS,CAT_ARDUINO,CAT_ARDUINO_IN,CAT_ARDUINO_TIME,CAT_FONCTION_AFFICHAGE,CAT_FONCTION_CAPTEURS,CAT_FONCTION_MOTEURS,CAT_FONCTION_ENTREES,CAT_FONCTION_SORTIES,CAT_FONCTION_BUS,CAT_FONCTION_WIRELESS,CAT_FONCTION_TABLE_XY,CAT_FONCTION_STOCKAGE
+	</parametre> 
+	<category name="CAT_LOGIC" colour="#727272">
+		<block type="controls_if"></block>
+        <block type="controls_repeat_ext"></block>
+        <block type="controls_whileUntil"></block>
+        <block type="controls_flow_statements"></block>
+		<block type="inout_onoff"></block>
+        <block type="logic_operation"></block>
+		<block type="controls_for"></block>
+		<block type="controls_switch"></block>
+        <block type="logic_negate"></block>
+        <block type="logic_null"></block>
+	</category>
+    <category name="CAT_MATH" colour="#00cc00">
+        <block type="math_number"></block>
+		<block type="inout_angle_maths"></block>
+        <block type="logic_compare"></block>
+        <block type="math_arithmetic"></block>
+		<block type="intervalle"></block>
+        <block type="math_single"></block>
+        <block type="math_round"></block>
+        <block type="math_trig"></block>
+        <block type="math_constant"></block>
+        <block type="math_number_property"></block>
+        <block type="math_modulo"></block>
+		<block type="math_random_int"></block>
+    </category>
+	<category name="CAT_BITWISE" colour="#123456">
+			<block type="Not_Bitwise"></block>
+			<block type="Bitwise_Operators"></block>
+			<block type="Data_Format"></block>
+	</category>
+    <category name="CAT_TEXT" colour="#FD6C9E">
+		<block type="text"></block>
+		<block type="text_char"></block>
+		<block type="text_join"></block>
+        <block type="text_length"></block>
+        <block type="text_isEmpty"></block>
+    </category>
+	<category name="CAT_TAB" colour="#804000">
+		<block type="creer_tableau"></block>
+		<block type="array_create_with"></block>
+		<block type="fixer_tableau"></block>
+		<block type="array_getIndex"></block>
+		<block type="array_getsize"></block>
+    </category>
+    <category name="CAT_VARIABLES" custom="VARIABLE" colour="#FFA500"></category>
+	<category name="CAT_ARDUINO_CONVERSION" colour="#00979D">
+		<block type="conversion_tochar"></block>
+		<block type="conversion_tobyte"></block>
+		<block type="conversion_toint"></block>
+		<block type="conversion_tolong"></block>
+		<block type="conversion_tofloat"></block>
+		<block type="conversion_toString"></block>
+		<block type="conversion_map"></block>
+	</category>
+    <category name="CAT_FUNCTIONS" custom="PROCEDURE" colour="#FF0000"></category>
+    <category name="CAT_ARDUINO" colour="#4a235a">
+		<block type="base_setup"></block>
+		<block type="base_loop"></block>		
+		<block type="base_setup_loop"></block>
+		<block type="base_end"></block>
+		<block type="base_define"></block>
+		<block type="base_code"></block>
+		<block type="base_code_entree"></block>
+		<block type="biblio_include"></block>
+		<block type="include_file"></block>
+		<block type="base_comment"></block>
+	</category>
+	<category name="CAT_ARDUINO_IN" colour="#787746">
+				<block type="inout_digital_mode"></block>
+		<category name="CAT_FONCTION_ARDUINO_ENTREES" colour="#787746">
+			<category name="CAT_FONCTION_ENTREES_NUM" colour="#787746">  			
+				<block type="digital_read"></block>
+				<block type="inout_attachInterrupt"></block>
+				<block type="inout_detachInterrupt"></block>
+				<block type="inout_port_digital_read"></block>
+			</category>
+			<category name="CAT_FONCTION_ENTREES_ANA" colour="#787746">  			
+				<block type="inout_analog_read"></block>
+			</category>
+		</category>
+		<category name="CAT_FONCTION_ARDUINO_SORTIES" colour="#787746"> 
+			<category name="CAT_FONCTION_SORTIES_NUM" colour="#787746">  			
+				<block type="inout_digital_write"></block>
+				<block type="toggle"></block>
+				<block type="inout_port_digital_write"></block>
+			</category>
+			<category name="CAT_FONCTION_SORTIES_ANA" colour="#787746">  			
+				<block type="inout_analog_write"></block>
+			</category>
+		</category>	
+	</category>	
+	<category name="CAT_ARDUINO_TIME" colour="#bbbbbb">	
+		<block type="millis"></block>
+		<block type="inout_pulsein"></block>
+		<block type="inout_pulsein_timeout"></block>
+		<block type="base_delay"></block>
+		<block type="delay_time"></block>
+		<block type="tempo_sans_delay"></block>
+	</category>
+	<category name="CAT_FONCTION_AFFICHAGE" colour="#5CB712">
+		<category name="CAT_FONCTION_AFFICHAGE_LED" colour="#5CB712">	
+			<block type="inout_buildin_led"></block>
+		</category>
+		<category name="CAT_FONCTION_AFFICHAGE_7SEG" colour="#5CB712">	</category>
+		<category name="CAT_FONCTION_AFFICHAGE_LCD" colour="#5CB712">
+			<category name="CAT_FONCTION_AFFICHAGE_LCD_SERIE" colour="#5CB712">			
+				<block type="grove_serial_lcd_power"></block> <!-- foireux -->
+				<block type="grove_serial_lcd_print"></block>
+				<block type="grove_serial_lcd_effect"></block>
+			</category>
+			<category name="CAT_FONCTION_AFFICHAGE_LCD_I2C" colour="#5CB712">	
+				<category name="CAT_FONCTION_AFFICHAGE_LCD_I2C_GROVE" colour="#5CB712">	
+					<block type="grove_lcd_rgb_init"></block>
+					<block type="grove_lcd_rgb_clear"></block>
+					<block type="grove_lcd_rgb_set_cursor"></block>
+					<block type="grove_lcd_rgb_set_RGB"></block>
+					<block type="grove_lcd_rgb_print_data"></block>
+					<block type="grove_lcd_rgb_write_data"></block>
+					<block type="grove_lcd_rgb_scrolling"></block>
+				</category>
+				<category name="CAT_FONCTION_AFFICHAGE_LCD_I2C_ADAFRUIT" colour="#5CB712">	
+					<block type="Adafruit_RGB_LCD_Shield_init"></block>
+					<block type="Adafruit_RGB_LCD_Shield_clear"></block>
+					<block type="Adafruit_RGB_LCD_Shield_set_cursor"></block>
+					<block type="Adafruit_RGB_LCD_Shield_set_RGB"></block>
+					<block type="Adafruit_RGB_LCD_Shield_print_data"></block>
+					<block type="Adafruit_RGB_LCD_Shield_write_data"></block>
+					<block type="Adafruit_RGB_LCD_Shield_scrolling"></block>
+					<block type="Adafruit_RGB_LCD_Shield_read_button"></block>
+				</category>
+			</category>
+			<category name="CAT_FONCTION_AFFICHAGE_LCD_4BITS" colour="#5CB712">			
+				<block type="Lcd4bits_init"></block>
+				<block type="Lcd4bits_clear"></block>
+				<block type="Lcd4bits_set_cursor"></block>
+				<block type="Lcd4bits_print_data"></block>
+				<block type="Lcd4bits_write_data"></block>				
+			</category>
+			<sep></sep>
+		</category>
+		<category name="CAT_FONCTION_AFFICHAGE_SERIE" colour="#5CB712">		
+			<block type="serial_init2"></block>
+			<block type="serial_write2"></block>
+			<block type="serial_print_multi2"></block>
+			<block type="serial_print_integer2"></block>
+			<block type="serial_print_float2"></block>
+			<block type="serial_available2"></block>
+			<block type="serial_read2"></block>
+		</category>
+		<sep></sep>
+	</category>
+	<category name="CAT_FONCTION_CAPTEURS" colour="#58B5DC">
+		<category name="CAT_FONCTION_CAPTEURS_TEMPERATURE" colour="#58B5DC"></category>
+		<category name="CAT_FONCTION_CAPTEURS_TEMPHUM" colour="#58B5DC"> 
+				<category name="CAT_FONCTION_CAPTEURS_DHTxx" colour="#58B5DC"> 
+					<block type="DHTxx_init"></block>
+					<block type="DHTxx_read"></block>
+					<block type="DHTxx_read_bytes"></block>
+				</category>
+				<category name="CAT_FONCTION_CAPTEURS_SHT1x" colour="#58B5DC"> 
+					<block type="sht1x_init"></block>
+					<block type="sht1x_start"></block>
+					<block type="sht1x_send_command"></block>
+					<block type="sht1x_eoc"></block>
+					<block type="sht1x_getbyte"></block>
+					<block type="sht1x_ack"></block>
+					<block type="sht1x_skip_ack"></block>
+				</category>
+		</category>
+		<!-- <category name="CAT_FONCTION_CAPTEURS_LOAD" colour="#58B5DC"> 	 -->
+		<!-- <category name="CAT_FONCTION_Amplificateur_HX711" colour="#58B5DC">  -->
+					<!-- <block type="HX711_init"></block> -->
+					<!-- <block type="HX711_set_gain"></block> -->
+				<!-- </category> -->
+				<!-- <sep></sep> -->
+		<!-- </category> -->
+		<category name="CAT_FONCTION_CAPTEURS_LUX" colour="#58B5DC"> 	</category>
+		<category name="CAT_FONCTION_CAPTEURS_VOCAL" colour="#58B5DC"> 	</category>
+		<category name="CAT_FONCTION_CAPTEURS_BATTERY" colour="#58B5DC">
+				<category name="CAT_FONCTION_CAPTEURS_BQ27441" colour="#58B5DC"> 
+							<block type="BQ27441_init"></block>
+							<block type="BQ27441_setup"></block>
+							<block type="BQ27441_set_capacity"></block>
+				</category>
+				<sep></sep>
+		</category>
+		
+		<category name="CAT_FONCTION_CAPTEURS_COLOR" colour="#58B5DC"> 	</category>
+		<sep></sep>
+	</category>
+	<category name="CAT_FONCTION_MOTEURS" colour="20">
+		<category name="CAT_FONCTION_MOTEURS_MOTORCC" colour="20">	
+			<category name="CAT_FONCTION_MOTEURS_MOTORCC_L298" colour="20">	
+				<block type="l298n_motor"></block>
+				<block type="l298n_motor_init"></block>
+			</category>
+			<category name="CAT_FONCTION_MOTEURS_MOTORCC_ADAFRUITV11" colour="20">	
+				<block type="motorCC_config"></block>
+				<block type="motorCC_setspeed"></block>
+				<block type="motorCC_run"></block>
+			</category>	
+			<category name="CAT_FONCTION_MOTEURS_MOTORCC_GROVEV13" colour="20">	
+				<block type="I2C_MotorShield_begin"></block>
+				<block type="I2C_MotorShield_DC_speed"></block>
+				<block type="I2C_MotorShield_DC_stop"></block>
+			</category>	
+			<category name="CAT_FONCTION_MOTEURS_MOTORCC_GROVE_MINI_DRIVER_V10" colour="20">	
+				<block type="Grove_mini_motor_driver_init"></block>
+				<block type="Grove_mini_motor_driver_speed"></block>
+				<block type="Grove_mini_motor_driver_stop"></block>
+				<block type="Grove_mini_motor_driver_brake"></block>
+				<block type="Grove_mini_motor_driver_getfault"></block>
+			</category>	
+		</category>
+		<category name="CAT_FONCTION_MOTEURS_PAP" colour="20">	
+			<category name="CAT_FONCTION_MOTEURS_PAP_ULN2003" colour="20">	
+				<block type="stepper2_config"></block>
+				<block type="stepper2_setspeed"></block>
+				<block type="stepper2_step"></block>
+			</category>
+			<category name="CAT_FONCTION_MOTEURS_PAP_ADAFRUITV11" colour="20">	
+				<block type="stepper22_config"></block>
+				<block type="stepper22_setspeed"></block>
+				<block type="stepper22_step"></block>
+				<block type="stepper22_onestep"></block>
+				<block type="stepper22_release"></block>
+			</category>
+			<category name="CAT_FONCTION_MOTEURS_PAP_GROVEV13" colour="20">
+				<block type="I2C_MotorShield_begin"></block>
+				<block type="I2C_MotorShield_PAP_step"></block>				
+			</category>	
+			<category name="CAT_FONCTION_MOTEURS_PAP_GROVE_MINI_DRIVER_V10" colour="20">	
+				<block type="Grove_mini_motor_driver_stepper_init"></block>
+				<block type="Grove_mini_motor_driver_stepper_set_speed"></block>
+				<block type="Grove_mini_motor_driver_stepper_step"></block>
+			</category>	
+		</category>
+		
+		<category name="CAT_FONCTION_MOTEURS_SERVO" colour="20">
+		<category name="CAT_FONCTION_MOTEURS_SERVO_ANALOG" colour="20">
+			<block type="servo_attach"></block>
+			<block type="servo_detach"></block>
+			<block type="servo_write"></block>
+			<block type="servo_writeus"></block>
+		</category>	
+		<category name="CAT_FONCTION_MOTEURS_SERVO_SCS15" colour="20">	
+				<block type="SCS15_Servo_init">
+				<value name="Serial_ID">
+						<shadow type="math_number">
+							<field name="NUM">1</field>
+						</shadow>
+				</value>
+				<value name="Baud_rate">
+						<shadow type="math_number">
+							<field name="NUM">38400</field>
+						</shadow>
+				</value>
+				</block>
+				<block type="SCS15_Servo_Enable_Torque">
+				<value name="Motor_ID">
+						<shadow type="math_number">
+							<field name="NUM">0</field>
+						</shadow>
+				</value>
+				</block>
+				<block type="SCS15_Servo_Read_Position">
+				<value name="Motor_ID">
+						<shadow type="math_number">
+							<field name="NUM">0</field>
+						</shadow>
+				</value>
+				</block>
+				<block type="SCS15_Servo_Write_Position">
+				<value name="Motor_ID">
+						<shadow type="math_number">
+							<field name="NUM">0</field>
+						</shadow>
+				</value>
+				</block>
+		</category>	
+		</category>
+		<sep></sep>
+	</category>
+	<category name="CAT_FONCTION_BUS" colour="#E1A91A">
+		<category name="CAT_FONCTION_BUS_RS232" colour="#E1A91A">					
+			<block type="soft_init"></block>
+			<block type="soft_print"></block>
+			<block type="soft_write"></block>
+			<block type="soft_available"></block>
+			<block type="soft_read"></block>	
+		</category>
+		<category name="CAT_FONCTION_BUS_I2C" colour="#E1A91A">						
+			<category name="CAT_FONCTION_BUS_I2C_SOFT" colour="#E1A91A">				
+				<block type="I2C_init">
+					<value name="Pin_SCL">
+						<shadow type="math_number">
+							<field name="NUM"></field>
+						</shadow>
+					</value>
+					<value name="Pin_SDA">
+						<shadow type="math_number">
+							<field name="NUM"></field>
+						</shadow>
+					</value>
+				</block>
+				<block type="I2C_start">
+						<value name="Address">
+							<shadow type="math_number">
+								<field name="NUM"></field>
+							</shadow>
+						</value>
+				</block>
+				<block type="I2C_restart">
+						<value name="Address">
+							<shadow type="math_number">
+								<field name="NUM"></field>
+							</shadow>
+						</value>
+				</block>
+				<block type="I2C_stop"></block>
+				<block type="I2C_write">
+						<value name="Data">
+							<shadow type="math_number">
+								<field name="NUM"></field>
+							</shadow>
+						</value>
+				</block>
+				<block type="I2C_read"></block>
+				<block type="I2C_scan"></block>
+			</category>
+			<category name="CAT_FONCTION_BUS_I2C_HARD" colour="#E1A91A">				
+				<block type="I2C_init_HW"></block>
+				<block type="I2C_stop_HW"></block>
+				<block type="I2C_restart_HW"></block>
+				<block type="I2C_start_2_HW">
+				<value name="Slave_Address">
+					<shadow type="Data_Format">
+						<field name="value">00</field>
+					</shadow>
+				</value>
+				</block> 
+				<block type="I2C_write_2_HW">
+					<value name="data">
+						<shadow type="Data_Format">
+							<field name="value">00</field>
+						</shadow>
+					</value>
+				</block>
+				<block type="I2C_request_2_HW">
+					<value name="Slave_Address">
+						<shadow type="Data_Format">
+							<field name="value">00</field>
+						</shadow>
+					</value>
+					<value name="Number_of_Bytes">
+						<shadow type="math_number">
+							<field name="NUM">1</field>
+						</shadow>
+					</value>
+				</block> 
+				<block type="I2C_available_HW"></block>
+				<block type="I2C_data_HW"></block>
+			</category>
+		</category>
+		<category name="CAT_FONCTION_BUS_SPI" colour="#E1A91A">						
+			<block type="SPI_init">
+				<value name="Speed">
+						<shadow type="math_number">
+							<field name="NUM">1</field>
+						</shadow>
+				</value>
+			</block>
+			<block type="SPI_send_2">
+				<value name="data">
+					<shadow type="Data_Format">
+						<field name="value">00</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="SPI_receive"></block>
+		</category>
+		<category name="CAT_FONCTION_BUS_1WIRE" colour="#E1A91A">					</category>
+		<category name="CAT_FONCTION_BUS_Ethernet" colour="#E1A91A">		    	
+			<category name="CAT_ETHERNET_CLIENT" colour="#FFCC66">
+				<block type="ethernet_begin_staticIP_client">
+					<value name="MAC_ADDRESS">
+						<block type="ethernet_mac_address"></block>
+					</value>
+				</block>
+				<block type="ethernet_begin_dhcp_client">
+					<value name="MAC_ADDRESS">
+						<block type="ethernet_mac_address"></block>
+					</value>		
+				</block>	
+				<block type="ethernet_connect">
+					<value name="SERVER">
+						<block type="text">
+							<field name="TEXT">www.google.com</field>
+						</block>
+					</value>
+				</block>
+				
+				<block type="ethernet_available"></block>
+				<block type="ethernet_print">
+					<value name="TEXT">
+						<block type="text">
+							<field name="TEXT"></field>
+						</block>
+					</value>
+				</block>
+				<block type="ethernet_println">
+					<value name="TEXT">
+						<block type="text">
+							<field name="TEXT"></field>
+						</block>
+					</value>
+				</block>
+				<block type="ethernet_read"></block>
+				<block type="ethernet_get_request"></block>
+				<block type="ethernet_post_request"></block>
+			</category>
+			<category name="CAT_ETHERNET_SERVER" colour="#FFCC66">
+				<block type="ethernet_begin_dhcp_server">
+					<value name="MAC_ADDRESS">
+						<block type="ethernet_mac_address"></block>
+					</value>
+				</block>
+				<block type="ethernet_begin_staticIP_server">
+					<value name="MAC_ADDRESS">
+						<block type="ethernet_mac_address"></block>
+					</value>
+				</block>
+				<block type="ethernet_localip"></block>
+				<block type="ethernet_ATTENTE_CLIENT"></block>
+				<block type="ethernet_stop"></block>
+				<block type="ethernet_connected"></block>
+				<block type="ethernet_HTML_send_page"></block>
+				<category name="Analyseur de requête" colour="#FFCC66">	
+					<block type="ethernet_PARSERV2_CREATION"></block>
+					<block type="ethernet_PARSERV2_LECTURE"></block>
+					<block type="ethernet_PARSERV2_PARSING"></block>
+					<block type="ethernet_PARSERV2_GETNAME"></block>
+					<block type="ethernet_PARSERV2_GETVALUE"></block>
+					<block type="ethernet_PARSERV2_FREE"></block>
+					<block type="ethernet_PARSERV2_ATOI"></block>
+					<block type="ethernet_PARSERV2_ATOF"></block>
+				</category>
+			</category>	
+		</category>
+	<sep></sep>
+	</category>
+	<category name="CAT_FONCTION_WIRELESS" colour="20">
+		<category name="CAT_FONCTION_WIRELESS_BLUTOOTH" colour="20">		</category>
+		<category name="CAT_FONCTION_WIRELESS_WIFI" colour="20">			
+			<block type="ethernet_wifi_begin_server"></block>
+			<block type="ethernet_client_for_wifi_server"></block>
+			<block type="ethernet_wifi_localip"></block>	
+		</category>
+		<category name="CAT_FONCTION_WIRELESS_RFID" colour="20">			</category>
+		<category name="CAT_FONCTION_WIRELESS_NFC" colour="20">			</category>
+		<category name="CAT_FONCTION_WIRELESS_GPS" colour="20">			</category>
+		<category name="CAT_FONCTION_WIRELESS_GSM" colour="20">			</category>
+		<category name="CAT_FONCTION_WIRELESS_IR" colour="20">				</category>
+		<category name="CAT_FONCTION_WIRELESS_RC5" colour="20">			</category>
+		<category name="CAT_FONCTION_WIRELESS_RF24" colour="20">			</category>
+		<category name="CAT_FONCTION_WIRELESS_ZIGBEE" colour="20">			</category>
+		<sep></sep>
+	</category>
+	<category name="CAT_FONCTION_TABLE_XY" colour="#58B5DC">
+	<category name="CAT_FONCTION_TABLE_INIT" colour="#58B5DC">		
+			<block type="table_XY_makeblock_init"></block>
+		</category>
+		<category name="CAT_FONCTION_TABLE_SWITCH" colour="#58B5DC">		
+			<block type="table_XY_makeblock_read_switch"></block>
+		</category>
+		<category name="CAT_FONCTION_TABLE_STEPPER" colour="#58B5DC">	
+			<block type="table_XY_makeblock_stepper_settings"></block>		
+			<block type="table_XY_makeblock_stepper_move_to"></block>
+			<block type="table_XY_makeblock_stepper_run"></block>
+			<block type="table_XY_makeblock_stepper_run_to_position"></block>
+			<block type="table_XY_makeblock_stepper_run_to_new_position"></block>
+			<block type="table_XY_makeblock_stepper_stop"></block>
+			<block type="table_XY_makeblock_stepper_get_speed"></block>
+			<block type="table_XY_makeblock_stepper_get_position"></block>
+			<block type="table_XY_makeblock_stepper_set_current_position"></block>
+		</category>
+		<category name="CAT_FONCTION_TABLE_SERVO" colour="#58B5DC">		
+			<block type="table_XY_makeblock_servo"></block>
+		</category>
+		<category name="CAT_FONCTION_TABLE_COLOR_SENSOR" colour="#58B5DC">		
+			<block type="table_XY_makeblock_color_sensor_init"></block>
+			<block type="table_XY_makeblock_color_sensor_return_data"></block>
+		</category>
+		<sep></sep>
+	</category>
+	<category name="CAT_FONCTION_STOCKAGE" colour="#58B5DC">
+		<category name="CAT_FONCTION_STOCKAGE_EEPROM" colour="#58B5DC">		
+			<block type="storage_eeprom_write_long"></block>
+			<block type="storage_eeprom_read_long"></block>
+			<block type="storage_eeprom_write_byte"></block>
+			<block type="storage_eeprom_read_byte"></block>
+		</category>
+		<category name="CAT_FONCTION_STOCKAGE_SDCARD" colour="#58B5DC">		
+			<block type="storage_sd_write"></block>
+		</category>
+		<sep></sep>
+	</category>
+</toolbox>
+
+
+
+

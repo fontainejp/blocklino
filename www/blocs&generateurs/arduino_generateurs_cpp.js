@@ -126,7 +126,6 @@ Blockly.Arduino["esp8266_request_indexof"]=function(block){
 	return code
 };
 /*  bluetooth  */
-
 Blockly.Arduino["bluetooth_init"]=function(block){
     var dropdown_pin1=Blockly.Arduino.valueToCode(block,"PIN1", Blockly.Arduino.ORDER_NONE);
     var dropdown_pin2=Blockly.Arduino.valueToCode(block,"PIN2", Blockly.Arduino.ORDER_NONE);
@@ -323,5 +322,5 @@ Blockly.Arduino['eeprom_write'] = function(block) {
 Blockly.Arduino['eeprom_read'] = function(block) {
 	var adresse = Blockly.Arduino.valueToCode(block, 'adr', Blockly.Arduino.ORDER_ATOMIC);
 	Blockly.Arduino.includes_["eeprom"]='#include <EEPROM.h>';
-	return 'EEPROM.read('+adresse+')';
+return ['EEPROM.read('+adresse+')', Blockly.Arduino.ORDER_ATOMIC];
 };

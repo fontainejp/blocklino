@@ -13,7 +13,7 @@ Blockly.Blocks['io_readDigitalPin']={init:function() {
         }],
         "colour": "#787746",
         "output": "Number",
-        "tooltip": "retourne l'état logique (0 ou 1) de la broche indiquée",
+        "tooltip": Blockly.Msg.ARDUINO_INOUT_DIGITAL_READ_TOOLTIP,
         "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
 	})
 }};
@@ -23,7 +23,7 @@ Blockly.Python['io_readDigitalPin'] = function(block) {
 //////////////
 Blockly.Blocks['io_writeDigitalPin']={init:function() {
 	this.jsonInit({
-		"message0": Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_INPUT1 + "%1" + "à" + "%2",
+		"message0": Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_INPUT1 + "%1" + Blockly.Msg._AT + "%2",
         "args0":[{
             "type": "input_value",
             "name": "PIN",
@@ -37,7 +37,7 @@ Blockly.Blocks['io_writeDigitalPin']={init:function() {
         "colour": "#787746",
         "previousStatement": null,
         "nextStatement": null,        
-        "tooltip": "écrire un état logique (0 ou 1) sur la broche indiquée",
+        "tooltip": Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_TOOLTIP,
         "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
 	})
 }};
@@ -59,7 +59,7 @@ Blockly.Blocks['io_readAnalogPin']={init:function() {
         }],
         "colour": "#787746",
         "output": "Number",
-        "tooltip": "retourne la valeur (de 0 à 1023) de la broche indiquée",
+        "tooltip": Blockly.Msg.ARDUINO_INOUT_ANALOG_READ_TOOLTIP,
         "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
 	})
 }};
@@ -70,7 +70,7 @@ Blockly.Python['io_readAnalogPin'] = function(block) {
 Blockly.Blocks['io_writeAnalogPin']={init:function() {
 	var card=window.localStorage.card;
 	this.jsonInit({
-		"message0": Blockly.Msg.ARDUINO_INOUT_ANALOG_WRITE_INPUT1 + "%1 %2 à %3",
+		"message0": Blockly.Msg.ARDUINO_INOUT_ANALOG_WRITE_INPUT1 + "%1 %2 " + Blockly.Msg._AT + " %3",
         "args0":[{
             "type": "field_dropdown",
             "name": "PIN",
@@ -87,7 +87,7 @@ Blockly.Blocks['io_writeAnalogPin']={init:function() {
         "colour": "#787746",
         "previousStatement": null,
         "nextStatement": null,        
-        "tooltip": "écrire la valeur (de 0 à 1023) sur la broche indiquée",
+        "tooltip": Blockly.Msg.MICROBIT_ANALOG_WRITE_TOOLTIP,
         "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
 	})
 }};
@@ -102,7 +102,7 @@ Blockly.Python['io_writeAnalogPin'] = function(block) {
 Blockly.Blocks['init_leds']={init:function() {
 	this.jsonInit({
 		"lastDummyAlign0": "CENTRE",
-        "message0": "définir le symbole %1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18 %19 %20 %21 %22 %23 %24 %25 %26 %27 %28 %29 %30 %31",
+        "message0": Blockly.Msg.lcd_symbole + " %1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18 %19 %20 %21 %22 %23 %24 %25 %26 %27 %28 %29 %30 %31",
         args0: [{
 			"type": "field_variable",
 			"name": "VAR",
@@ -257,13 +257,13 @@ Blockly.Blocks['init_leds']={init:function() {
         "previousStatement": null,
         "nextStatement": null,
         "colour": "#00929F",        
-        "tooltip": "définition d'un symbole pour la matrice :\nune case cochée allume une DEL",
+        "tooltip": Blockly.Msg.matrice16x8_symbole_tooltip,
         "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
 	})
 }};
 Blockly.Python['init_leds'] = function(block) {
 	var vname=Blockly.Python.variableDB_.getName(block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
-	const BRIGHTNESS = 5;
+	const BRIGHTNESS = 7;
     var image = "";
     for (var r = 0; r < 5; r++) {
         for (var c = 0; c < 5; c++) {
@@ -278,7 +278,7 @@ Blockly.Python['init_leds'] = function(block) {
 //////////////
 Blockly.Blocks['show_leds']={init:function() {
 	this.jsonInit({
-		"message0": "afficher le symbole %1",
+		"message0": Blockly.Msg.matrice16x8_aff + " %1",
         "args0": [{
             "type": "field_variable",
 			"name": "VAR",
@@ -287,7 +287,7 @@ Blockly.Blocks['show_leds']={init:function() {
         "previousStatement": null,
         "nextStatement": null,
         "colour": "#00929F",
-        "tooltip": "Affiche le symbole qui aura été préalablement défini",
+        "tooltip": Blockly.Msg.matrice16x8_aff_tooltip,
         "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
 	})
 }};
@@ -298,7 +298,7 @@ Blockly.Python['show_leds'] = function(block) {
 //////////////
 Blockly.Blocks['show_string']={init:function() {
 	this.jsonInit({
-		"message0": "faire défiler %1",
+		"message0": Blockly.Msg.MICROBIT_SHOW_STRING + " %1",
         "args0": [{
             "type": "input_value",
             "name": "TEXT"
@@ -306,7 +306,7 @@ Blockly.Blocks['show_string']={init:function() {
         "previousStatement": null,
         "nextStatement": null,
         "colour": "#00929F",
-        "tooltip": "fait défiler le texte indiqué sur la matrice intégrée",
+        "tooltip": Blockly.Msg.MICROBIT_SHOW_STRING_TOOLTIP,
         "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
 	})
 }};
@@ -317,20 +317,20 @@ Blockly.Python['show_string'] = function(block) {
 //////////////
 Blockly.Blocks['show_icon']={init:function() {
 	this.jsonInit({
-		"message0": "afficher le symbole %1",
+		"message0": Blockly.Msg.matrice16x8_aff +" %1",
         "args0": [{
             "type": "field_dropdown",
             "name": "ICON",
-            "options": [["coeur", "HEART_SMALL"],
-                ["COEUR", "HEART"],
-                ["damier", "CHESSBOARD"],
-                ["smile", "HAPPY"],
-                ["triste", "SAD"]]
+            "options": [["\u2661", "HEART_SMALL"],
+                ["\u2665", "HEART"],
+                ["\u25A6", "CHESSBOARD"],
+                ["\u263A", "HAPPY"],
+                ["\u2639", "SAD"]]
         }],
         "previousStatement": null,
         "nextStatement": null,
         "colour": "#00929F",
-        "tooltip": "affiche les symboles prédéfinis :\nun petit coeur, un gros coeur, un sourire, un visage triste et un damier",
+        "tooltip": Blockly.Msg.MICROBIT_SHOW_ICON_TOOLTIP,
         "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
 	})
 }};
@@ -341,7 +341,7 @@ Blockly.Python['show_icon'] = function(block) {
 //////////////
 Blockly.Blocks['set_pixel']={init:function() {
 	this.jsonInit({
-		"message0": "mettre la DEL X %1 Y %2 à %3",
+		"message0": Blockly.Msg.MICROBIT_SET_PIXEL +" X %1 Y %2 "+Blockly.Msg._AT+" %3",
         "args0": [{
             "type": "input_value",
             "name": "X",
@@ -354,7 +354,7 @@ Blockly.Blocks['set_pixel']={init:function() {
         },{
             "type": "input_value",
             "name": "VALUE",
-            "check": "Boolean" ,
+            "check": "Number" ,
 			"align": "RIGHT"  
         }],
         "colour": "#00929F",
@@ -366,20 +366,17 @@ Blockly.Blocks['set_pixel']={init:function() {
 }};
 Blockly.Python['set_pixel'] = function(block) {
 	var x = Blockly.Python.valueToCode(block, "X", Blockly.Python.ORDER_NONE);
-    if (x < 0) b = 0;
-    if (x > 5) b = 5;
+    if (x > 5) x = 5;
     var y = Blockly.Python.valueToCode(block, "Y", Blockly.Python.ORDER_NONE);
-    if (y < 0) b = 0;
-    if (y > 5) b = 5;
+    if (y > 5) y = 5;
     var state = Blockly.Python.valueToCode(block, "VALUE", Blockly.Python.ORDER_NONE);
-    var light = 5;
-    if (state == 0) light = 0;
-    return "display.set_pixel(" + x + "," + y + "," + light + ")\n"
+    if (state > 9) state = 9;
+    return "display.set_pixel(" + x + "," + y + "," + state + ")\n"
 };
 //////////////
 Blockly.Blocks['clear']={init:function() {
 	this.jsonInit({
-		"message0": "éteindre toutes les DEL",
+		"message0": Blockly.Msg.MICROBIT_CLEAR,
         "previousStatement": null,
         "nextStatement": null,
         "colour": "#00929F",
@@ -390,10 +387,24 @@ Blockly.Blocks['clear']={init:function() {
 Blockly.Python['clear'] = function(block) {
 	return "display.clear()\n"
 };
-/*		capteur	*/
+//////////////
+Blockly.Blocks['show']={init:function() {
+	this.jsonInit({
+		"message0": Blockly.Msg.MICROBIT_SHOW,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#00929F",
+        "tooltip": Blockly.Msg.MICROBIT_SHOW_TOOLTIP,
+        "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
+	})
+}};
+Blockly.Python['show'] = function(block) {
+	return "display.show()\n"
+};
+/*		capteur		*/
 Blockly.Blocks['io_isButtonPressed']={init:function() {
 	this.jsonInit({
-		"message0": "bouton %1 est pressé",
+		"message0": Blockly.Msg.MICROBIT_BT + " %1 " + Blockly.Msg.MICROBIT_IS_PRESSED,
         "args0": [{
             "type": "field_dropdown",
             "name": "BUTTON",
@@ -422,7 +433,7 @@ Blockly.Python['io_isButtonPressed'] = function(block) {
 //////////////
 Blockly.Blocks['sensors_getAcceleration']={init:function() {
 	this.jsonInit({
-		"message0": "accélération sur %1",
+		"message0": Blockly.Msg.MICROBIT_ACC + " %1",
         "args0": [{
             "type": "field_dropdown",
             "name": "AXIS",
@@ -433,7 +444,7 @@ Blockly.Blocks['sensors_getAcceleration']={init:function() {
         }],
         "output": "Number",
         "colour": "#00929F",
-        "tooltip": "détecte quand la crate est en mouvement sur l'un des trois axes",
+        "tooltip": Blockly.Msg.MICROBIT_ACC_TOOLTIP,
         "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
 	})
 }};
@@ -443,10 +454,10 @@ Blockly.Python['sensors_getAcceleration'] = function(block) {
 //////////////
 Blockly.Blocks['sensors_getMagneticForce']={init:function() {
 	this.jsonInit({
-		"message0": "direction de la boussole",
+		"message0": Blockly.Msg.MICROBIT_COMPASS,
         "output": "Number",
         "colour": "#00929F",
-        "tooltip": "détecte le champ magnétique de la Terre, ce qui permet de savoir quelle direction la carte indique (0 = Nord)",
+        "tooltip": Blockly.Msg.MICROBIT_COMPASS_TOOLTIP,
         "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
 	})
 }};
@@ -456,9 +467,9 @@ Blockly.Python['sensors_getMagneticForce'] = function(block) {
 //////////////
 Blockly.Blocks['sensors_calibrate']={init:function() {
 	this.jsonInit({
-		"message0": "calibrer de la boussole",
+		"message0": Blockly.Msg.MICROBIT_CAL_COMPASS,
         "colour": "#00929F",
-        "tooltip": "Pour calibrer la boussole, inclinez la cartet pour déplacer le point au centre jusqu'à ce que vous ayez rempli la totalité de l’écran",
+        "tooltip": Blockly.Msg.MICROBIT_CAL_COMPASS_TOOLTIP,
         "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
 	})
 }};
@@ -469,10 +480,10 @@ Blockly.Python['sensors_calibrate'] = function(block) {
 //////////////
 Blockly.Blocks['sensors_getTemperature']={init:function() {
 	this.jsonInit({
-		message0: "température de la carte",
+		message0: Blockly.Msg.MICROBIT_TEMP,
         "output": "Number",
         "colour": "#00929F",
-        "tooltip": "retourne la température de la carte (légèrement différent de la température réelle)",
+        "tooltip": Blockly.Msg.MICROBIT_TEMP_TOOLTIP,
         "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
 	})
 }};
@@ -482,10 +493,10 @@ Blockly.Python['sensors_getTemperature'] = function(block) {
 //////////////
 Blockly.Blocks['sensors_getLight']={init:function() {
 	this.jsonInit({
-		message0: "luminosité",
+		message0: Blockly.Msg.MICROBIT_LIGHT,
         "output": "Number",
         "colour": "#00929F",
-        "tooltip": "détecte la luminosité ambiante grâce aux DEL de la matrice",
+        "tooltip": Blockly.Msg.MICROBIT_LIGHT_TOOLTIP,
         "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
 	})
 }};
@@ -495,7 +506,7 @@ Blockly.Python['sensors_getLight'] = function(block) {
 /*		communication		*/
 Blockly.Blocks['radioSendString']={init:function() {
 	this.jsonInit({
-		"message0": "envoyer %1",
+		"message0": Blockly.Msg.MICROBIT_RADIO + " %1",
         "args0": [{
             "type": "input_value",
             "name": "STR",
@@ -504,7 +515,7 @@ Blockly.Blocks['radioSendString']={init:function() {
         "colour" : "#006000",
         "previousStatement": null,
         "nextStatement": null,
-        "tooltip": "envoie une information par onde radio",
+        "tooltip": Blockly.Msg.MICROBIT_RADIO_TOOLTIP,
         "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
 	})
 }};
@@ -516,14 +527,14 @@ Blockly.Python['radioSendString'] = function(block) {
 };
 //////////////
 Blockly.Blocks['onRadioDataReceive']={init:function() {
-    this.appendValueInput("CASE0").appendField("si la donnée reçue vaut");
+    this.appendValueInput("CASE0").appendField(Blockly.Msg.MICROBIT_RADIO_RECEPT);
     this.appendStatementInput("DO0").setAlign(Blockly.ALIGN_RIGHT).appendField(Blockly.Msg.CONTROLS_IF_MSG_THEN);
     this.setHelpUrl(Blockly.Msg.bluetooth_helpurl);
     this.setColour("#006000");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setMutator(new Blockly.Mutator(["bluetooth_create_item", "bluetooth_default"]));
-    this.setTooltip("vérifie qu'une donnée est reçue par onde radio et réalise les actions appropriées");
+    this.setTooltip(Blockly.Msg.MICROBIT_RADIO_RECEPT_TOOLTIP);
     this.casebreakCount_ = 0;
     this.defaultCount_ = 0
     },
@@ -626,5 +637,25 @@ Blockly.Python['onRadioDataReceive'] = function(block) {
         code += "if radio.receive() == " + argument + ":\n" + branch
     }
 	return code
+};
+//////////////
+Blockly.Blocks['print']={init:function() {
+	this.jsonInit({
+		"message0": Blockly.Msg.Serial_Write + " %1",
+        "args0": [{
+            "type": "input_value",
+            "name": "STR",
+            "check": "String"           
+        }],
+        "colour" : "#006000",
+        "previousStatement": null,
+        "nextStatement": null,
+        "tooltip": Blockly.Msg.Serial_write_tooltip,
+        "helpUrl": "https://microbit-micropython.readthedocs.io/fr/latest/index.html"
+	})
+}};
+Blockly.Python['print'] = function(block) {
+    var str = Blockly.Python.valueToCode(block, "STR", Blockly.Python.ORDER_NONE);
+    return "print(" + str + ")\n"
 };
 //////////////

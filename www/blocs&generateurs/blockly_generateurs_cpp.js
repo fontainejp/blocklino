@@ -436,17 +436,23 @@ Blockly.Arduino['creer_tableau']=function(block){
 			Blockly.Arduino.variables_[varName] = typeBlock + ' ' + varName + k + ';';
 			break;
         case "c2":
-			k += "{" ;
-			for (var i = 0; i < dimension; i++) {
-				var j = Blockly.Arduino.valueToCode(block, "D" + i, Blockly.Arduino.ORDER_ASSIGNMENT);
-				var nb = j.split(',');
-				k += j + ",";
-				l += "[" + nb.length + "]";
+			if (dimension == "1"){
+				var j = Blockly.Arduino.valueToCode(block, "D0", Blockly.Arduino.ORDER_ASSIGNMENT);
+				Blockly.Arduino.variables_[varName] = typeBlock + ' ' + varName + '[] =' + j + ';';
+				break
+			} else {
+				k += "{" ;
+				for (var i = 0; i < dimension; i++) {
+					var j = Blockly.Arduino.valueToCode(block, "D" + i, Blockly.Arduino.ORDER_ASSIGNMENT);
+					var nb = j.split(',');
+					k += j + ",";
+					l += "[" + nb.length + "]";
+				}
+				k=k.substr(0,k.length-1);
+				k+="}";
+				Blockly.Arduino.variables_[varName] = typeBlock + ' ' + varName + l + '=' + k + ';';
+				break
 			}
-			k=k.substr(0,k.length-1);
-			k+="}";
-			Blockly.Arduino.variables_[varName] = typeBlock + ' ' + varName + l + '=' + k + ';';
-			break;
 		}
 	return '';
 };

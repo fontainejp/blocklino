@@ -41,12 +41,21 @@ Code.initLanguage = function() {
     if (lang == Code.LANG) option.selected = true;
     languageMenu.append(option);
   }
+  $('#span_theme').text(MSG['span_theme']);
+  $('#span_fontsize').text(MSG['span_fontsize']);
+  $('#span_card_connect').text(MSG['span_card_connect']);
+  $('#span_card_cpu').text(MSG['span_card_cpu']);
+  $('#span_card_voltage').text(MSG['span_card_voltage']);
+  $('#span_card_inout').text(MSG['span_card_inout']);
+  $('#span_card_flash').text(MSG['span_card_flash']);
+  $('#span_card_in_anal').text(MSG['span_card_in_anal']);
+  $('#span_card_out_anal').text(MSG['span_card_out_anal']);
+  $('#span_card_ram').text(MSG['span_card_ram']);
+  $('#span_card_eeprom').text(MSG['span_card_eeprom']);
   $('#aboutBody').text(MSG['aboutBody']);
   $('#aboutModalLabel').text(MSG['aboutModalLabel']);
   $('#cardLabel').text(MSG['cardLabel']);
   $('#aboutcardLabel').text(MSG['aboutcardLabel']);
-  $('#aboutusbLabel').text(MSG['aboutusbLabel']);
-  $('#usbLabel').text(MSG['usbLabel']);
   $('#configModalLabel').text(MSG['configModalLabel']);
   $('#versionModalLabel').text(MSG['versionModalLabel']); 
   $('#exampleModalLabel').text(MSG['exampleModalLabel']); 
@@ -54,6 +63,9 @@ Code.initLanguage = function() {
   $('#variablebody').text(MSG['variablebody']);
   $('#labelToolboxDefinition').text(MSG['labelToolboxDefinition']); 
   $('#survol').text(MSG['survol']);
+  $('#survol_check').text(MSG['survol_check']);
+  $('#survol_flash').text(MSG['survol_flash']);
+  $('#survol_bin').text(MSG['survol_bin']);
   $('#span_about').text(MSG['span_about']);
   $('#span_example').text(MSG['span_example']);
   $('#span_connect_serial').text(MSG['span_connect_serial']);
@@ -91,6 +103,7 @@ Code.initLanguage = function() {
   $('#btn_config').attr('title', MSG['btn_config']);
   $('#btn_about').attr('title', MSG['btn_about']);
   $('#btn_example').attr('title', MSG['btn_example']);
+  $('#btn_html').attr('title', MSG['btn_html']);
   $("xml").find("category").each(function() {
 	if (!$(this).attr('id')) {
 	  $(this).attr('id', $(this).attr('name'));
@@ -101,3 +114,5 @@ Code.initLanguage = function() {
 document.write('<script src="lang/msg_' + Code.LANG + '.js"></script>\n');
 document.write('<script src="lang/Blockly_' + Code.LANG + '.js"></script>\n');
 document.write('<script src="lang/Arduino_' + Code.LANG + '.js"></script>\n');
+document.write('<script src="lang/microbit_' + Code.LANG + '.js"></script>\n');
+document.write('<script src="lang/fresnel_' + Code.LANG + '.js"></script>\n');

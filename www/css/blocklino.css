@@ -7,19 +7,6 @@ body {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	margin: 0
 }
-#div_var {
-    position: absolute;
-	text-align: center;
-    top: 45px;
-	margin: 10px
-}
-#divfenetre {
-	background-color: #fff;
-    position: absolute;
-    top: 45px;
-    bottom: 0px;
-    width: 100%
-}
 #divBody {
     position: absolute;
     top: 80px;
@@ -28,21 +15,11 @@ body {
 }
 #title-bar {
     -webkit-app-region: drag;
-	height: 40px;
+	height: 41px;
 	text-align: center;
 	line-height: 40px;
 	vertical-align: middle;
 	background-color: #5bc0de;
-	padding: none;
-	margin: 0px
-}
-#title-bar-repl {
-    -webkit-app-region: drag;
-	height: 40px;
-	text-align: center;
-	line-height: 40px;
-	vertical-align: middle;
-	background-color: #b8b8b8;
 	padding: none;
 	margin: 0px
 }
@@ -66,28 +43,6 @@ body {
 	-webkit-app-region: no-drag;
 	position: fixed;
 	right: 0px
-}
-#fenetre_term{
-	width: 630px;
-	height: 415px;
-	border: 1px solid #ccc;
-	padding:0px 5px 5px 5px;
-	margin-bottom: 5px;
-	margin-left: 5px;
-	border-radius: 5px;
-	overflow: auto
-}
-#fenetre_repl{
-	width: 630px;
-	height: 415px;
-	color:white;
-	background-color: #b8b8b8;
-	border: 1px solid #ccc;
-	padding:0px 5px 5px 5px;
-	margin-bottom: 5px;
-	margin-left: 5px;
-	border-radius: 5px;
-	overflow: auto
 }
 #header {
     position: absolute;
@@ -113,25 +68,9 @@ body {
 .modal-body-config-global_left {
     position: relative
 }
-#content_factory{
-	height: 100%;
-	width: 100%;
-	padding-right: 5px
-}
 #content_blocks{
 	height: 100%;
 	width: 100%
-}
-#blockly_l{
-	background-color: #fff;
-	float:left;
-	height:100%;
-	width:55%
-}
-#blockly_r{
-	float:right;
-	height:100%;
-	width:45%
 }
 #btn_all {
 	position: absolute;
@@ -186,7 +125,7 @@ body {
 .blocklyToolboxDiv {
 	background-color: ffffff  !important;
 	margin-left: 5px;
-	width: 160px;
+	width: 290px;
 	opacity: 0.8 
 }
 .blocklyFlyoutBackground {
@@ -238,4 +177,22 @@ body {
 .blocklyScrollbarBackground {
   stroke-width: 0px !important;
   fill: none !important
+}
+.btn-minmax { 
+  color: #666666; 
+  width: 40px;
+  height: 40px;
+  background-color: #008080; 
+  border-color: #008080; 
+  line-height: 0px;
+  padding:0;
+}
+.btn-quit { 
+  color: #d9534f; 
+  width: 40px;
+  height: 40px;
+  background-color: #008080; 
+  border-color: #008080; 
+  line-height: 0px;
+  padding:0;
 }

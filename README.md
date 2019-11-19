@@ -94,6 +94,7 @@ Tools without which nothing would not have been possible :
 - [electron](https://electronjs.org/)
 - [electron-builder](https://github.com/electron-userland/electron-builder)
 - [Serialport](https://github.com/node-serialport/node-serialport)
+- [tableify](https://github.com/wankdanker/node-tableify)
 - [arduino-builder](https://github.com/arduino/arduino-builder)
 - [winAVR](https://sourceforge.net/projects/winavr)
 - [Avrdude](http://www.nongnu.org/avrdude)
@@ -103,3 +104,4 @@ Tools without which nothing would not have been possible :
 - [ampy](https://github.com/pycampers/ampy)
 - [pyflakes](https://github.com/PyCQA/pyflakes)
 - [NSIS](https://sourceforge.net/projects/nsis)
+- [ACE](https://https://ace.c9.io/)

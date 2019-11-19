@@ -1,0 +1,37 @@
+@CHARSET "UTF-8";
+#div_var {
+	position: absolute;
+	text-align: center;
+	top: 45px;
+	margin: 10px
+}
+#title-bar {
+	-webkit-app-region: drag;
+	height: 41px;
+	text-align: center;
+	line-height: 41px;
+	vertical-align: middle;
+	background-color: #ffa500;
+	padding: none;
+	margin: 0px
+}
+#title {
+	position: fixed;
+	top: 0px;
+	left: 5px;
+	color: white
+}
+#title-bar-btns {
+	-webkit-app-region: no-drag;
+	position: fixed;
+	right: 0px
+}
+.btn-quitOrange { 
+  color: #fff; 
+  width: 40px;
+  height: 40px;
+  background-color: #FFA500; 
+  border-color: #FFA500; 
+  line-height: 0px;
+  padding: 0px
+}

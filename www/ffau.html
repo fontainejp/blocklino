@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+<head>
+	<meta charset="utf-8" />
+	<title> HTML & CSS </title>
+	<!-- JavaScript -->
+	<script type="text/javascript" src="js/blockly.min.js"></script>
+	<script src="js/jquery.min.2.1.3.js" onload="window.$ = window.jQuery = module.exports;"></script>
+	<script type="text/javascript" src="js/ffau/block.js"></script>
+	<script type="text/javascript" src="js/ffau/generator.js"></script>
+    <script type="text/javascript" src="js/ffau/ffau.js"></script>
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.3.3.6.css"/>
+	<link rel="stylesheet" type="text/css" href="css/fontawesome.css"/>
+	<link rel="stylesheet" type="text/css" href="css/ffau.css"/>
+</head>
+<body>
+	<div id="toptitle">
+		<div id="title">
+            <span class="fa fa-html5 fa-1_75x fa-fw"></span> HTML & CSS
+		</div>
+        <div id="title-bar-btns">
+			<button id="btn_max" type="button" class="btn btn-minmaxgreen"><span class="fa fa-maximize fa-lg"></span></button>
+			<button id="btn_quit" type="button" class="btn btn-quitgreen"><span class="fa fa-times fa-1_75x"></span></button>
+        </div>
+	</div>
+	<div id="container">
+		<div id="blockly_l">
+			<div id="btn_group" class="btn-group">
+				<button id="btn_new" type="button" class="btn btn-default" style="color: #727272;">
+					<span class="fa fa-file fa-fw"></span>
+				</button>
+				<button id="btn_open" type="button" class="btn btn-default" style="color: #727272;">
+					<span class="fa fa-folder-open fa-lg fa-fw"></span>
+				</button>
+				<input id="loadText" style="display:none;" type="file" accept=".lmth,.xml">
+				<button id="btn_save" type="button" class="btn btn-default" style="color: #727272;">
+					<span class="fa fa-cloud-download fa-lg fa-fw"></span>
+				</button>
+				<!--button id="btn_undo" class="btn btn-default" style="color: #727272;">
+					<span class="fa fa-undo"> </span>
+				</button>
+				<button id="btn_redo" class="btn btn-default" style="color: #727272;">
+					<span class="fa fa-repeat"> </span>
+				</button>
+				<button id="btn_print" class="btn btn-default" style="color: #727272;">
+					<span class="fa fa-camera"> </span>
+				</button>
+				<button id="btn_preview" class="btn btn-default">
+					<span class="fa fa-code"> </span>
+				</button-->
+			</div>
+			<div id="blocklyDiv"></div>
+		</div>
+		<div id="blockly_r"></div>
+	</div>
+	<xml id="toolbox" style="display: none;">
+		<category colour="210" name="Structure">
+			<block type="html"></block>
+			<block type="head"></block>
+			<block type="title"></block>
+			<block type="metacharset"></block>
+			<block type="metaviewport"></block>
+			<block type="body"></block>
+			<block type="divider"></block>
+			<block type="linebreak"></block>
+			<block type="hline"></block>
+		</category>
+		<category colour="65" name="Text">
+			<block type="emptytext"></block>
+			<block type="span"></block>
+			<block type="textmod"></block>
+			<block type="paragraph"></block>
+			<block type="header"></block>
+			<block type="link"></block>
+		</category>
+		<category colour="20" name="Tables">
+			<block type="table"></block>
+			<block type="tablerow"></block>
+			<block type="tableheading"></block>
+			<block type="tabledata"></block>
+		</category>
+		<category colour="20" name="Lists">
+			<block type="unorderedlist"></block>
+			<block type="orderedlist"></block>
+			<block type="listitem"></block>
+		</category>
+		<category colour="160" name="Forms">
+			<block type="form"></block>
+			<block type="input"></block>
+			<block type="label"></block>
+		</category>
+		<category colour="330" name="Media">
+			<block type="image"></block>
+			<block type="audio"></block>
+			<block type="video"></block>
+		</category>
+		<category colour="120" name="Modifiers">
+			<block type="args"></block>
+			<block type="class"></block>
+			<block type="id"></block>
+			<block type="emptyarg"></block>
+		</category>
+		<category colour="290" name="CSS">
+			<block type="style"></block>
+			<block type="stylearg"></block>
+			<block type="linkhead"></block>
+			<block type="cssitem"></block>
+			<category colour="290" name="Text">
+				<label text="Font"></label>
+				<block type="fontfamily"></block>
+				<block type="fontsize"></block>
+				<block type="fontweight"></block>
+				<label text="Text Styling"></label>
+				<block type="color-new">
+					<value name="value">
+						<block type="color_picker"></block>
+					</value>
+				</block>
+				<block type="colordropdown"></block>
+				<block type="textshadow-new">
+					<value name="color">
+						<block type="color_picker"></block>
+					</value>
+				</block>
+				<block type="texttransform"></block>
+				<block type="textalign"></block>
+				<block type="letterspacing"></block>
+			</category>
+			<category colour="290" name="Arrangement">
+				<label text="Display"></label>
+				<block type="margin"></block>
+				<block type="padding"></block>
+				<block type="display"></block>
+				<block type="overflow"></block>
+				<block type="float"></block>
+				<block type="verticalalign"></block>
+				<label text="Dimensions"></label>
+				<block type="widthheightnum"></block>
+				<block type="widthheight"></block>
+			</category>
+			<category colour="290" name="Design">
+				<label text="Colours"></label>
+				<block type="color_picker"></block>
+				<block type="hex_picker"></block>
+				<block type="rgba_picker"></block>
+				<label text="Backgrounds"></label>
+				<block type="bgcolor-new">
+					<value name="value">
+						<block type="color_picker"></block>
+					</value>
+				</block>
+				<block type="bgimage"></block>
+				<block type="bgposition"></block>
+				<block type="bgrepeat"></block>
+				<block type="bgsize"></block>
+				<label text="Other Design"></label>
+				<block type="cursor"></block>
+				<block type="boxshadow-new">
+					<value name="color">
+						<block type="color_picker"></block>
+					</value>
+				</block>
+			</category>
+			<category colour="290" name="Borders">
+				<block type="border-new">
+					<value name="color">
+						<block type="color_picker"></block>
+					</value>
+				</block>
+				<block type="borderedge-new">
+					<value name="color">
+						<block type="color_picker"></block>
+					</value>
+				</block>
+				<block type="bordercol"></block>
+				<block type="borderrad"></block>
+			</category>
+		</category>
+	</xml>
+</body>
+<script>require('../resources/app/ffau_node.js')
+</script>
+</html>

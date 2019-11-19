@@ -2,6 +2,9 @@
 goog.provide('Blockly.Msg.fr');
 goog.require('Blockly.Msg');
 // Electron window
+Blockly.Msg.survol_check = "VERIFIER";
+Blockly.Msg.survol_flash = "TELEVERSER";
+Blockly.Msg.survol_bin = "EXPORTER les binaires"; 
 Blockly.Msg.com1 = "Choisir le port" ; 
 Blockly.Msg.com2 = "Sélectionner un port !" ; 
 Blockly.Msg.check = "Vérification " ; 
@@ -153,6 +156,8 @@ Blockly.Msg.pir_tooltip="HC-SR501 :\nretourne vrai (faux) si une présence est (
 Blockly.Msg.feu_tooltip="CAP168 :\nretourne vrai (faux) si une flamme est (n'est pas) détectée";
 Blockly.Msg.presence_tooltip="CAP711 :\nretourne vrai (faux) si un contact a (n'a pas) lieu";
 Blockly.Msg.appui_tooltip="CAP831 :\nretourne vrai (faux) si un appui est (n'est pas) détecté";
+Blockly.Msg.CAP661="impulsions sur la broche";
+Blockly.Msg.CAP661_TOOLTIP="retourne le nombre de fentes (pleines + creuses) de la roue codeuse";
 //bluetooth
 Blockly.Msg.bluetooth1="si la donnée reçue par bluetooth";
 Blockly.Msg.bluetooth1_tooltip= "réception de données par bluetooth\nconnecter le module HC-06 sur les broches 0 et 1\net croiser les broches Rx et Tx";
@@ -258,16 +263,16 @@ Blockly.Msg.pixel5_tooltip="règle la luminosité des pixels (de 0 à 255)";
 Blockly.Msg.pixel3_tooltip="choisir la pixel à allumer ainsi que sa couleur\nAttention la numérotation commence à 0";
 //sortie
 Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_INPUT1="mettre la broche NUMERIQUE";
-Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_TOOLTIP="écrire un état logique 0 ou 1 sur une sortie spécifique";
+Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_TOOLTIP="écrire un état logique (0 ou 1) sur la broche indiquée";
 Blockly.Msg.toggle="basculer l'état de la broche";
 Blockly.Msg.toggle_tooltip="Toggle :\nécrire un état logique 0 si auparavant il y avait un état 1 (et inversement) sur la sortie spécifiée";
 Blockly.Msg.ARDUINO_INOUT_ANALOG_WRITE_INPUT1="mettre la broche PWM";
-Blockly.Msg.ARDUINO_INOUT_ANALOG_WRITE_TOOLTIP="envoyer une valeur comprise entre 0 et 255 sur une sortie spécifique";
+Blockly.Msg.ARDUINO_INOUT_ANALOG_WRITE_TOOLTIP="envoyer une valeur comprise entre 0 et 255 sur la broche indiquée";
 //entrée
 Blockly.Msg.ARDUINO_INOUT_DIGITAL_READ_INPUT="état de la broche NUMERIQUE";
 Blockly.Msg.in_pullup ="Pull-Up";
 Blockly.Msg.in_pullup_tooltip="retourne l'état logique (0 ou 1) de la broche indiquée\nretourne 1(état haut) par défaut si pull-up activé";
-Blockly.Msg.ARDUINO_INOUT_DIGITAL_READ_TOOLTIP="lecture de l'état logique 0 ou 1 de la broche numérique";
+Blockly.Msg.ARDUINO_INOUT_DIGITAL_READ_TOOLTIP="retourne l'état logique (0 ou 1) de la broche indiquée";
 Blockly.Msg.ARDUINO_INOUT_ANALOG_READ_INPUT="valeur de la broche ANALOGIQUE";
 Blockly.Msg.ARDUINO_INOUT_ANALOG_READ_TOOLTIP="retourne une valeur comprise entre 0 et 1023";
 //audio
@@ -358,3 +363,9 @@ Blockly.Msg.SSERIAL_Write_tooltip="Envoie des données sur le port logiciel";
 Blockly.Msg.SSERIAL_Read_tooltip="retourne le premier octet de donnée entrant disponible dans le port logiciel, ou -1 si aucune donnée n'est disponible";
 Blockly.Msg.SSERIAL_Available="quantité de données sur le port logiciel";
 Blockly.Msg.SSERIAL_Available_tooltip="retourne le nombre d'octet disponible dans la file d'attente du port logiciel, ou 0 si rien n'est disponible";
+// stockage
+Blockly.Msg.STOCK1="stocker la donnée";
+Blockly.Msg.STOCK2="à l'adresse";
+Blockly.Msg.STOCK_TOOLTIP="permet d'écrire une donnée (8 bits ou un octet) dans la mémoire EEPROM, à l'adresse indiquée\nATmega328p et ATmega32u4 --> 1024 octets\nATmega2560 --> 4096 octets";
+Blockly.Msg.STOCK3="donnée stockée à l'adresse";
+Blockly.Msg.STOCK3_TOOLTIP="retourne la donnée stockée à l'adrese indiquée (8 bits ou un octet)\nATmega328p et ATmega32u4 --> 1024 octets\nATmega2560 --> 4096 octets";

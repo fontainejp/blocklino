@@ -68,6 +68,7 @@
 		<block type="show_string"></block>
 		<block type="show_icon"></block>
 		<block type="set_pixel"></block>
+		<block type="show"></block>
 		<block type="clear"></block>
 	</category>
 	<category name="CAT_ultrason" colour="#00929F">
@@ -79,6 +80,9 @@
 		<block type="sensors_getTemperature"></block>
 	</category>
 	<category name="CAT_com"  colour="#006000">
+		<label text="Console"></label>
+		<block type="print"></block>
+		<label text="Radio"></label>
 		<block type="radioSendString"></block>
 		<block type="onRadioDataReceive"></block>
 	</category>

@@ -1,0 +1,28 @@
+'use strict';
+goog.provide('Blockly.Msg.fr');
+goog.require('Blockly.Msg');
+// micro:bit
+Blockly.Msg.MICROBIT_ANALOG_WRITE_TOOLTIP="envoyer une valeur comprise entre 0 et 1023 sur la broche indiquée";
+Blockly.Msg.MICROBIT_SHOW_STRING="faire défiler";
+Blockly.Msg.MICROBIT_SHOW_STRING_TOOLTIP="fait défiler le texte indiqué sur la matrice intégrée";
+Blockly.Msg.MICROBIT_SHOW_ICON_TOOLTIP="affiche les symboles prédéfinis :\nun petit coeur, un gros coeur, un sourire, un visage triste et un damier";
+Blockly.Msg.MICROBIT_SET_PIXEL="mettre la DEL";
+Blockly.Msg.MICROBIT_CLEAR="éteindre toutes les DEL";
+Blockly.Msg.MICROBIT_SHOW="afficher toutes les DEL";
+Blockly.Msg.MICROBIT_SHOW_TOOLTIP="affiche toutes les DEL de la matrice";
+Blockly.Msg.MICROBIT_BT="bouton";
+Blockly.Msg.MICROBIT_IS_PRESSED="est pressé";
+Blockly.Msg.MICROBIT_ACC="accélération sur";
+Blockly.Msg.MICROBIT_ACC_TOOLTIP="détecte quand la crate est en mouvement sur l'un des trois axes";
+Blockly.Msg.MICROBIT_COMPASS="direction de la boussole";
+Blockly.Msg.MICROBIT_COMPASS_TOOLTIP="détecte le champ magnétique de la Terre, ce qui permet de savoir quelle direction la carte indique (0 = Nord)";
+Blockly.Msg.MICROBIT_CAL_COMPASS="calibrer de la boussole";
+Blockly.Msg.MICROBIT_CAL_COMPASS_TOOLTIP="Pour calibrer la boussole, inclinez la carte pour déplacer le point au centre jusqu'à ce que vous ayez rempli la totalité de l’écran";
+Blockly.Msg.MICROBIT_TEMP="température de la carte";
+Blockly.Msg.MICROBIT_TEMP_TOOLTIP="retourne la température de la carte (légèrement différent de la température réelle)";
+Blockly.Msg.MICROBIT_LIGHT="luminosité";
+Blockly.Msg.MICROBIT_LIGHT_TOOLTIP="détecte la luminosité ambiante grâce aux DEL de la matrice";
+Blockly.Msg.MICROBIT_RADIO="envoyer par radio";
+Blockly.Msg.MICROBIT_RADIO_TOOLTIP="envoie une information par onde radio";
+Blockly.Msg.MICROBIT_RADIO_RECEPT="si la donnée reçue vaut";
+Blockly.Msg.MICROBIT_RADIO_RECEPT_TOOLTIP="vérifie qu'une donnée est reçue par onde radio et réalise les actions appropriées";

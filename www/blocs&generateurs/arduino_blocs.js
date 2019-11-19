@@ -698,25 +698,25 @@ Blockly.Blocks["esp8266_create_container"]={init:function(){
 /*  stockage  */
 Blockly.Blocks['eeprom_write']={init:function(){
     this.appendValueInput("val")
-        .appendField("stocker la donnée");
+        .appendField(Blockly.Msg.STOCK1);
 	this.appendValueInput("adr")
         .setCheck("Number")
 		.setAlign(Blockly.ALIGN_RIGHT)
-        .appendField("à l'adresse");
+        .appendField(Blockly.Msg.STOCK2);
 	this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#154360");
-    this.setTooltip("permet d'écrire une donnée (8 bits ou un octet) dans la mémoire EEPROM, à l'adresse indiquée\nATmega328p et ATmega32u4 --> 1024 octets\nATmega2560 --> 4096 octets");
+    this.setTooltip(Blockly.Msg.STOCK_TOOLTIP);
     this.setHelpUrl(Blockly.Msg.HELPURL);
   }
 };
 Blockly.Blocks["eeprom_read"]={init:function(){
         this.appendValueInput("adr")
 			.setCheck("Number")
-			.appendField("donnée stockée à l'adresse");
+			.appendField(Blockly.Msg.STOCK3);
         this.setColour("#154360");
         this.setHelpUrl(Blockly.Msg.HELPURL);
         this.setOutput(true, "Number");
-        this.setTooltip("retourne la donnée stockée à l'adrese indiquée (8 bits ou un octet)\nATmega328p et ATmega32u4 --> 1024 octets\nATmega2560 --> 4096 octets")}
+        this.setTooltip(Blockly.Msg.STOCK3_TOOLTIP)}
 };

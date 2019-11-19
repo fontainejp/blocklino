@@ -1,0 +1,50 @@
+@CHARSET "UTF-8";
+#title-bar {
+    -webkit-app-region: drag;
+	height: 41px;
+	text-align: center;
+	line-height: 41px;
+	vertical-align: middle;
+	background-color: #b8b8b8;
+	padding: none;
+	margin: 0px
+}
+#title {
+	position: fixed;
+	top: 0px;
+	left: 6px;
+	color:white
+}
+#title-bar-btns {
+	-webkit-app-region: no-drag;
+	position: fixed;
+	right: 0px
+}
+#divfenetre {
+	background-color: #fff;
+    position: absolute;
+    top: 45px;
+    bottom: 0px;
+    width: 100%
+}
+#fenetre_repl{
+	width: 630px;
+	height: 410px;
+	color:white;
+	background-color: #b8b8b8;
+	border: 1px solid #ccc;
+	padding:0px 5px 5px 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	border-radius: 5px;
+	overflow: auto
+}
+.btn-quitGray { 
+  color: #fff; 
+  width: 40px;
+  height: 40px;
+  background-color: #b8b8b8; 
+  border-color: #b8b8b8; 
+  line-height: 0px;
+  padding:0;
+}
