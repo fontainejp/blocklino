@@ -38,29 +38,6 @@ function CSSEscape(input) {
 function isNewTabUrl(input) {
     return URLRegex.test(input) || (!input.includes('http://') && !input.includes('https://')) && !hashRegex.test(input) && input.length > 0;
 }
-// CSS file
-Blockly.Blocks['css'] = {
-    init: function () {
-        this.jsonInit({
-            "message0": '<CSS> %1 %2 </CSS>',
-            "args0": [
-                {
-                    "type": "input_dummy"
-                },
-                {
-                    "type": "input_statement",
-                    "name": "content",
-                    "check": "style"
-                }
-            ],
-            "colour": 290
-        });
-    }
-};
-Blockly.html['css'] = function (block) {
-    var statement = Blockly.html.statementToCode(block, 'content');
-    return '';
-};
 // Style
 Blockly.Blocks['style'] = {
     init: function () {
@@ -78,9 +55,7 @@ Blockly.Blocks['style'] = {
             ],
             "previousStatement": "header",
             "nextStatement": "header",
-            "colour": 290,
-            "tooltip": "Style tag",
-            "helpUrl": "https://www.w3schools.com/tags/tag_style.asp"
+            "colour": 290
         });
     }
 };
@@ -106,9 +81,7 @@ Blockly.Blocks['stylearg'] = {
             ],
             "previousStatement": "args",
             "nextStatement": "args",
-            "colour": 290,
-            "tooltip": "Style modifier",
-            "helpUrl": "https://www.w3schools.com/css/css_howto.asp"
+            "colour": 290
         });
     }
 };
@@ -148,10 +121,37 @@ Blockly.html['cssitem'] = function (block) {
     var stmt = Blockly.html.statementToCode(block, 'content');
     var mod = Blockly.html.statementToCode(block, 'modifier', Blockly.html.ORDER_ATOMIC);
     mod = mod.split(' ').join(''); // remove spaces
-
     var selector = CSSEscape(block.getFieldValue('selector'));
-
     return selector + mod + '{\n' + stmt + '}\n';
+};
+//Other tag
+Blockly.Blocks['othercss'] = {
+	init: function() {
+		this.jsonInit({
+			"message0": '%1 : %2 ;',
+			"args0": [
+				{
+					"type": "field_input",
+					"name": "property",
+					"text": "property"
+				},
+				{
+					"type": "field_input",
+					"name": "value",
+					"text": "value"
+				}
+			],
+			"previousStatement": "stylecontent",
+			"nextStatement": "stylecontent",
+			"colour": 290
+		});
+	}
+};
+Blockly.html['othercss'] = function(block){
+	var property = block.getFieldValue('property');
+	var value = block.getFieldValue('value');
+	var code = property+': '+value+';\n';
+	return code;
 };
 // Font-family
 Blockly.Blocks['fontfamily'] = {
@@ -167,9 +167,7 @@ Blockly.Blocks['fontfamily'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290,
-            "tooltip": "CSS font-family",
-            "helpUrl": "https://www.w3schools.com/cssref/pr_font_font-family.asp"
+            "colour": 290
         });
     }
 };
@@ -191,9 +189,7 @@ Blockly.Blocks['fontsize'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290,
-            "tooltip": "CSS font-size",
-            "helpUrl": "https://www.w3schools.com/cssref/pr_font_font-size.asp"
+            "colour": 290
         });
     }
 };
@@ -240,9 +236,7 @@ Blockly.Blocks['fontweight'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290,
-            "tooltip": "Font-weight CSS property",
-            "helpUrl": "https://www.w3schools.com/cssref/pr_font_weight.asp"
+            "colour": 290
         });
     }
 };
@@ -286,9 +280,7 @@ Blockly.Blocks['margin'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290,
-            "tooltip": "CSS Margin",
-            "helpUrl": "https://www.w3schools.com/cssref/pr_margin.asp"
+            "colour": 290
         });
     }
 };
@@ -333,9 +325,7 @@ Blockly.Blocks['padding'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290,
-            "tooltip": "CSS Padding",
-            "helpUrl": "https://www.w3schools.com/cssref/pr_padding.asp"
+            "colour": 290
         });
     }
 };
@@ -365,9 +355,7 @@ Blockly.Blocks['texttransform'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290,
-            "tooltip": "CSS Text-transform",
-            "helpUrl": "https://www.w3schools.com/cssref/pr_text_text-transform.asp"
+            "colour": 290
         });
     }
 };
@@ -394,9 +382,7 @@ Blockly.Blocks['textalign'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290,
-            "tooltip": "CSS Text-align",
-            "helpUrl": "https://www.w3schools.com/cssref/pr_text_text-align.asp"
+            "colour": 290
         })
     }
 };
@@ -418,9 +404,7 @@ Blockly.Blocks['bgcolor-new'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290,
-            "tooltip": "CSS Background-Color",
-            "helpUrl": "https://www.w3schools.com/css/css_background.asp"
+            "colour": 290
         });
     }
 };
@@ -646,9 +630,7 @@ Blockly.Blocks['widthheightnum'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290,
-            "tooltip": "CSS Width/height",
-            "helpUrl": "https://www.w3schools.com/css/css_dimension.asp"
+            "colour": 290
         });
     }
 };
@@ -678,9 +660,7 @@ Blockly.Blocks['float'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290,
-            "tooltip": "Float an element left or right",
-            "helpUrl": "https://www.w3schools.com/cssref/pr_class_float.asp"
+            "colour": 290
         });
     }
 };
@@ -742,9 +722,7 @@ Blockly.Blocks['verticalalign'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290,
-            "tooltip": "Vertical-align CSS property",
-            "helpUrl": "https://www.w3schools.com/cssref/pr_pos_vertical-align.asp"
+            "colour": 290
         })
     }
 };
@@ -787,9 +765,7 @@ Blockly.Blocks['hex_picker'] = {
                 }
             ],
             "output": "color",
-            "colour": 290,
-            "tooltip": "HTML HEX color picker",
-            "helpUrl": "https://www.w3schools.com/html/html_colors.asp"
+            "colour": 290
         });
     }
 };
@@ -859,9 +835,7 @@ Blockly.Blocks['color_picker'] = {
                 }
             ],
             "output": "color",
-            "colour": 290,
-            "tooltip": "HTML color picker",
-            "helpUrl": "https://www.w3schools.com/html/html_colors.asp"
+            "colour": 290
         });
     }
 };

@@ -37,12 +37,12 @@
 			<li role="presentation" class="active"><a href="#blocklyDiv" aria-controls="blocklyDiv" role="tab" data-toggle="tab"></a></li>
 			<li role="presentation"><a href="#content_code" aria-controls="content_code" role="tab" data-toggle="tab"></a></li>
 		</ul>
+		<input type="file" id="loadText" accept=".www, .html" style="display:none">
 		<div id="header">
 			<div id="btn_left">
 				<input id="codeORblock" checked data-toggle="toggle" data-onstyle="default" data-on="<img src='media/icon.png' style='height:20px'>" data-off="<i class='fa fa-code fa-1_5x'></i>" type="checkbox">
 			</div>
 			<div id="btn_center" class="btn-toolbar">
-				<input type="file" id="loadText" accept=".www, .html" style="display:none">
 				<div class="btn-group">
 					<button id="btn_new" class="btn btn-default"><i class="fa fa-file fa-1_5x btn_color"></i></button>
 					<div class="btn-group">
@@ -83,7 +83,7 @@
 				<div role="tabpanel" id="blocklyDiv" class="tab-pane fade in active" style="position: relative;"></div>
 				<div role="tabpanel" id="content_code" class="tab-pane fade" onChange="update()"></div>
 			</div>
-			<div id="blockly_r"></div>
+			<iframe id="blockly_r" style="border-top:none"></iframe>
 	</div>
 	<!-- modal -->
 		<div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
@@ -396,10 +396,16 @@
 		</div>
 		<xml id="toolbox" style="display:none">
 		<category colour="210" name="Structure">
-			<block type="base"></block>
+			<block type="html"></block>
+			<block type="head"></block>
+			<block type="title"></block>
+			<block type="bootstrap"></block>
+			<block type="fontawesome"></block>
+			<block type="body"></block>
 			<block type="divider"></block>
 			<block type="linebreak"></block>
 			<block type="hline"></block>
+			<block type="base"></block>
 		</category>
 		<category colour="65" name="Texte">
 			<block type="emptytext"></block>
@@ -452,10 +458,10 @@
 			<block type="emptyarg"></block>
 		</category>
 		<category colour="290" name="CSS">
-			<block type="css"></block>
 			<block type="style"></block>
 			<block type="stylearg"></block>
 			<block type="cssitem"></block>
+			<block type="othercss"></block>
 		<category colour="290" name="Texte">
 			<block type="fontsize"></block>
 			<block type="fontweight"></block>
@@ -499,7 +505,7 @@
 	})
 	function update(){
 		var ace = editor.getValue();
-		document.getElementById("blockly_r").innerHTML = ace
+		document.getElementById("blockly_r").srcdoc = ace
     }
 	require('../resources/app/ffau.js')
 </script>

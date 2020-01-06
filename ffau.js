@@ -126,7 +126,7 @@ window.addEventListener('load', function load(event) {
 		if (localStorage.getItem('contentHTML')=="on") {
 			ffau.clearWorkspace()
 		} else {
-			editor.setValue('<!DOCTYPE HTML>\n<html lang="fr">\n  <head>\n    <meta charset="utf-8">\n    <link rel="stylesheet" href="css/bootstrap.min.3.3.6.css">\n    <link rel="stylesheet" href="css/fontawesome.css">\n  </head>\n  <body>\n\n  </body>\n</html>',1)
+			editor.setValue('<!DOCTYPE HTML>\n<html lang="fr">\n  <head>\n    <meta charset="utf-8">\n  </head>\n  <body>\n\n  </body>\n</html>',1)
 		}
 	})
 	$('#btn_search').on('click', function(){
@@ -212,7 +212,7 @@ window.addEventListener('load', function load(event) {
 		}
 	})
 	$('#codeORblock').on("change", function(){
-		var data = '<!DOCTYPE HTML>\n<html lang="fr">\n  <head>\n    <meta charset="utf-8">\n    <link rel="stylesheet" href="css/bootstrap.min.3.3.6.css">\n    <link rel="stylesheet" href="css/fontawesome.css">\n  </head>\n  <body>\n'+document.getElementById('blockly_r').innerHTML+'  </body>\n</html>'
+		var data = document.getElementById('blockly_r').srcdoc
 		if (localStorage.getItem('contentHTML')=="on") {
 			if (localStorage.getItem('size')) {
 				document.getElementById('content_code').style.fontSize = localStorage.getItem('size')

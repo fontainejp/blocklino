@@ -117,12 +117,8 @@ class Ffau {
         // add listener to workspace
         this.ffauWorkspace.addChangeListener(function () {
             // generate the code using Blockly.html from generator.js
-            let code = Blockly.html.workspaceToCode(this.ffauWorkspace);
-            // if iframe has been initialised
-            if (this.iframe) {
-                this.iframe.src = "data:text/html;charset=utf-8," + encodeURIComponent(code);
-            }
-			document.getElementById('blockly_r').innerHTML = code;
+            var code = Blockly.html.workspaceToCode(this.ffauWorkspace);
+            document.getElementById('blockly_r').srcdoc = code;
         }.bind(this) /* bind parent scope */);
     }
     /**
@@ -218,9 +214,15 @@ class Ffau {
 			a.click();
 		}	
 	}
+	/**
+     * To reverse your last action
+     */
 	undo() {
         this.ffauWorkspace.undo(0);
     }
+	/**
+     * To reverse your last Undo
+     */
 	redo() {
         this.ffauWorkspace.undo(1);
     }
