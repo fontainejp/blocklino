@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 	<meta charset="utf-8">
-	<title> L'usine à blocs </title>
 	<script src="blocs&generateurs/factory/generator.js"></script>
 	<script src="js/blockly.min.js"></script>
 	<script src="js/prettify.min.js"></script>
@@ -10,17 +9,17 @@
 	<script src="js/ace/ace.js"></script>
 	<script src="js/ace/ext-language_tools.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.3.3.6.css">
-	<link rel="stylesheet" href="css/fontawesome.css"/>
+	<link rel="stylesheet" href="css/fontawesome.css">
 	<link rel="stylesheet" href="css/factory.css">
 	<link rel="stylesheet" href="css/prettify.min.css">
 </head>
 <body>
-	<div id="title-bar">
+	<div id="toptitle">
         <div id="title">
-			<span class="fa fa-industry fa-1_75x fa-fw"></span> L'usine à blocs 
+			<i class="fa fa-industry fa-1_75x fa-fw"></i> L'usine à blocs
 		</div>
         <div id="title-bar-btns">
-			<button id="btn_max" type="button" class="btn btn-minmaxred"><span class="fa fa-maximize fa-lg"></span></button>
+			<button id="btn_max" type="button" class="btn btn-minmaxred"><span class="fa fa-window-restore fa-lg"></span></button>
 			<button id="btn_quit" type="button" class="btn btn-quitred"><span class="fa fa-times fa-1_75x"></span></button>
         </div>
 	</div>
@@ -29,7 +28,7 @@
 			<div id="blockly" ></div>
 		</div>
 		<div id="blockly_r">
-			<button id="btn_add" type="button" class="btn btn-danger"><span class="fa fa-chart-plus fa-1_75x"></span></button>
+			<button id="btn_add" type="button" class="btn btn-danger"><span class="fa fa-cart-plus fa-1_75x"></span></button>
 			<div style="height:3%">Prévisualisation :
 				<select id="direction" style="display: none;">
 					<option value="ltr">LTR</option>

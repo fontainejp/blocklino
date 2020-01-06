@@ -1,11 +1,11 @@
 var {electron, ipcMain, app, BrowserWindow, globalShortcut, dialog} = require('electron')
 var { autoUpdater } = require("electron-updater")
 var path = require('path')
-var mainWindow, termWindow, factoryWindow, promptWindow, promptOptions, promptAnswer, htmlWindow, usbWindow
+var mainWindow, termWindow, factoryWindow, promptWindow, promptOptions, promptAnswer, htmlWindow, usbWindow, colorWindow
 autoUpdater.autoDownload = false
 autoUpdater.logger = null
 function createWindow () {
-	mainWindow = new BrowserWindow({width: 1240, height: 700, icon: '../../www/media/icon.png', frame: false, movable: true})
+	mainWindow = new BrowserWindow({width: 800, height: 600, icon: '../../www/media/icon.png', frame: false, movable: true})
 	if (process.platform == 'win32' && process.argv.length >= 2) {
 		mainWindow.loadURL(path.join(__dirname, '../../www/index.html?url='+process.argv[1]))
 	} else {
@@ -56,6 +56,14 @@ function createUSB() {
 		factoryWindow = null 
 	})
 }
+function createColor() {
+	colorWindow = new BrowserWindow({width: 420, height: 330, 'parent': mainWindow, resizable: true, movable: true, frame: false})
+	colorWindow.loadURL(path.join(__dirname, "../../www/rvb.html"))
+	colorWindow.setMenu(null)
+	colorWindow.on('closed', function () { 
+		colorWindow = null 
+	})
+}
 function promptModal(options, callback) {
 	promptOptions = options
 	promptWindow = new BrowserWindow({width:360, height: 135, 'parent': mainWindow, resizable: false, movable: true, frame: false, modal: true})
@@ -97,6 +105,9 @@ ipcMain.on("factory", function () {
 })
 ipcMain.on("html", function () {
 	createHTML()       
+})
+ipcMain.on("color", function () {
+	createColor()       
 })
 ipcMain.on("usb", function () {
 	createUSB()       

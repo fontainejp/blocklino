@@ -4,15 +4,15 @@ A mini development environment for free and open source graphic language. Progra
 
 This app works on Windows operating systems. You can [download the latest release](https://github.com/fontainejp/blocklino/releases)
 
-![blocklino Screenshots](http://lesormeaux.net/blocklino/assets/img/Capture.PNG)
+![blocklino Screenshots](http://lesormeaux.net/blocklino/start/img/Capture.PNG)
 
 ## Demo
 
 Blocklino is a web tool. You can give it a try [here.](http://lesormeaux.net/blocklino)
 
 You can link directly to examples :
-* [make default LED blink](http://lesormeaux.net/blocklino/index.html?url=./examples/blink/blink.xml) 
-* [control LED Matrix](http://lesormeaux.net/blocklino/index.html?url=./examples/matrice/matrice.xml) 
+* [make default LED blink](http://lesormeaux.net/blocklino/index.html?url=./examples/blink.xml) 
+* [control LED Matrix](http://lesormeaux.net/blocklino/index.html?url=./examples/matrice.xml) 
 
 Or watch the [video demo](https://www.youtube.com/watch?v=XqfNAjnf6_8)
 
@@ -104,4 +104,5 @@ Tools without which nothing would not have been possible :
 - [ampy](https://github.com/pycampers/ampy)
 - [pyflakes](https://github.com/PyCQA/pyflakes)
 - [NSIS](https://sourceforge.net/projects/nsis)
-- [ACE](https://https://ace.c9.io/)
+- [ACE](https://ace.c9.io/)
+- [CodeDragon](https://codedragon.org/)

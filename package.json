@@ -1,6 +1,6 @@
 {
  "name": "Blocklino",
- "version": "1.6.0",
+ "version": "1.7.0",
  "description": "environnement de développement pour langage graphique",
  "author": "Fontaine Jean Philippe",
  "license": "CC0-1.0",
@@ -23,7 +23,9 @@
   "PYTHON",
   "python",
   "microbit",
-  "MICROBIT"
+  "MICROBIT",
+  "ACE",
+  "ace"
  ],
  "scripts": {
   "postinstall": "electron-builder install-app-deps",
@@ -99,6 +101,7 @@
   "child_process": "1.0.2",
   "electron-updater": "4.0.6",
   "serialport": "7.1.4",
-  "tableify": "1.1.0"
+  "tableify": "1.1.0",
+  "jsftp": "2.1.3"
  }
 }

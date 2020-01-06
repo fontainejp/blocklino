@@ -3,16 +3,18 @@ var { ipcRenderer } = require("electron")
 var fs = require('fs')
 
 window.addEventListener('load', function load(event) {
+	var window = remote.getCurrentWindow()
+	if(!window.isMaximized())window.maximize()
 	document.getElementById('btn_quit').onclick = function() {
-		var window = remote.getCurrentWindow() 
 		window.close()
 	}
 	document.getElementById('btn_max').onclick = function() {
-		var window = remote.getCurrentWindow()
 		if(window.isMaximized()){
             window.unmaximize()
+			document.getElementById('btn_max').innerHTML="<span class='fa fa-window-maximize fa-lg'></span>"
         }else{
             window.maximize()
+			document.getElementById('btn_max').innerHTML="<span class='fa fa-window-restore fa-lg'></span>"
         }
 	}
 	document.getElementById('btn_add').onclick = function(){

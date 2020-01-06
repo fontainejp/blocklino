@@ -1,184 +1,506 @@
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 <html lang="fr">
 <head>
-	<meta charset="utf-8" />
-	<title> HTML & CSS </title>
-	<!-- JavaScript -->
-	<script type="text/javascript" src="js/blockly.min.js"></script>
+	<meta charset="utf-8">
+	<script src="js/blockly.min.js"></script>
+	<script src="js/ffau/generate_html.js"></script>
+	<script src="js/rvb.js"></script>
 	<script src="js/jquery.min.2.1.3.js" onload="window.$ = window.jQuery = module.exports;"></script>
-	<script type="text/javascript" src="js/ffau/block.js"></script>
-	<script type="text/javascript" src="js/ffau/generator.js"></script>
-    <script type="text/javascript" src="js/ffau/ffau.js"></script>
-	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.3.3.6.css"/>
-	<link rel="stylesheet" type="text/css" href="css/fontawesome.css"/>
-	<link rel="stylesheet" type="text/css" href="css/ffau.css"/>
+	<script src="js/bootstrap.toggle.min.js"></script>
+	<script src="js/bootstrap.min.3.3.6.js"></script>
+	<script src="blocs&generateurs/ffau/css.js"></script>
+	<script src="blocs&generateurs/ffau/html.js"></script>
+    <script src="js/ffau/index.js"></script>
+	<script src="js/ace/ace.js"></script>
+	<script src="js/ace/ext-language_tools.js"></script>
+	<!--script src="js/ui/jquery.ui.core.js"></script>
+	<script src="js/ui/jquery.ui.widget.js"></script>
+	<script src="js/ui/jquery.ui.mouse.js"></script>
+	<script src="js/ui/jquery.ui.resizable.js"></script>
+	<link rel="stylesheet" href="css/jquery.ui.resizable.css"-->
+	<link rel="stylesheet" href="css/bootstrap.toggle.min.css">
+	<link rel="stylesheet" href="css/bootstrap.min.3.3.6.css">
+	<link rel="stylesheet" href="css/fontawesome.css">
+	<link id="theme_css_ffau" rel="stylesheet" href="css/ffau.css">
 </head>
 <body>
 	<div id="toptitle">
 		<div id="title">
-            <span class="fa fa-html5 fa-1_75x fa-fw"></span> HTML & CSS
+            <i class="fa fa-globe fa-1_75x fa-fw"></i> BLOCKLY-WEB
 		</div>
         <div id="title-bar-btns">
-			<button id="btn_max" type="button" class="btn btn-minmaxgreen"><span class="fa fa-maximize fa-lg"></span></button>
-			<button id="btn_quit" type="button" class="btn btn-quitgreen"><span class="fa fa-times fa-1_75x"></span></button>
+			<button id="btn_max" type="button" class="btn btn-minmaxgreen"><i class="fa fa-window-restore fa-lg"></i></button>
+			<button id="btn_quit" type="button" class="btn btn-quitgreen"><i class="fa fa-times fa-1_75x"></i></button>
         </div>
 	</div>
-	<div id="container">
-		<div id="blockly_l">
-			<div id="btn_group" class="btn-group">
-				<button id="btn_new" type="button" class="btn btn-default" style="color: #727272;">
-					<span class="fa fa-file fa-fw"></span>
-				</button>
-				<button id="btn_open" type="button" class="btn btn-default" style="color: #727272;">
-					<span class="fa fa-folder-open fa-lg fa-fw"></span>
-				</button>
-				<input id="loadText" style="display:none;" type="file" accept=".lmth,.xml">
-				<button id="btn_save" type="button" class="btn btn-default" style="color: #727272;">
-					<span class="fa fa-cloud-download fa-lg fa-fw"></span>
-				</button>
-				<!--button id="btn_undo" class="btn btn-default" style="color: #727272;">
-					<span class="fa fa-undo"> </span>
-				</button>
-				<button id="btn_redo" class="btn btn-default" style="color: #727272;">
-					<span class="fa fa-repeat"> </span>
-				</button>
-				<button id="btn_print" class="btn btn-default" style="color: #727272;">
-					<span class="fa fa-camera"> </span>
-				</button>
-				<button id="btn_preview" class="btn btn-default">
-					<span class="fa fa-code"> </span>
-				</button-->
+		<ul class="nav nav-tabs" role="tablist" style="display:none">
+			<li role="presentation" class="active"><a href="#blocklyDiv" aria-controls="blocklyDiv" role="tab" data-toggle="tab"></a></li>
+			<li role="presentation"><a href="#content_code" aria-controls="content_code" role="tab" data-toggle="tab"></a></li>
+		</ul>
+		<div id="header">
+			<div id="btn_left">
+				<input id="codeORblock" checked data-toggle="toggle" data-onstyle="default" data-on="<img src='media/icon.png' style='height:20px'>" data-off="<i class='fa fa-code fa-1_5x'></i>" type="checkbox">
 			</div>
-			<div id="blocklyDiv"></div>
+			<div id="btn_center" class="btn-toolbar">
+				<input type="file" id="loadText" accept=".www, .html" style="display:none">
+				<div class="btn-group">
+					<button id="btn_new" class="btn btn-default"><i class="fa fa-file fa-1_5x btn_color"></i></button>
+					<div class="btn-group">
+						<button id="btn_example" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							<i class="fa fa-file-text fa-1_5x btn_color"></i>
+						</button>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">EXEMPLES</li>
+							<li class="divider"></li>
+							<li><a href="#" id="lien1"><i class="fa fa-html5 fa-fw"></i> Titre et paragraphe</a></li>
+							<li><a href="#" id="lien2"><i class="fa fa-image fa-fw"></i> page simple avec image</a></li>
+							<li><a href="#" id="lien3"><i class="fa fa-css3 fa-fw"></i> page complexe</a></li>
+							<li><a href="#" id="lien4"><i class="fa fa-fa fa-fw"></i> utilisation de Bootstrap et FontAwesome</a></li>
+						</ul>
+					</div>
+					<button id="btn_open" class="btn btn-default"><i class="fa fa-folder-open fa-1_5x btn_color"></i></button>
+					<button id="btn_save" class="btn btn-default"><i class="fa fa-cloud-download fa-1_5x btn_color"></i></button>
+				</div>
+				<div class="btn-group">
+					<button id="btn_config" class="btn btn-default" data-toggle="modal" data-target="#configModal">
+						<i class="fa fa-cog fa-1_5x btn_color"></i>
+					</button>
+					<button id="btn_tint" class="btn btn-default" data-toggle="modal" data-target="#colorModal">
+						<i class="fa fa-tint fa-1_5x btn_color"></i>
+					</button>
+					<button id="btn_factory" class="btn btn-default"><i class="fa fa-industry fa-1_5x btn_color"></i></button>
+				</div>
+				<div class="btn-group">
+					<button id="btn_undo" class="btn btn-default"><i class="fa fa-undo fa-1_5x btn_color"></i></button>
+					<button id="btn_redo" class="btn btn-default"><i class="fa fa-repeat fa-1_5x btn_color"></i></button>
+					<button id="btn_search" class="btn btn-default"><i class="fa fa-binoculars fa-1_5x btn_color"></i></button>
+					<button id="btn_print" class="btn btn-default"><i class="fa fa-camera fa-1_5x btn_color"></i></button>
+				</div>
+			</div>
 		</div>
-		<div id="blockly_r"></div>
+	<div id="container">
+			<div id="blockly_l"  class="tab-content">
+				<div role="tabpanel" id="blocklyDiv" class="tab-pane fade in active" style="position: relative;"></div>
+				<div role="tabpanel" id="content_code" class="tab-pane fade" onChange="update()"></div>
+			</div>
+			<div id="blockly_r"></div>
 	</div>
-	<xml id="toolbox" style="display: none;">
+	<!-- modal -->
+		<div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
+					<span class="fa fa-cog fa-2x" class="modal-title"> Connexion au serveur ftp</span>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+					  <div class="form-group">
+						<label for="inputHost" class="col-sm-3 control-label">Nom hôte</label>
+						<div class="col-sm-6">
+						  <input type="text" class="form-control" id="inputHost" placeholder="lesormeaux.dx.am">
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label for="inputPort" class="col-sm-3 control-label">Port</label>
+						<div class="col-sm-6">
+						  <input type="text" class="form-control" id="inputPort" placeholder="21">
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label for="inputId" class="col-sm-3 control-label">Identifiant</label>
+						<div class="col-sm-6">
+						  <input type="text" class="form-control" id="inputId" placeholder="3268550_2025000948">
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label for="inputPwd" class="col-sm-3 control-label">Mot de passe</label>
+						<div class="col-sm-6">
+						  <input type="password" class="form-control" id="inputPwd" placeholder="">
+						</div>
+					  </div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button id="btn_ftp" class="btn btn-danger"><i class="fa fa-arrow-right fa-1_5x"></i> Transférer</button>
+					<button id="btn_valid_config_ffau" type="button" class="btn btn-primary">OK</button>
+				</div>
+			</div>
+		  </div>
+		</div>
+		<div class="modal fade" id="message" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-body" >
+						<div id = "messageDIV"></div>
+					</div>  
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="colorModal" tabindex="-1" role="dialog" aria-labelledby="colorModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
+						<span class="fa fa-tint fa-2x" class="modal-title"> Couleurs</span>
+					</div>
+					<div class="modal-body">
+						<form name="converter">
+							<table border="0" cellpadding="6" cellspacing="1" width="570">
+								<tr height="40px">
+									<td bgcolor="#000000" align="center" width="33%">
+										<font style="font-family:Verdana,Helvetica,Sans-serif;font-size:16px;color:white"><b>Canal RGB</b></font>
+									</td>
+									<td bgcolor="#000000" align="center" width="33%">
+										<font style="font-family:Verdana,Helvetica,Sans-serif;font-size:16px;color:white"><b>Hexadécimal</b></font>
+									</td>
+									<td bgcolor="#000000" align="center" width="33%">
+										<font style="font-family:Verdana,Helvetica,Sans-serif;font-size:16px;color:white"><b>Décimal</b></font>
+									</td>
+								</tr>
+								<tr height="40px">
+									<td bgcolor="#000000" align="center" nowrap>
+										<b>
+										<input type="button" onClick="reduceVal('R')" value="- " style="width:22px;height:22px;border:1px solid;border-color:white gray gray white; background-color:silver;font-size:15px;cursor:pointer;">
+														&nbsp;&nbsp;&nbsp;&nbsp; <font style="font-family:Verdana,Helvetica,Sans-serif;font-size:15px;color:red;">Red</font> 
+														&nbsp;&nbsp;&nbsp;&nbsp;
+														<input type="button" onClick="increaseVal('R')" value="+ " style="width:22px;height:22px;border:1px solid;border-color:white gray gray white; background-color:silver;font-size:15px;cursor:pointer;">
+														</b>
+													</td>
+													<td bgcolor="#000000" align="center">
+														<input type="text" name="hexR" size="5" maxlength="2" style="border:2px solid red;color:red;">
+													</td>
+													<td bgcolor="#000000" align="center">
+														<input type="text" name="decR" size="5" maxlength="3" style="border:2px solid red;color:red;">
+													</td>
+								</tr>
+								<tr height="40px">
+													<td bgcolor="#000000" align="center" nowrap>
+														<b>
+														<input type="button" onClick="reduceVal('G')" value="- " style="width:22px;height:22px;border:1px solid;border-color:white gray gray white; background-color:silver;font-size:15px;cursor:pointer;">
+														&nbsp;&nbsp; <font style="font-family:Verdana,Helvetica,Sans-serif;font-size:15px;color:green;">Green</font> 
+														&nbsp;&nbsp;
+														<input type="button" onClick="increaseVal('G')" value="+ " style="width:22px;height:22px;border:1px solid;border-color:white gray gray white; background-color:silver;font-size:15px;cursor:pointer;">
+														</b>
+													</td>
+													<td bgcolor="#000000" align="center">
+														<input type="text" name="hexG" size="5" maxlength="2" style="border:2px solid green;color:green;">
+													</td>
+													<td bgcolor="#000000" align="center">
+														<input type="text" name="decG" size="5" maxlength="3" style="border:2px solid green;color:green;">
+													</td>
+								</tr>
+								<tr height="40px">
+													<td bgcolor="#000000" align="center" nowrap>
+														<b>
+														<input type="button" onClick="reduceVal('B')" value="- " style="width:22px;height:22px;border:1px solid;border-color:white gray gray white; background-color:silver;font-size:15px;cursor:pointer;">
+														&nbsp;&nbsp;&nbsp;&nbsp; <font style="font-family:Verdana,Helvetica,Sans-serif;font-size:15px;color:blue;">Blue</font> 
+														&nbsp;&nbsp;&nbsp;
+														<input type="button" onClick="increaseVal('B')" value="+ " style="width:22px;height:22px;border:1px solid;border-color:white gray gray white; background-color:silver;font-size:15px;cursor:pointer;">
+														</b>
+													</td>
+													<td bgcolor="#000000" align="center">
+														<input type="text" name="hexB" size="5" maxlength="2" style="border:2px solid blue;color:blue;">
+													</td>
+													<td bgcolor="#000000" align="center">
+														<input type="text" name="decB" size="5" maxlength="3" style="border:2px solid blue;color:blue;">
+													</td>
+								</tr>
+								<tr height="40px">
+													<td bgcolor="#000000" align="center" nowrap>
+														<b>
+														<input type="button" onClick="reduceVal('R');reduceVal('G');reduceVal('B');" value="- " style="width:22px;height:22px;border:1px solid;border-color:white gray gray white; background-color:silver;font-size:15px;cursor:pointer;">
+														&nbsp;&nbsp;&nbsp;&nbsp; <font style="font-family:Verdana,Helvetica,Sans-serif;font-size:15px;color:white;">Tout</font> 
+														&nbsp;&nbsp;&nbsp;
+														<input type="button" onClick="increaseVal('R');increaseVal('G');increaseVal('B');" value="+ " style="width:22px;height:22px;border:1px solid;border-color:white gray gray white; background-color:silver;font-size:15px;cursor:pointer;">
+														</b>
+													</td>
+													<td bgcolor="#000000" align="center">
+														<input type="button" value="  Montrer  " onclick="convert2Dec(document.converter.hexR.value,document.converter.hexG.value,document.converter.hexB.value,'')" style="width:100px;height:22px;border:1px solid;border-color:white gray gray white; background-color:silver;font-size:15px;cursor:pointer;">
+													</td>
+													<td bgcolor="#000000" align="center">
+														<input type="button" value="  Montrer  " onclick="convert2Hex(document.converter.decR.value,document.converter.decG.value,document.converter.decB.value,'')" style="width:100px;height:22px;border:1px solid;border-color:white gray gray white; background-color:silver;font-size:15px;cursor:pointer;">
+													</td>
+								</tr>
+								<tr height="40px">
+													<td bgcolor="#000000" align="center">
+														<font style="font-family:Verdana,Helvetica,Sans-serif;font-size:15px;color:white;"><b>
+														Code Hex&nbsp;:</b>
+														</font>
+													</td>
+													<td bgcolor="#000000" align="center"><font style="font-family:Verdana,Helvetica,Sans-serif;font-size:20px;color:white;"><b># </b></font>
+														<input type="text" name="hexString" size="6" maxlength="6" style="border:2px solid gray;margin-bottom:3px;">
+													</td>
+													<td bgcolor="#000000" align="center">
+														<input type="button" value="  Montrer   " onclick="showHex(document.converter.hexString.value)" style="width:100px;height:22px;border:1px solid;border-color:white gray gray white; background-color:silver;font-size:15px;cursor:pointer;">
+													</td>
+								</tr>
+								<tr height="40px">
+													<td bgcolor="#000000" align="center">
+														<font style="font-family:Verdana,Helvetica,Sans-serif;font-size:15px;color:white;"><b>
+														Couleurs nomées :</b>
+													</font>
+													</td>
+													<td bgcolor="#000000" align="center" colspan="2">
+													 <select name="names" onChange="showHex(this.value)" style="border:2px solid gray;font-family:Verdana,Helvetica,Sans-serif;">
+														 <option value="000000"></option>
+														 <option value="F0F8FF" style="background-color:aliceblue;">aliceblue</option>
+														 <option value="FAEBD7" style="background-color:antiquewhite;">antiquewhite</option>
+														 <option value="00FFFF" style="background-color:aqua;">aqua</option>
+														 <option value="7FFFD4" style="background-color:aquamarine;">aquamarine</option>
+														 <option value="F0FFFF" style="background-color:azure;">azure</option>
+														 <option value="F5F5DC" style="background-color:beige;">beige</option>
+														 <option value="FFE4C4" style="background-color:bisque;">bisque</option>
+														 <option value="000000" style="background-color:black; color:white;">black</option>
+														 <option value="FFEBCD" style="background-color:blanchedalmond;">blanchedalmond</option>
+														 <option value="0000FF" style="background-color:blue; color:white;">blue</option>
+														 <option value="8A2BE2" style="background-color:blueviolet; color:white;">blueviolet</option>
+														 <option value="A52A2A" style="background-color:brown; color:white;">brown</option>
+														 <option value="DEB887" style="background-color:burlywood;">burlywood</option>
+														 <option value="5F9EA0" style="background-color:cadetblue;">cadetblue</option>
+														 <option value="7FFF00" style="background-color:chartreuse;">chartreuse</option>
+														 <option value="D2691E" style="background-color:chocolate; color:white;">chocolate</option>
+														 <option value="FF7F50" style="background-color:coral;">coral</option>
+														 <option value="6495ED" style="background-color:cornflowerblue;">cornflowerblue</option>
+														 <option value="FFF8DC" style="background-color:cornsilk;">cornsilk</option>
+														 <option value="DC143C" style="background-color:crimson; color:white;">crimson</option>
+														 <option value="00008B" style="background-color:darkblue; color:white;">darkblue</option>
+														 <option value="008B8B" style="background-color:darkcyan; color:white;">darkcyan</option>
+														 <option value="B8860B" style="background-color:darkgoldenrod; color:white;">darkgoldenrod</option>
+														 <option value="404040" style="background-color:#404040; color:white;">darkgray</option>
+														 <option value="006400" style="background-color:darkgreen; color:white;">darkgreen</option>
+														 <option value="BDB76B" style="background-color:darkkhaki;">darkkhaki</option>
+														 <option value="8B008B" style="background-color:darkmagenta; color:white;">darkmagenta</option>
+														 <option value="556B2F" style="background-color:darkolivegreen; color:white;">darkolivegreen</option>
+														 <option value="FF8C00" style="background-color:darkorange; color:white;">darkorange</option>
+														 <option value="9932CC" style="background-color:darkorchid; color:white;">darkorchid</option>
+														 <option value="8B0000" style="background-color:darkred; color:white;">darkred</option>
+														 <option value="E9967A" style="background-color:darksalmon;">darksalmon</option>
+														 <option value="8FBC8F" style="background-color:darkseagreen;">darkseagreen</option>
+														 <option value="483D8B" style="background-color:darkslateblue; color:white;">darkslateblue</option>
+														 <option value="2F4F4F" style="background-color:darkslategray; color:white;">darkslategray</option>
+														 <option value="00CED1" style="background-color:darkturquoise;">darkturquoise</option>
+														 <option value="9400D3" style="background-color:darkviolet; color:white;">darkviolet</option>
+														 <option value="FF1493" style="background-color:deeppink; color:white;">deeppink</option>
+														 <option value="00BFFF" style="background-color:deepskyblue;">deepskyblue</option>
+														 <option value="696969" style="background-color:dimgray; color:white;">dimgray</option>
+														 <option value="1E90FF" style="background-color:dodgerblue; color:white;">dodgerblue</option>
+														 <option value="B22222" style="background-color:firebrick; color:white;">firebrick</option>
+														 <option value="FFFAF0" style="background-color:floralwhite;">floralwhite</option>
+														 <option value="228B22" style="background-color:forestgreen; color:white;">forestgreen</option>
+														 <option value="FF00FF" style="background-color:fuchsia; color:white;">fuchsia</option>
+														 <option value="DCDCDC" style="background-color:gainsboro;">gainsboro</option>
+														 <option value="F8F8FF" style="background-color:ghostwhite;">ghostwhite</option>
+														 <option value="FFD700" style="background-color:gold;">gold</option>
+														 <option value="DAA520" style="background-color:goldenrod;">goldenrod</option>
+														 <option value="808080" selected="selected" style="background-color:gray;">gray</option>
+														 <option value="008000" style="background-color:green; color:white;">green</option>
+														 <option value="ADFF2F" style="background-color:greenyellow;">greenyellow</option>
+														 <option value="F0FFF0" style="background-color:honeydrew;">honeydew</option>
+														 <option value="FF69B4" style="background-color:hotpink; color:white;">hotpink</option>
+														 <option value="CD5C5C" style="background-color:indianred; color:white;">indianred</option>
+														 <option value="4B0082" style="background-color:indigo; color:white;">indigo</option>
+														 <option value="FFFFF0" style="background-color:ivory;">ivory</option>
+														 <option value="F0E68C" style="background-color:khaki;">khaki</option>
+														 <option value="E6E6FA" style="background-color:lavender;">lavender</option>
+														 <option value="FFF0FF" style="background-color:lavenderblush;">lavenderblush</option>
+														 <option value="7CFC00" style="background-color:lawngreen;">lawngreen</option>
+														 <option value="FFFACD" style="background-color:lemonchiffon;">lemonchiffon</option>
+														 <option value="ADD8E6" style="background-color:lightblue;">lightblue</option>
+														 <option value="F08080" style="background-color:lightcoral;">lightcoral</option>
+														 <option value="E0FFFF" style="background-color:lightcyan;">lightcyan</option>
+														 <option value="FAFAD2" style="background-color:lightgoldenrodyellow;">lightgoldenrodyellow</option>
+														 <option value="90EE90" style="background-color:lightgreen;">lightgreen</option>
+														 <option value="D3D3D3" style="background-color:lightgrey;">lightgrey</option>
+														 <option value="FFB6C1" style="background-color:lightpink;">lightpink</option>
+														 <option value="FFA07A" style="background-color:lightsalmon;">lightsalmon</option>
+														 <option value="20B2AA" style="background-color:lightseagreen;">lightseagreen</option>
+														 <option value="87CEFA" style="background-color:lightskyblue;">lightskyblue</option>
+														 <option value="778899" style="background-color:lightslategray;">lightslategray</option>
+														 <option value="B0C4DE" style="background-color:lightsteelblue;">lightsteelblue</option>
+														 <option value="FFFFE0" style="background-color:lightyellow;">lightyellow</option>
+														 <option value="00FF00" style="background-color:lime;">lime</option>
+														 <option value="32CD32" style="background-color:limegreen;">limegreen</option>
+														 <option value="FAF0E6" style="background-color:linen;">linen</option>
+														 <option value="FF00FF" style="background-color:magenta; color:white;">magenta</option>
+														 <option value="800000" style="background-color:maroon; color:white;">maroon</option>
+														 <option value="66CDAA" style="background-color:mediumaquamarine;">mediumaquamarine</option>
+														 <option value="3CB371" style="background-color:mediumseagreen;">mediumseagreen</option>
+														 <option value="7B68EE" style="background-color:mediumslateblue; color:white;">mediumslateblue</option>
+														 <option value="00FA9A" style="background-color:mediumspringgreen;">mediumspringgreen</option>
+														 <option value="48D1CC" style="background-color:mediumturquoise;">mediumturquoise</option>
+														 <option value="C71585" style="background-color:mediumvioletred; color:white;">mediumvioletred</option>
+														 <option value="0000CD" style="background-color:mediumblue; color:white;">mediumblue</option>
+														 <option value="BA55D3" style="background-color:mediumorchid; color:white;">mediumorchid</option>
+														 <option value="9370DB" style="background-color:mediumpurple; color:white;">mediumpurple</option>
+														 <option value="191970" style="background-color:midnightblue; color:white;">midnightblue</option>
+														 <option value="F5FFFA" style="background-color:mintcream;">mintcream</option>
+														 <option value="FFE4E1" style="background-color:mistyrose;">mistyrose</option>
+														 <option value="FFE4B5" style="background-color:moccasin;">moccasin</option>
+														 <option value="FFDEAD" style="background-color:navajowhite;">navajowhite</option>
+														 <option value="000080" style="background-color:navy; color:white;">navy</option>
+														 <option value="FDF5E6" style="background-color:oldlace;">oldlace</option>
+														 <option value="808000" style="background-color:olive; color:white;">olive</option>
+														 <option value="6B8E23" style="background-color:olivedrab; color:white;">olivedrab</option>
+														 <option value="FFA500" style="background-color:orange;">orange</option>
+														 <option value="FF4500" style="background-color:orangered; color:white;">orangered</option>
+														 <option value="DA70D6" style="background-color:orchid; color:white;">orchid</option>
+														 <option value="EEE8AA" style="background-color:palegoldenrod;">palegoldenrod</option>
+														 <option value="98FB98" style="background-color:palegreen;">palegreen</option>
+														 <option value="AFEEEE" style="background-color:paleturquoise;">paleturquoise</option>
+														 <option value="DB7093" style="background-color:palevioletred;">palevioletred</option>
+														 <option value="FFEFD5" style="background-color:papayawhip;">papayawhip</option>
+														 <option value="FFDAB9" style="background-color:peachpuff;">peachpuff</option>
+														 <option value="CD853F" style="background-color:peru;">peru</option>
+														 <option value="FFC0CB" style="background-color:pink;">pink</option>
+														 <option value="DDA0DD" style="background-color:plum;">plum</option>
+														 <option value="B0E0E6" style="background-color:powderblue;">powderblue</option>
+														 <option value="800080" style="background-color:purple; color:white;">purple</option>
+														 <option value="FF0000" style="background-color:red; color:white;">red</option>
+														 <option value="BC8F8F" style="background-color:rosybrown;">rosybrown</option>
+														 <option value="4169E1" style="background-color:royalblue; color:white;">royalblue</option>
+														 <option value="8B4513" style="background-color:saddlebrown; color:white;">saddlebrown</option>
+														 <option value="FA8072" style="background-color:salmon;">salmon</option>
+														 <option value="F4A460" style="background-color:sandybrown;">sandybrown</option>
+														 <option value="2E8B57" style="background-color:seagreen; color:white;">seagreen</option>
+														 <option value="FFF5EE" style="background-color:seashell;">seashell</option>
+														 <option value="A0522D" style="background-color:sienna; color:white;">sienna</option>
+														 <option value="C0C0C0" style="background-color:silver;">silver</option>
+														 <option value="87CEEB" style="background-color:skyblue;">skyblue</option>
+														 <option value="6A5ACD" style="background-color:slateblue; color:white;">slateblue</option>
+														 <option value="708090" style="background-color:slategray; color:white;">slategray</option>
+														 <option value="FFFAFA" style="background-color:snow;">snow</option>
+														 <option value="00FF7F" style="background-color:springgreen;">springgreen</option>
+														 <option value="4682B4" style="background-color:steelblue;">steelblue</option>
+														 <option value="D2B48C" style="background-color:tan;">tan</option>
+														 <option value="008080" style="background-color:teal; color:white;">teal</option>
+														 <option value="D8BFD8" style="background-color:thistle;">thistle</option>
+														 <option value="FF6347" style="background-color:tomato;;">tomato</option>
+														 <option value="40E0D0" style="background-color:turquoise;">turquoise</option>
+														 <option value="EE82EE" style="background-color:violet;">violet</option>
+														 <option value="F5DEB3" style="background-color:wheat;">wheat</option>
+														 <option value="FFFFFF" style="background-color:white;">white</option>
+														 <option value="F5F5F5" style="background-color:whitesmoke;">whitesmoke</option>
+														 <option value="FFFF00" style="background-color:yellow;">yellow</option>
+														 <option value="9ACD32" style="background-color:yellowgreen;">yellowgreen</option>
+													 </select>
+													</td>
+								</tr>
+								<tr height="5px" bgcolor="#ffffff"><td colspan="3"></td></tr>
+							</table>
+							<div id="color_show" style="width: 570px; height: 40px; background-color: gray"></div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<xml id="toolbox" style="display:none">
 		<category colour="210" name="Structure">
-			<block type="html"></block>
-			<block type="head"></block>
-			<block type="title"></block>
-			<block type="metacharset"></block>
-			<block type="metaviewport"></block>
-			<block type="body"></block>
+			<block type="base"></block>
 			<block type="divider"></block>
 			<block type="linebreak"></block>
 			<block type="hline"></block>
 		</category>
-		<category colour="65" name="Text">
+		<category colour="65" name="Texte">
 			<block type="emptytext"></block>
-			<block type="span"></block>
-			<block type="textmod"></block>
-			<block type="paragraph"></block>
-			<block type="header"></block>
-			<block type="link"></block>
+				<block type="icon"></block>
+			<category colour="65" name="bloc">
+				<block type="paragraph">
+					<value name='content'>
+						<block type="emptytext">
+							<field name='content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</field>
+						</block>
+					</value>
+				</block>
+				<block type="header"></block>
+			</category>
+			<category colour="65" name="en-ligne">
+				<block type="span"></block>
+				<block type="textmod"></block>
+				<block type="button"></block>
+				<block type="link"></block>
+			</category>
 		</category>
-		<category colour="20" name="Tables">
+		<category colour="20" name="Table">
 			<block type="table"></block>
 			<block type="tablerow"></block>
+			<block type="thead"></block>
 			<block type="tableheading"></block>
+			<block type="tbody"></block>
 			<block type="tabledata"></block>
 		</category>
-		<category colour="20" name="Lists">
+		<category colour="#FD6C9E" name="Liste">
 			<block type="unorderedlist"></block>
 			<block type="orderedlist"></block>
 			<block type="listitem"></block>
 		</category>
-		<category colour="160" name="Forms">
+		<category colour="160" name="Formulaire">
 			<block type="form"></block>
 			<block type="input"></block>
 			<block type="label"></block>
 		</category>
 		<category colour="330" name="Media">
 			<block type="image"></block>
+			<block type="img"></block>
 			<block type="audio"></block>
 			<block type="video"></block>
 		</category>
-		<category colour="120" name="Modifiers">
+		<category colour="120" name="Modification">
 			<block type="args"></block>
 			<block type="class"></block>
 			<block type="id"></block>
 			<block type="emptyarg"></block>
 		</category>
 		<category colour="290" name="CSS">
+			<block type="css"></block>
 			<block type="style"></block>
 			<block type="stylearg"></block>
-			<block type="linkhead"></block>
 			<block type="cssitem"></block>
-			<category colour="290" name="Text">
-				<label text="Font"></label>
-				<block type="fontfamily"></block>
-				<block type="fontsize"></block>
-				<block type="fontweight"></block>
-				<label text="Text Styling"></label>
-				<block type="color-new">
-					<value name="value">
-						<block type="color_picker"></block>
-					</value>
-				</block>
-				<block type="colordropdown"></block>
-				<block type="textshadow-new">
-					<value name="color">
-						<block type="color_picker"></block>
-					</value>
-				</block>
-				<block type="texttransform"></block>
-				<block type="textalign"></block>
-				<block type="letterspacing"></block>
-			</category>
-			<category colour="290" name="Arrangement">
-				<label text="Display"></label>
-				<block type="margin"></block>
-				<block type="padding"></block>
-				<block type="display"></block>
-				<block type="overflow"></block>
-				<block type="float"></block>
-				<block type="verticalalign"></block>
-				<label text="Dimensions"></label>
-				<block type="widthheightnum"></block>
-				<block type="widthheight"></block>
-			</category>
-			<category colour="290" name="Design">
-				<label text="Colours"></label>
-				<block type="color_picker"></block>
-				<block type="hex_picker"></block>
-				<block type="rgba_picker"></block>
-				<label text="Backgrounds"></label>
-				<block type="bgcolor-new">
-					<value name="value">
-						<block type="color_picker"></block>
-					</value>
-				</block>
-				<block type="bgimage"></block>
-				<block type="bgposition"></block>
-				<block type="bgrepeat"></block>
-				<block type="bgsize"></block>
-				<label text="Other Design"></label>
-				<block type="cursor"></block>
-				<block type="boxshadow-new">
-					<value name="color">
-						<block type="color_picker"></block>
-					</value>
-				</block>
-			</category>
-			<category colour="290" name="Borders">
-				<block type="border-new">
-					<value name="color">
-						<block type="color_picker"></block>
-					</value>
-				</block>
-				<block type="borderedge-new">
-					<value name="color">
-						<block type="color_picker"></block>
-					</value>
-				</block>
-				<block type="bordercol"></block>
-				<block type="borderrad"></block>
-			</category>
+		<category colour="290" name="Texte">
+			<block type="fontsize"></block>
+			<block type="fontweight"></block>
+			<block type="texttransform"></block>
+			<block type="textalign"></block>
+		</category>
+		<category colour="290" name="Arrangement">
+			<block type="margin"></block>
+			<block type="padding"></block>
+			<block type="float"></block>
+			<block type="verticalalign"></block>
+			<block type="widthheightnum"></block>
+		</category>
+		<category colour="290" name="Couleur">
+			<block type="color_picker"></block>
+			<block type="hex_picker"></block>
+			<block type="rgba_picker"></block>
+			<block type="color-new"></block>
+			<block type="bgcolor-new"></block>
+		</category>
+		<category colour="290" name="Bordure">
+			<block type="border-new"></block>
+			<block type="borderedge-new"></block>
+			<block type="borderrad"></block>
+		</category>
 		</category>
 	</xml>
 </body>
-<script>require('../resources/app/ffau_node.js')
+<script>
+	ace.require("ace/ext/language_tools");
+	var editor = ace.edit("content_code");
+	editor.setTheme('ace/theme/sqlserver');
+	editor.session.setTabSize(2);
+	editor.setShowPrintMargin(false);
+	editor.session.setMode("ace/mode/html");
+	editor.session.on('change', function(){update()});
+	editor.setOptions({
+		enableBasicAutocompletion: true,
+		enableSnippets: true,
+		enableLiveAutocompletion: true
+	})
+	function update(){
+		var ace = editor.getValue();
+		document.getElementById("blockly_r").innerHTML = ace
+    }
+	require('../resources/app/ffau.js')
 </script>
 </html>

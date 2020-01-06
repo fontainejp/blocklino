@@ -5,6 +5,9 @@ body {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	margin: 0
 }
+.btn_color {
+	color: gray;
+}
 #toptitle {
     -webkit-app-region: drag;
 	height: 41px;
@@ -12,8 +15,8 @@ body {
 	line-height: 41px;
 	vertical-align: middle;
 	background-color: #5cb85c;
-	padding: none;
-	margin: 0px
+	padding: 0;
+	margin: 0
 }
 #title {
 	position: fixed;
@@ -26,32 +29,64 @@ body {
 	position: fixed;
 	right: 0px
 }
-#btn_group {
-	float: right;
+#header {
+    position: absolute;
+    top: 40px;
+	background: #fff;
+	height: 40px;
+    width: 100%
+}
+#btn_right {
+	position: absolute;
 	right: 5px;
-	z-index: 10
+	top: 5px;
+	z-index: 10;
+}
+#btn_left {
+	position: absolute;
+	left: 5px;
+	top: 5px;
+	z-index: 10;
+}
+#btn_center {
+	position: absolute;
+	left: 75px;
+	top: 5px;
+	z-index: 10;
 }
 #container {
 	background-color: #fff;
     position: absolute;
-    top: 45px;
-	left: 5px;
-    bottom: 0px;
-    width: 99%;
+    top: 85px;
+    bottom: 0;
+    width: 100%
 }
 #blocklyDiv{
-	height:95%
+	height: 100%
 }
 #blockly_l{
-	background-color: #fff;
-	float:left;
-	width:60%;
-	height:99%
+	background-color: white;
+    position: relative;
+    float: left;
+	padding: 5px;
+	width: 50%;
+	height: 100%
 }
 #blockly_r{
-	float:right;
-	height:99%;
-	width:40%
+	border-left: gray 1px solid;
+    position: relative;
+    float: left;
+	height: 100%;
+	width: 50%
+}
+#content_code {
+	font-size: 14px;
+    position: absolute;
+	border: 1px solid gray;
+    top: 5px;
+    right: 5px;
+    bottom: 5px;
+    left: 5px
 }
 .btn-minmaxgreen { 
   color: #fff; 
@@ -59,8 +94,8 @@ body {
   height: 40px;
   background-color: #5cb85c; 
   border-color: #5cb85c; 
-  line-height: 0px;
-  padding:0;
+  line-height: 0;
+  padding: 0
 }
 .btn-quitgreen { 
   color: #fff; 
@@ -68,8 +103,8 @@ body {
   height: 40px;
   background-color: #5cb85c; 
   border-color: #5cb85c; 
-  line-height: 0px;
-  padding:0;
+  line-height: 0;
+  padding: 0
 }
 .blocklyToolboxDiv {
 	opacity: 0.8 

@@ -57,21 +57,23 @@ Code.initLanguage = function() {
   $('#cardLabel').text(MSG['cardLabel']);
   $('#aboutcardLabel').text(MSG['aboutcardLabel']);
   $('#configModalLabel').text(MSG['configModalLabel']);
+  $('#colorModalLabel').text(MSG['btn_tint']);
+  $('#usbModalLabel').text(MSG['usbLabel']);
   $('#versionModalLabel').text(MSG['versionModalLabel']); 
   $('#exampleModalLabel').text(MSG['exampleModalLabel']); 
   $('#variableModalLabel').text(MSG['variableModalLabel']);
   $('#variablebody').text(MSG['variablebody']);
   $('#labelToolboxDefinition').text(MSG['labelToolboxDefinition']); 
-  $('#survol').text(MSG['survol']);
   $('#survol_check').text(MSG['survol_check']);
   $('#survol_flash').text(MSG['survol_flash']);
   $('#survol_bin').text(MSG['survol_bin']);
   $('#span_about').text(MSG['span_about']);
+  $('#span_title1').text(MSG['span_blocklino']);
   $('#span_example').text(MSG['span_example']);
   $('#span_connect_serial').text(MSG['span_connect_serial']);
   $('#span_select_all').text(MSG['span_select_all']);
   $('#span_languageMenu').text(MSG['span_languageMenu']);
-  $('#span_blocklino').text(MSG['span_blocklino']);
+  $('#span_version1').text(MSG['span_blocklino']);
   $('#span_update').text(MSG['span_update']);
   $('#span_verify_update').text(MSG['span_verify_update']);
   $('#span_site').text(MSG['span_site']);
@@ -79,6 +81,7 @@ Code.initLanguage = function() {
   $('#span_contact').text(MSG['span_contact']);
   $('#btn_close_config').text(MSG['btn_close']);
   $('#btn_valid_config').text(MSG['btn_valid']);
+  $('#btn_valid_config_ffau').text(MSG['btn_valid']);
   $('#btn_close_msg').text(MSG['btn_close']);
   $('#btn_valid_msg').text(MSG['btn_valid']);
   $('#btn_variable').text(MSG['btn_variable']);
@@ -90,6 +93,9 @@ Code.initLanguage = function() {
 	$('#btn_preview').attr('title', MSG['btn_preview_py']);
 	$('#btn_saveino').attr('title', MSG['btn_save_py']);   
   }
+  $('#btn_usb').attr('title', MSG['usbLabel']);
+  $('#btn_card').attr('title', MSG['cardLabel']);
+  $('#btn_add').attr('title', MSG['btn_add']);
   $('#btn_copy').attr('title', MSG['btn_copy']);
   $('#btn_print').attr('title', MSG['btn_print']);
   $('#btn_undo').attr('title', MSG['btn_undo']);
@@ -104,6 +110,7 @@ Code.initLanguage = function() {
   $('#btn_about').attr('title', MSG['btn_about']);
   $('#btn_example').attr('title', MSG['btn_example']);
   $('#btn_html').attr('title', MSG['btn_html']);
+  $('#btn_tint').attr('title', MSG['btn_tint']);
   $("xml").find("category").each(function() {
 	if (!$(this).attr('id')) {
 	  $(this).attr('id', $(this).attr('name'));

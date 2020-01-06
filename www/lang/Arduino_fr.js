@@ -2,10 +2,10 @@
 goog.provide('Blockly.Msg.fr');
 goog.require('Blockly.Msg');
 // Electron window
-Blockly.Msg.survol_check = "VERIFIER";
-Blockly.Msg.survol_flash = "TELEVERSER";
-Blockly.Msg.survol_bin = "EXPORTER les binaires"; 
-Blockly.Msg.com1 = "Choisir le port" ; 
+Blockly.Msg.survol_check = " VERIFIER";
+Blockly.Msg.survol_flash = " TELEVERSER";
+Blockly.Msg.survol_bin = " EXPORTER les binaires"; 
+Blockly.Msg.com1 = "Port" ; 
 Blockly.Msg.com2 = "Sélectionner un port !" ; 
 Blockly.Msg.check = "Vérification " ; 
 Blockly.Msg.upload = "Téléversement " ; 

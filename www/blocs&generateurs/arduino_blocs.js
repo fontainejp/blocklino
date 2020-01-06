@@ -100,7 +100,7 @@ Blockly.Blocks["serial_input"]={init:function(){
 Blockly.Blocks["toggle"]={init:function(){
         this.setColour("#787746");
         this.setHelpUrl(Blockly.Msg.tempo_helpurl);
-        this.appendValueInput("PIN", "Number").setCheck("Number").appendField(Blockly.Msg.toggle);
+        this.appendValueInput("PIN").setCheck("Number").appendField(Blockly.Msg.toggle);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setTooltip(Blockly.Msg.toggle_tooltip)}
@@ -108,7 +108,7 @@ Blockly.Blocks["toggle"]={init:function(){
 Blockly.Blocks["inout_digital_write"]={init:function(){
         this.setColour("#787746");
         this.setHelpUrl(Blockly.Msg.HELPURL);
-        this.appendValueInput("PIN", "Number").setAlign(Blockly.ALIGN_RIGHT).setCheck("Number").appendField(Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_INPUT1);
+        this.appendValueInput("PIN").setAlign(Blockly.ALIGN_RIGHT).setCheck("Number").appendField(Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_INPUT1);
         this.setInputsInline(true);
         this.appendValueInput("STAT", "Boolean").setAlign(Blockly.ALIGN_RIGHT).appendField(Blockly.Msg._AT);
         this.setInputsInline(false);
@@ -137,7 +137,7 @@ Blockly.Blocks["inout_analog_write"]={init:function(){
         this.setColour("#787746");
         this.setHelpUrl(Blockly.Msg.HELPURL);
         this.appendDummyInput().appendField(Blockly.Msg.ARDUINO_INOUT_ANALOG_WRITE_INPUT1).appendField(new Blockly.FieldDropdown(profile[card].dropdownPWM), "broche");
-        this.appendValueInput("NUM", "Number").setAlign(Blockly.ALIGN_RIGHT).appendField(Blockly.Msg._AT).setCheck("Number");
+        this.appendValueInput("NUM").setAlign(Blockly.ALIGN_RIGHT).appendField(Blockly.Msg._AT).setCheck("Number");
         this.setInputsInline(false);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
@@ -316,7 +316,7 @@ Blockly.Blocks["millis"]={init:function(){
 };
 Blockly.Blocks['tempo_sans_delay']={init:function() {
 	var prog = window.localStorage.prog;
-	this.appendValueInput("DELAY_TIME", "Number").setCheck("Number").appendField(Blockly.Msg.tempo1);
+	this.appendValueInput("DELAY_TIME").setCheck("Number").appendField(Blockly.Msg.tempo1);
 	if (prog != "python") {
 		this.appendDummyInput().appendField(new Blockly.FieldDropdown(Blockly.Msg.times), "unite");
 		this.setPreviousStatement(true, null);
@@ -333,7 +333,7 @@ Blockly.Blocks['tempo_sans_delay']={init:function() {
 Blockly.Blocks["base_delay"]={init:function(){
         this.setColour("#bbbbbb");
         this.setHelpUrl(Blockly.Msg.HELPURL);
-        this.appendValueInput("DELAY_TIME", "Number").appendField(Blockly.Msg.ARDUINO_BASE_DELAY).setCheck("Number");
+        this.appendValueInput("DELAY_TIME").appendField(Blockly.Msg.ARDUINO_BASE_DELAY).setCheck("Number");
         this.appendDummyInput().appendField(new Blockly.FieldDropdown(Blockly.Msg.times), "unite");
         this.setInputsInline(true);
         this.setPreviousStatement(true, null);

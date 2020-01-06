@@ -4,16 +4,19 @@ var { exec } = require('child_process')
 var sp = require('serialport')
 var fs = require('fs')
 var path = require('path')
+var tableify = require('tableify')
 var appVersion = window.require('electron').remote.app.getVersion()
 
-window.addEventListener('load', function load(event) {
-	var window = remote.getCurrentWindow() 
+window.addEventListener('load', function load(event){
+	var window = remote.getCurrentWindow()
+	if(!window.isMaximized())window.maximize()
 	var quitDiv = '<button type="button" class="close" data-dismiss="modal" aria-label="Close">&#215;</button>'
 	var checkBox = document.getElementById('verifyUpdate')
 	var portserie = document.getElementById('portserie')
 	var messageDiv = document.getElementById('messageDIV')
 	localStorage.setItem("verif",false)
-	document.getElementById('versionapp').textContent = " BLOCKLINO v" + appVersion
+	document.getElementById('span_title2').textContent = appVersion
+	document.getElementById('span_version2').textContent = appVersion
 	function uploadOK(){
 		messageDiv.style.color = '#009000'
 		messageDiv.innerHTML = Blockly.Msg.upload + ': OK' + quitDiv
@@ -67,27 +70,14 @@ window.addEventListener('load', function load(event) {
 			localStorage.setItem("com","com")
 		}
 	})
-	$('#btn_quit').on('click', function(){
-		window.close()
-	})
-	$('#btn_max').on('click', function(){
-		if(window.isMaximized()){
-			window.unmaximize()
+	sp.list(function(err,ports){
+		var messageUSB = document.getElementById('usb')
+		if (ports.length === 0) {
+			messageUSB.innerHTML = "Aucun port n'est disponible"
 		} else {
-			window.maximize()
+		tableHTML = tableify(ports)
+		messageUSB.innerHTML = tableHTML
 		}
-	})
-	$('#btn_min').on('click', function(){
-		window.minimize()
-	})
-	$('#btn_forum').on('click', function(){
-		shell.openExternal('http://blockly.technologiescollege.fr/forum/')
-	})
-	$('#btn_site').on('click', function(){
-		shell.openExternal('http://lesormeaux.net/blocklino/start.html')
-	})
-	$('#btn_contact').on('click', function(){
-		shell.openExternal('mailto:jean-philippe.fontaine@ac-rouen.fr')
 	})
 	$('#portserie').mouseover(function(){
 		sp.list(function(err,ports) {
@@ -113,6 +103,30 @@ window.addEventListener('load', function load(event) {
 				localStorage.setItem("nb_com",ports.length)
 			}
 		})
+	})
+	$('#btn_quit').on('click', function(){
+		window.close()
+	})
+	$('#btn_max').on('click', function(){
+		if(window.isMaximized()){
+			window.unmaximize()
+			document.getElementById('btn_max').innerHTML="<span class='fa fa-window-maximize fa-lg'></span>"
+		} else {
+			window.maximize()
+			document.getElementById('btn_max').innerHTML="<span class='fa fa-window-restore fa-lg'></span>"
+		}
+	})
+	$('#btn_min').on('click', function(){
+		window.minimize()
+	})
+	$('#btn_forum').on('click', function(){
+		shell.openExternal('http://blockly.technologiescollege.fr/forum/')
+	})
+	$('#btn_site').on('click', function(){
+		shell.openExternal('http://lesormeaux.net/blocklino/start.html')
+	})
+	$('#btn_contact').on('click', function(){
+		shell.openExternal('https://github.com/fontainejp/blocklino/issues/')
 	})
 	$('#btn_copy').on('click', function(){
 		clipboard.writeText($('#pre_previewArduino').text())
@@ -290,15 +304,25 @@ window.addEventListener('load', function load(event) {
 			if (localStorage.getItem("prog") == "python") { ipcRenderer.send('save-py') } else { ipcRenderer.send('save-ino') }
 		}
 	})
-	$('#btn_usb').on('click', function(){
-		ipcRenderer.send("usb", "")
-	})
 	$('#btn_reset').on('click', function(){
+		fs.stat("./compilation/arduino/ino/sketch.ino", function(err,stats){
+			if (err) return console.log(err)
+			fs.unlink("./compilation/arduino/ino/sketch.ino", function(err){
+				if (err) return console.log(err)
+			})
+		})
 		localStorage.clear()
 		ipcRenderer.send("reload", "")
 	})
+	$('#btn_print').on("click", function(){
+		ipcRenderer.send('save-png')
+	})
 	ipcRenderer.on('saved-ino', function(event, path){
-		var code = $('#pre_previewArduino').text()
+		if (localStorage.getItem('content') == "off") {
+			var code = editor.getValue()
+		} else {
+			var code = $('#pre_previewArduino').text()
+		}
 		if (path === null) {
 			return
 		} else {
@@ -308,7 +332,11 @@ window.addEventListener('load', function load(event) {
 		}
 	})
 	ipcRenderer.on('saved-py', function(event, path){
-		var code = $('#pre_previewArduino').text()
+		if (localStorage.getItem('content') == "off") {
+			var code = editor.getValue()
+		} else {
+			var code = $('#pre_previewArduino').text()
+		}
 		if (path === null) {
 			return
 		} else {
@@ -377,10 +405,32 @@ window.addEventListener('load', function load(event) {
 		if (path === null) {
 			return
 		} else {
-			code 
-			fs.writeFile(path, code, function(err){
-				if (err) return console.log(err)
-			})
+			var ws = BlocklyDuino.workspace.svgBlockCanvas_.cloneNode(true);
+			ws.removeAttribute("width");
+			ws.removeAttribute("height");
+			ws.removeAttribute("transform");
+			var styleElem = document.createElementNS("http://www.w3.org/2000/svg", "style");
+			styleElem.textContent = Blockly.Css.CONTENT.join('') ;
+			ws.insertBefore(styleElem, ws.firstChild);
+			var bbox = BlocklyDuino.workspace.svgBlockCanvas_.getBBox();
+			var canvas = document.createElement( "canvas" );
+			canvas.width = Math.ceil(bbox.width+10);
+			canvas.height = Math.ceil(bbox.height+10);
+			var ctx = canvas.getContext( "2d" );
+			var xml = new XMLSerializer().serializeToString(ws);
+			xml = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="'+bbox.width+'" height="'+bbox.height+'" viewBox="' + bbox.x + ' ' + bbox.y + ' '  + bbox.width + ' ' + bbox.height + '"><rect width="100%" height="100%" fill="white"></rect>'+xml+'</svg>';
+			var img = new Image();
+			var code = btoa(unescape(encodeURIComponent(xml)));
+			img.setAttribute( "src", 'data:image/svg+xml;base64,' + code);
+			img.onload = function() {
+				ctx.drawImage( img, 5, 5 );
+				var canvasdata = canvas.toDataURL("image/png",1);
+				var data = canvasdata.replace(/^data:image\/png;base64,/,"")
+				fs.writeFile(path, data, 'base64', function(err){
+					if (err) return console.log(err)
+				})
+			}
+			
 		}
 	})
 	ipcRenderer.on('BlockAdded', function(event, bloc){

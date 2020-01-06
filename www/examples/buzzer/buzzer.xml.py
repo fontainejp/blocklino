@@ -1,0 +1,36 @@
+from machine import Pin
+from machine import PWM
+import time
+
+for count in range(2):
+  Play_5 = PWM(Pin(5), freq=392)
+  time.sleep(500)
+  Play_5.deinit()
+Play_5 = PWM(Pin(5), freq=440)
+time.sleep(500)
+Play_5.deinit()
+Play_5 = PWM(Pin(5), freq=392)
+time.sleep(500)
+Play_5.deinit()
+Play_5 = PWM(Pin(5), freq=523)
+time.sleep(500)
+Play_5.deinit()
+Play_5 = PWM(Pin(5), freq=493)
+time.sleep(1000)
+Play_5.deinit()
+for count2 in range(2):
+  Play_5 = PWM(Pin(5), freq=392)
+  time.sleep(500)
+  Play_5.deinit()
+Play_5 = PWM(Pin(5), freq=440)
+time.sleep(500)
+Play_5.deinit()
+Play_5 = PWM(Pin(5), freq=392)
+time.sleep(500)
+Play_5.deinit()
+Play_5 = PWM(Pin(5), freq=587)
+time.sleep(500)
+Play_5.deinit()
+Play_5 = PWM(Pin(5), freq=523)
+time.sleep(500)
+Play_5.deinit()

@@ -5,7 +5,7 @@
 	top: 5px;
 	z-index: 10
 }
-#title-bar {
+#toptitle {
     -webkit-app-region: drag;
 	height: 41px;
 	text-align: center;
@@ -18,8 +18,8 @@
 #title {
 	position: fixed;
 	top: 0px;
-	left: 6px;
-	color:white
+	left: 5px;
+	color: white
 }
 #title-bar-btns {
 	-webkit-app-region: no-drag;
