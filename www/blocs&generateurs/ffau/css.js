@@ -55,7 +55,7 @@ Blockly.Blocks['style'] = {
             ],
             "previousStatement": "header",
             "nextStatement": "header",
-            "colour": 290
+            "colour": 120
         });
     }
 };
@@ -81,7 +81,7 @@ Blockly.Blocks['stylearg'] = {
             ],
             "previousStatement": "args",
             "nextStatement": "args",
-            "colour": 290
+            "colour": 120
         });
     }
 };
@@ -113,7 +113,7 @@ Blockly.Blocks['cssitem'] = {
             ],
             "previousStatement": "style",
             "nextStatement": "style",
-            "colour": 290
+            "colour": 120
         });
     }
 };
@@ -143,7 +143,7 @@ Blockly.Blocks['othercss'] = {
 			],
 			"previousStatement": "stylecontent",
 			"nextStatement": "stylecontent",
-			"colour": 290
+			"colour": 120
 		});
 	}
 };
@@ -601,6 +601,37 @@ Blockly.Blocks['borderrad'] = {
 Blockly.html['borderrad'] = function (block) {
     var content = block.getFieldValue('content');
     return 'border-radius: ' + fullEscape(content) + ';\n';
+};
+// Border Collapse
+Blockly.Blocks['bordercollapse'] = {
+    init: function () {
+        this.jsonInit({
+            "message0": 'border-collapse: %1 ;',
+            "args0": [
+                {
+                    "type": "field_dropdown",
+                    "name": "content",
+                    "options": [
+                        [
+                            "collapse",
+                            "collapse"
+                        ],
+                        [
+                            "separate",
+                            "separate"
+                        ]
+					]
+                }
+            ],
+            "previousStatement": "stylecontent",
+            "nextStatement": "stylecontent",
+            "colour": 290
+        });
+    }
+};
+Blockly.html['bordercollapse'] = function (block) {
+    var content = block.getFieldValue('content');
+    return 'border-collapse: ' + fullEscape(content) + ';\n';
 };
 // Width height number selector
 Blockly.Blocks['widthheightnum'] = {

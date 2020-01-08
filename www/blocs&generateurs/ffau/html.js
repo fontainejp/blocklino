@@ -51,7 +51,7 @@ Blockly.Blocks['html'] = {
                     "check": "document"
                 }
             ],
-            "colour": 210
+            "colour": "#4a235a"
         });
     }
 };
@@ -95,7 +95,7 @@ Blockly.Blocks['head'] = {init:function(){
             ],
 			"previousStatement": "document",
             "nextStatement": "document",
-            "colour": 210
+            "colour": "#4a235a"
         });
 	}
 };
@@ -114,11 +114,11 @@ Blockly.Blocks['title'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setColour(210)}
+    this.setColour("#4a235a")}
 };
 Blockly.html['title'] = function (block) {
     var text_content = block.getFieldValue('_text');
-    return '<title>' + text_content + '</title>\n  <meta charset="utf-8">\n';
+    return '<title>' + text_content + '</title>\n<meta charset="utf-8">\n';
 };
 // Link bootstrap.css
 Blockly.Blocks['bootstrap'] = {
@@ -128,10 +128,10 @@ Blockly.Blocks['bootstrap'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setColour(210)}
+    this.setColour("#4a235a")}
 };
 Blockly.html['bootstrap'] = function (block) {
-	return '<link rel="stylesheet" href="css/bootstrap.min.3.3.6.css">'
+	return '<script src="js/jquery.min.2.1.3.js"></script>\n<script src="js/bootstrap.min.3.3.6.js"></script>\n<link rel="stylesheet" href="css/bootstrap.min.3.3.6.css">\n'
 };
 // Link FontAwesome.css
 Blockly.Blocks['fontawesome'] = {
@@ -141,10 +141,10 @@ Blockly.Blocks['fontawesome'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setColour(210)}
+    this.setColour("#4a235a")}
 };
 Blockly.html['fontawesome'] = function (block) {
-    return '<link rel="stylesheet" href="css/fontawesome.css">';
+    return '<link rel="stylesheet" href="css/fontawesome.css">\n';
 };
 // Body tag
 Blockly.Blocks['body'] = {
@@ -164,7 +164,7 @@ Blockly.Blocks['body'] = {
                 }
             ],
             "previousStatement": "document",
-            "colour": 210
+            "colour": "#4a235a"
         });
     }
 };
@@ -200,7 +200,7 @@ Blockly.Blocks['button'] = {
 Blockly.html['button'] = function (block) {
     var statements_content = Blockly.html.statementToCode(block, 'content');
     var block_modifier = Blockly.html.statementToCode(block, 'modifier', Blockly.html.ORDER_ATOMIC);
-    var code = '<button' + (block_modifier ? " " + block_modifier.trim() : "") + '>\n' + statements_content + '</button>\n';
+    var code = '\n<button' + (block_modifier ? " " + block_modifier.trim() : "") + '>' + statements_content + '</button>\n';
     return code;
 };
 // Icon tag
@@ -223,7 +223,7 @@ Blockly.Blocks['icon'] = {
 };
 Blockly.html['icon'] = function (block) {
     var text_content = block.getFieldValue('content');
-    var code = '<i class="' + text_content + '"></i>\n';
+    var code = '<i class="' + text_content + '"></i>';
     return code;
 };
 // Divider tag
@@ -256,7 +256,7 @@ Blockly.Blocks['divider'] = {
                 "html",
                 "form"
             ],
-            "colour": 210
+            "colour": "#4a235a"
         });
     }
 };
@@ -273,7 +273,7 @@ Blockly.Blocks['linebreak'] = {
             "message0": '<br>',
             "previousStatement": "html",
             "nextStatement": "html",
-            "colour": 210
+            "colour": "#4a235a"
         });
     }
 };
@@ -294,7 +294,7 @@ Blockly.Blocks['hline'] = {
             ],
             "previousStatement": "html",
             "nextStatement": "html",
-            "colour": 210
+            "colour": "#4a235a"
         });
     }
 };
@@ -418,7 +418,7 @@ Blockly.Blocks['emptytext'] = {
 };
 Blockly.html['emptytext'] = function (block) {
     var text_content = block.getFieldValue('content');
-    return '\n' + looseEscape(text_content) + '\n';
+    return looseEscape(text_content)
 };
 // Text modifier
 Blockly.Blocks['textmod'] = {
@@ -537,7 +537,7 @@ Blockly.Blocks['paragraph'] = {
 Blockly.html['paragraph'] = function (block) {
     var statements_content = Blockly.html.statementToCode(block, 'content');
     var block_modifier = Blockly.html.statementToCode(block, 'modifier');
-    return '<p' + (block_modifier ? " " + block_modifier.trim() : "") + '>' + statements_content + '</p>\n';
+    return '<p' + (block_modifier ? " " + block_modifier.trim() : "") + '>\n' + statements_content + '\n</p>\n';
 };
 // Header tag
 Blockly.Blocks['header'] = {
@@ -635,7 +635,7 @@ Blockly.html['link'] = function (block) {
     if (isNewTabUrl(bareLink)) {
         target = ' target="_blank"';
     }
-    return '<a href="' + link + '"' + target + (block_modifier ? " " + block_modifier.trim() : "") + '>' + text + '</a>\n';
+    return '\n<a href="' + link + '"' + target + (block_modifier ? " " + block_modifier.trim() : "") + '>' + text + '</a>\n';
 };
 // Span tag
 Blockly.Blocks['span'] = {
@@ -663,7 +663,7 @@ Blockly.Blocks['span'] = {
 Blockly.html['span'] = function (block) {
     var content = Blockly.html.statementToCode(block, 'content');
     var block_modifier = Blockly.html.statementToCode(block, 'modifier', Blockly.html.ORDER_ATOMIC);
-    return '<span' + (block_modifier ? " " + block_modifier.trim() : "") + '>' + content + '</span>';
+    return '\n<span' + (block_modifier ? " " + block_modifier.trim() : "") + '>' + content + '</span>\n';
 };
 //////////////////////// Table ////////////////////////
 // Table tag
@@ -891,20 +891,12 @@ Blockly.Blocks['input'] = {
                             "date"
                         ],
                         [
-                            "datetime-local",
-                            "datetime-local"
-                        ],
-                        [
                             "email",
                             "email"
                         ],
                         [
                             "hidden",
                             "hidden"
-                        ],
-                        [
-                            "month",
-                            "month"
                         ],
                         [
                             "number",
@@ -929,10 +921,6 @@ Blockly.Blocks['input'] = {
                         [
                             "time",
                             "time"
-                        ],
-                        [
-                            "week",
-                            "week"
                         ]
                     ]
                 },

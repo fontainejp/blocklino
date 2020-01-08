@@ -83,7 +83,7 @@
 				<div role="tabpanel" id="blocklyDiv" class="tab-pane fade in active" style="position: relative;"></div>
 				<div role="tabpanel" id="content_code" class="tab-pane fade" onChange="update()"></div>
 			</div>
-			<iframe id="blockly_r" style="border-top:none"></iframe>
+			<iframe id="blockly_r" style="border:none"></iframe>
 	</div>
 	<!-- modal -->
 		<div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
@@ -395,7 +395,7 @@
 			</div>
 		</div>
 		<xml id="toolbox" style="display:none">
-		<category colour="210" name="Structure">
+		<category colour="#4a235a" name="Structure">
 			<block type="html"></block>
 			<block type="head"></block>
 			<block type="title"></block>
@@ -405,12 +405,11 @@
 			<block type="divider"></block>
 			<block type="linebreak"></block>
 			<block type="hline"></block>
-			<block type="base"></block>
 		</category>
 		<category colour="65" name="Texte">
 			<block type="emptytext"></block>
-				<block type="icon"></block>
-			<category colour="65" name="bloc">
+			<category colour="65" name="en-bloc">
+				<block type="paragraph"></block>
 				<block type="paragraph">
 					<value name='content'>
 						<block type="emptytext">
@@ -425,6 +424,7 @@
 				<block type="textmod"></block>
 				<block type="button"></block>
 				<block type="link"></block>
+				<block type="icon"></block>
 			</category>
 		</category>
 		<category colour="20" name="Table">
@@ -456,12 +456,12 @@
 			<block type="class"></block>
 			<block type="id"></block>
 			<block type="emptyarg"></block>
-		</category>
-		<category colour="290" name="CSS">
 			<block type="style"></block>
 			<block type="stylearg"></block>
 			<block type="cssitem"></block>
 			<block type="othercss"></block>
+		</category>
+		<category colour="290" name="CSS">
 		<category colour="290" name="Texte">
 			<block type="fontsize"></block>
 			<block type="fontweight"></block>
@@ -486,6 +486,7 @@
 			<block type="border-new"></block>
 			<block type="borderedge-new"></block>
 			<block type="borderrad"></block>
+			<block type="bordercollapse"></block>
 		</category>
 		</category>
 	</xml>
