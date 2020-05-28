@@ -8,6 +8,7 @@
 'use strict';
 goog.provide('Blockly.html');
 goog.require('Blockly.Generator');
+var maPage = "MaPage";
   ////////////////
  /*  function  */
 ////////////////
@@ -36,6 +37,57 @@ function URLInput(input) {
     }
 }
 //////////////////////// STRUCTURE ////////////////////////
+// balise tag
+Blockly.Blocks['balise'] = {
+    init: function () {
+        this.jsonInit({
+            "message0": '< %1 > %2 %3 </>',
+            "args0": [
+                {
+                    "type": "field_input",
+                    "name": "_text",
+                    "text": ""
+                },
+                {
+                    "type": "input_value",
+                    "name": "modifier",
+                    "check": "attributes"
+                },
+                {
+                    "type": "input_statement",
+                    "name": "content",
+                    "check": "document"
+                }
+            ],
+            "previousStatement": null,
+            "nextStatement": null,
+            "colour": "#4a235a"
+        });
+    }
+};
+Blockly.html['balise'] = function (block) {
+	var text_content = block.getFieldValue('_text');
+    var statements_content = Blockly.html.statementToCode(block, 'content');
+    var block_modifier = Blockly.html.statementToCode(block, 'modifier', Blockly.html.ORDER_ATOMIC).trim();
+    var code = '<' + text_content +  (block_modifier ? " " + block_modifier.trim() : "") + '>\n' + statements_content + '</' + text_content + '>\n';
+    return code;
+};
+// balise orpheline tag
+Blockly.Blocks['balise_orph'] = {
+    init:function(){
+    this.appendDummyInput()
+        .appendField("<")
+        .appendField(new Blockly.FieldTextInput(""), "_text")
+        .appendField(">");
+    this.setInputsInline(false);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour("#4a235a")}
+};
+Blockly.html['balise_orph'] = function (block) {
+    var text_content = block.getFieldValue('_text');
+    return '<' + text_content + '>\n';
+};
 // HTML tag
 Blockly.Blocks['html'] = {
     init: function () {
@@ -109,7 +161,7 @@ Blockly.Blocks['title'] = {
     init:function(){
     this.appendDummyInput()
         .appendField("<title>")
-        .appendField(new Blockly.FieldTextInput("monTitre"), "_text")
+        .appendField(new Blockly.FieldTextInput(maPage), "_text")
         .appendField("</title>");
     this.setInputsInline(false);
     this.setPreviousStatement(true);
@@ -118,6 +170,7 @@ Blockly.Blocks['title'] = {
 };
 Blockly.html['title'] = function (block) {
     var text_content = block.getFieldValue('_text');
+	maPage = text_content;
     return '<title>' + text_content + '</title>\n<meta charset="utf-8">\n';
 };
 // Link bootstrap.css
@@ -160,7 +213,7 @@ Blockly.Blocks['body'] = {
                 {
                     "type": "input_statement",
                     "name": "content",
-                    "check": "html"
+				"check": ["html", "textcontainer"]
                 }
             ],
             "previousStatement": "document",
@@ -249,14 +302,16 @@ Blockly.Blocks['divider'] = {
                 }
             ],
             "previousStatement": [
+                "textcontainer",
                 "html",
                 "form"
             ],
             "nextStatement": [
+                "textcontainer",
                 "html",
                 "form"
             ],
-            "colour": "#4a235a"
+            "colour": 65
         });
     }
 };
@@ -271,8 +326,8 @@ Blockly.Blocks['linebreak'] = {
     init: function () {
         this.jsonInit({
             "message0": '<br>',
-            "previousStatement": "html",
-            "nextStatement": "html",
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
             "colour": "#4a235a"
         });
     }
@@ -292,8 +347,8 @@ Blockly.Blocks['hline'] = {
                     "check": "attributes"
                 }
             ],
-            "previousStatement": "html",
-            "nextStatement": "html",
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
             "colour": "#4a235a"
         });
     }
@@ -528,8 +583,8 @@ Blockly.Blocks['paragraph'] = {
                     "check": "textcontainer"
                 }
             ],
-            "previousStatement": "html",
-            "nextStatement": "html",
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
             "colour": 65
         });
     }
@@ -586,8 +641,8 @@ Blockly.Blocks['header'] = {
                     "check": "textcontainer"
                 }
             ],
-            "previousStatement": "html",
-            "nextStatement": "html",
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
             "colour": 65
         });
     }
@@ -602,17 +657,22 @@ Blockly.html['header'] = function (block) {
 Blockly.Blocks['link'] = {
     init: function () {
         this.jsonInit({
-            "message0": '<a href=\" %1 \"> %2 %3 </a>',
+            "message0": '<a href="%1" _blank%2 > %3 %4 </a>',
             "args0": [
                 {
                     "type": "field_input",
                     "name": "target",
-                    "text": "http://"
+                    "text": ""
+                },
+                {
+                    "type": "field_checkbox",
+                    "name": "blank",
+                    "check": true
                 },
                 {
                     "type": "input_value",
                     "name": "modifier",
-                    "check": "attributes"
+                    "checked": "attributes"
                 },
                 {
                     "type": "input_statement",
@@ -628,11 +688,11 @@ Blockly.Blocks['link'] = {
 };
 Blockly.html['link'] = function (block) {
     var text = Blockly.html.statementToCode(block, 'content');
-    var bareLink = block.getFieldValue('target');
-    var link = URLInput(block.getFieldValue('target'));
+    var blank = block.getFieldValue('blank') == 'TRUE';
+    var link = block.getFieldValue('target');
     var block_modifier = Blockly.html.statementToCode(block, 'modifier', Blockly.html.ORDER_ATOMIC);
     var target = '';
-    if (isNewTabUrl(bareLink)) {
+    if (blank) {
         target = ' target="_blank"';
     }
     return '\n<a href="' + link + '"' + target + (block_modifier ? " " + block_modifier.trim() : "") + '>' + text + '</a>\n';
@@ -683,8 +743,8 @@ Blockly.Blocks['table'] = {
                     "check": "table"
                 }
             ],
-            "previousStatement": "html",
-            "nextStatement": "html",
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
             "colour": 20
         });
     }
@@ -849,12 +909,12 @@ Blockly.Blocks['form'] = {
                 {
                     "type": "input_statement",
                     "name": "content",
-                    "check": "form"
+                    "check": ["html", "textcontainer"]
 
                 }
             ],
-            "previousStatement": "html",
-            "nextStatement": "html",
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
             "colour": 160
         });
     }
@@ -945,8 +1005,8 @@ Blockly.Blocks['input'] = {
                     "check": "attributes",
                 }
             ],
-            "previousStatement": "form",
-            "nextStatement": "form",
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
             "colour": 160
         });
     }
@@ -969,7 +1029,7 @@ Blockly.Blocks['label'] = {
                 {
                     "type": "field_input",
                     "name": "for",
-                    "text": "id"
+                    "text": ""
                 },
                 {
                     "type": "input_value",
@@ -984,10 +1044,12 @@ Blockly.Blocks['label'] = {
             ],
             "previousStatement": [
                 "html",
+				"textcontainer",
                 "form"
             ],
             "nextStatement": [
                 "html",
+				"textcontainer",
                 "form"
             ],
             "colour": 160
@@ -1019,8 +1081,8 @@ Blockly.Blocks['orderedlist'] = {
                     "check": "list"
                 }
             ],
-            "previousStatement": "html",
-            "nextStatement": "html",
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
             "colour": "#FD6C9E"
         });
     }
@@ -1048,8 +1110,8 @@ Blockly.Blocks['unorderedlist'] = {
                     "check": "list"
                 }
             ],
-            "previousStatement": "html",
-            "nextStatement": "html",
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
             "colour": "#FD6C9E"
         });
     }
@@ -1090,11 +1152,56 @@ Blockly.html['listitem'] = function (block) {
     return code;
 };
 //////////////////////// MEDIA ////////////////////////
+// Audios tag
+Blockly.Blocks['audios'] = {
+    init: function () {
+        this.jsonInit({
+            "message0": '<audio src="%1" loop%2 autoplay%3 > %4',
+            "args0": [
+                {
+                    "type": "field_input",
+                    "name": "source",
+                    "text": ""
+                },
+                {
+                    "type": "field_checkbox",
+                    "name": "loop",
+                    "checked": false
+                },
+                {
+                    "type": "field_checkbox",
+                    "name": "autoplay",
+                    "checked": false
+                },
+                {
+                    "type": "input_value",
+                    "name": "modifier",
+                    "check": "attributes"
+                }
+            ],
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
+            "colour": 330
+        });
+    }
+};
+Blockly.html['audios'] = function (block) {
+    var source = block.getFieldValue('source');
+    var loop = block.getFieldValue('loop');
+    var autoplay = block.getFieldValue('autoplay');
+    var block_modifier = Blockly.html.statementToCode(block, 'modifier', Blockly.html.ORDER_ATOMIC);
+    var code = '<audio' + (block_modifier ? " " + block_modifier.trim() : "");
+    if (loop === "TRUE") code += ' loop';
+    if (autoplay === "TRUE") code += ' autoplay';
+    code += ' controls';
+	code += '>\n  <source src="' + source + '" type="audio/mpeg">\n</audio>\n';
+    return code 
+};
 // Audio tag
 Blockly.Blocks['audio'] = {
     init: function () {
         this.jsonInit({
-            "message0": '<audio src =  %1 loop = %2 autoplay = %3 controls = %4 > %5',
+            "message0": '<audio src=%1 loop%2 autoplay%3 > %4',
             "args0": [
                 {
                     "type": "field_dropdown",
@@ -1102,15 +1209,15 @@ Blockly.Blocks['audio'] = {
                     "options": [
                         [
                             "acqua",
-                            "acqua"
+                            "media/acqua.mp3"
                         ],
                         [
                             "kv",
-                            "kv"
+                            "media/kv.mp3"
                         ],
                         [
                             "vexento",
-                            "vexento"
+                            "media/vexento.mp3"
                         ]
                     ]
                 },
@@ -1125,18 +1232,13 @@ Blockly.Blocks['audio'] = {
                     "checked": false
                 },
                 {
-                    "type": "field_checkbox",
-                    "name": "controls",
-                    "checked": true
-                },
-                {
                     "type": "input_value",
                     "name": "modifier",
                     "check": "attributes"
                 }
             ],
-            "previousStatement": "html",
-            "nextStatement": "html",
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
             "colour": 330
         });
     }
@@ -1145,7 +1247,6 @@ Blockly.html['audio'] = function (block) {
     var source = block.getFieldValue('source');
     var loop = block.getFieldValue('loop');
     var autoplay = block.getFieldValue('autoplay');
-    var controls = block.getFieldValue('controls');
     var block_modifier = Blockly.html.statementToCode(block, 'modifier', Blockly.html.ORDER_ATOMIC);
     var code = '<audio' + (block_modifier ? " " + block_modifier.trim() : "");
     if (loop === "TRUE") {
@@ -1154,45 +1255,107 @@ Blockly.html['audio'] = function (block) {
     if (autoplay === "TRUE") {
         code += ' autoplay';
     }
-    if (controls === "TRUE") {
-        code += ' controls';
+    code += ' controls';
+    code += '>\n  <source src="' + source + '" type="audio/mpeg">\n</audio>\n';
+    return code;
+};
+// videos tag
+Blockly.Blocks['videos'] = {
+    init: function () {
+        this.jsonInit({
+            "message0": '<video youtube.com/watch?v= %1 > %2',
+            "args0": [
+                {
+                    "type": "field_input",
+                    "name": "source",
+                    "text": ""
+                },
+                {
+                    "type": "input_value",
+                    "name": "modifier",
+                    "check": "attributes"
+                }
+            ],
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
+            "colour": 330
+        });
     }
-    var type;
-    var url;
-    switch (source) {
-        case "acqua":
-            url = 'media/acqua.mp3';
-            type = "audio/mpeg";
-            break;
-        case "kv":
-            url = 'media/kv.mp3';
-            type = "audio/mpeg";
-            break;
-        case "vexento":
-            url = 'media/vexento.mp3';
-            type = "audio/mpeg";
-            break;
+};
+Blockly.html['videos'] = function (block) {
+    var source = block.getFieldValue('source');
+    var block_modifier = Blockly.html.statementToCode(block, 'modifier', Blockly.html.ORDER_ATOMIC);
+    var code = '<object' + (block_modifier ? " " + block_modifier.trim() : "");
+    code += ' data="https://www.youtube.com/embed/' + source + '">\n</object>\n';
+    return code;
+};
+// Video file tag
+Blockly.Blocks['video_file'] = {
+    init: function () {
+        this.jsonInit({
+            "message0": '<video src="%1" loop%2 autoplay%3 > %4',
+            "args0": [
+                {
+                    "type": "field_input",
+                    "name": "source",
+                    "text": ""
+                },
+                {
+                    "type": "field_checkbox",
+                    "name": "loop",
+                    "checked": false
+                },
+                {
+                    "type": "field_checkbox",
+                    "name": "autoplay",
+                    "checked": false
+                },
+                {
+                    "type": "input_value",
+                    "name": "modifier",
+                    "check": "attributes"
+                }
+            ],
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
+            "colour": 330
+        });
     }
-    code += '>\n<source src="' + url + '" type="' + type + '">\n</audio>\n';
+};
+Blockly.html['video_file'] = function (block) {
+    var source = block.getFieldValue('source');
+    var loop = block.getFieldValue('loop');
+    var autoplay = block.getFieldValue('autoplay');
+    var block_modifier = Blockly.html.statementToCode(block, 'modifier', Blockly.html.ORDER_ATOMIC);
+    var code = '<video' + (block_modifier ? " " + block_modifier.trim() : "");
+    if (loop === "TRUE") {
+        code += ' loop';
+    }
+    if (autoplay === "TRUE") {
+        code += ' autoplay';
+    }
+    code += ' controls';
+    var type = "video/mp4";
+    code += '>\n  <source src="' + source + '" type="' + type + '">\n</video>\n';
     return code;
 };
 // Video tag
 Blockly.Blocks['video'] = {
     init: function () {
         this.jsonInit({
-            "message0": '<video src =  %1 loop = %2 autoplay = %3 controls = %4 > %5',
+            "message0": '<video src=%1 loop%2 autoplay%3 > %4',
             "args0": [
                 {
                     "type": "field_dropdown",
                     "name": "source",
                     "options": [
                         [
-                            "bigbuckbunny.mp4",
-                            "bbb"
+                            "BigBuckBunny",
+                            "media/bigbuckbunny.mp4"
                         ],
                         [
-                            "lamadrama.mp4",
-                            "ld"
+                            "lamaDrama",
+                            "media/lamadrama.mp4"
                         ]
                     ]
                 },
@@ -1207,18 +1370,13 @@ Blockly.Blocks['video'] = {
                     "checked": false
                 },
                 {
-                    "type": "field_checkbox",
-                    "name": "controls",
-                    "checked": true
-                },
-                {
                     "type": "input_value",
                     "name": "modifier",
                     "check": "attributes"
                 }
             ],
-            "previousStatement": "html",
-            "nextStatement": "html",
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
             "colour": 330
         });
     }
@@ -1227,7 +1385,6 @@ Blockly.html['video'] = function (block) {
     var source = block.getFieldValue('source');
     var loop = block.getFieldValue('loop');
     var autoplay = block.getFieldValue('autoplay');
-    var controls = block.getFieldValue('controls');
     var block_modifier = Blockly.html.statementToCode(block, 'modifier', Blockly.html.ORDER_ATOMIC);
     var code = '<video' + (block_modifier ? " " + block_modifier.trim() : "");
     if (loop === "TRUE") {
@@ -1236,31 +1393,21 @@ Blockly.html['video'] = function (block) {
     if (autoplay === "TRUE") {
         code += ' autoplay';
     }
-    if (controls === "TRUE") {
-        code += ' controls';
-    }
+    code += ' controls';
     var type = "video/mp4";
-    switch (source) {
-        case "bbb":
-            source = "media/bigbuckbunny.mp4";
-            break;
-        case "ld":
-            source = "media/lamadrama.mp4";
-            break;
-    }
-    code += '>\n<source src="' + source + '" type="' + type + '">\n</video>\n';
+    code += '>\n  <source src="' + source + '" type="' + type + '">\n</video>\n';
     return code;
 };
 // Image tag
 Blockly.Blocks['image'] = {
     init: function () {
         this.jsonInit({
-            "message0": '<img src = \"  %1 \"> %2',
+            "message0": '<img src="%1"> %2',
             "args0": [
                 {
                     "type": "field_input",
                     "name": "source",
-                    "text": "http://"
+                    "text": ""
                 },
                 {
                     "type": "input_value",
@@ -1268,23 +1415,23 @@ Blockly.Blocks['image'] = {
                     "check": "attributes"
                 }
             ],
-            "previousStatement": "html",
-            "nextStatement": "html",
+            "previousStatement": ["html", "textcontainer"],
+            "nextStatement": ["html", "textcontainer"],
             "colour": 330
         });
     }
 };
 Blockly.html['image'] = function (block) {
-    var source = block.getFieldValue('source');
+    var source = block.getFieldValue('source')||'media/no_photo.png';
     var block_modifier = Blockly.html.statementToCode(block, 'modifier', Blockly.html.ORDER_ATOMIC);
-    var code = '<img src="' + (URLInput(source) || 'media/no_photo.png') + '"' + (block_modifier ? " " + block_modifier.trim() : "") + '>\n';
+    var code = '<img src="' + source + '"' + (block_modifier ? " " + block_modifier.trim() : "") + '>\n';
     return code;
 };
 // img
 Blockly.Blocks['img'] = {
     init: function () {
         this.jsonInit({
-            "message0": '<img src = \"  %1 \"> %2',
+            "message0": '<img src=%1> %2',
             "args0": [
                 {
                     "type": "field_dropdown",
@@ -1292,15 +1439,15 @@ Blockly.Blocks['img'] = {
                     "options": [
                         [
                             "zen",
-                            "zen"
+                            "media/zen.jpg"
                         ],
                         [
                             "earth",
-                            "earth"
+                            "media/earth.jpg"
                         ],
                         [
                             "IA",
-                            "IA"
+                            "media/neuronne.jpg"
                         ]
                     ]
                 },
@@ -1319,16 +1466,5 @@ Blockly.Blocks['img'] = {
 Blockly.html['img'] = function (block) {
     var source = block.getFieldValue('source');
     var block_modifier = Blockly.html.statementToCode(block, 'modifier', Blockly.html.ORDER_ATOMIC);
-    switch (source) {
-        case "zen":
-            source = "media/zen.jpg";
-            break;
-        case "earth":
-            source = "media/earth.jpg";
-            break;
-        case "IA":
-            source = "media/neuronne.jpg";
-            break;
-    }
 	return '<img src="' + source + '"' + (block_modifier ? " " + block_modifier.trim() : "") + '>\n';
 };

@@ -5,9 +5,6 @@ body {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	margin: 0
 }
-.btn_color {
-	color: gray;
-}
 #toptitle {
     -webkit-app-region: drag;
 	height: 41px;
@@ -20,7 +17,6 @@ body {
 }
 #title {
 	position: fixed;
-	top: 5px;
 	left: 5px;
 	color: white
 }
@@ -88,6 +84,12 @@ body {
     bottom: 5px;
     left: 5px
 }
+.tooltip-inner{
+	background-color: #5cb85c;
+}
+.btn_color {
+	color: gray;
+}
 .btn-minmaxgreen { 
   color: #fff; 
   width: 40px;
@@ -107,5 +109,22 @@ body {
   padding: 0
 }
 .blocklyToolboxDiv {
+	background-color: #fff  !important;
 	opacity: 0.8 
+}
+.blocklyTreeRow {
+	height: 30px !important;
+	line-height: 30px !important
+}
+.blocklyScrollbarHandle {
+	fill: #5cb85c;
+}
+.blocklyScrollbarBackground:hover+.blocklyScrollbarHandle, .blocklyScrollbarHandle:hover {
+	fill: #5cb85c;
+}
+.blocklyFlyout .blocklyScrollbarHandle {
+	fill: #5cb85c;
+}
+.blocklyFlyout .blocklyScrollbarBackground:hover+.blocklyScrollbarHandle, .blocklyFlyout .blocklyScrollbarHandle:hover {
+	fill: #5cb85c;
 }

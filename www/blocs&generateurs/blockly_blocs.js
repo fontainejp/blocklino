@@ -1172,7 +1172,7 @@ Blockly.Blocks["intervalle"] = {
         ];
         this.appendValueInput("inf").setCheck("Number");
         this.appendDummyInput().appendField(new Blockly.FieldDropdown(OPERATORS), "comp_inf");
-        this.appendValueInput("valeur").setCheck(null);
+        this.appendValueInput("valeur").setCheck("Number");
         this.appendDummyInput().appendField(new Blockly.FieldDropdown(OPERATORS), "comp_sup");
         this.appendValueInput("sup").setCheck("Number");
         this.setOutput(true, "Boolean");
@@ -1239,7 +1239,7 @@ Blockly.Blocks["list_size"] = {
 };
 Blockly.Blocks["list_set"] = {
     init: function() {
-		this.appendValueInput("index")
+		this.appendValueInput("index").setCheck("Number")
 			.appendField(Blockly.Msg.LISTS_SET_INDEX_SET);
 		this.appendDummyInput()
         	.appendField(Blockly.Msg.LISTS_of)
@@ -1263,7 +1263,7 @@ Blockly.Blocks["list_set"] = {
 };
 Blockly.Blocks["list_get"] = {
     init: function() {
-		this.appendValueInput("index")
+		this.appendValueInput("index").setCheck("Number")
 		.appendField(Blockly.Msg.LISTS_GET);
         this.appendDummyInput()
 			.appendField(Blockly.Msg.LISTS_of)
@@ -1386,22 +1386,22 @@ Blockly.Blocks["fixer_tableau"] = {
 		}
 		switch (option) {
 		case "2":
-            this.appendValueInput("D1");
+            this.appendValueInput("D1").setCheck("Number");
 			break;
 		case "3":
-            this.appendValueInput("D1");
-            this.appendValueInput("D2");
+            this.appendValueInput("D1").setCheck("Number");
+            this.appendValueInput("D2").setCheck("Number");
 			break;
 		case "4":
-            this.appendValueInput("D1");
-            this.appendValueInput("D2");
-			this.appendValueInput("D3");
+            this.appendValueInput("D1").setCheck("Number");
+            this.appendValueInput("D2").setCheck("Number");
+			this.appendValueInput("D3").setCheck("Number");
 			break;
 		case "5":
-            this.appendValueInput("D1");
-            this.appendValueInput("D2");
-			this.appendValueInput("D3");
-            this.appendValueInput("D4");
+            this.appendValueInput("D1").setCheck("Number");
+            this.appendValueInput("D2").setCheck("Number");
+			this.appendValueInput("D3").setCheck("Number");
+            this.appendValueInput("D4").setCheck("Number");
 			break;
 		}
     }
@@ -1443,22 +1443,22 @@ Blockly.Blocks["array_getIndex"] = {
 		}
 		switch (option) {
 		case "2":
-            this.appendValueInput("D1");
+            this.appendValueInput("D1").setCheck("Number");
 			break;
 		case "3":
-            this.appendValueInput("D1");
-            this.appendValueInput("D2");
+            this.appendValueInput("D1").setCheck("Number");
+            this.appendValueInput("D2").setCheck("Number");
 			break;
 		case "4":
-            this.appendValueInput("D1");
-            this.appendValueInput("D2");
-			this.appendValueInput("D3");
+            this.appendValueInput("D1").setCheck("Number");
+            this.appendValueInput("D2").setCheck("Number");
+			this.appendValueInput("D3").setCheck("Number");
 			break;
 		case "5":
-            this.appendValueInput("D1");
-            this.appendValueInput("D2");
-			this.appendValueInput("D3");
-            this.appendValueInput("D4");
+            this.appendValueInput("D1").setCheck("Number");
+            this.appendValueInput("D2").setCheck("Number");
+			this.appendValueInput("D3").setCheck("Number");
+            this.appendValueInput("D4").setCheck("Number");
 			break;
 		}
     }

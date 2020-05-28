@@ -1,0 +1,2 @@
+@echo off
+.\_microbit\sandeepmistry\tools\openocd\0.10.0-dev.nrf5\bin\openocd -d2 -f interface/cmsis-dap.cfg -c "transport select swd;" -f target/nrf51.cfg -c "program {{.\build\sketch.ino.hex}} verify reset; shutdown;"

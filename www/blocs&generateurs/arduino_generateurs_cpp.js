@@ -217,6 +217,36 @@ Blockly.Arduino["millis"]=function(block){
 	}
     return [code, Blockly.Arduino.ORDER_ATOMIC]
 };
+Blockly.Arduino["chrono"]=function(block){
+	var _u=block.getFieldValue("unite");
+    switch (_u) {
+        case "u":
+            var code="start-micros()";
+            break;
+        case "m":
+            var code="start-millis()";
+            break;
+        case "s":
+            code="start-1000*millis()";
+            break
+	}
+    return [code, Blockly.Arduino.ORDER_SUBTRACTION]
+};
+Blockly.Arduino["millis_start"]=function(block){
+	var _u=block.getFieldValue("unite");
+    switch (_u) {
+        case "u":
+            var code="unsigned long start = micros();\n";
+            break;
+        case "m":
+            var code="unsigned long start = millis();\n";
+            break;
+        case "s":
+            code="unsigned long start = 1000*millis();\n";
+            break
+	}
+    return code
+};
 Blockly.Arduino["base_delay"]=function(block){
     var _u=block.getFieldValue("unite");
     var delay_time=Blockly.Arduino.valueToCode(block, "DELAY_TIME", Blockly.Arduino.ORDER_ATOMIC);
@@ -238,7 +268,7 @@ Blockly.Arduino["tempo_sans_delay"]=function(block){
     var delay_time=Blockly.Arduino.valueToCode(block, "DELAY_TIME", Blockly.Arduino.ORDER_ATOMIC);
 	var faire=Blockly.Arduino.statementToCode(block, "branche");
 	var temps="temps"+delay_time;
-	Blockly.Arduino.definitions_["temporisation"+delay_time]="long "+temps+"=0 ;";
+	Blockly.Arduino.definitions_["temporisation"+delay_time]="unsigned long "+temps+"=0 ;";
     switch (_u) {
         case "u":
             var code="if ((micros()-"+temps+")>=" + delay_time + ") {\n  "+temps+"=micros();\n"+faire+"}\n";

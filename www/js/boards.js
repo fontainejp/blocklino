@@ -4,6 +4,30 @@ goog.provide('Blockly.Arduino');
 goog.require('Blockly.Generator');
 
 var profile = {
+	micro_bit: {
+	    description: "micro:bit",
+	    BUILTIN_LED: 2,
+		picture : "media/microbit.jpg",
+		dropdownPWM: [["P0", "pin0"],["P1", "pin1"],["P2", "pin2"],["P3", "pin3"],["P4", "pin4"],["P5", "pin5"],["P6", "pin6"],["P7", "pin7"],["P8", "pin8"],["P9", "pin9"],["P10", "pin10"],["P11", "pin11"],["P12", "pin12"],["P13", "pin13"],["P14", "pin14"],["P15", "pin15"],["P16", "pin16"],["P19", "pin19"],["P20", "pin20"]],
+		dropdownAnalog: [["P0", "pin0"],["P1", "pin1"],["P2", "pin2"],["P3", "pin3"],["P4", "pin4"],["P10", "pin10"]],
+		interrupt: [["2", "2"], ["3", "3"]],
+		serial: [['300', '300'], ['600', '600'], ['1200', '1200'],
+                ['2400', '2400'], ['4800', '4800'], ['9600', '9600'],
+                ['14400', '14400'], ['19200', '19200'], ['28800', '28800'],
+                ['31250', '31250'], ['38400', '38400'], ['57600', '57600'],
+                ['115200', '115200']],
+		serialPin: [["Rx/Tx", "0"]],
+		build: "",
+		cpu: "cortexM0",
+		speed: "115200",
+		prog: "arduino",
+		usb: "micro USB",
+		voltage: "3,3V",
+		inout: "20",
+		in_anal: "",
+		out_anal: "",
+		eeprom: ""
+	},
 	microbit: {
 	    description: "micro:bit",
 	    BUILTIN_LED: 2,
@@ -23,7 +47,10 @@ var profile = {
 		prog: "python",
 		usb: "micro USB",
 		voltage: "3,3V",
-		inout: "20"
+		inout: "20",
+		in_anal: "6",
+		out_anal: "18",
+		eeprom: ""
 	},
 	esp32: {
 	    description: "ESP32",
@@ -44,7 +71,10 @@ var profile = {
 		prog: "python",
 		usb: "micro USB",
 		voltage: "3,3V",
-		inout: "34"
+		inout: "34",
+		in_anal: "1",
+		out_anal: "8",
+		eeprom: ""
 	},
 	esp8266: {
 	    description: "ESP8266",
@@ -65,7 +95,10 @@ var profile = {
 		prog: "python",
 		usb: "micro USB",
 		voltage: "3,3V",
-		inout: "11"
+		inout: "11",
+		in_anal: "1",
+		out_anal: "8",
+		eeprom: "512 octets"
 	},
 	pyboard: {
 	    description: "pyBoard",
@@ -86,7 +119,10 @@ var profile = {
 		prog: "python",
 		usb: "micro USB",
 		voltage: "3,3V",
-		inout: "29"
+		inout: "29",
+		in_anal: "1",
+		out_anal: "8",
+		eeprom: ""
 	},
 	pro8: {
 	    description: "Arduino Pro Mini 3.3V atMega328",
@@ -108,7 +144,10 @@ var profile = {
 		prog: "arduino",
 		usb: "\u00D8",
 		voltage: "3,3V",
-		inout: "20"
+		inout: "20",
+		in_anal: "6",
+		out_anal: "6",
+		eeprom: "1024 octets"
 	},
 	pro16: {
 	    description: "Dagu RS040 / Pro ou Pro Mini",
@@ -130,7 +169,10 @@ var profile = {
 		prog: "arduino",
 		usb: "mini USB",
 		voltage: "5V",
-		inout: "20"
+		inout: "20",
+		in_anal: "6",
+		out_anal: "6",
+		eeprom: "1024 octets"
 	},
 	atmegang: {
 	    description: "Dagu rs027",
@@ -151,7 +193,10 @@ var profile = {
 		prog: "arduino",
 		usb: "mini USB",
 		voltage: "5V",
-		inout: "20"
+		inout: "20",
+		in_anal: "3",
+		out_anal: "6",
+		eeprom: "512 octets"
 	},
 	nano: {
 	    description: "Arduino Nano",
@@ -173,7 +218,10 @@ var profile = {
 		prog: "arduino",
 		usb: "mini USB",
 		voltage: "5V",
-		inout: "20"
+		inout: "20",
+		in_anal: "8",
+		out_anal: "6",
+		eeprom: "1024 octets"
 	},
 	mini: {
 	    description: "Arduino Mini",
@@ -195,7 +243,10 @@ var profile = {
 		prog: "arduino",
 		usb: "\u00D8",
 		voltage: "5V",
-		inout: "20"
+		inout: "20",
+		in_anal: "6",
+		out_anal: "6",
+		eeprom: "1024 octets"
 	},
 	micro: {
 	    description: "Arduino Micro",
@@ -215,7 +266,10 @@ var profile = {
 		prog: "avr109",
 		usb: "micro USB",
 		voltage: "5V",
-		inout: "20"
+		inout: "20",
+		in_anal: "12",
+		out_anal: "7",
+		eeprom: "1024 octets"
 	},
 	yun: {
 	    description: "Arduino Yun",
@@ -236,7 +290,10 @@ var profile = {
 		prog: "avr109",
 		usb: "micro USB",
 		voltage: "5V",
-		inout: "20"
+		inout: "20",
+		in_anal: "12",
+		out_anal: "7",
+		eeprom: "1024 octets"
 	},
 	leonardo: {
 	    description: "Arduino Léonardo",
@@ -257,7 +314,10 @@ var profile = {
 		prog: "avr109",
 		usb: "micro USB",
 		voltage: "5V",
-		inout: "20"
+		inout: "20",
+		in_anal: "12",
+		out_anal: "7",
+		eeprom: "1024 octets"
 	},
 	uno: {
 	    description: "Arduino Uno",
@@ -279,7 +339,10 @@ var profile = {
 		prog: "arduino",
 		usb: "USB B",
 		voltage: "5V",
-		inout: "20"
+		inout: "20",
+		in_anal: "6",
+		out_anal: "6",
+		eeprom: "1024 octets"
 	},
 	mega:{
 		description: "Arduino Méga 2560 / ADK",
@@ -301,6 +364,9 @@ var profile = {
 		prog: "wiring",
 		usb: "USB B",
 		voltage: "5V",
-		inout: "70"
+		inout: "70",
+		in_anal: "16",
+		out_anal: "15",
+		eeprom: "4096 octets"
 	}
 };

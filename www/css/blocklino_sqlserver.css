@@ -6,6 +6,7 @@ body {
 	margin: 0
 }
 #divBody {
+	background-color: #fff;
     position: absolute;
     top: 85px;
     bottom: 0px;
@@ -60,7 +61,7 @@ body {
     position: relative
 }
 #content_blocks{
-	background: white;
+	background-color: #fff;
 	height: 100%;
 	width: 100%
 }
@@ -151,7 +152,7 @@ body {
 	line-height: 30px !important
 }
 .blocklyTreeSeparator {
-	background: none repeat scroll 0 0 #e9f9f9 !important;
+	background: none repeat scroll 0 0 teal !important;
 	border-bottom: none !important;
 	height: 10px !important
 }
@@ -176,7 +177,7 @@ body {
     max-height: 80px
 }
 .blocklyScrollbarKnob {
-  fill: #008080 !important;
+  fill: #808080 !important;
   fill-opacity: 0.7 !important
 }
 .blocklyScrollbarBackground {
@@ -184,7 +185,7 @@ body {
   fill: none !important
 }
 .btn-minmax { 
-  color: #666666; 
+  color: #fff; 
   width: 40px;
   height: 40px;
   background-color: #008080; 

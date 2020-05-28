@@ -1,23 +1,16 @@
 @CHARSET "UTF-8";
-#btn_add {
-	position: absolute;
-	right: 5px;
-	top: 5px;
-	z-index: 10
-}
 #toptitle {
     -webkit-app-region: drag;
 	height: 41px;
 	text-align: center;
 	line-height: 41px;
 	vertical-align: middle;
-	background-color: #d9534f;
+	background: #d9534f;
 	padding: none;
 	margin: 0px
 }
 #title {
 	position: fixed;
-	top: 0px;
 	left: 5px;
 	color: white
 }
@@ -27,33 +20,63 @@
 	right: 0px
 }
 #divfenetre {
-	background-color: #fff;
+	background: #fff;
     position: absolute;
     top: 45px;
     bottom: 0px;
     width: 100%
 }
 #blockly_l{
-	background-color: #fff;
-	float:left;
-	height:100%;
-	width:55%
+	background: #fff;
+	float: left;
+	width: 55%
+}
+#btn_group {
+	background: #fff;
+	position: absolute;
+	left: 5px;
+}
+#blockly{
+	background: #fff;
+	position: absolute;
+    top: 37px;
+    bottom: 0px;
+	padding: 5px;
 }
 #blockly_r{
-	float:right;
-	height:100%;
-	width:45%
+	background: #fff;
+	float: right;
+	height: 100%;
+	width: 45%
 }
 #generatorPre {
-	font-size: 14px;
+	font-size: 15px;
     position: absolute;
-	border: 1px solid #727272;
+	border: 1px solid #d9534f;
+}
+pre {
+	font-size: 15px;
+	border: 1px solid #d9534f;
+	overflow:auto
+}
+.tooltip-inner{
+	background-color: #d9534f;
+}
+.my_select{
+	height: 22px;  
+	border-top-right-radius: 3px; 
+	border-bottom-right-radius: 3px;
+	border-left-width: 0px;
+	color: gray
+}
+.btn_color {
+	color: gray;
 }
 .btn-minmaxred { 
   color: #fff; 
   width: 40px;
   height: 40px;
-  background-color: #d9534f; 
+  background: #d9534f; 
   border-color: #d9534f; 
   line-height: 0px;
   padding:0;
@@ -62,11 +85,27 @@
   color: #fff; 
   width: 40px;
   height: 40px;
-  background-color: #d9534f; 
+  background: #d9534f; 
   border-color: #d9534f; 
   line-height: 0px;
   padding:0;
 }
 .blocklyToolboxDiv {
 	opacity: 0.8 
+}
+.blocklyTreeRow {
+	height: 30px !important;
+	line-height: 30px !important
+}
+.blocklyScrollbarHandle {
+	fill: #d9534f;
+}
+.blocklyScrollbarBackground:hover+.blocklyScrollbarHandle, .blocklyScrollbarHandle:hover {
+	fill: #d9534f;
+}
+.blocklyFlyout .blocklyScrollbarHandle {
+	fill: #d9534f;
+}
+.blocklyFlyout .blocklyScrollbarBackground:hover+.blocklyScrollbarHandle, .blocklyFlyout .blocklyScrollbarHandle:hover {
+	fill: #d9534f;
 }

@@ -46,6 +46,7 @@
     <category name="CAT_FUNCTIONS" custom="PROCEDURE" colour="#FF0000"></category>
     <category name="CAT_ARDUINO" colour="#4a235a">
 		<block type="base_begin"></block>
+		<block type="base_define"></block>
 		<block type="base_loop"></block>
 		<block type="base_end"></block>
 		<block type="base_code"></block>
@@ -63,27 +64,77 @@
 		<block type="millis"></block>
 	</category>
 	<category name="CAT_actionneur" colour="#00929F">
-		<block type="init_leds"></block>
-		<block type="show_leds"></block>
-		<block type="show_string"></block>
-		<block type="show_icon"></block>
-		<block type="set_pixel"></block>
-		<block type="show"></block>
-		<block type="clear"></block>
+		<category name="CAT_ARDUINO_matrice8x8" colour="#00929F">
+			<block type="init_leds"></block>
+			<block type="show_leds"></block>
+			<block type="show_string"></block>
+			<block type="show_icon"></block>
+			<block type="set_pixel"></block>
+			<block type="show"></block>
+			<block type="clear"></block>
+		</category>
+		<category name="CAT_del" colour="#00929F">
+			<block type="digital_write"></block>
+			<block type="pixel_init"></block>
+			<block type="pixel_setcolor"></block>
+			<block type="pixel_setcolor_rvb"></block>
+			<block type="pixel_show"></block>
+			<block type="pixel_clear"></block>
+		</category>
+		<!--category name="CAT_servo" colour="#00929f">
+			<block type="servo_move"></block>
+			<block type="servo_rot_continue_param"></block>
+		</category-->
+		<category name="CAT_DFPLAYER" colour="#00929F">
+			<block type="play_music"></block>
+			<block type="plays"></block>
+			<block type="silence"></block>
+			<block type="microbit_tone"></block>
+		</category>	
 	</category>
 	<category name="CAT_ultrason" colour="#00929F">
-		<block type="io_isButtonPressed"></block>
-		<block type="sensors_getAcceleration"></block>
-		<block type="sensors_calibrate"></block>
-		<block type="sensors_getMagneticForce"></block>
-		<block type="sensors_getLight"></block>
-		<block type="sensors_getTemperature"></block>
+		<category name="CAT_numerique" colour="#00929F">
+			<block type="io_isButtonPressed"></block>
+			<block type="inout_bp"></block>
+			<block type="mc005"></block>
+			<block type="block_sensitif"></block>
+			<block type="block_anticollision"></block>
+			<block type="suiveur_ligne"></block>
+			<block type="block_pir"></block>
+			<block type="block_feu"></block>
+			<block type="inter"></block>
+		</category>
+		<category name="CAT_INT" colour="#00929F">
+			<block type="sensors_getAcceleration"></block>
+			<block type="sensors_calibrate"></block>
+			<block type="sensors_getMagneticForce"></block>
+			<block type="sensors_getLight"></block>
+			<block type="sensors_getTemperature"></block>
+		</category>
+		<!--category name="CAT_analogique" colour="#00929F">
+			<block type="dht11"></block>
+			<block type="dht22"></block>
+			<block type="BME280"></block>
+			<block type="BME280_pressure"></block>
+			<block type="VL53L0X"></block>
+			<block type="VL53L0X_distance"></block>
+			<block type="ultrason"></block>
+			<block type="ultrason_distance"></block>
+			<block type="grove_ldr"></block>
+			<block type="cap615"></block>
+			<block type="potentiometre"></block>
+			<block type="cap661"></block>
+		</category-->
 	</category>
 	<category name="CAT_com"  colour="#006000">
-		<label text="Console"></label>
+		<!--label text="Console"></label>
 		<block type="print"></block>
-		<label text="Radio"></label>
+		<label text="Radio"></label-->
 		<block type="radioSendString"></block>
 		<block type="onRadioDataReceive"></block>
+		<!--label text="Bluetooth"></label>
+		<block type="bluetooth"></block>
+		<block type="bluetooth_a"></block>
+		<block type="bluetooth_b"></block-->
 	</category>
 </toolbox>

@@ -1,13 +1,19 @@
 var {electron, ipcMain, app, BrowserWindow, globalShortcut, dialog} = require('electron')
 var { autoUpdater } = require("electron-updater")
 var path = require('path')
-var mainWindow, termWindow, factoryWindow, promptWindow, promptOptions, promptAnswer, htmlWindow, usbWindow, colorWindow
+var mainWindow, termWindow, factoryWindow, promptWindow, promptOptions, promptAnswer, htmlWindow, gamesWindow
 autoUpdater.autoDownload = false
 autoUpdater.logger = null
-function createWindow () {
-	mainWindow = new BrowserWindow({width: 800, height: 600, icon: '../../www/media/icon.png', frame: false, movable: true})
+function createWindow() {
+	mainWindow = new BrowserWindow({width: 1000, height: 625, icon: '../../www/media/icon.png', frame: false, movable: true})
 	if (process.platform == 'win32' && process.argv.length >= 2) {
-		mainWindow.loadURL(path.join(__dirname, '../../www/index.html?url='+process.argv[1]))
+		var file = process.argv[1]
+		if (file.endsWith(".bloc")||file.endsWith(".ino")||file.endsWith(".py")) {
+			mainWindow.loadURL(path.join(__dirname, '../../www/index.html?url='+file))
+		}
+        if (file.endsWith(".www")||file.endsWith(".html")) {
+			mainWindow.loadURL(path.join(__dirname, '../../www/ffau.html?url='+file))
+		}
 	} else {
 		mainWindow.loadURL(path.join(__dirname, '../../www/index.html'))
 	}
@@ -33,7 +39,7 @@ function createRepl() {
 	})
 }
 function createfactory() {
-	factoryWindow = new BrowserWindow({width: 1066, height: 640, 'parent': mainWindow, resizable: true, movable: true, frame: false})
+	factoryWindow = new BrowserWindow({width: 1000, height: 625, 'parent': mainWindow, resizable: true, movable: true, frame: false})
 	factoryWindow.loadURL(path.join(__dirname, "../../www/factory.html"))
 	factoryWindow.setMenu(null)
 	factoryWindow.on('closed', function () { 
@@ -41,27 +47,18 @@ function createfactory() {
 	})
 }
 function createHTML() {
-	htmlWindow = new BrowserWindow({width: 1066, height: 640, 'parent': mainWindow, resizable: true, movable: true, frame: false})
+	htmlWindow = new BrowserWindow({width: 1000, height: 625, resizable: true, movable: true, frame: false})
 	htmlWindow.loadURL(path.join(__dirname, "../../www/ffau.html"))
 	htmlWindow.setMenu(null)
 	htmlWindow.on('closed', function () { 
 		htmlWindow = null 
 	})
 }
-function createUSB() {
-	factoryWindow = new BrowserWindow({width: 1100, height: 200, 'parent': mainWindow, resizable: true, movable: true, frame: false})
-	factoryWindow.loadURL(path.join(__dirname, "../../www/usb.html"))
-	factoryWindow.setMenu(null)
-	factoryWindow.on('closed', function () { 
-		factoryWindow = null 
-	})
-}
-function createColor() {
-	colorWindow = new BrowserWindow({width: 420, height: 330, 'parent': mainWindow, resizable: true, movable: true, frame: false})
-	colorWindow.loadURL(path.join(__dirname, "../../www/rvb.html"))
-	colorWindow.setMenu(null)
-	colorWindow.on('closed', function () { 
-		colorWindow = null 
+function createGames() {
+	gamesWindow = new BrowserWindow({width: 1000, height: 625, icon: '../../www/media/gamepad.png', resizable: true, movable: true})
+	gamesWindow.loadURL(path.join(__dirname, "../../www/games/index.html"))
+	gamesWindow.on('closed', function () { 
+		gamesWindow = null 
 	})
 }
 function promptModal(options, callback) {
@@ -79,52 +76,54 @@ function open_console(mainWindow = BrowserWindow.getFocusedWindow()) {
 function refresh(mainWindow = BrowserWindow.getFocusedWindow()) {
 	mainWindow.webContents.reloadIgnoringCache()
 }
-app.on('ready',  function () {
+app.on('ready',  function() {
 	createWindow()
 	globalShortcut.register('F8', open_console)
 	globalShortcut.register('F5', refresh)
 })
-app.on('activate', function () {
+app.on('activate', function() {
 	if (mainWindow === null) createWindow()
 })
-app.on('window-all-closed', function () {
+app.on('window-all-closed', function() {
 	globalShortcut.unregisterAll()
+	if (mainWindow) {
+		mainWindow.webContents.executeJavaScript('localStorage.setItem("loadOnceBlocks", "")')
+		mainWindow.webContents.executeJavaScript('localStorage.setItem("pwd", "")')
+	}
+	if (htmlWindow) htmlWindow.webContents.executeJavaScript('localStorage.setItem("pwd", "")')
 	if (process.platform !== 'darwin') app.quit()
 })
-ipcMain.on("version", function () {
+ipcMain.on("version", function() {
 	autoUpdater.checkForUpdates()  
 })
-ipcMain.on("prompt", function () {
+ipcMain.on("prompt", function() {
 	createTerm()  
 })
-ipcMain.on("repl", function () {
+ipcMain.on("repl", function() {
 	createRepl()  
 })
-ipcMain.on("factory", function () {
+ipcMain.on("factory", function() {
 	createfactory()       
 })
-ipcMain.on("html", function () {
+ipcMain.on("html", function() {
 	createHTML()       
 })
-ipcMain.on("color", function () {
-	createColor()       
+ipcMain.on("games", function() {
+	createGames()       
 })
-ipcMain.on("usb", function () {
-	createUSB()       
+ipcMain.on("appendBlock", function(event, data1, data2, data3) {
+    mainWindow.webContents.send('BlockAppended', data1, data2, data3)
 })
-ipcMain.on("addBlock", function (event, data) {
-    mainWindow.webContents.send('BlockAdded', data)
-})
-ipcMain.on("reload", function (event) {
+ipcMain.on("reload", function(event) {
 	mainWindow.loadURL(path.join(__dirname, '../../www/index.html'))
 })
-ipcMain.on("openDialog", function (event, data) {
+ipcMain.on("openDialog", function(event, data) {
     event.returnValue = JSON.stringify(promptOptions, null, '')
 })
-ipcMain.on("closeDialog", function (event, data) {
+ipcMain.on("closeDialog", function(event, data) {
 	promptAnswer = data
 })
-ipcMain.on("modalVar", function (event, arg) {
+ipcMain.on("modalVar", function(event, arg) {
 	promptModal(
 		{"label": arg, "value": "", "ok": "OK"}, 
 	    function(data) {
@@ -132,7 +131,7 @@ ipcMain.on("modalVar", function (event, arg) {
         }
 	)       
 })
-ipcMain.on('save-bin', function (event) {
+ipcMain.on('save-bin', function(event) {
 	dialog.showSaveDialog(mainWindow,{
 		title: 'Exporter les binaires',
 		defaultPath: 'Programme.hex',
@@ -142,17 +141,37 @@ ipcMain.on('save-bin', function (event) {
 		event.sender.send('saved-bin', filename)
 	})
 })
-ipcMain.on('save-png', function (event) {
+ipcMain.on('save-png', function(event) {
 	dialog.showSaveDialog(mainWindow,{
 		title: 'Enregistrer au format .PNG',
-		defaultPath: 'Programme',
-		filters: [{ name: 'Capture', extensions: ['png'] }]
+		defaultPath: 'Capture',
+		filters: [{ name: 'Images', extensions: ['png'] }]
 	},
 	function(filename){
 		event.sender.send('saved-png', filename)
 	})
 })
-ipcMain.on('save-ino', function (event) {
+ipcMain.on('save-png-html', function(event) {
+	dialog.showSaveDialog(htmlWindow,{
+		title: 'Enregistrer au format .PNG',
+		defaultPath: 'Capture',
+		filters: [{ name: 'Images', extensions: ['png'] }]
+	},
+	function(filename){
+		event.sender.send('saved-png-html', filename)
+	})
+})
+ipcMain.on('save-png-factory', function(event) {
+	dialog.showSaveDialog(factoryWindow,{
+		title: 'Enregistrer au format .PNG',
+		defaultPath: 'Capture',
+		filters: [{ name: 'Images', extensions: ['png'] }]
+	},
+	function(filename){
+		event.sender.send('saved-png-factory', filename)
+	})
+})
+ipcMain.on('save-ino', function(event) {
 	dialog.showSaveDialog(mainWindow,{
 		title: 'Enregistrer au format .INO',
 		defaultPath: 'Programme',
@@ -162,7 +181,7 @@ ipcMain.on('save-ino', function (event) {
 		event.sender.send('saved-ino', filename)
 	})
 })
-ipcMain.on('save-py', function (event) {
+ipcMain.on('save-py', function(event) {
 	dialog.showSaveDialog(mainWindow,{
 		title: 'Enregistrer au format .PY',
 		defaultPath: 'Programme',
@@ -172,7 +191,7 @@ ipcMain.on('save-py', function (event) {
 		event.sender.send('saved-py', filename)
 	})
 })
-ipcMain.on('save-bloc', function (event) {
+ipcMain.on('save-bloc', function(event) {
 	dialog.showSaveDialog(mainWindow,{
 		title: 'Enregistrer au format .BLOC',
 		defaultPath: 'Programme',
@@ -182,7 +201,37 @@ ipcMain.on('save-bloc', function (event) {
 		event.sender.send('saved-bloc', filename)
 	})
 })
-ipcMain.on('save-csv', function (event) {
+ipcMain.on('save-html', function(event) {
+	dialog.showSaveDialog(htmlWindow,{
+		title: 'Enregistrer au format .html',
+		defaultPath: 'pageWeb.html',
+		filters: [{ name: 'Web', extensions: ['html'] }]
+	},
+	function(filename){
+		event.sender.send('saved-html', filename)
+	})
+})
+ipcMain.on('save-www', function(event) {
+	dialog.showSaveDialog(htmlWindow,{
+		title: 'Enregistrer au format .www',
+		defaultPath: 'pageWeb.www',
+		filters: [{ name: 'Blockly-Web', extensions: ['www'] }]
+	},
+	function(filename){
+		event.sender.send('saved-www', filename)
+	})
+})
+ipcMain.on('save-bf', function(event) {
+	dialog.showSaveDialog(factoryWindow,{
+		title: 'Enregistrer au format .bf',
+		defaultPath: 'Bloc.bf',
+		filters: [{ name: 'Blockly-Factory', extensions: ['bf'] }]
+	},
+	function(filename){
+		event.sender.send('saved-bf', filename)
+	})
+})
+ipcMain.on('save-csv', function(event) {
 	dialog.showSaveDialog(mainWindow,{
 		title: 'Exporter les données au format CSV',
 		defaultPath: 'Programme',
@@ -190,6 +239,37 @@ ipcMain.on('save-csv', function (event) {
 	},
 	function(filename){
 		event.sender.send('saved-csv', filename)
+	})
+})
+ipcMain.on('addMedias', function(event) {
+	dialog.showOpenDialog(htmlWindow,{
+		title: 'Ajouter des médias (images, sons ou vidéos)',
+		buttonLabel: "Ajouter",
+		filters: [{ name: 'Médias', extensions: ['bmp', 'jpg', 'png', 'gif', 'mp3', 'mp4']}],
+		properties: ['openFile','multiSelections']
+	},
+	function(filename){
+		event.sender.send('addedMedias', filename)
+	})
+})
+ipcMain.on('addImg', function(event) {
+	dialog.showOpenDialog(factoryWindow,{
+		title: 'Ajouter des images',
+		buttonLabel: "Ajouter",
+		filters: [{ name: 'Images', extensions: ['bmp', 'jpg', 'png', 'gif']}],
+		properties: ['openFile','multiSelections']
+	},
+	function(filename){
+		event.sender.send('added-img', filename)
+	})
+})
+ipcMain.on('openBF', function(event) {
+	dialog.showOpenDialog(factoryWindow,{
+		title: 'Ouvrir',
+		filters: [{ name: 'Blockly-Factory', extensions: ['bf'] }]
+	},
+	function(filename){
+		event.sender.send('openedBF', filename)
 	})
 })
 autoUpdater.on('error', function(error) {

@@ -49,8 +49,7 @@ function formatJavaScript(code, rootBlock) {
       }
       code[code.length - 1] += ';';
     }
-    contentsBlock = contentsBlock.nextConnection &&
-        contentsBlock.nextConnection.targetBlock();
+    contentsBlock = contentsBlock.nextConnection && contentsBlock.nextConnection.targetBlock();
   }
   if (rootBlock.getFieldValue('INLINE') == 'EXT') {
     code.push('    this.setInputsInline(false);');
@@ -145,7 +144,7 @@ function getFieldsJs_(block) {
           }
           break;
         case 'field_image':
-          var src = escapeString(block.getFieldValue('SRC'));
+          var src = escapeString("media/factory/"+block.getFieldValue('SRC'));
           var width = Number(block.getFieldValue('WIDTH'));
           var height = Number(block.getFieldValue('HEIGHT'));
           var alt = escapeString(block.getFieldValue('ALT'));
@@ -199,7 +198,7 @@ function getTypesFrom_(block, name) {
 function updateGenerator() {
   function makeVar(root, name) {
     name = name.toLowerCase().replace(/\W/g, '_');
-    return '    var ' + root + name;
+    return '  var ' + root + name;
   }
   var language_generator = document.getElementById('language_generator').value;
   var code = [];
@@ -251,66 +250,56 @@ function updateGenerator() {
       }
     }
 	if (language_generator=="Arduino") {
-		code.push("    Blockly." + language_generator + ".includes_['lib'] = '#include <lib.h>;';");
-		code.push("    Blockly." + language_generator + ".variables_['var'] = 'int var;';");
-		code.push("    Blockly." + language_generator + ".definitions_['inst'] = 'inst instance;';");
-		code.push("    Blockly." + language_generator + ".userFunctions_['func'] = 'void func(){return 0};';");
-		code.push("    Blockly." + language_generator + ".setups_['setup'] = 'code du setup();';");
+		code.push("  Blockly." + language_generator + ".includes_['lib'] = '#include &lt;lib.h&gt; ;';");
+		code.push("  Blockly." + language_generator + ".variables_['var'] = 'int var;';");
+		code.push("  Blockly." + language_generator + ".definitions_['inst'] = 'inst instance;';");
+		code.push("  Blockly." + language_generator + ".userFunctions_['func'] = 'void func(){return 0};';");
+		code.push("  Blockly." + language_generator + ".setups_['setup'] = 'code du setup();';");
+		code.push("  var code = 'code du loop()';");
 		if (rootBlock.getFieldValue('CONNECTIONS') == 'LEFT') {
-			code.push("    var code = 'code du loop()';");
-			code.push("    return [code, Blockly." + language_generator + ".ORDER_ATOMIC];");
+			code.push("  return [code, Blockly." + language_generator + ".ORDER_ATOMIC];");
 		} else {
-			code.push("    var code = 'code du loop();';");
-			code.push("    return code");
+			code.push("  return code");
 		}
-	} else {
-		code.push("    Blockly." + language_generator + ".imports_['lib'] = 'import lib';");
-		code.push("    Blockly." + language_generator + ".definitions_['inst'] = 'inst instance';");
-		code.push("    Blockly." + language_generator + ".userFunctions_['func'] = 'def func():\\n  return 0';");
-		code.push("    var code = 'placer ici le reste du code';");
+	} 
+	if (language_generator=="Python") {
+		code.push("  Blockly." + language_generator + ".imports_['lib'] = 'import lib';");
+		code.push("  Blockly." + language_generator + ".definitions_['inst'] = 'inst instance';");
+		code.push("  Blockly." + language_generator + ".userFunctions_['func'] = 'def func():\\n  return 0';");
+		code.push("  var code = 'placer ici le reste du code';");
 		if (rootBlock.getFieldValue('CONNECTIONS') == 'LEFT') {
-			code.push("    return [code, Blockly." + language_generator + ".ORDER_ATOMIC];");
+			code.push("  return [code, Blockly." + language_generator + ".ORDER_ATOMIC];");
+		} else {
+			code.push("  return code");
+		}
+	}
+	if (language_generator=="html") {
+		code.push("  var code = 'placer votre code ici'");
+		if (rootBlock.getFieldValue('CONNECTIONS') == 'LEFT') {
+			code.push("  return [code, Blockly." + language_generator + ".ORDER_ATOMIC];");
+		} else {
+			code.push("  return code");
 		}
 	}
   }
   code.push("};");
-  editor.session.setMode("ace/mode/javascript");
-  editor.setOptions({
-	enableBasicAutocompletion: true,
-	enableSnippets: true,
-	enableLiveAutocompletion: true
-  })
   editor.setValue(code.join('\n'),1);
 }
-var oldDir = null;
 function updatePreview() {
-  var newDir = document.getElementById('direction').value;
-  if (oldDir != newDir) {
-    if (previewWorkspace) {
-      previewWorkspace.dispose();
-    }
-    var rtl = newDir == 'rtl';
-    previewWorkspace = Blockly.inject('preview',{rtl: rtl, media: 'media/', sounds: false, scrollbars: true});
-    oldDir = newDir;
-  }
-  previewWorkspace.clear();
-  if (Blockly.Blocks[blockType]) {
-    throw 'Block name collides with existing property: ' + blockType;
-  }
-  var code = document.getElementById('languagePre').textContent.trim();
-  if (!code) {
-    // Nothing to render.  Happens while cloud storage is loading.
-    return;
-  }
-  var format = 'JavaScript';
-  eval(code);
-  var previewBlock = previewWorkspace.newBlock(blockType);
-  delete Blockly.Blocks[blockType];
-  previewBlock.initSvg();
-  previewBlock.render();
-  previewBlock.setMovable(false);
-  previewBlock.setDeletable(false);
-  previewBlock.moveBy(15, 10);
+    if (previewWorkspace) previewWorkspace.dispose();
+    previewWorkspace = Blockly.inject('preview',{scrollbars:true,grid:{snap:true},media:'media/',sounds:false,zoom:{controls:true,wheel:true}});
+	previewWorkspace.clear();
+	if (Blockly.Blocks[blockType]) throw 'Block name collides with existing property: ' + blockType;
+	var code = document.getElementById('languagePre').textContent.trim();
+	if (!code) return;		// Nothing to render.  Happens while cloud storage is loading.
+    eval(code);
+	var previewBlock = previewWorkspace.newBlock(blockType);
+	delete Blockly.Blocks[blockType];
+	previewBlock.initSvg();
+	previewBlock.render();
+	previewBlock.setMovable(false);
+	previewBlock.setDeletable(false);
+	previewBlock.moveBy(5, 5);
 }
 function injectCode(code, id) {
   var pre = document.getElementById(id);
@@ -328,30 +317,48 @@ function getRootBlock() {
   }
   return null;
 }
+function getStringParamFromUrl(name, defaultValue) {
+  var val = location.search.match(new RegExp('[?&]' + name + '=([^&]+)'));
+  return val ? decodeURIComponent(val[1].replace(/\+/g, '%20')) : defaultValue;
+}
 function init() {
-  var expandList = [
-    document.getElementById('blockly'),
-    document.getElementById('preview'),
-    document.getElementById('languagePre'),
-    document.getElementById('generatorPre')
-  ];
-  var onresize = function(e) {
-    for (var i = 0, expand; expand = expandList[i]; i++) {
-      expand.style.width = (expand.parentNode.offsetWidth - 2) + 'px';
-      expand.style.height = (expand.parentNode.offsetHeight - 2) + 'px'
-    }
-  }
-  onresize();
-  window.addEventListener('resize', onresize);
-  var toolbox = document.getElementById('toolbox_factory');
-  mainWorkspace = Blockly.inject('blockly',{toolbox: toolbox, media: 'media/', sounds: false});
-  var rootBlock = mainWorkspace.newBlock('factory_base');
-  rootBlock.initSvg();
-  rootBlock.render();
-  rootBlock.setMovable(false);
-  rootBlock.setDeletable(false);
-  mainWorkspace.addChangeListener(onchange);
-  document.getElementById('direction').addEventListener('change', updatePreview);
-  document.getElementById('language_generator').addEventListener('change', updateGenerator);
+	var expandList = [
+		document.getElementById('blockly'),
+		document.getElementById('preview'),
+		document.getElementById('languagePre'),
+		document.getElementById('generatorPre')
+	];
+	var onresize = function(e) {
+		for (var i = 0, expand; expand = expandList[i]; i++) {
+			expand.style.width = (expand.parentNode.offsetWidth - 2) + 'px';
+			expand.style.height = (expand.parentNode.offsetHeight - 2) + 'px'
+		}
+	}
+	onresize();
+	window.addEventListener('resize', onresize);
+	var toolbox = document.getElementById('toolbox_factory');
+	mainWorkspace = Blockly.inject('blockly',{grid:{snap:true},toolbox: toolbox, media: 'media/', sounds: false});
+  	var rootBlock = mainWorkspace.newBlock('factory_base');
+	rootBlock.initSvg();
+	rootBlock.render();
+	rootBlock.setDeletable(false);
+	/*var urlFile = getStringParamFromUrl('url', '')
+	if (urlFile) {
+		$.get( urlFile, function(data){
+			if (data){
+				var xml = Blockly.Xml.textToDom(data);
+				mainWorkspace.clear();
+				Blockly.Xml.domToWorkspace(xml, mainWorkspace);
+				mainWorkspace.render();
+				var elem = xml.getElementsByTagName("language")[0];
+				var node = elem.childNodes[0];
+				localStorage.code_bf = node.nodeValue;
+			}
+		}, 'text')
+	}*/
+	mainWorkspace.addChangeListener(onchange);
+	if (window.localStorage.prog == "python") $("#language_generator").val("Python");
+	document.getElementById('language_generator').addEventListener('change', updateGenerator);
+	$('[data-toggle="tooltip"]').tooltip();
 }
 window.addEventListener('load', init);

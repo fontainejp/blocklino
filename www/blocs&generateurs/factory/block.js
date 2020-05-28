@@ -1,22 +1,24 @@
 'use strict';
 
-var ALIGNMENT_OPTIONS = [['à gauche', 'LEFT'], ['à droite', 'RIGHT'], ['au centre', 'CENTRE']];
+var ALIGNMENT_OPTIONS = [['à gauche', 'LEFT'], ['à droite', 'RIGHT'], ['centré', 'CENTRE']];
+var dropdown_colour = [["gris foncé", "#727272"],["vert clair", "#00CC00"],["rose", "#FD6C9E"],["marron", "#804000"],["orange", "#FFA500"],["rouge", "#FF0000"],["violet", "#4a235a"],["vert olive", "#787746"],["gris clair", "#bbbbbb"],["vert foncé", "#006000"],["bleu marine", "#154360"]];
+
 Blockly.Blocks['factory_base'] = { init: function() {
 	this.contextMenu = false;
     this.setColour("#154360");
     this.appendDummyInput()
-        .appendField(new Blockly.FieldTextInput('monBloc'), 'NAME');
+        .appendField(new Blockly.FieldTextInput('monbloc'), 'NAME');
     this.appendStatementInput('INPUTS').setCheck('Input');
     var dropdown = new Blockly.FieldDropdown([
         ['bloc externe', 'EXT'],
         ['bloc interne', 'INT']]);
     this.appendDummyInput().setAlign(Blockly.ALIGN_RIGHT).appendField(dropdown, 'INLINE');
     dropdown = new Blockly.FieldDropdown([
-        ['← accroche à gauche', 'LEFT'],
+        ["pas d'accroches", 'NONE'],
         ['↑ accroche en haut', 'TOP'],
         ['↓ accroche en bas', 'BOTTOM'],
         ['↕ accroches haut&bas', 'BOTH'],
-        ["pas d'accroches", 'NONE']],
+        ['← accroche à gauche', 'LEFT']],
         function(option) {
           this.sourceBlock_.updateShape_(option);
         });
@@ -74,12 +76,12 @@ Blockly.Blocks['factory_base'] = { init: function() {
 Blockly.Blocks['input_value'] = { init: function() {
     this.setColour("#696969");
     this.appendDummyInput()
-        .appendField('bloc')
-        .appendField(new Blockly.FieldTextInput('_block'), 'INPUTNAME');
+        //.appendField(new Blockly.FieldImage("media/value.png","17","24"))
+		.appendField('valeur')
+		.appendField(new Blockly.FieldTextInput('_block'), 'INPUTNAME')
+		.appendField(new Blockly.FieldDropdown(ALIGNMENT_OPTIONS), 'ALIGN');
     this.appendStatementInput('FIELDS')
-        .setCheck('Field')
-        .appendField('aligné')
-        .appendField(new Blockly.FieldDropdown(ALIGNMENT_OPTIONS), 'ALIGN');
+        .setCheck('Field');
     this.appendValueInput('TYPE')
         .setCheck('Type')
         .setAlign(Blockly.ALIGN_RIGHT)
@@ -98,12 +100,12 @@ Blockly.Blocks['input_value'] = { init: function() {
 Blockly.Blocks['input_statement'] = { init: function() {
     this.setColour("#696969");
     this.appendDummyInput()
-        .appendField('déclaration')
-        .appendField(new Blockly.FieldTextInput('_statement'), 'INPUTNAME');
+        //.appendField(new Blockly.FieldImage("media/statement.png","19","24"))
+		.appendField('déclaration')
+        .appendField(new Blockly.FieldTextInput('_statement'), 'INPUTNAME')
+		.appendField(new Blockly.FieldDropdown(ALIGNMENT_OPTIONS), 'ALIGN');
     this.appendStatementInput('FIELDS')
-        .setCheck('Field')
-        .appendField('aligné')
-        .appendField(new Blockly.FieldDropdown(ALIGNMENT_OPTIONS), 'ALIGN');
+        .setCheck('Field');
     this.appendValueInput('TYPE')
         .setCheck('Type')
         .setAlign(Blockly.ALIGN_RIGHT)
@@ -122,11 +124,11 @@ Blockly.Blocks['input_statement'] = { init: function() {
 Blockly.Blocks['input_dummy'] = { init: function() {
     this.setColour("#696969");
     this.appendDummyInput()
-        .appendField("entrée");
+        //.appendField(new Blockly.FieldImage("media/dummy.png","21","24"))
+		.appendField('entrée')
+		.appendField(new Blockly.FieldDropdown(ALIGNMENT_OPTIONS), 'ALIGN');
     this.appendStatementInput('FIELDS')
-        .setCheck('Field')
-        .appendField('aligné')
-        .appendField(new Blockly.FieldDropdown(ALIGNMENT_OPTIONS), 'ALIGN');
+        .setCheck('Field');
     this.setPreviousStatement(true, 'Input');
     this.setNextStatement(true, 'Input')
   }
@@ -161,7 +163,7 @@ Blockly.Blocks['field_math'] = { init: function() {
     this.setColour("#00cc00");
     this.appendDummyInput()
         .appendField('nombre')
-        .appendField(new Blockly.FieldTextInput('123'), 'TEXT')
+        .appendField(new Blockly.FieldNumber('123'), 'TEXT')
         .appendField(',')
         .appendField(new Blockly.FieldTextInput('_number'), 'FIELDNAME');
     this.setPreviousStatement(true, 'Field');
@@ -337,8 +339,7 @@ Blockly.Blocks['field_colour'] = { init: function() {
         .appendField(',')
         .appendField(new Blockly.FieldTextInput('_colour'), 'FIELDNAME');
     this.setPreviousStatement(true, 'Field');
-    this.setNextStatement(true, 'Field');
-	this.contextMenu = false;
+    this.setNextStatement(true, 'Field')
   },
   onchange: function() {
     if (!this.workspace) {
@@ -354,10 +355,9 @@ Blockly.Blocks['field_variable'] = { init: function() {
         .appendField('variable')
         .appendField(new Blockly.FieldTextInput('item'), 'TEXT')
         .appendField(',')
-        .appendField(new Blockly.FieldTextInput('NAME'), 'FIELDNAME');
+        .appendField(new Blockly.FieldTextInput('_var'), 'FIELDNAME');
     this.setPreviousStatement(true, 'Field');
-    this.setNextStatement(true, 'Field');
-	this.contextMenu = false;
+    this.setNextStatement(true, 'Field')
   },
   onchange: function() {
     if (!this.workspace) {
@@ -375,16 +375,13 @@ Blockly.Blocks['field_image'] = { init: function() {
         .appendField(new Blockly.FieldTextInput(src), 'SRC');
     this.appendDummyInput()
         .appendField('largeur')
-        .appendField(new Blockly.FieldTextInput('24',
-            Blockly.FieldTextInput.numberValidator), 'WIDTH')
+        .appendField(new Blockly.FieldNumber('28'), 'WIDTH')
         .appendField('hauteur')
-        .appendField(new Blockly.FieldTextInput('24',
-            Blockly.FieldTextInput.numberValidator), 'HEIGHT')
+        .appendField(new Blockly.FieldNumber('28'), 'HEIGHT')
         .appendField('alternative')
         .appendField(new Blockly.FieldTextInput('*'), 'ALT');
     this.setPreviousStatement(true, 'Field');
-    this.setNextStatement(true, 'Field');
-	this.contextMenu = false;
+    this.setNextStatement(true, 'Field')
   }
 };
 Blockly.Blocks['type_boolean'] = {
@@ -394,8 +391,7 @@ Blockly.Blocks['type_boolean'] = {
     this.setColour("#ff0000");
     this.appendDummyInput()
         .appendField('binaire');
-    this.setOutput(true, 'Type');
-	this.contextMenu = false;
+    this.setOutput(true, 'Type')
   }
 };
 Blockly.Blocks['type_number'] = {
@@ -405,8 +401,7 @@ Blockly.Blocks['type_number'] = {
     this.setColour("#ff0000");
     this.appendDummyInput()
         .appendField('nombre');
-    this.setOutput(true, 'Type');
-	this.contextMenu = false;
+    this.setOutput(true, 'Type')
   }
 };
 Blockly.Blocks['type_string'] = {
@@ -416,8 +411,7 @@ Blockly.Blocks['type_string'] = {
     this.setColour("#ff0000");
     this.appendDummyInput()
         .appendField('texte');
-    this.setOutput(true, 'Type');
-	this.contextMenu = false;
+    this.setOutput(true, 'Type')
   }
 };
 Blockly.Blocks['type_other'] = {
@@ -427,8 +421,7 @@ Blockly.Blocks['type_other'] = {
     this.appendDummyInput()
         .appendField('autre')
         .appendField(new Blockly.FieldTextInput(''), 'TYPE');
-    this.setOutput(true, 'Type');
-	this.contextMenu = false;
+    this.setOutput(true, 'Type')
   }
 };
 Blockly.Blocks['colour_hue'] = { init: function() {
@@ -452,9 +445,26 @@ Blockly.Blocks['colour_hue'] = { init: function() {
 Blockly.Blocks['colour_rrggbb'] = { init: function() {
     this.appendDummyInput()
         .appendField(new Blockly.FieldTextInput('#FFA500', this.validator), 'HUE');
-    this.setOutput(true, 'Colour');
-    this.setTooltip('Paint the block with this colour.');
-    this.setHelpUrl('https://www.youtube.com/watch?v=s2_xaEvcVI0#t=55');
+    this.setOutput(true, 'Colour')
+  },
+  validator: function(text) {
+    // Update the current block's colour to match.
+    this.sourceBlock_.setColour(text);
+  },
+  mutationToDom: function(workspace) {
+    var container = document.createElement('mutation');
+    container.setAttribute('colour', this.getColour());
+    return container;
+  },
+  domToMutation: function(container) {
+    this.setColour(container.getAttribute('colour'));
+  }
+};
+Blockly.Blocks['colour_choice'] = { init: function() {
+    this.setColour("#727272");
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown(dropdown_colour, this.validator), 'HUE');
+    this.setOutput(true, 'Colour')
   },
   validator: function(text) {
     // Update the current block's colour to match.

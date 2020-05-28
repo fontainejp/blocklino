@@ -189,5 +189,6 @@
 			<block type="bgcolor"></block>
 			<block type="border"></block>
 		</category>
+	</category>="CAT_divers"  colour="#000000">
 	</category>
 </toolbox>

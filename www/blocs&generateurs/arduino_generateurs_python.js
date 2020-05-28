@@ -81,26 +81,46 @@ Blockly.Python["base_code"]=function(block){
 Blockly.Python["base_code_entree"]=function(block){
     return [block.getFieldValue("TEXT"), Blockly.Python.ORDER_ATOMIC]
 };
-Blockly.Python["base_end"]=function(){return""};
-Blockly.Python["base_begin"]=function(){return""};
-Blockly.Python["base_define"]=function(){return""};
+Blockly.Python["base_end"]=function(block){return""};
+Blockly.Python["base_begin"]=function(block){return""};
+Blockly.Python["base_define"]=function(block){
+    var setup_key=Blockly.Python.variableDB_.getDistinctName("base_define", Blockly.Variables.NAME_TYPE);
+    Blockly.Python.definitions_[setup_key] = Blockly.Python.statementToCode(block, "DO");
+	return""
+};
 Blockly.Python["base_setup_loop"]=function(){return""};
 /*	temps  */
 Blockly.Python["base_delay"]=function(block){
+	var carte = localStorage.getItem('card');
+	var cpu = profile[carte].cpu;
     var _u=block.getFieldValue("unite");
     var delay_time=Blockly.Python.valueToCode(block, "DELAY_TIME", Blockly.Python.ORDER_ATOMIC);
-	Blockly.Python.imports_["time"]="import time";
-    switch (_u) {
-        case "u":
-            var code="time.sleep_us(" + delay_time + ")\n";
-            break;
-        case "m":
-            var code="time.sleep_ms(" + delay_time + ")\n";
-            break;
-        case "s":
-            code="time.sleep(" + delay_time + ")\n";
-            break
-    };
+	if ( cpu == "cortexM0" ) {
+		switch (_u) {
+			case "u":
+				var code="sleep(" + delay_time + "*0.001)\n";
+				break;
+			case "m":
+				var code="sleep(" + delay_time + ")\n";
+				break;
+			case "s":
+				var code="sleep(" + delay_time + "*1000)\n";
+				break
+		}
+	} else {
+		Blockly.Python.imports_["time"]="import time";
+		switch (_u) {
+			case "u":
+				var code="time.sleep_us(" + delay_time + ")\n";
+				break;
+			case "m":
+				var code="time.sleep_ms(" + delay_time + ")\n";
+				break;
+			case "s":
+				var code="time.sleep(" + delay_time + ")\n";
+				break
+		}
+	}
     return code
 };
 Blockly.Python["tempo_sans_delay"]=function(block){
@@ -122,19 +142,40 @@ Blockly.Python["tempo_sans_delay"]=function(block){
 };
 Blockly.Python["inout_pulsein"]=function(){return''};
 Blockly.Python["millis"]=function(block){
+	var carte = localStorage.getItem('card');
+	var cpu = profile[carte].cpu ;
 	var _u=block.getFieldValue("unite");
-    switch (_u) {
-		case "m":
-            var code="time.ticks_diff(time.ticks_ms(), start)";
-            break;
-		case "u":
-            var code="time.ticks_diff(time.ticks_us(), start)";
-            break;
-        case "s":
-            code="time.ticks_diff(time.ticks_ms(), start))*1000";
-            break
+	if ( cpu == "cortexM0" ) {
+		switch (_u) {
+			case "m":
+				var code="time.ticks_diff(time.ticks_ms(), start)";
+				return [code, Blockly.Python.ORDER_SUBTRACTION];
+				break;
+			case "u":
+				var code="time.ticks_diff(time.ticks_us(), start)";
+				return [code, Blockly.Python.ORDER_SUBTRACTION];
+				break;
+			case "s":
+				code="time.ticks_diff(time.ticks_ms(), start)*1000";
+				return [code, Blockly.Python.ORDER_SUBTRACTION];
+				break;
+		}
+	} else {
+		switch (_u) {
+			case "m":
+				var code="time.ticks_diff(time.ticks_ms(), start)";
+				return [code, Blockly.Python.ORDER_ATOMIC];
+				break;
+			case "u":
+				var code="time.ticks_diff(time.ticks_us(), start)";
+				return [code, Blockly.Python.ORDER_ATOMIC];
+				break;
+			case "s":
+				code="time.ticks_diff(time.ticks_ms(), start)*1000";
+				return [code, Blockly.Python.ORDER_ATOMIC];
+				break;
+		}
 	}
-    return [code, Blockly.Python.ORDER_ATOMIC]
 };
 Blockly.Python["millis_start"]=function(block){
 	var _u=block.getFieldValue("unite");

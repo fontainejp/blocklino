@@ -87,6 +87,7 @@
 			<block type="matrice8x8_aff"></block>
 			<block type="matrice8x8_efface"></block>
 			<block type="matrice8x8_del"></block>
+			<block type="matrice_scroll"></block>
 		</category>
 		<category name="CAT_DFRobot_SHIELD_LCDKEYPAD" colour="#00929F">
 			<block type="lcd_i2c"></block>

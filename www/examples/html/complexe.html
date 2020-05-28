@@ -1,48 +1,61 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="fr">
   <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="css/bootstrap.min.3.3.6.css">
     <link rel="stylesheet" href="css/fontawesome.css">
+    <style>
+      td,th{
+        border: 1px solid ;
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
-<h1>
-  Titre
-</h1>
-<h3>
-  Lorem ipsum dolor sit amet
-</h3>
-<div>
-  <div>
-    Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  </div>
-  <div>
-    <img src="media/earth.jpg">
-  </div>
-</div>
-<div>
-  <button>
-    <i class="fa fa-heart"></i>
-    j'aime
-  </button>
-</div>
-<hr>
-<div>
-  <p>  <i class="fa fa-copyright"></i>
-    2019 -
-    <em>
-      Réalisé par
-      <a href="undefined">
-        JP
-      </a>
-    </em>
-  </p>
-  <p>
-    avec
-    <i class="fa fa-font-awesome fa-lg"></i>
-    <i class="fa fa-html5 fa-1_5x"></i>
-    <i class="fa fa-css3 fa-lg"></i>
-  </p>
-</div>
+    <h1>  Lorem</h1>
+    <h3>  Ipsum dolor sit amet</h3>
+    <div>
+      Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </div>
+    <p>
+      <mark>  Utilisation de la police fontawesome :</mark>
+    </p>
+    <table style="border-collapse: collapse;
+          width: 80%;">
+      <tr>
+        <th>
+          fa fa-apple</th>
+        <th>
+          fa fa-windows</th>
+        <th>
+          fa fa-linux</th>
+        <th>
+          fa fa-android</th>
+      </tr>
+      <tr style="color: #999999;">
+        <td>  <i class="fa fa-apple fa-2x"></i></td>
+        <td>  <i class="fa fa-windows fa-2x"></i></td>
+        <td>  <i class="fa fa-linux fa-2x"></i></td>
+        <td>  <i class="fa fa-android fa-2x"></i></td>
+      </tr>
+    </table>
+    <form style="background-color: #c0c0c0;
+          width: 80%;">
+      <div>
+        <p>
+          Donnez votre avis sur le site :
+        </p>
+        <label for="id">  bien</label>
+        <input type="radio" value="" placeholder="" name="avis">
+        <label for="id">  moyen</label>
+        <input type="radio" value="" placeholder="" name="avis">
+        <label for="id">  nul</label>
+        <input type="radio" value="" placeholder="" name="avis">
+      </div>
+      <div>
+        <label for="id">  commentaire</label>
+        <input type="text" value="" placeholder="" name="">
+        <input type="submit" value="envoyer" placeholder="" name="">
+      </div>
+      <br>
+    </form>
   </body>
 </html>

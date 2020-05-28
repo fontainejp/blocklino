@@ -1,23 +1,7 @@
 'use strict';
 goog.provide ( 'Blockly.Msg.fr');
 goog.require ( 'Blockly.Msg');
-// Electron window
-Blockly.Msg.survol_check = "CHECK";
-Blockly.Msg.survol_flash = "UPLOAD";
-Blockly.Msg.survol_bin = "EXPORT binaries"; 
-Blockly.Msg.com1 = "Port";
-Blockly.Msg.com2 = "Select a port !" ;
-Blockly.Msg.check = "Check";
-Blockly.Msg.upload = "Upload";
-Blockly.Msg.error = "ERROR: Blocks not connected";
-Blockly.Msg.verif = "Check the program first !"
-Blockly.Msg.save = "Save as format";
-Blockly.Msg.update = "Update";
-Blockly.Msg.new_update = "A new version is available, do you want to download and install it now ?" ;
-Blockly.Msg.yes = "yes";
-Blockly.Msg.no = "no";
-Blockly.Msg.uptodate = "Your version is up to date." ;
-Blockly.Msg.download = "Download completed, the application will install and restart ..."
+
 // common to all blocks
 Blockly.Msg.HELPURL = "http://www.mon-club-elec.fr/pmwiki_reference_arduino/pmwiki.php?n=Main.ReferenceMaxi"; // do not translate
 Blockly.Msg.pin = "on pin";
@@ -31,36 +15,6 @@ Blockly.Msg.left = "left";
 Blockly.Msg.LetR = "right & left";
 Blockly.Msg.direction = "direction";
 Blockly.Msg.vitesse = "speed ";
-// categories (menu)
-Blockly.Msg.CAT_STOCKAGE = "Storage";
-Blockly.Msg.CAT_numerique = "- Binary";
-Blockly.Msg.CAT_analogique = "- Other";
-Blockly.Msg.CAT_wifi = "- Wifi";
-Blockly.Msg.CAT_TAB = "Table";
-Blockly.Msg.CAT_list = "List";
-Blockly.Msg.CAT_servo = "- Servo";
-Blockly.Msg.CAT_del = "- LED";
-Blockly.Msg.CAT_LOGIC = "Control";
-Blockly.Msg.CAT_MATH = "Math";
-Blockly.Msg.CAT_TEXT = "Text";
-Blockly.Msg.CAT_VARIABLES = "Variable";
-Blockly.Msg.CAT_FUNCTIONS = "Function";
-Blockly.Msg.CAT_ARDUINO = "Structure";
-Blockly.Msg.CAT_ARDUINO_IN = "Input / Output";
-Blockly.Msg.CAT_ARDUINO_OUT = "Exit";
-Blockly.Msg.CAT_ARDUINO_TIME = "Time";
-Blockly.Msg.CAT_actionneur = "Actuator";
-Blockly.Msg.CAT_com = "Communication";
-Blockly.Msg.CAT_ARDUINO_COMM_SERIAL = "- Serial";
-Blockly.Msg.CAT_ARDUINO_COMM_SOFTSERIAL = "- Software";
-Blockly.Msg.CAT_ARDUINO_moteur="- Motor";
-Blockly.Msg.CAT_ultrason = "Sensor";
-Blockly.Msg.CAT_bluetooth = "- Bluetooth";
-Blockly.Msg.CAT_ARDUINO_matrice8x8 = "- Matrix";
-Blockly.Msg.CAT_DFRobot_SHIELD_LCDKEYPAD = "- LCD Screen";
-Blockly.Msg.CAT_iot = "IoT";
-Blockly.Msg.CAT_html = "- HTML";
-Blockly.Msg.CAT_DFPLAYER = "- Audio";
 //Wireless
 Blockly.Msg.esp8266_init_tooltip = "initialization of the wifi module and connection with the indicated parameters";
 Blockly.Msg.esp8266_1 = "Esp 8266";
@@ -90,8 +44,8 @@ Blockly.Msg.LKL_TOOLTIP_INOUT_ATTACHINTERRUPT = "Specifies an action to take whe
 Blockly.Msg.LKL_TOOLTIP_INOUT_DETACHINTERRUPT = "Disable the previously specified external interrupt";
 Blockly.Msg.LKL_MODE = 'is detected on the pin';
 // FIELDDROPDOWN
-Blockly.Msg.note = [[ "OD \u2083", "261"], [ "RE \u2083", "293"], [ "MI \u2083", "329"], [ "FA \u2083", "349"], [ "SOL \u2083", "392"], [ "LA \u2083", "440"], [ "SI \u2083", "493"], [ "DO \ u2084", "523 "], [" RE \u2084 "," 587 "], [" MI \u2084 "," 659 "], [" FA \u2084 "," 698 "], [" SOL \u2084 "," 784 "], [ "LA \u2084", "880"]];
-Blockly.Msg.tempo = [["\u266B", "125"], ["\u266A", "250"], ["\u2669", "500"], ["white", "1000"], ["round", "2000"]];
+Blockly.Msg.note = [[ "C\u2084", "261"], [ "D\u2084", "293"], [ "E\u2084", "329"], [ "F\u2084", "349"], [ "G\u2084", "392"], [ "A\u2084", "440"], [ "B\u2084", "493"], [ "C\u2085", "523 "], ["D\u2085 "," 587 "], ["E\u2085 "," 659 "], ["F\u2085 "," 698 "], ["G\u2085 "," 784 "], [ "A\u2085", "880"]];
+Blockly.Msg.tempo = [["1", "125"], ["2", "250"], ["4", "500"], ["8", "1000"], ["16", "2000"]];
 Blockly.Msg.on_off = [["on", "LOW"], ["off", "HIGH"]];
 Blockly.Msg.menublink = [["slowly", "1000"], ["fast", "100"]];
 Blockly.Msg.AV_AR = [[Blockly.Msg.AV, "FORWARD"], [Blockly.Msg.AR, "BACKWARD"]]; // do not translate
@@ -181,8 +135,8 @@ Blockly.Msg.LCD_col = "column";
 Blockly.Msg.LCD_raz = "erase the LCD screen";
 Blockly.Msg.LCD_raz_tooltip = "clear screen";
 Blockly.Msg.lcd_aff_symbole = "display the symbol";
-Blockly.Msg.lcd_aff_symbole_tooltip = "show the symbol that has been defined before";
-Blockly.Msg.lcd_symbole = "define the symbol";
+Blockly.Msg.lcd_aff_symbole_tooltip = "show the symbol that has been declared before";
+Blockly.Msg.lcd_symbole = "declare the symbol";
 Blockly.Msg.lcd_symbole_tooltip = "definition of a character for the LCD: \n 0 turns off a pixel \n 1 lights a pixel";
 // structure
 Blockly.Msg.loop = "Loop";
@@ -202,7 +156,7 @@ Blockly.Msg.matrice_create_aff = "Create block 'display symbol %1'";
 Blockly.Msg.matrice_create_symbole = "Create the block 'set the symbol %1'";
 Blockly.Msg.matrice = "matrix";
 Blockly.Msg.matrice8x8_tooltip = "Initialisation of the matrix to 64 LEDs, it is necessary to indicate the pins of the arduino to which will be connected DIN, CLK, CS";
-Blockly.Msg.matrice8x8_symbole = "define the symbol";
+Blockly.Msg.matrice8x8_symbole = "declare the symbol";
 Blockly.Msg.matrice8x8_symbole_tooltip = "definition of a symbol for the matrix: \n 0 turn off an LED \n 1 turn on an LED";
 Blockly.Msg.matrice8x8_efface = "erase the matrix";
 Blockly.Msg.matrice8x8_aff = "display the symbol";
@@ -212,7 +166,7 @@ Blockly.Msg.matrice8x8_aff_tooltip = "Display the symbol that has been previousl
 Blockly.Msg.matrice8x8_efface_tooltip = "Turn off all LEDs in the matrix";
 Blockly.Msg.matrice8x8_helpurl = "http://tiptopboards.free.fr/arduino_forum/viewtopic.php?t=6&p=6";
 Blockly.Msg.matrice16x8_tooltip = "Initialization of the array to 128 LEDs. \nMatrix <-> Arduino \nSDA <--------> A4 \nSCL <--------> A5";
-Blockly.Msg.matrice16x8_symbole = "define the symbol";
+Blockly.Msg.matrice16x8_symbole = "declare the symbol";
 Blockly.Msg.matrice16x8_symbole_tooltip = "definition of a symbol for the matrix: \n 0 turns off an LED \n 1 turns on an LED";
 Blockly.Msg.matrice16x8_efface = "turn off the LEDs of the matrix";
 Blockly.Msg.matrice16x8_aff = "display the symbol";
@@ -221,16 +175,19 @@ Blockly.Msg.matrice16x8_del_tooltip = "Turns on (off) an LED in the matrix indic
 Blockly.Msg.matrice16x8_aff_tooltip = "Display the symbol that has been previously defined";
 Blockly.Msg.matrice16x8_efface_tooltip = "Turn off all LEDs in the matrix";
 Blockly.Msg.matrice16x8_helpurl = "";
+Blockly.Msg.matrice8x8_scroll_tooltip="scroll the text on the matrix";
+Blockly.Msg.matrice8x8_scroll="scroll the text";
 //time
-Blockly.Msg.millis ="time elapsed in";
+Blockly.Msg.millis0 ="time elapsed in";
+Blockly.Msg.millis1 = "duration in";
+Blockly.Msg.millis2 = "from the beginning";
+Blockly.Msg.millis_tooltip="returns the time elapsed since program is started";
 Blockly.Msg.millis_start="start a timekeeping in";
-Blockly.Msg.millis_tooltip="";
-Blockly.Msg.millis_start_tooltip="";
+Blockly.Msg.millis_start_tooltip="starts timing from the moment the block is positioned";
+Blockly.Msg.chrono_tooltip="returns the time since the stopwatch was started";
 Blockly.Msg.ARDUINO_INOUT_Pulsein = "returns the duration in microseconds of a UP or DOWN pulse applied to a pin.If the parameter value is HIGH, the block waits for the pin to go HIGH, starts then the timing, waits for the pin to go back to the LOW level and then stop the timing ";
 Blockly.Msg.ARDUINO_BASE_DELAY = "wait";
 Blockly.Msg.ARDUINO_BASE_DELAY_TOOLTIP = "Specify the wait time in seconds, milliseconds or microseconds. \nThe program does nothing else during this time";
-Blockly.Msg.millis1 = "duration in";
-Blockly.Msg.millis2 = "from the beginning";
 Blockly.Msg.ARDUINO_SINCE_PROGRAM_STARTED_TOOLTIP = "returns the duration in milliseconds, seconds or microseconds since the program started";
 Blockly.Msg.ARDUINO_PULSEIN = "state duration";
 Blockly.Msg.tempo_helpurl = "http://www.mon-club-elec.fr/pmwiki_reference_arduino/pmwiki.php?n=Main.ExempleBlinkWithoutDelay";
@@ -257,10 +214,12 @@ Blockly.Msg.pixel3 = "with color";
 Blockly.Msg.pixel4 = "number";
 Blockly.Msg.pixel5 = "set pixel brightness to";
 Blockly.Msg.pixel6 = "set the pixel";
+Blockly.Msg.pixel7 = "turn off pixels";
 Blockly.Msg.pixel1_tooltip="neopixel RGB module indicate the pin to be connected and the number of pixels";
 Blockly.Msg.pixel2_tooltip="show changes made";
+Blockly.Msg.pixel3_tooltip="choose the pixel to light and its color \nCaution the numbering starts at 0";
+Blockly.Msg.pixel4_tooltip="turn off all the pixels";
 Blockly.Msg.pixel5_tooltip="adjusts pixel brightness (from 0 to 255)";
-Blockly.Msg.pixel3_tooltip="choose the pixel to light and its color \ nCaution the numbering starts at 0";
 // output
 Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_INPUT1 = "put the DIGITAL pin";
 Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_TOOLTIP = "write a 0 or 1 logical state to a specific output";

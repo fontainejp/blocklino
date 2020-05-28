@@ -334,6 +334,32 @@ Blockly.html['padding'] = function (block) {
     var value = block.getFieldValue('value');
     return 'padding-' + direction + ': ' + fullEscape(value) + ';\n';
 };
+// Text decoration
+Blockly.Blocks['textdecoration'] = {
+    init: function () {
+        this.jsonInit({
+            "message0": "text-decoration: %1 ;",
+            "args0": [
+                {
+                    "type": "field_dropdown",
+                    "name": "value",
+                    "options": [
+                        ["underline", "underline"],
+                        ["overline", "overline"],
+						["under & over", "underline overline"]
+                    ]
+                }
+            ],
+            "previousStatement": "stylecontent",
+            "nextStatement": "stylecontent",
+            "colour": 290
+        });
+    }
+};
+Blockly.html['textdecoration'] = function (block) {
+    var value = block.getFieldValue('value');
+    return `text-decoration: ${value};\n`;
+};
 // Text transform
 Blockly.Blocks['texttransform'] = {
     init: function () {

@@ -2,6 +2,8 @@
 goog.provide('Blockly.Msg.fr');
 goog.require('Blockly.Msg');
 // micro:bit
+Blockly.Msg.MICROBIT_URL = "https://microbit-micropython.readthedocs.io/fr/latest/index.html";
+Blockly.Msg.CAT_INT = "- Intégré";
 Blockly.Msg.MICROBIT_ANALOG_WRITE_TOOLTIP="envoyer une valeur comprise entre 0 et 1023 sur la broche indiquée";
 Blockly.Msg.MICROBIT_SHOW_STRING="faire défiler";
 Blockly.Msg.MICROBIT_SHOW_STRING_TOOLTIP="fait défiler le texte indiqué sur la matrice intégrée";
@@ -26,3 +28,19 @@ Blockly.Msg.MICROBIT_RADIO="envoyer par radio";
 Blockly.Msg.MICROBIT_RADIO_TOOLTIP="envoie une information par onde radio";
 Blockly.Msg.MICROBIT_RADIO_RECEPT="si la donnée reçue vaut";
 Blockly.Msg.MICROBIT_RADIO_RECEPT_TOOLTIP="vérifie qu'une donnée est reçue par onde radio et réalise les actions appropriées";
+Blockly.Msg.MICROBIT_PLAYS1="jouer la note";
+Blockly.Msg.MICROBIT_PLAYS2="pendant";
+Blockly.Msg.MICROBIT_PLAYS3="temps";
+Blockly.Msg.MICROBIT_PLAYS_TOOLTIP="DISPONIBLE UNIQUEMENT SUR LA BROCHE 0\nChaque note a un nom (do, ré, mi, fa, sol, la ou si), une octave (4 ou 5) et une durée (1, 2, 4 ou 8)";
+Blockly.Msg.MICROBIT_SILENCE="silence pendant";
+Blockly.Msg.MICROBIT_SILENCE_TOOLTIP="DISPONIBLE UNIQUEMENT SUR LA BROCHE 0\nfait une pause d'une certaine durée (1, 2, 4 ou 8)";
+Blockly.Msg.MICROBIT_MUSIC_PLAY="écouter";
+Blockly.Msg.MICROBIT_MUSIC_PLAY_TOOLTIP="DISPONIBLE UNIQUEMENT SUR LA BROCHE 0\nécouter une des mélodies pré-programmées";
+Blockly.Msg.MICROBIT_TONE1="jouer la fréquence (Hz)";
+Blockly.Msg.MICROBIT_TONE2="pendant (ms)";
+Blockly.Msg.MICROBIT_TONE_TOOLTIP="DISPONIBLE UNIQUEMENT SUR LA BROCHE 0\npermet de produire un son à la fréquence et durée souhaités";
+Blockly.Msg.MICROBIT_NOTATION=[["DO\u2084","C4"],["RE\u2084","D4"],["MI\u2084","E4"],["FA\u2084","F4"],["SOL\u2084","G4"],["LA\u2084","A4"],["SI\u2084","B4"],["DO\u2085","C5"],["RE\u2085","D5"],["MI\u2085","E5"],["FA\u2085","F5"],["SOL\u2085","G5"],["LA\u2085","A5"]];
+Blockly.Msg.MICROBIT_REST=[["1", "1"], ["2", "2"], ["4", "4"], ["8", "8"]];
+Blockly.Msg.MICROBIT_PLAY_LIST=[["hymne", "music.ODE"],["up", "music.JUMP_UP"],["down", "music.JUMP_DOWN"],["punchline", "music.PUNCHLINE"],["ba ding", "music.BA_DING"]];
+Blockly.Msg.MICROBIT_BLUETOOTH="actualiser bluetooth";
+Blockly.Msg.MICROBIT_BLUETOOTH_tooltip="placer ce bloc au début de la boucle ";

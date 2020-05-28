@@ -27,7 +27,7 @@
 	<script src="blocs&generateurs/_capteur.js"></script>
 	<script src="blocs&generateurs/_iot.js"></script>
 	<script src="blocs&generateurs/_microbit.js"></script>
-	<script src="blocs&generateurs/factory/add.js"></script>
+	<script src="blocs&generateurs/factory/append.js"></script>
 	<script src="blocs&generateurs/FRESNEL/arduino_conversion_blocs.js"></script>
 	<script src="blocs&generateurs/FRESNEL/Addon_Arduino.js"></script>
 	<script src="blocs&generateurs/FRESNEL/Bitwise_operators_blocs.js"></script>
@@ -62,7 +62,7 @@
 	<div class="loading"></div>
 	<div id="toptitle">
 		<div id="title">
-            <strong><span id="span_title1"></span></strong><span id="span_title2"></span>
+            <strong><span id="span_title1"></span></strong><span id="span_title2"></span><em><span id="span_file"></span></em>
 		</div>
         <div id="title-bar-btns">
 			<button id="btn_min" type="button" class="btn btn-minmax"><i class="fa fa-window-minimize fa-lg"></i></button>
@@ -107,6 +107,9 @@
 				<button id="btn_factory" class="btn btn-default btn_color">
 					<i class="fa fa-industry fa-1_5x"></i>
 				</button>
+				<button id="btn_games" class="btn btn-default btn_color">
+					<i class="fa fa-gamepad fa-1_5x"></i>
+				</button>
 				<button id="btn_term" class="btn btn-default btn_color">
 					<i class="fa fa-search fa-1_5x"></i>
 				</button>
@@ -130,6 +133,7 @@
 						<option value="yun" >Arduino Yun</option>
 						<option value="atmegang" >DAGU RS027</option>
 						<option value="pro16" >DAGU RS040</option>
+						<!-- <option value="micro_bit" >micro_bit</option> -->
 					</optgroup>
 					<optgroup label="Python">
 						<option value="esp8266" >ESP 8266</option>
@@ -209,7 +213,9 @@
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-body" >
-					<div id = "messageDIV"></div>
+					<div><span id = "messageDIV"></span><button id="btn_close_message" type="button" class="close" aria-label="Close" style="display: none;">&#215;</button></div>
+					<button id="btn_detail" type="button" class="btn btn-xs btn-default" style="display: none;">détails</button>
+					<div id = "detailDIV"></div>
 				</div>  
 			</div>
 		</div>
@@ -489,10 +495,10 @@
 						<span id="span_site"></span>
 					</button>
 				  	<button id="btn_forum" class="btn btn-default" style="color: #727272;">
-						<i class='fa fa-comments' id="span_forum"></i>
+						<i class='fa fa-comments'></i><span id="span_forum"></span>
 					</button>
 				  	<button id="btn_contact" class="btn btn-default" style="color: #727272">
-						<i class='fa fa-bug' id="span_contact"></i>
+						<i class='fa fa-bug'></i><span id="span_contact"></span>
 					</button>
 				  </div>
 				</div>
@@ -598,15 +604,14 @@
 				</optgroup>
 			</select>
 			<br><br>
-			<span id="span_card_connect" style="text-decoration:underline;"></span><span id="card_connect" style="font-weight:bold;"></span><br>
-			<span id="span_card_voltage" style="text-decoration:underline;"></span><span id="card_voltage" style="font-weight:bold;"></span><br>
-			<span id="span_card_cpu" style="text-decoration:underline;"></span><span id="card_cpu" style="font-weight:bold;"></span><br>
-			<span id="span_card_inout" style="text-decoration:underline;"></span><span id="card_inout" style="font-weight:bold;"></span><br>
-			<span id="span_card_in_anal" style="text-decoration:underline;"></span><span id="card_in_anal" style="font-weight:bold;"></span><br>
-			<span id="span_card_out_anal" style="text-decoration:underline;"></span><span id="card_out_anal"style="font-weight:bold;"></span><br>
-			<span id="span_card_flash" style="text-decoration:underline;"></span><span id="card_flash" style="font-weight:bold;"></span><br>
-			<span id="span_card_ram" style="text-decoration:underline;"></span><span id="card_ram" style="font-weight:bold;"></span><br>
-			<span id="span_card_eeprom" style="text-decoration:underline;"></span><span id="card_eeprom" style="font-weight:bold;"></span><br>
+			<span id="span_card_connect"></span><span id="card_connect" style="font-weight:bold;"></span><br>
+			<span id="span_card_voltage"></span><span id="card_voltage" style="font-weight:bold;"></span><br>
+			<span id="span_card_cpu"></span><span id="card_cpu" style="font-weight:bold;"></span><br>
+			<span id="span_card_inout"></span><span id="card_inout" style="font-weight:bold;"></span><br>
+			<span id="span_card_in_anal"></span><span id="card_in_anal" style="font-weight:bold;"></span><br>
+			<span id="span_card_out_anal"></span><span id="card_out_anal"style="font-weight:bold;"></span><br>
+			<span id="span_card_eeprom"></span><span id="card_eeprom" style="font-weight:bold;"></span><br>
+			<br><br><br>
 		  </div>
 		</div>
 	  </div>
@@ -676,7 +681,7 @@
 		</div>
 	</div>
 </body>
-<script>	
+<script>
 	$(window).load(function(){$(".loading").fadeOut("slow")});
 	ace.require("ace/ext/language_tools");
 	var editor = ace.edit("content_code");

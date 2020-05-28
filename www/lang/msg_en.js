@@ -1,73 +1,116 @@
-var MSG = {
-  btn_variable: " OK ",
-  btn_close: " Close ",
-  btn_valid: " Validate ",
-  btn_config: " Preferences ",
-  btn_about: " about ",
-  btn_new: " New ",
-  btn_fakeload: " Open ",
-  btn_example: " Examples ",
-  btn_term: " serial monitor ",
-  btn_factory: " BLOCKLY-FACTORY ",
-  btn_saveXML: " Save ",
-  btn_print: " Screenshot ",
-  btn_preview_ino: " Arduino Code Preview ",
-  btn_preview_py: " Python Code Preview ",
-  btn_save_ino: " Save as .INO ",
-  btn_save_py: " Save as .PY ",
-  btn_copy:" Copy to clipboard ",
-  btn_undo: " Cancel (ctrl + z) ",
-  btn_redo: " Restore ",
-  btn_search: " Search ",
-  btn_html: " BLOCKLY-FACTORY ",
-  btn_add: " add to workspace ",
-  btn_tint: " colors ",
-  span_fontsize: "Font size : ",
-  span_theme: "Theme : ", 
-  span_card_connect: "Connector : ",
-  span_card_cpu: "CPU : ",
-  span_card_voltage: "Supply voltage : ",
-  span_card_inout: "Digital In/Out : ",
-  span_card_flash: "Flash memory : ",
-  span_card_in_anal: "Analog input : ",
-  span_card_ram: "RAM : ",
-  span_card_out_anal: "Analog output : ",
-  span_card_eeprom: "EEPROM : ",
-  card_connect: "",
-  card_cpu: "",
-  card_voltage: "",
-  card_inout: "",
-  card_flash: "",
-  card_in_anal: "",
-  card_ram: "",
-  card_out_anal: "",
-  card_eeprom: "",
-  span_update: " Check for startup updates ",
-  span_blocklino: " BLOCKLINO ",
-  span_verify_update: " Check now ",
-  span_site: " The site ",
-  span_forum: " The Forum ",
-  span_contact: " a problem ! ",
-  span_languageMenu: " Language: ",
-  span_toolbox_all: " ALL ",
-  span_select_all: " Check all categories ",
-  configModalLabel: " Preferences ",
-  exampleModalLabel: " Examples ",
-  versionModalLabel: " Download ",
-  variableModalLabel: " Variable ",
-  cardLabel: " Available cards ",
-  usbLabel: " Available USB Ports ",
-  variablebody: "Name for the variable ",
-  labelToolboxDefinition: "Level: ",
-  httpRequestError: "There was a problem with the request.",
-  hashError: "Sorry, '%1' does not match any saved programs.",
-  xmlError: "Unable to load file Can it be created with another version of Blocklino?",
-  xmlLoad: "'OK' to load the new program\n\n'Cancel'  to merge the two programs.",
-  timeout: "Maximum number of execution iterations exceeded.",
-  badCode: "Program error : \n %1",
-  discard: "Delete all blocks to start a new program?",
-  badXml: "XML parsing error: \n %1 \n\nSelect 'OK' to abort your changes or 'Cancel' to continue editing the XML.",
-  arduino_card: "Load settings for the map",
-  aboutModalLabel: "about",
-  aboutBody: "This is a mini development environment for free and open source graphical language, programs are created by assembling blocks, they are then compiled and sent to the board."
-};
+Blockly.Msg.survol_check = "CHECK";
+Blockly.Msg.survol_flash = "UPLOAD";
+Blockly.Msg.survol_bin = "EXPORT binaries"; 
+Blockly.Msg.com1 = "Port";
+Blockly.Msg.com2 = "Select a port !" ;
+Blockly.Msg.check = "Check";
+Blockly.Msg.upload = "Upload";
+Blockly.Msg.error = "ERROR= Blocks not connected";
+Blockly.Msg.verif = "Check the program first !"
+Blockly.Msg.save = "Save as format";
+Blockly.Msg.update = "Update";
+Blockly.Msg.new_update = "A new version is available; do you want to download and install it now ?" ;
+Blockly.Msg.yes = "yes";
+Blockly.Msg.no = "no";
+Blockly.Msg.uptodate = "Your version is up to date." ;
+Blockly.Msg.download = "Download completed; the application will install and restart ...";
+Blockly.Msg.CAT_STOCKAGE = "Storage";
+Blockly.Msg.CAT_numerique = "- Binary";
+Blockly.Msg.CAT_analogique = "- Other";
+Blockly.Msg.CAT_wifi = "- Wifi";
+Blockly.Msg.CAT_TAB = "Table";
+Blockly.Msg.CAT_list = "List";
+Blockly.Msg.CAT_servo = "- Servo";
+Blockly.Msg.CAT_del = "- LED";
+Blockly.Msg.CAT_LOGIC = "Control";
+Blockly.Msg.CAT_MATH = "Math";
+Blockly.Msg.CAT_TEXT = "Text";
+Blockly.Msg.CAT_VARIABLES = "Variable";
+Blockly.Msg.CAT_FUNCTIONS = "Function";
+Blockly.Msg.CAT_ARDUINO = "Structure";
+Blockly.Msg.CAT_ARDUINO_IN = "Input / Output";
+Blockly.Msg.CAT_ARDUINO_OUT = "Exit";
+Blockly.Msg.CAT_ARDUINO_TIME = "Time";
+Blockly.Msg.CAT_actionneur = "Actuator";
+Blockly.Msg.CAT_com = "Communication";
+Blockly.Msg.CAT_ARDUINO_COMM_SERIAL = "- Serial";
+Blockly.Msg.CAT_ARDUINO_COMM_SOFTSERIAL = "- Software";
+Blockly.Msg.CAT_ARDUINO_moteur="- Motor";
+Blockly.Msg.CAT_ultrason = "Sensor";
+Blockly.Msg.CAT_bluetooth = "- Bluetooth";
+Blockly.Msg.CAT_ARDUINO_matrice8x8 = "- Matrix";
+Blockly.Msg.CAT_DFRobot_SHIELD_LCDKEYPAD = "- LCD Screen";
+Blockly.Msg.CAT_iot = "IoT";
+Blockly.Msg.CAT_html = "- HTML";
+Blockly.Msg.CAT_DFPLAYER = "- Audio";
+Blockly.Msg.btn_variable= " OK ";
+Blockly.Msg.btn_close= " Close ";
+Blockly.Msg.btn_valid= " Validate ";
+Blockly.Msg.btn_config= " Preferences ";
+Blockly.Msg.btn_about= " About ";
+Blockly.Msg.btn_new= " New ";
+Blockly.Msg.btn_fakeload= " Open ";
+Blockly.Msg.btn_example= " Examples ";
+Blockly.Msg.btn_term= " Serial monitor ";
+Blockly.Msg.btn_factory= " BLOCKLY-FACTORY ";
+Blockly.Msg.btn_saveXML= " Save ";
+Blockly.Msg.btn_print= " Screenshot ";
+Blockly.Msg.btn_preview_ino= " Arduino Code Preview ";
+Blockly.Msg.btn_preview_py= " Python Code Preview ";
+Blockly.Msg.btn_save_ino= " Save as .INO ";
+Blockly.Msg.btn_save_py= " Save as .PY ";
+Blockly.Msg.btn_copy=" Copy to clipboard ";
+Blockly.Msg.btn_undo= " Cancel (ctrl + z) ";
+Blockly.Msg.btn_redo= " Restore ";
+Blockly.Msg.btn_search= " Search ";
+Blockly.Msg.btn_html= " BLOCKLY-FACTORY ";
+Blockly.Msg.btn_add= " Add to workspace ";
+Blockly.Msg.btn_tint= " Colors ";
+Blockly.Msg.btn_games= " BLOCKLY-GAMES ";
+Blockly.Msg.span_fontsize= "Font size = ";
+Blockly.Msg.span_theme= "Theme = "; 
+Blockly.Msg.span_card_connect= "Connector = ";
+Blockly.Msg.span_card_cpu= "CPU = ";
+Blockly.Msg.span_card_voltage= "Supply voltage = ";
+Blockly.Msg.span_card_inout= "Digital In/Out = ";
+Blockly.Msg.span_card_flash= "Flash memory = ";
+Blockly.Msg.span_card_in_anal= "Analog input = ";
+Blockly.Msg.span_card_ram= "RAM = ";
+Blockly.Msg.span_card_out_anal= "Analog output = ";
+Blockly.Msg.span_card_eeprom= "EEPROM = ";
+Blockly.Msg.card_connect= "";
+Blockly.Msg.card_cpu= "";
+Blockly.Msg.card_voltage= "";
+Blockly.Msg.card_inout= "";
+Blockly.Msg.card_in_anal= "";
+Blockly.Msg.card_out_anal= "";
+Blockly.Msg.card_eeprom= "";
+Blockly.Msg.span_update= " Check for startup updates ";
+Blockly.Msg.span_blocklino= " BLOCKLINO ";
+Blockly.Msg.span_verify_update= " Check now ";
+Blockly.Msg.span_site= " The site ";
+Blockly.Msg.span_forum= " The Forum ";
+Blockly.Msg.span_contact= " a problem ! ";
+Blockly.Msg.span_languageMenu= " Language= ";
+Blockly.Msg.span_toolbox_all= " ALL ";
+Blockly.Msg.span_select_all= " Check all categories ";
+Blockly.Msg.configModalLabel= " Preferences ";
+Blockly.Msg.imageModalLabel=" Médias ";
+Blockly.Msg.exampleModalLabel= " Examples ";
+Blockly.Msg.versionModalLabel= " Download ";
+Blockly.Msg.variableModalLabel= " Variable ";
+Blockly.Msg.cardLabel= " Available cards ";
+Blockly.Msg.usbLabel= " Available USB Ports ";
+Blockly.Msg.variablebody= "Name for the variable ";
+Blockly.Msg.labelToolboxDefinition= "Level= ";
+Blockly.Msg.httpRequestError= "There was a problem with the request.";
+Blockly.Msg.hashError= "Sorry; '%1' does not match any saved programs.";
+Blockly.Msg.xmlError= "Unable to load file Can it be created with another version of Blocklino?";
+Blockly.Msg.xmlLoad= "'OK' to load the new program\n\n'Cancel'Blockly.Msg.to merge the two programs.";
+Blockly.Msg.timeout= "Maximum number of execution iterations exceeded.";
+Blockly.Msg.badCode= "Program error = \n %1";
+Blockly.Msg.discard= "Delete all blocks to start a new program?";
+Blockly.Msg.badXml= "XML parsing error= \n %1 \n\nSelect 'OK' to abort your changes or 'Cancel' to continue editing the XML.";
+Blockly.Msg.arduino_card= "Load settings for the map";
+Blockly.Msg.aboutModalLabel= "about";
+Blockly.Msg.aboutBody= "This is a mini development environment for free and open source graphical language; programs are created by assembling blocks; they are then compiled and sent to the board.";
