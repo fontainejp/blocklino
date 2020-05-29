@@ -68,7 +68,7 @@ window.addEventListener('load', function load(event){
 			maPage = Bframe.document.title
 		}
 		if (maPage === "MaPage"||maPage === ""){
-			document.getElementById('titreOK').innerHTML = "Pour pouvoir uploader la page sur un site distant il faut lui donner un nouveau titre !"
+			document.getElementById('titreOK').innerHTML = "Pour pouvoir uploader la page sur un site distant il faut lui donner un nouveau titre.<br>Utiliser la balise HEAD et TITLE !"
 			document.getElementById('monFormulaire').style.display = "none"
 			$('#btn_ftp').addClass('disabled')
 		} else {
@@ -129,8 +129,8 @@ window.addEventListener('load', function load(event){
 			maPage = Bframe.document.title
 		}
 		if (maPage === "MaPage"||maPage === ""){
-			var date = Date.now()
-			maPage += date
+			$("#message").modal("show")
+			return
 		}
 		var file = chemin+'/../compilation/html/'
 		file += maPage.replace(/\s/g, '_')

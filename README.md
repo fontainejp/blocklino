@@ -1,18 +1,18 @@
-# <img src="http://lesormeaux.net/blocklino/media/icon.png" alt="Blocklino icon"> BLOCKLINO
+# <img src="https://fontainejp.github.io/media/icon.png" alt="Blocklino icon"> BLOCKLINO
 
 A mini development environment for free and open source graphic language. Programs are created by assembling blocks, they are then compiled and sent to the board.
 
 This app works on Windows operating systems. You can [download the latest release](https://github.com/fontainejp/blocklino/releases)
 
-![blocklino Screenshots](http://lesormeaux.net/blocklino/start/img/Capture.PNG)
+![blocklino Screenshots](https://fontainejp.github.io/start/img/Capture.PNG)
 
 ## Demo
 
-Blocklino is a web tool. You can give it a try [here.](http://lesormeaux.net/blocklino)
+Blocklino is a web tool. You can give it a try [here.](https://fontainejp.github.io/blocklino.html)
 
 You can link directly to examples :
-* [make default LED blink](http://lesormeaux.net/blocklino/index.html?url=./examples/blink.xml) 
-* [control LED Matrix](http://lesormeaux.net/blocklino/index.html?url=./examples/matrice.xml) 
+* [make default LED blink](https://fontainejp.github.io/blocklino.html?url=./examples/blink.xml) 
+* [control LED Matrix](https://fontainejp.github.io/blocklino.html?url=./examples/matrice.xml) 
 
 Or watch the [video demo](https://www.youtube.com/watch?v=XqfNAjnf6_8)
 
@@ -44,8 +44,16 @@ and
 > git clone https://github.com/fontainejp/blocklino
 > cd blocklino-master
 > npm install
-> npm start
 ```
+### from Arduino IDE
+
+copy / paste all files and directories
+
+| Arduino | Blocklino |
+| ------- | --------- |
+| hardware\arduino | compilation\arduino\arduino |
+| hardware\tools | compilation\arduino\tools |
+| tools-builder | compilation\arduino\tools-builder |
 
 ### Build 
 
@@ -106,3 +114,4 @@ Tools without which nothing would not have been possible :
 - [NSIS](https://sourceforge.net/projects/nsis)
 - [ACE](https://ace.c9.io/)
 - [CodeDragon](https://codedragon.org/)
+- [node-ftp](https://github.com/mscdex/node-ftp)
