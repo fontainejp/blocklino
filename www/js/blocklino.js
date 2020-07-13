@@ -530,6 +530,7 @@ BlocklyDuino.buildToolbox = function() {
 		} else {
 			loadIds = '';
 		}
+		window.localStorage.toolboxids = loadIds;
 	}
 	var xmlValue = '<xml id="toolbox">';	
 	var xmlids = loadIds.split(",");
