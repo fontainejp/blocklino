@@ -18,11 +18,12 @@ BlocklyDuino.prog_microbit = "# Python\n\nfrom microbit import *\n\nwhile True:\
 BlocklyDuino.init = function() {
 	Code.initLanguage();
 	BlocklyDuino.loadConfig();
-	if (window.localStorage.renderer == "blockly") {
+	BlocklyDuino.workspace = Blockly.inject('content_blocks',{grid:{snap:true},sounds:false,media:'media/',toolbox:BlocklyDuino.buildToolbox(),zoom:{controls:true,wheel:true}});
+	/*if (window.localStorage.renderer == "blockly") {
 		BlocklyDuino.workspace = Blockly.inject('content_blocks',{grid:{snap:true},sounds:false,media:'media/',toolbox:BlocklyDuino.buildToolbox(),zoom:{controls:true,wheel:true}});
 	} else {
 		BlocklyDuino.workspace = Blockly.inject('content_blocks',option_scratch);
-	}
+	}*/
 	var bTD = document.getElementsByClassName('blocklyToolboxDiv');
 	if ($("#toolboxes").val()=="toolbox_fresnel_all") {
 		bTD[0].style.width = "290px"
