@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 var blockType = '';
 var mainWorkspace = null;
@@ -250,14 +250,14 @@ function updateGenerator() {
       }
     }
 	if (language_generator=="Arduino") {
-		code.push("  Blockly." + language_generator + ".includes_['lib'] = '#include &lt;lib.h&gt; ;';");
-		code.push("  Blockly." + language_generator + ".variables_['var'] = 'int var;';");
-		code.push("  Blockly." + language_generator + ".definitions_['inst'] = 'inst instance;';");
-		code.push("  Blockly." + language_generator + ".userFunctions_['func'] = 'void func(){return 0};';");
-		code.push("  Blockly." + language_generator + ".setups_['setup'] = 'code du setup();';");
-		code.push("  var code = 'code du loop()';");
+		code.push("  Blockly." + language_generator + ".includes_['lib'] = '#include \"lib.h\" ;'; // à supprimer si inutile");
+		code.push("  Blockly." + language_generator + ".variables_['var'] = 'int var;'; // à supprimer si inutile");
+		code.push("  Blockly." + language_generator + ".definitions_['inst'] = 'inst instance;'; // à supprimer si inutile");
+		code.push("  Blockly." + language_generator + ".userFunctions_['func'] = 'void func(){return 0};'; // à supprimer si inutile");
+		code.push("  Blockly." + language_generator + ".setups_['setup'] = 'code_setup();'; // à supprimer si inutile");
+		code.push("  var code = 'code_loop();\\n';");
 		if (rootBlock.getFieldValue('CONNECTIONS') == 'LEFT') {
-			code.push("  return [code, Blockly." + language_generator + ".ORDER_ATOMIC];");
+			code.push("  return [code, Blockly." + language_generator + ".ORDER_ATOMIC]");
 		} else {
 			code.push("  return code");
 		}
@@ -266,9 +266,9 @@ function updateGenerator() {
 		code.push("  Blockly." + language_generator + ".imports_['lib'] = 'import lib';");
 		code.push("  Blockly." + language_generator + ".definitions_['inst'] = 'inst instance';");
 		code.push("  Blockly." + language_generator + ".userFunctions_['func'] = 'def func():\\n  return 0';");
-		code.push("  var code = 'placer ici le reste du code';");
+		code.push("  var code = 'code';");
 		if (rootBlock.getFieldValue('CONNECTIONS') == 'LEFT') {
-			code.push("  return [code, Blockly." + language_generator + ".ORDER_ATOMIC];");
+			code.push("  return [code, Blockly." + language_generator + ".ORDER_ATOMIC]");
 		} else {
 			code.push("  return code");
 		}
@@ -276,7 +276,7 @@ function updateGenerator() {
 	if (language_generator=="html") {
 		code.push("  var code = 'placer votre code ici'");
 		if (rootBlock.getFieldValue('CONNECTIONS') == 'LEFT') {
-			code.push("  return [code, Blockly." + language_generator + ".ORDER_ATOMIC];");
+			code.push("  return [code, Blockly." + language_generator + ".ORDER_ATOMIC]");
 		} else {
 			code.push("  return code");
 		}
@@ -285,9 +285,17 @@ function updateGenerator() {
   code.push("};");
   editor.setValue(code.join('\n'),1);
 }
+var oldDir = null;
 function updatePreview() {
-    if (previewWorkspace) previewWorkspace.dispose();
-    previewWorkspace = Blockly.inject('preview',{scrollbars:true,grid:{snap:true},media:'media/',sounds:false,zoom:{controls:true,wheel:true}});
+	var newDir = document.getElementById('direction').value;
+	if (oldDir != newDir) {
+		if (previewWorkspace) {
+			previewWorkspace.dispose();
+		}
+		var rtl = newDir == 'rtl';
+		previewWorkspace = Blockly.inject('preview',{rtl: rtl, media: 'media/', sounds: false, scrollbars: true});
+		oldDir = newDir;
+	}
 	previewWorkspace.clear();
 	if (Blockly.Blocks[blockType]) throw 'Block name collides with existing property: ' + blockType;
 	var code = document.getElementById('languagePre').textContent.trim();
@@ -342,22 +350,9 @@ function init() {
 	rootBlock.initSvg();
 	rootBlock.render();
 	rootBlock.setDeletable(false);
-	/*var urlFile = getStringParamFromUrl('url', '')
-	if (urlFile) {
-		$.get( urlFile, function(data){
-			if (data){
-				var xml = Blockly.Xml.textToDom(data);
-				mainWorkspace.clear();
-				Blockly.Xml.domToWorkspace(xml, mainWorkspace);
-				mainWorkspace.render();
-				var elem = xml.getElementsByTagName("language")[0];
-				var node = elem.childNodes[0];
-				localStorage.code_bf = node.nodeValue;
-			}
-		}, 'text')
-	}*/
 	mainWorkspace.addChangeListener(onchange);
 	if (window.localStorage.prog == "python") $("#language_generator").val("Python");
+	document.getElementById('direction').addEventListener('change', updatePreview);
 	document.getElementById('language_generator').addEventListener('change', updateGenerator);
 	$('[data-toggle="tooltip"]').tooltip();
 }

@@ -519,39 +519,66 @@
 				<i class="fa fa-cog fa-2x" class="modal-title"  id="configModalLabel"></i>
 			</div>
 			<div class="modal-body">
-				<label id="span_languageMenu"></label>
-				<select id="languageMenu"></select><br><br>
-				<label id="span_theme"></label>
-				<select id="theme">
-					<option value="monokai">Sombre</option>
-					<option value="sqlserver" selected="selected">Clair</option>
-				</select><br><br>
-				<label id="span_fontsize"></label>
-				<select id="fontsize">
-					<option value="12px">12</option>
-					<option value="14px" selected="selected">14</option>
-					<option value="16px">16</option>
-					<option value="18px">18</option>
-					<option value="20px">20</option>
-					<option value="22px">22</option>
-				</select><br><br>
-				<div id="divToolbox">
-					<label id="labelToolboxDefinition"></label>
-					<select id="toolboxes">
-						<option value="toolbox_6">Débutant</option>
-						<option value="toolbox_arduino_all" selected="selected">Initié</option>
-						<option value="toolbox_microbit">Confirmé</option>
-						<option value="toolbox_lycee">Expert</option>
-						<option value="toolbox_fresnel_all">Maître</option>
-					</select>
+				<div class="row">
+					<div class="col-md-9">
+						<div class="input-group">
+							<span class="input-group-addon" id="span_library"></span>
+							<input type="text" class="form-control" id="library_name" onfocus="this.value=''">
+							<div class="input-group-btn">
+								<button id="btn_library_view" type="button" class="btn btn-default">
+									<i class='fa fa-eye'></i>
+								</button>
+								<button id="btn_library_add" type="button" class="btn btn-default">
+									<i class='fa fa-search-plus'></i>
+								</button>
+							</div>
+						</div>
+					</div>
 				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-6">
+						<label id="span_languageMenu"></label>
+						<select id="languageMenu"></select><br><br>
+						<label id="span_fontsize"></label>
+						<select id="fontsize">
+							<option value="12px">12</option>
+							<option value="14px" selected="selected">14</option>
+							<option value="16px">16</option>
+							<option value="18px">18</option>
+							<option value="20px">20</option>
+							<option value="22px">22</option>
+						</select><br><br>
+						<label id="labelToolboxDefinition"></label>
+						<select id="toolboxes">
+							<option value="toolbox_6">Débutant</option>
+							<option value="toolbox_arduino_all" selected="selected">Initié</option>
+							<option value="toolbox_microbit">Confirmé</option>
+							<option value="toolbox_lycee">Expert</option>
+							<option value="toolbox_fresnel_all">Maître</option>
+						</select>
+					</div>
+					<div class="col-md-6">
+						<label id="span_theme"></label>
+						<select id="theme">
+							<option value="monokai">Sombre</option>
+							<option value="sqlserver" selected="selected">Clair</option>
+						</select><br><br>
+						<label id="span_renderer"></label>
+						<select id="renderer">
+							<option value="zelos">Scratch</option>
+							<option value="blockly" selected="selected">Blockly</option>
+						</select><br><br>
+						<span id="span_select_all"></span><input type="checkbox" name="select_all" id="select_all">
+					</div>
+				</div>
+				<br>
+				<div id="modal-body-config"></div>
 			</div>
-		  <input type="checkbox" name="select_all" id="select_all"><span id="span_select_all"></span>
-		  <div class="modal-body" id="modal-body-config"></div>
-		  <div class="modal-footer">
-			<button id="btn_reset" type="button" class="btn btn-danger"><i class='fa fa-trash-o fa-lg'></i> Vider le cache</button>
-			<button id="btn_valid_config" type="button" class="btn btn-primary"></button>
-		  </div>
+			<div class="modal-footer">
+				<button id="btn_reset" type="button" class="btn btn-danger"><i class='fa fa-trash-o fa-lg'></i> Vider le cache</button>
+				<button id="btn_valid_config" type="button" class="btn btn-primary"></button>
+			</div>
 		</div>
 	  </div>
 	</div>

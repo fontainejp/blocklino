@@ -1,11 +1,13 @@
 'use strict';
 
 var BlocklyDuino = {};
+var option_scratch = {};
 BlocklyDuino.selectedToolbox = "toolbox_arduino_all";
 BlocklyDuino.selectedCard = "uno";
 BlocklyDuino.content = "on";
 BlocklyDuino.contentHTML = "on";
 BlocklyDuino.theme = "sqlserver";
+BlocklyDuino.renderer = "blockly";
 BlocklyDuino.size = "14px";
 BlocklyDuino.workspace = null;
 BlocklyDuino.loadOnce = "";
@@ -16,7 +18,11 @@ BlocklyDuino.prog_microbit = "# Python\n\nfrom microbit import *\n\nwhile True:\
 BlocklyDuino.init = function() {
 	Code.initLanguage();
 	BlocklyDuino.loadConfig();
-	BlocklyDuino.workspace = Blockly.inject('content_blocks',{grid:{snap:true},sounds:false,media:'media/',toolbox:BlocklyDuino.buildToolbox(),zoom:{controls:true,wheel:true}});
+	if (window.localStorage.renderer == "blockly") {
+		BlocklyDuino.workspace = Blockly.inject('content_blocks',{grid:{snap:true},sounds:false,media:'media/',toolbox:BlocklyDuino.buildToolbox(),zoom:{controls:true,wheel:true}});
+	} else {
+		BlocklyDuino.workspace = Blockly.inject('content_blocks',option_scratch);
+	}
 	var bTD = document.getElementsByClassName('blocklyToolboxDiv');
 	if ($("#toolboxes").val()=="toolbox_fresnel_all") {
 		bTD[0].style.width = "290px"
@@ -151,6 +157,7 @@ BlocklyDuino.loadConfig = function() {
 	var content = window.localStorage.content;
 	var prog = window.localStorage.prog;
 	var theme = window.localStorage.theme;
+	var renderer = window.localStorage.renderer;
 	var size = window.localStorage.size;
 	if (card===undefined) {
 		window.localStorage.card = BlocklyDuino.selectedCard;
@@ -199,6 +206,9 @@ BlocklyDuino.loadConfig = function() {
 	} else {
 		$('#fontsize').val(size);
 		document.getElementById('content_code').style.fontSize = size
+	}
+	if (renderer === undefined) {
+		window.localStorage.renderer = BlocklyDuino.renderer
 	}
 }
 BlocklyDuino.change_card = function() {
@@ -322,6 +332,7 @@ BlocklyDuino.bindFunctions = function() {
 		window.localStorage.size = $(this).val()
 	});
 	$('#theme').on("change", BlocklyDuino.apply_theme);
+	$('#renderer').on("change", BlocklyDuino.apply_renderer);
 	$('.modal-child').on('show.bs.modal', function () {
 		var modalParent = $(this).attr('data-modal-parent');
 		$(modalParent).css('opacity', 0)
@@ -457,6 +468,15 @@ BlocklyDuino.apply_theme = function () {
 		BlocklyDuino.theme_monokai()
 	} else {
 		BlocklyDuino.theme_sqlserver()
+	}
+}
+BlocklyDuino.apply_renderer = function () {
+	var new_renderer = $('#renderer').val();
+	window.localStorage.renderer = new_renderer
+	if (new_renderer == "blockly") {
+		
+	} else {
+		
 	}
 }
 BlocklyDuino.checkAll = function () {

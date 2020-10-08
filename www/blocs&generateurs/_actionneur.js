@@ -730,7 +730,7 @@ Blockly.Arduino["pixel_setcolor"]=function(block){
 	var color=block.getFieldValue("color");
 	var colorR=color[1] + color[2], colorG=color[3] + color[4], colorB=color[5] + color[6];
 	var red=parseInt(colorR,16), green=parseInt(colorG,16), blue=parseInt(colorB,16);
-    return "pixel.setPixelColor(" + pin + ", " + red + ", " + green + ", " + blue + ");\n"
+    return "pixel.setPixelColor(" + pin + ", " + red + ", " + green + ", " + blue + ");\npixel.show();\n"
 };
 Blockly.Python["pixel_setcolor"]=function(block){
     var pin=Blockly.Python.valueToCode(block, "broche", Blockly.Python.ORDER_ASSIGNMENT);
@@ -771,7 +771,7 @@ Blockly.Blocks["pixel_clear"]={init:function(){
     this.setHelpUrl("http://")}
 };
 Blockly.Arduino["pixel_clear"]=function(block){
-    return "pixel.show();\n"
+    return "pixel.clear();\npixel.show();\n"
 };
 Blockly.Python["pixel_clear"]=function(block){
 	var carte = localStorage.getItem('card')
@@ -781,7 +781,6 @@ Blockly.Python["pixel_clear"]=function(block){
 	} else {
 		return "np.clear()\n"
 	}
-    
 };
 //////////////
 Blockly.Blocks["pixel_setbrightness"]={init:function(){
@@ -797,6 +796,25 @@ Blockly.Arduino["pixel_setbrightness"]=function(block){
     return "pixel.setBrightness(" + value + ");\n"
 };
 Blockly.Python["pixel_setbrightness"]=function(){return""};
+//////////////
+Blockly.Blocks["pixel_setcolor_random"]={init:function(){
+	this.appendValueInput("broche").setCheck("Number").appendField(Blockly.Msg.pixel6);
+	this.appendDummyInput().appendField(Blockly.Msg.pixel8);
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#00929F");
+    this.setTooltip(Blockly.Msg.pixel6_tooltip);
+    this.setHelpUrl("http://")}
+};
+Blockly.Arduino["pixel_setcolor_random"]=function(block){
+    var pin=Blockly.Arduino.valueToCode(block, "broche", Blockly.Arduino.ORDER_ASSIGNMENT);
+	Blockly.Arduino.setups_["randomSeed"]="randomSeed(analogRead(0));";
+    return "pixel.setPixelColor(" + pin + ", random(0,256), random(0,256), random(0,256));\npixel.show();\n"
+};
+Blockly.Python["pixel_setcolor_random"]=function(block){
+    return ""
+};
   //////////////
  /*  moteur  */
 //////////////

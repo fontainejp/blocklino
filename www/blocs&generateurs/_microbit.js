@@ -554,7 +554,7 @@ Blockly.Blocks["plays"]={init:function(){
 Blockly.Python["plays"]=function(block){
     var value_note=block.getFieldValue("note");
     var value_tempo=block.getFieldValue("tempo");
-	Blockly.Python.imports_["time"]="import time";
+	Blockly.Python.imports_["music"]="import music";
 	return 'music.play(["' + value_note + ':' + value_tempo +'"])\n'
 };
 //////////////
@@ -873,7 +873,7 @@ Blockly.Arduino['print'] = function(block) {
     return "Serial.println(" + str + ");\n"
 };
 /////////////////
-/* bluetooth  */
+/* bluetooth  
 ///////////////
 Blockly.Blocks["bluetooth_a"]={init:function(){
         this.appendValueInput("data_s").setCheck("Number").appendField(Blockly.Msg.bluetooth2);
@@ -1037,3 +1037,4 @@ Blockly.Blocks["bluetooth_create_container"]={init:function(){
     }
 };
 //////////////
+*/

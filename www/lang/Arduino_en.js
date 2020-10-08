@@ -215,11 +215,13 @@ Blockly.Msg.pixel4 = "number";
 Blockly.Msg.pixel5 = "set pixel brightness to";
 Blockly.Msg.pixel6 = "set the pixel";
 Blockly.Msg.pixel7 = "turn off pixels";
+Blockly.Msg.pixel8="with random color";
 Blockly.Msg.pixel1_tooltip="neopixel RGB module indicate the pin to be connected and the number of pixels";
 Blockly.Msg.pixel2_tooltip="show changes made";
 Blockly.Msg.pixel3_tooltip="choose the pixel to light and its color \nCaution the numbering starts at 0";
 Blockly.Msg.pixel4_tooltip="turn off all the pixels";
 Blockly.Msg.pixel5_tooltip="adjusts pixel brightness (from 0 to 255)";
+Blockly.Msg.pixel6_tooltip="choose the pixel to light and its random color\nCaution the numbering starts at 0";
 // output
 Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_INPUT1 = "put the DIGITAL pin";
 Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_TOOLTIP = "write a 0 or 1 logical state to a specific output";

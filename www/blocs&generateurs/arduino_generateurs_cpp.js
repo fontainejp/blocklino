@@ -131,7 +131,7 @@ Blockly.Arduino["bluetooth_init"]=function(block){
     var dropdown_pin2=Blockly.Arduino.valueToCode(block,"PIN2", Blockly.Arduino.ORDER_NONE);
     var dropdown_speed=block.getFieldValue("SPEED");
     var n=0;
-	Blockly.Arduino.includes_["bluetooth"]="#include <SoftwareSerial.h>";
+	Blockly.Arduino.includes_["define_ss"]="#include <SoftwareSerial.h>";
 	Blockly.Arduino.definitions_["bluetooth"]="SoftwareSerial bluetooth("+dropdown_pin1+","+dropdown_pin2+");";
 	Blockly.Arduino.setups_["bluetooth"]="bluetooth.begin(" + dropdown_speed + ");";
 	return ""

@@ -213,13 +213,15 @@ Blockly.Msg.pixel2="mettre à jour les pixels";
 Blockly.Msg.pixel3="avec la couleur";
 Blockly.Msg.pixel4="nombre";
 Blockly.Msg.pixel5="régler la luminosité des pixels à";
-Blockly.Msg.pixel6="régler la pixel";
+Blockly.Msg.pixel6="allumer la pixel";
 Blockly.Msg.pixel7="éteindre les pixels";
+Blockly.Msg.pixel8="avec une couleur aléatoire";
 Blockly.Msg.pixel1_tooltip="module neopixel RVB\nindiquer la broche à connecter et le nombre de pixels";
 Blockly.Msg.pixel2_tooltip="affiche les modifications apportées";
 Blockly.Msg.pixel3_tooltip="choisir la pixel à allumer ainsi que sa couleur\nAttention la numérotation commence à 0";
 Blockly.Msg.pixel4_tooltip="éteint toutes les pixels";
 Blockly.Msg.pixel5_tooltip="règle la luminosité des pixels (de 0 à 255)";
+Blockly.Msg.pixel6_tooltip="choisir la pixel à allumer ainsi qu'une couleur aléatoire\nAttention la numérotation commence à 0";
 //sortie
 Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_INPUT1="mettre la broche NUMERIQUE";
 Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_TOOLTIP="écrire un état logique (0 ou 1) sur la broche indiquée";

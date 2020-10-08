@@ -42,6 +42,8 @@ Code.initLanguage = function() {
     languageMenu.append(option);
   }
   $('#span_theme').text(Blockly.Msg['span_theme']);
+  $('#span_renderer').text(Blockly.Msg['span_renderer']);
+  $('#span_library').text(Blockly.Msg['span_library']);
   $('#span_fontsize').text(Blockly.Msg['span_fontsize']);
   $('#span_card_connect').text(Blockly.Msg['span_card_connect']);
   $('#span_card_cpu').text(Blockly.Msg['span_card_cpu']);
