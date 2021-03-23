@@ -25,7 +25,7 @@ Blockly.Blocks["soft_read"]={init:function(){
 Blockly.Blocks["soft_write"]={init:function(){
         this.setHelpUrl(Blockly.Msg.HELPURL);
         this.setColour("#006000");
-        this.appendValueInput("CONTENT").setCheck("String").appendField(Blockly.Msg.SSERIAL_Write);
+        this.appendValueInput("CONTENT").appendField(Blockly.Msg.SSERIAL_Write);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setTooltip(Blockly.Msg.SSERIAL_Write_tooltip)}
@@ -83,7 +83,15 @@ Blockly.Blocks["serial_available"]={init:function(){
 Blockly.Blocks["serial_write"]={init:function(){
         this.setColour("#006000");
         this.setHelpUrl(Blockly.Msg.HELPURL);
-        this.appendValueInput("CONTENT").setCheck("String").appendField(Blockly.Msg.Serial_Write);
+        this.appendValueInput("CONTENT").appendField(Blockly.Msg.Serial_Write);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip(Blockly.Msg.Serial_write_tooltip)}
+};
+Blockly.Blocks["serial_writeln"]={init:function(){
+        this.setColour("#006000");
+        this.setHelpUrl(Blockly.Msg.HELPURL);
+        this.appendDummyInput().appendField(Blockly.Msg.Serial_Writeln);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setTooltip(Blockly.Msg.Serial_write_tooltip)}

@@ -18,7 +18,7 @@
 		<link rel="stylesheet" href="css/bootstrap.toggle.min.css">
 		<link rel="stylesheet" href="css/bootstrap.min.3.3.6.css">
 		<link rel="stylesheet" href="css/fontawesome.css">
-		<link id="theme_css_ffau" rel="stylesheet" href="css/ffau.css">
+		<link id="theme_css" rel="stylesheet" href="css/ffau_sqlserver.css">
 	</head>
 	<body>
 		<div id="toptitle">
@@ -118,10 +118,10 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
-					<span class="fa fa-cog fa-2x" class="modal-title"> Connexion au serveur ftp</span>
+					<span class="fa fa-upload fa-2x" class="modal-title"> Connexion au serveur ftp</span>
 				</div>
 				<div class="modal-body">
-					<span id="titreOK"></span>
+					<div id="titreOK"></div>
 					<form class="form-horizontal" id="monFormulaire" >
 					  <div class="form-group">
 						<label for="inputHost" class="col-sm-3 control-label">Nom hôte</label>
@@ -172,8 +172,6 @@
 						<span class="fa fa-cog fa-2x" class="modal-title"> Préférences</span>
 					</div>
 					<div class="modal-body" >
-						<label id="span_languageMenu">Langue : </label>
-						<select id="languageMenu"></select><br><br>
 						<label id="span_theme">Thème : </label>
 						<select id="theme">
 							<option value="monokai">Sombre</option>
@@ -188,14 +186,15 @@
 							<option value="20px">20</option>
 							<option value="22px">22</option>
 						</select><br><br>
-						<div id="divToolbox">
-							<label id="labelToolboxDefinition">Niveau : </label>
-							<select id="toolboxes">
-								<option value="">Expert</option>
-								<option value="" selected="selected">Débutant</option>
-							</select>
-						</div>
-					</div>  
+						<!--label id="span_largeur">Largeur : </label>
+						<select id="largeur">
+							<option value="40%">40 %</option>
+							<option value="45%" selected="selected">45 %</option>
+							<option value="50%">50 %</option>
+							<option value="55%">55 %</option>
+							<option value="60%">60 %</option>
+						</select><br><br-->
+					</div>
 					<div class="modal-footer">
 						<button id="btn_reset" type="button" class="btn btn-danger"><i class='fa fa-trash-o fa-lg'></i> Vider le cache</button>
 						<button id="btn_valid_config" type="button" class="btn btn-primary">Valider</button>
@@ -208,7 +207,7 @@
 				<div class="modal-content">
 					<div class="modal-body" >
 						Pour avoir un aperçu de la page il faut lui donner un nouveau titre.<br>
-						Utiliser la balise HEAD et TITLE !
+						Utiliser les balises HEAD et TITLE !
 					</div>  
 				</div>
 			</div>
@@ -225,25 +224,25 @@
 			<block type="balise"></block>
 			<block type="balise_orph"></block>
 		</category>
-		<category colour="65" name="Texte">
+		<category colour="#bbbbbb" name="Texte">
 			<block type="emptytext"></block>
 			<block type="emptytext">
 				<field name='content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</field>
 			</block>
-			<category colour="65" name="en-bloc">
-				<block type="paragraph"></block>
-				<block type="header"></block>
-				<block type="divider"></block>
-			</category>
-			<category colour="65" name="en-ligne">
-				<block type="span"></block>
-				<block type="textmod"></block>
-				<block type="button"></block>
-				<block type="link"></block>
-				<block type="icon"></block>
-			</category>
 		</category>
-		<category colour="20" name="Table">
+		<category colour="#787746" name="en-bloc">
+			<block type="paragraph"></block>
+			<block type="header"></block>
+			<block type="divider"></block>
+		</category>
+		<category colour="#FFA500" name="en-ligne">
+			<block type="span"></block>
+			<block type="textmod"></block>
+			<block type="button"></block>
+			<block type="link"></block>
+			<block type="icon"></block>
+		</category>
+		<category colour="#804000" name="Table">
 			<block type="table"></block>
 			<block type="tablerow"></block>
 			<block type="thead"></block>
@@ -256,21 +255,18 @@
 			<block type="orderedlist"></block>
 			<block type="listitem"></block>
 		</category>
-		<category colour="160" name="Formulaire">
+		<category colour="#154360" name="Formulaire">
 			<block type="form"></block>
 			<block type="input"></block>
 			<block type="label"></block>
 		</category>
-		<category colour="330" name="Media">
-			<block type="img"></block>
+		<category colour="#00cc00" name="Media">
 			<block type="image"></block>
-			<block type="audio"></block>
 			<block type="audios"></block>
-			<block type="video"></block>
 			<block type="video_file"></block>
 			<block type="videos"></block>
 		</category>
-		<category colour="120" name="Modification">
+		<category colour="#727272" name="Modification">
 			<block type="args"></block>
 			<block type="stylearg"></block>
 			<block type="class"></block>
@@ -280,30 +276,30 @@
 			<block type="cssitem"></block>
 			<block type="othercss"></block>
 		</category>
-		<category colour="290" name="CSS">
-			<category colour="290" name="Texte">
+		<category colour="#00929F" name="CSS">
+			<category colour="#00929F" name="Texte">
 				<block type="fontsize"></block>
 				<block type="fontweight"></block>
 				<block type="textdecoration"></block>
 				<block type="texttransform"></block>
 				<block type="textalign"></block>
 			</category>
-			<category colour="290" name="Arrangement">
+			<category colour="#00929F" name="Arrangement">
+				<block type="display"></block>
 				<block type="margin"></block>
 				<block type="padding"></block>
 				<block type="float"></block>
 				<block type="verticalalign"></block>
 				<block type="widthheightnum"></block>
 			</category>
-			<category colour="290" name="Couleur">
+			<category colour="#00929F" name="Couleur">
 				<block type="color_picker"></block>
 				<block type="hex_picker"></block>
 				<block type="rgba_picker"></block>
 				<block type="color-new"></block>
 				<block type="bgcolor-new"></block>
 			</category>
-			<category colour="290" name="Bordure">
-				<block type="border-new"></block>
+			<category colour="#00929F" name="Bordure">
 				<block type="borderedge-new"></block>
 				<block type="borderrad"></block>
 				<block type="bordercollapse"></block>

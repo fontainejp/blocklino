@@ -635,6 +635,27 @@ Blockly.Blocks['variables_set_init'] = {
         return Blockly.Types.getChildBlockType(this)
     }
 };
+Blockly.Blocks['variables_set_init_volatile'] = {
+    init: function() {
+        this.appendValueInput("VALUE")
+            .appendField(Blockly.Msg.var_set_init+" volatile")
+            .appendField(new Blockly.FieldVariable(Blockly.Msg.VARIABLES_DEFAULT_NAME), 'VAR')
+            .appendField(Blockly.Msg.VARIABLES_AS)
+            .appendField(new Blockly.FieldDropdown(Blockly.Types.getValidTypeArray()), 'VARIABLE_SETTYPE_TYPE')
+            .appendField(Blockly.Msg._AT);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(Blockly.Blocks.variables.HUE);
+        this.setHelpUrl(Blockly.Msg.HELPURL);
+        this.setTooltip(Blockly.Msg.var_set_init_tooltip);
+        this.contextMenuMsg_ = Blockly.Msg.VARIABLES_GET_CREATE_SET
+    },
+    contextMenuType_: 'variables_set',
+    customContextMenu: Blockly.Blocks["variables_get"].customContextMenu,
+    getVarType: function(varName) {
+        return Blockly.Types.getChildBlockType(this)
+    }
+};
 Blockly.Blocks["base_define_const"] = {
     init: function() {
         this.appendValueInput("TEXT2")

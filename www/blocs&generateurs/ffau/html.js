@@ -8,7 +8,7 @@
 'use strict';
 goog.provide('Blockly.html');
 goog.require('Blockly.Generator');
-var maPage = "MaPage";
+var nameFile = "";
   ////////////////
  /*  function  */
 ////////////////
@@ -161,7 +161,7 @@ Blockly.Blocks['title'] = {
     init:function(){
     this.appendDummyInput()
         .appendField("<title>")
-        .appendField(new Blockly.FieldTextInput(maPage), "_text")
+        .appendField(new Blockly.FieldTextInput(""), "_text")
         .appendField("</title>");
     this.setInputsInline(false);
     this.setPreviousStatement(true);
@@ -169,9 +169,8 @@ Blockly.Blocks['title'] = {
     this.setColour("#4a235a")}
 };
 Blockly.html['title'] = function (block) {
-    var text_content = block.getFieldValue('_text');
-	maPage = text_content;
-    return '<title>' + text_content + '</title>\n<meta charset="utf-8">\n';
+	nameFile = block.getFieldValue('_text');
+    return '<title>' + nameFile + '</title>\n<meta charset="utf-8">\n';
 };
 // Link bootstrap.css
 Blockly.Blocks['bootstrap'] = {
@@ -246,7 +245,7 @@ Blockly.Blocks['button'] = {
             ],
             "previousStatement": "textcontainer",
             "nextStatement": "textcontainer",
-            "colour": 65
+            "colour": "#FFA500"
         });
     }
 };
@@ -270,7 +269,7 @@ Blockly.Blocks['icon'] = {
             ],
             "previousStatement": "textcontainer",
             "nextStatement": "textcontainer",
-            "colour": 65
+            "colour": "#FFA500"
         });
     }
 };
@@ -311,7 +310,7 @@ Blockly.Blocks['divider'] = {
                 "html",
                 "form"
             ],
-            "colour": 65
+            "colour": "#787746"
         });
     }
 };
@@ -370,7 +369,7 @@ Blockly.Blocks['args'] = {
                     "check": "args"
                 }
             ],
-            "colour": 120,
+            "colour": "#727272",
             "output": "attributes"
         });
     }
@@ -393,7 +392,7 @@ Blockly.Blocks['class'] = {
             ],
             "previousStatement": "args",
             "nextStatement": "args",
-            "colour": 120
+            "colour": "#727272"
         });
     }
 };
@@ -415,7 +414,7 @@ Blockly.Blocks['id'] = {
             ],
             "previousStatement": "args",
             "nextStatement": "args",
-            "colour": 120
+            "colour": "#727272"
         });
     }
 };
@@ -442,7 +441,7 @@ Blockly.Blocks['emptyarg'] = {
             ],
             "previousStatement": "args",
             "nextStatement": "args",
-            "colour": 120
+            "colour": "#727272"
         });
     }
 };
@@ -467,7 +466,7 @@ Blockly.Blocks['emptytext'] = {
             ],
             "previousStatement": "textcontainer",
             "nextStatement": "textcontainer",
-            "colour": 65
+            "colour": "#BBBBBB"
         });
     }
 };
@@ -498,14 +497,6 @@ Blockly.Blocks['textmod'] = {
                             "mark"
                         ],
                         [
-                            "small",
-                            "small"
-                        ],
-                        [
-                            "big",
-                            "big"
-                        ],
-                        [
                             "del",
                             "del"
                         ],
@@ -522,28 +513,12 @@ Blockly.Blocks['textmod'] = {
                             "sup"
                         ],
                         [
-                            "code",
-                            "code"
-                        ],
-                        [
                             "q",
                             "q"
                         ],
                         [
-                            "aside",
-                            "aside"
-                        ],
-                        [
                             "blockquote",
                             "blockquote"
-                        ],
-                        [
-                            "legend",
-                            "legend"
-                        ],
-                        [
-                            "cite",
-                            "cite"
                         ]
                     ]
                 },
@@ -557,7 +532,7 @@ Blockly.Blocks['textmod'] = {
             ],
             "previousStatement": "textcontainer",
             "nextStatement": "textcontainer",
-            "colour": 65
+            "colour": "#FFA500"
         });
     }
 };
@@ -585,7 +560,7 @@ Blockly.Blocks['paragraph'] = {
             ],
             "previousStatement": ["html", "textcontainer"],
             "nextStatement": ["html", "textcontainer"],
-            "colour": 65
+            "colour": "#787746"
         });
     }
 };
@@ -643,7 +618,7 @@ Blockly.Blocks['header'] = {
             ],
             "previousStatement": ["html", "textcontainer"],
             "nextStatement": ["html", "textcontainer"],
-            "colour": 65
+            "colour": "#787746"
         });
     }
 };
@@ -682,7 +657,7 @@ Blockly.Blocks['link'] = {
             ],
             "previousStatement": "textcontainer",
             "nextStatement": "textcontainer",
-            "colour": 65
+            "colour": "#FFA500"
         });
     }
 };
@@ -716,7 +691,7 @@ Blockly.Blocks['span'] = {
             ],
             "previousStatement": "textcontainer",
             "nextStatement": "textcontainer",
-            "colour": 65
+            "colour": "#FFA500"
         });
     }
 };
@@ -745,7 +720,7 @@ Blockly.Blocks['table'] = {
             ],
             "previousStatement": ["html", "textcontainer"],
             "nextStatement": ["html", "textcontainer"],
-            "colour": 20
+            "colour": "#804000"
         });
     }
 };
@@ -773,7 +748,7 @@ Blockly.Blocks['tablerow'] = {
             ],
             "previousStatement": "table",
             "nextStatement": "table",
-            "colour": 20
+            "colour": "#804000"
         });
     }
 };
@@ -801,7 +776,7 @@ Blockly.Blocks['tableheading'] = {
             ],
             "previousStatement": ["tablerow", "thead", "tbody"],
             "nextStatement": ["tablerow", "thead", "tbody"],
-            "colour": 20
+            "colour": "#804000"
         });
     }
 };
@@ -829,7 +804,7 @@ Blockly.Blocks['thead'] = {
             ],
             "previousStatement": "table",
             "nextStatement": "table",
-            "colour": 20
+            "colour": "#804000"
         });
     }
 };
@@ -857,7 +832,7 @@ Blockly.Blocks['tbody'] = {
             ],
             "previousStatement": "table",
             "nextStatement": "table",
-            "colour": 20
+            "colour": "#804000"
         });
     }
 };
@@ -885,7 +860,7 @@ Blockly.Blocks['tabledata'] = {
             ],
             "previousStatement": ["tablerow", "thead", "tbody"],
             "nextStatement": ["tablerow", "thead", "tbody"],
-            "colour": 20
+            "colour": "#804000"
         });
     }
 };
@@ -915,7 +890,7 @@ Blockly.Blocks['form'] = {
             ],
             "previousStatement": ["html", "textcontainer"],
             "nextStatement": ["html", "textcontainer"],
-            "colour": 160
+            "colour": "#154360"
         });
     }
 };
@@ -1007,7 +982,7 @@ Blockly.Blocks['input'] = {
             ],
             "previousStatement": ["html", "textcontainer"],
             "nextStatement": ["html", "textcontainer"],
-            "colour": 160
+            "colour": "#154360"
         });
     }
 };
@@ -1052,7 +1027,7 @@ Blockly.Blocks['label'] = {
 				"textcontainer",
                 "form"
             ],
-            "colour": 160
+            "colour": "#154360"
         });
     }
 };
@@ -1181,7 +1156,7 @@ Blockly.Blocks['audios'] = {
             ],
             "previousStatement": ["html", "textcontainer"],
             "nextStatement": ["html", "textcontainer"],
-            "colour": 330
+            "colour": "#00CC00"
         });
     }
 };
@@ -1239,7 +1214,7 @@ Blockly.Blocks['audio'] = {
             ],
             "previousStatement": ["html", "textcontainer"],
             "nextStatement": ["html", "textcontainer"],
-            "colour": 330
+            "colour": "#00CC00"
         });
     }
 };
@@ -1278,7 +1253,7 @@ Blockly.Blocks['videos'] = {
             ],
             "previousStatement": ["html", "textcontainer"],
             "nextStatement": ["html", "textcontainer"],
-            "colour": 330
+            "colour": "#00CC00"
         });
     }
 };
@@ -1318,7 +1293,7 @@ Blockly.Blocks['video_file'] = {
             ],
             "previousStatement": ["html", "textcontainer"],
             "nextStatement": ["html", "textcontainer"],
-            "colour": 330
+            "colour": "#00CC00"
         });
     }
 };
@@ -1351,7 +1326,7 @@ Blockly.Blocks['video'] = {
                     "options": [
                         [
                             "BigBuckBunny",
-                            "media/bigbuckbunny.mp4"
+                            "media/bunny.mp4"
                         ],
                         [
                             "lamaDrama",
@@ -1377,7 +1352,7 @@ Blockly.Blocks['video'] = {
             ],
             "previousStatement": ["html", "textcontainer"],
             "nextStatement": ["html", "textcontainer"],
-            "colour": 330
+            "colour": "#00CC00"
         });
     }
 };
@@ -1417,7 +1392,7 @@ Blockly.Blocks['image'] = {
             ],
             "previousStatement": ["html", "textcontainer"],
             "nextStatement": ["html", "textcontainer"],
-            "colour": 330
+            "colour": "#00CC00"
         });
     }
 };
@@ -1459,7 +1434,7 @@ Blockly.Blocks['img'] = {
             ],
             "previousStatement": "html",
             "nextStatement": "html",
-            "colour": 330
+            "colour": "#00CC00"
         });
     }
 };

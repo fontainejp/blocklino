@@ -23,6 +23,8 @@
 	<script src="blocs&generateurs/arduino_generateurs_python.js"></script>
 	<script src="blocs&generateurs/blockly_generateurs_cpp.js"></script>
 	<script src="blocs&generateurs/blockly_generateurs_python.js"></script>
+	<script src="blocs&generateurs/_midi.js"></script>
+	<script src="blocs&generateurs/_color.js"></script>
 	<script src="blocs&generateurs/_actionneur.js"></script>
 	<script src="blocs&generateurs/_capteur.js"></script>
 	<script src="blocs&generateurs/_iot.js"></script>
@@ -113,6 +115,9 @@
 				<button id="btn_term" class="btn btn-default btn_color">
 					<i class="fa fa-search fa-1_5x"></i>
 				</button>
+				<button id="btn_midi" class="btn btn-default btn_color">
+					<i class="fa fa-headphones fa-1_5x"></i>
+				</button>
 				<button id="btn_about" class="btn btn-default btn_color" data-toggle="modal" data-target="#aboutModal">
 					<i class="fa fa-question fa-1_5x"></i>
 				</button>
@@ -133,7 +138,7 @@
 						<option value="yun" >Arduino Yun</option>
 						<option value="atmegang" >DAGU RS027</option>
 						<option value="pro16" >DAGU RS040</option>
-						<!-- <option value="micro_bit" >micro_bit</option> -->
+						<option value="xiao" >Seeed XIAO</option>
 					</optgroup>
 					<optgroup label="Python">
 						<option value="esp8266" >ESP 8266</option>
@@ -150,13 +155,13 @@
 				<select class="my_select" id="portserie" onchange="BlocklyDuino.save_com();"></select>
 			</div>
 			<div class="btn-group">
-				<button id="btn_verify" class="btn btn-default btn_color" data-toggle="tooltip" data-placement="bottom" title="VERIFIER">
+				<button id="btn_verify" class="btn btn-default btn_color" data-toggle="tooltip" data-placement="bottom" >
 					<i class="fa fa-check fa-1_5x"></i>
 				</button>
-				<button id="btn_flash" class='btn btn-default btn_color' data-toggle="tooltip" data-placement="bottom" title="TELEVERSER">
+				<button id="btn_flash" class='btn btn-default btn_color' data-toggle="tooltip" data-placement="bottom">
 					<i class="fa fa-arrow-right fa-1_5x"></i>
 				</button>
-				<button id="btn_bin" class='btn btn-default btn_color' data-toggle="tooltip" data-placement="bottom" title="EXPORTER les binaires">
+				<button id="btn_bin" class='btn btn-default btn_color' data-toggle="tooltip" data-placement="bottom">
 					<i class="fa fa-code-fork fa-1_5x"></i>
 				</button>
 			</div>
@@ -197,7 +202,7 @@
 	</div>
 	<!-- modal -->
 	<div class="modal fade" id="usbModal" tabindex="-1" role="dialog" aria-labelledby="usbModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-90">
+	  <div class="modal-dialog modal-lg">
 		<div class="modal-content">
 		  <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
@@ -213,8 +218,9 @@
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-body" >
-					<div><span id = "messageDIV"></span><button id="btn_close_message" type="button" class="close" aria-label="Close" style="display: none;">&#215;</button></div>
-					<button id="btn_detail" type="button" class="btn btn-xs btn-default" style="display: none;">détails</button>
+					<span id = "messageDIV"></span>
+					<button id="btn_close_message" type="button" class="close" aria-label="Close" style="display: none;">&#215;</button>
+					<button id="btn_detail" type="button" class="btn btn-xs btn-default" style="display: none;"></button>
 					<div id = "detailDIV"></div>
 				</div>  
 			</div>
@@ -520,22 +526,24 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-md-9">
-						<div class="input-group">
-							<span class="input-group-addon" id="span_library"></span>
-							<input type="text" class="form-control" id="library_name" onfocus="this.value=''">
-							<div class="input-group-btn">
-								<button id="btn_library_view" type="button" class="btn btn-default">
-									<i class='fa fa-eye'></i>
-								</button>
-								<button id="btn_library_add" type="button" class="btn btn-default">
-									<i class='fa fa-search-plus'></i>
-								</button>
+					<div class="col-md-12">
+						<label id="span_library"></label>
+						<button id="btn_library_view" type="button" class="btn btn-xs btn-default" data-toggle="collapse" href="#collapseLIB" aria-expanded="false" aria-controls="collapseLIB">
+							<i class='fa fa-folder'></i><span id="span_lib_view"></span>
+						</button>
+						<button id="btn_library_add" type="button" class="btn btn-xs btn-default">
+							<i class='fa fa-plus-circle'></i><span id="span_lib_add"></span>
+						</button>
+						<br><br>
+						<div class="collapse" id="collapseLIB">
+							<div class="well">
+								<div class="row">
+									<span id="span_lib_dir"></span>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<br>
 				<div class="row">
 					<div class="col-md-6">
 						<label id="span_languageMenu"></label>
@@ -551,11 +559,11 @@
 						</select><br><br>
 						<label id="labelToolboxDefinition"></label>
 						<select id="toolboxes">
-							<option value="toolbox_6">Débutant</option>
-							<option value="toolbox_arduino_all" selected="selected">Initié</option>
-							<option value="toolbox_microbit">Confirmé</option>
-							<option value="toolbox_lycee">Expert</option>
-							<option value="toolbox_fresnel_all">Maître</option>
+							<option value="toolbox_6">1</option>
+							<option value="toolbox_arduino_all" selected="selected">2</option>
+							<option value="toolbox_microbit">3</option>
+							<option value="toolbox_lycee">4</option>
+							<option value="toolbox_fresnel_all">5</option>
 						</select>
 					</div>
 					<div class="col-md-6">
@@ -563,12 +571,14 @@
 						<select id="theme">
 							<option value="monokai">Sombre</option>
 							<option value="sqlserver" selected="selected">Clair</option>
-						</select><br><br>
+						</select><!--input id="lightORdark" checked data-toggle="toggle" data-on="<i class='fa fa-adjust'></i>" data-off="<i class='fa fa-adjust'></i>" data-onstyle="default" data-offstyle="secondary" type="checkbox" data-size="mini"-->
+						<br><br>
 						<label id="span_renderer"></label>
 						<select id="renderer">
 							<option value="zelos">Scratch</option>
 							<option value="blockly" selected="selected">Blockly</option>
-						</select><br><br>
+						</select><!--input id="blocklyORscratch" checked data-toggle="toggle" data-on="Blockly" data-off="Scratch" data-onstyle="default" data-offstyle="default" type="checkbox" data-size="mini"-->
+						<br><br>
 						<span id="span_select_all"></span><input type="checkbox" name="select_all" id="select_all">
 					</div>
 				</div>
@@ -576,7 +586,7 @@
 				<div id="modal-body-config"></div>
 			</div>
 			<div class="modal-footer">
-				<button id="btn_reset" type="button" class="btn btn-danger"><i class='fa fa-trash-o fa-lg'></i> Vider le cache</button>
+				<button id="btn_reset" type="button" class="btn btn-danger"></button>
 				<button id="btn_valid_config" type="button" class="btn btn-primary"></button>
 			</div>
 		</div>
@@ -610,7 +620,7 @@
 			<div class="arduino_card_mini_picture_div" style="height: 516px">
 				<img id="arduino_card_mini_picture"/>
 			</div>
-			<select size="16" multiple id="pinout" onchange="BlocklyDuino.cardPicture_change()">
+			<select size="17" multiple id="pinout" onchange="BlocklyDuino.cardPicture_change()">
 				<optgroup label="C / C++">
 					<option value="leonardo" >Arduino Léonardo</option>
 					<option value="mega" >Arduino Méga 2560</option>
@@ -622,6 +632,7 @@
 					<option value="yun" >Arduino Yun</option>
 					<option value="atmegang" >DAGU RS027</option>
 					<option value="pro16" >DAGU RS040</option>
+					<option value="xiao" >Seeed XIAO</option>
 				</optgroup>
 				<optgroup label="Python">
 					<option value="esp8266" >ESP 8266</option>

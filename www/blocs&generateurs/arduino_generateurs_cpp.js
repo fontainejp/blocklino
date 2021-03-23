@@ -27,6 +27,9 @@ Blockly.Arduino["serial_line"]=function(block){
     var code='"\\n"';
     return [code, Blockly.Arduino.ORDER_ATOMIC]
 };
+Blockly.Arduino["serial_writeln"]=function(block){
+    return "Serial.println();\n"
+};
 Blockly.Arduino["serial_tab"]=function(block){
     var code='" ; "';
     return [code, Blockly.Arduino.ORDER_ATOMIC]
@@ -285,9 +288,10 @@ Blockly.Arduino["tempo_sans_delay"]=function(block){
 /*  entree sortie  */
 Blockly.Arduino["inout_attachInterrupt"]=function(block){
 	var dropdown_pin=block.getFieldValue('PIN');
+	var INT=parseInt(dropdown_pin)+2;
 	var dropdown_mode=block.getFieldValue('mode');
 	var funcName='interrupt_'+dropdown_pin;
-	Blockly.Arduino.setups_['setup_Interrupt_'+dropdown_pin]='pinMode('+dropdown_pin+', INPUT);\n  attachInterrupt('+dropdown_pin+','+funcName+','+dropdown_mode+');';
+	Blockly.Arduino.setups_['setup_Interrupt_'+dropdown_pin]='pinMode('+INT+', INPUT_PULLUP);\n  attachInterrupt('+dropdown_pin+','+funcName+','+dropdown_mode+');';
 	var branch=Blockly.Arduino.statementToCode(block, 'DO' );
 	Blockly.Arduino.codeFunctions_[funcName] ='void ' + funcName + '() {\n' + branch + '}';
 	return "";

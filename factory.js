@@ -1,10 +1,7 @@
 var remote = require('electron').remote 
 var { ipcRenderer } = require("electron")
 var fs = require('fs')
-var chemin = process.resourcesPath
-var messageDiv = document.getElementById('messageDIV')
-var appendData = ""
-var place
+var chemin = process.resourcesPath // .../resources/
 
 function loadBF(file) {
 	$.get(file, function(data){ 
@@ -29,15 +26,15 @@ window.addEventListener('load', function load(event){
 	$('#btn_max').on('click', function(){
 		if(window.isMaximized()){
             window.unmaximize()
-			document.getElementById('btn_max').innerHTML="<span class='fa fa-window-maximize fa-lg'></span>"
+			$('#btn_max').html("<span class='fa fa-window-maximize fa-lg'></span>")
         }else{
             window.maximize()
-			document.getElementById('btn_max').innerHTML="<span class='fa fa-window-restore fa-lg'></span>"
+			$('#btn_max').html("<span class='fa fa-window-restore fa-lg'></span>")
         }
 	})
 	$('#btn_append').on('click', function(){
 		$("#message").modal("show")
-		messageDiv.innerHTML = ""
+		$('#messageDiv').html("")
 		var i = 0
 		var cat = localStorage.getItem("toolboxids").split(",")
 		var selectTool = document.createElement("select")
@@ -50,11 +47,11 @@ window.addEventListener('load', function load(event){
             opt.innerHTML = Blockly.Msg[cat[i]]
 			selectTool.appendChild(opt)
 		}
-		messageDiv.appendChild(selectTool)
+		document.getElementById('messageDIV').appendChild(selectTool)
 	})
 	$('#btn_appendOK').on('click', function(){
 		if ($("#toolchoice").val()) {
-			var dataB = document.getElementById('languagePre').textContent
+			var dataB = $('#languagePre').text()
 			var dataG = editor.getValue()
 			var xml = Blockly.Xml.workspaceToDom(mainWorkspace)
 			var new_element = document.createElement("language")
@@ -62,9 +59,9 @@ window.addEventListener('load', function load(event){
 			xml.insertBefore(new_element, xml.childNodes[0])
 			var dataX = Blockly.Xml.domToPrettyText(xml)
 			fs.writeFileSync(chemin+'/../www/blocs&generateurs/factory/' +blockType+ '.bf', dataX)
-			appendData = dataB + "\n" + dataG + "\n////////////////////\n"
+			var appendData = dataB + "\n" + dataG + "\n////////////////////\n"
 			fs.appendFileSync(chemin+'/../www/blocs&generateurs/factory/append.js', appendData)
-			place = $("#toolchoice").val()
+			var place = $("#toolchoice").val()
 			ipcRenderer.send("appendBlock", blockType, appendData, place[0])
 			window.close()
 		} else $("#message").modal("hide")

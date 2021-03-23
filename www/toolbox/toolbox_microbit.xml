@@ -78,7 +78,6 @@
 			<block type="pixel_init"></block>
 			<block type="pixel_setcolor"></block>
 			<block type="pixel_setcolor_rvb"></block>
-			<block type="pixel_show"></block>
 			<block type="pixel_clear"></block>
 		</category>
 		<!--category name="CAT_servo" colour="#00929f">

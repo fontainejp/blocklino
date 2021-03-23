@@ -201,20 +201,20 @@ ipcMain.on('save-bloc', function(event) {
 		event.sender.send('saved-bloc', filename)
 	})
 })
-ipcMain.on('save-html', function(event) {
+ipcMain.on('save-html', function(event, nameFile) {
 	dialog.showSaveDialog(htmlWindow,{
 		title: 'Enregistrer au format .html',
-		defaultPath: 'pageWeb.html',
+		defaultPath: nameFile+'.html',
 		filters: [{ name: 'Web', extensions: ['html'] }]
 	},
 	function(filename){
 		event.sender.send('saved-html', filename)
 	})
 })
-ipcMain.on('save-www', function(event) {
+ipcMain.on('save-www', function(event, nameFile) {
 	dialog.showSaveDialog(htmlWindow,{
 		title: 'Enregistrer au format .www',
-		defaultPath: 'pageWeb.www',
+		defaultPath: nameFile+'.www',
 		filters: [{ name: 'Blockly-Web', extensions: ['www'] }]
 	},
 	function(filename){
@@ -261,6 +261,17 @@ ipcMain.on('addImg', function(event) {
 	},
 	function(filename){
 		event.sender.send('added-img', filename)
+	})
+})
+ipcMain.on('addLIB', function(event) {
+	dialog.showOpenDialog(mainWindow,{
+		title: 'Ajouter des  bibliothèques',
+		buttonLabel: "Ajouter",
+		filters: [{ name: 'Archives', extensions: ['zip']}],
+		properties: ['openFile', 'multiSelections']
+	},
+	function(filename){
+		event.sender.send('addedLIB', filename)
 	})
 })
 ipcMain.on('openBF', function(event) {

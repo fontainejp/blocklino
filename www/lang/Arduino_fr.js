@@ -15,6 +15,14 @@ Blockly.Msg.left="gauche";
 Blockly.Msg.LetR="droit & gauche";
 Blockly.Msg.direction="direction";
 Blockly.Msg.vitesse="vitesse ";
+//midi
+Blockly.Msg.midi_init = "contrôleur MIDI";
+Blockly.Msg.midi_vitesse = "vitesse";
+Blockly.Msg.midi_play = "jouer la note";
+Blockly.Msg.midi_stop = "arrêter la note";
+Blockly.Msg.instrument = "instrument";
+Blockly.Msg.midi_play_percu = "jouer la percussion";
+Blockly.Msg.midi_stop_percu = "arrêter la percussion";
 //wifi
 Blockly.Msg.esp8266_init_tooltip="initialisation du module wifi et connection avec les paramètres indiqués";
 Blockly.Msg.esp8266_1="Esp 8266";
@@ -44,7 +52,10 @@ Blockly.Msg.LKL_TOOLTIP_INOUT_ATTACHINTERRUPT="Spécifie une action à réaliser
 Blockly.Msg.LKL_TOOLTIP_INOUT_DETACHINTERRUPT="Désactive l'interruption externe spécifiée précédement";
 Blockly.Msg.LKL_MODE='est détecté sur la broche';
 //FIELDDROPDOWN
-Blockly.Msg.note=[["DO\u2084","261"],["RE\u2084","293"],["MI\u2084","329"],["FA\u2084","349"],["SOL\u2084","392"],["LA\u2084","440"],["SI\u2084","493"],["DO\u2085","523"],["RE\u2085","587"],["MI\u2085","659"],["FA\u2085","698"],["SOL\u2085","784"],["LA\u2085","880"]];
+Blockly.Msg.instru=[["piano", "0"],["orgue", "19"],["basse", "32"],["synthétiseur", "81"],["guitare", "24"],["violon", "40"],["clarinette", "71"],["trompette", "56"]];
+Blockly.Msg.percu=[["grosse caisse", "36"],["caisse claire", "38"],["tom basse", "43"],["tom médium", "47"],["tom aigu", "50"],["cymbale crash", "49"],["cymbale ride", "51"]];
+Blockly.Msg.midi=[["DO\u2082","36"],["DO#\u2082","37"],["RE\u2082","38"],["RE#\u2082","39"],["MI\u2082","40"],["FA\u2082","41"],["FA#\u2082","42"],["SOL\u2082","43"],["SOL#\u2082","44"],["LA\u2082","45"],["LA#\u2082","46"],["SI\u2082","47"],["DO\u2083","48"],["DO#\u2083","49"],["RE\u2083","50"],["RE#\u2083","51"],["MI\u2083","52"],["FA\u2083","53"],["FA#\u2083","54"],["SOL\u2083","55"],["SOL#\u2083","56"],["LA\u2083","57"],["LA#\u2083","58"],["SI\u2083","59"],["DO\u2084","60"],["DO#\u2084","61"],["RE\u2084","62"],["RE#\u2084","63"],["MI\u2084","64"],["FA\u2084","65"],["FA#\u2084","66"],["SOL\u2084","67"],["SOL#\u2084","68"],["LA\u2084","69"],["LA#\u2084","70"],["SI\u2084","71"]];
+Blockly.Msg.note=[["DO\u2083","261"],["DO#\u2083","277"],["RE\u2083","293"],["RE#\u2083","311"],["MI\u2083","329"],["FA\u2083","349"],["FA#\u2083","370"],["SOL\u2083","392"],["SOL#\u2083","415"],["LA\u2083","440"],["LA#\u2083","466"],["SI\u2083","493"],["DO\u2084","523"],["DO#\u2084","554"],["RE\u2084","587"],["RE#\u2084","622"],["MI\u2084","659"],["FA\u2084","698"],["FA#\u2084","740"],["SOL\u2084","784"],["SOL#\u2084","831"],["LA\u2084","880"]];
 Blockly.Msg.tempo=[["1", "125"], ["2", "250"], ["4", "500"], ["8", "1000"], ["16", "2000"]];
 Blockly.Msg.on_off=[["on", "LOW"], ["off", "HIGH"]];
 Blockly.Msg.menublink=[["lentement", "1000"],["rapidement", "100"]];
@@ -120,7 +131,8 @@ Blockly.Msg.bluetooth2_tooltip= "envoie des données par bluetooth\nconnecter le
 Blockly.Msg.bluetooth_init_tooltip="";
 Blockly.Msg.bluetooth_helpurl="http://tiptopboards.free.fr/arduino_forum/viewtopic.php?f=2&t=57&sid=cedb66db91596dd8926d167142dbf307";//ne pas traduire
 //écran LCD
-Blockly.Msg.lcd_fond="fond";
+Blockly.Msg.lcd_change_color="changer la couleur";
+Blockly.Msg.lcd_fond="couleur";
 Blockly.Msg.LCD="écran LCD";
 Blockly.Msg.LCDi2c_tooltip="initialise l'écran LCD I2C, de 2 lignes et 16 caractères avec rétro-éclairage RGB.\nAfficheur <--> Arduino\nSDA <--------> A4\nSCL <--------> A5";
 Blockly.Msg.LCD_tooltip= "initialise l'écran LCD, de 2 lignes et 16 caractères, en indiquant les broches à connecter";
@@ -206,7 +218,7 @@ Blockly.Msg.bargraphe_allume_tooltip="0 n'allume aucune DEL\n2,5 allume les 2 pr
 Blockly.Msg.bargraphe_tooltip="module bargraphe composé de 10 DEL (8 vertes, 1 jaune et 1 rouge), il faut indiquer les broches de l'arduino sur lesquelles vont être connectées DCKI et DI";
 Blockly.Msg.rvb_init="DEL rvb";
 Blockly.Msg.rvb_init_tooltip="indiquer les broches PWM à connecter à la DEL RVB";
-Blockly.Msg.rvb_set="afficher la couleur";
+Blockly.Msg.rvb_set="allumer la DEL rvb";
 Blockly.Msg.rvb_set_tooltip="affiche la couleur en fonction des 3 composantes (rouge, vert, bleu)";
 Blockly.Msg.pixel1="pixel RVB";
 Blockly.Msg.pixel2="mettre à jour les pixels";
@@ -301,18 +313,19 @@ Blockly.Msg.m_pap_step1="avancer de";
 Blockly.Msg.m_pap_tooltip="Initialisation d'un moteur pas à pas.\nIndiquer le nombre de pas, la vitesse en tr/min et les broches à connecter";
 Blockly.Msg.m_pap_step_tooltip="actionne le moteur pas à pas du nombre de pas indiqué, l'instruction suivante ne sera éxécutée qu'une fois la rotation du moteur effectuée";
 //com série
-Blockly.Msg.Serial_Init="port série sur";
+Blockly.Msg.Serial_Writeln="aller à la ligne";
+Blockly.Msg.Serial_Init="Moniteur série";
 Blockly.Msg.Serial_Init_tooltip="Fixe le débit de communication en nombre de caractères par seconde pour la communication série";
-Blockly.Msg.Serial_Write="envoyer sur le port série";
+Blockly.Msg.Serial_Write="envoyer sur le moniteur";
 Blockly.Msg.Serial_write_tooltip="Envoie des données sur le port série";
-Blockly.Msg.Serial_read="donnée lue sur le port série";
+Blockly.Msg.Serial_read="donnée lue sur le moniteur";
 Blockly.Msg.Serial_read_tooltip="retourne le premier octet de donnée entrant disponible dans le port série, ou -1 si aucune donnée n'est disponible";
-Blockly.Msg.Serial_available="quantité de données sur le port série";
+Blockly.Msg.Serial_available="quantité de données sur le moniteur";
 Blockly.Msg.Serial_available_tooltip="retourne le nombre d'octet disponible dans la file d'attente du port série, ou 0 si rien n'est disponible";
 Blockly.Msg.Serial_saut="un saut de ligne";
 Blockly.Msg.Serial_saut_tooltip="retourne un saut de ligne sur le moniteur série";
 Blockly.Msg.Serial_space="un séparateur";
-Blockly.Msg.Serial_space_tooltip="retourne un espace sur le moniteur série";
+Blockly.Msg.Serial_space_tooltip="retourne un ';' sur le moniteur série";
 Blockly.Msg.repl_read="commande entrée par l'utilisateur";
 //com logicielle
 Blockly.Msg.SSERIAL_Init="port logiciel sur Rx";

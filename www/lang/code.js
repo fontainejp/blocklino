@@ -41,6 +41,9 @@ Code.initLanguage = function() {
     if (lang == Code.LANG) option.selected = true;
     languageMenu.append(option);
   }
+  $('#span_lib_view').text(Blockly.Msg['library_view']);
+  $('#span_lib_add').text(Blockly.Msg['library_add']);
+  $('#titreOK').text(Blockly.Msg['message1']);
   $('#span_theme').text(Blockly.Msg['span_theme']);
   $('#span_renderer').text(Blockly.Msg['span_renderer']);
   $('#span_library').text(Blockly.Msg['span_library']);
@@ -88,6 +91,8 @@ Code.initLanguage = function() {
   $('#btn_close_msg').text(Blockly.Msg['btn_close']);
   $('#btn_valid_msg').text(Blockly.Msg['btn_valid']);
   $('#btn_variable').text(Blockly.Msg['btn_variable']);
+  $('#btn_detail').text(Blockly.Msg['details']);
+  $('#btn_reset').html(Blockly.Msg['reset']);
   var prog = window.localStorage.prog;
   if (prog != "python") {
 	$('#btn_preview').attr('title', Blockly.Msg['btn_preview_ino']);
@@ -96,6 +101,9 @@ Code.initLanguage = function() {
 	$('#btn_preview').attr('title', Blockly.Msg['btn_preview_py']);
 	$('#btn_saveino').attr('title', Blockly.Msg['btn_save_py']);   
   }
+  $('#btn_verify').attr('title', Blockly.Msg['survol_check']);
+  $('#btn_flash').attr('title', Blockly.Msg['survol_flash']);
+  $('#btn_bin').attr('title', Blockly.Msg['survol_bin']);
   $('#btn_usb').attr('title', Blockly.Msg['usbLabel']);
   $('#btn_card').attr('title', Blockly.Msg['cardLabel']);
   $('#btn_add').attr('title', Blockly.Msg['btn_add']);
@@ -115,6 +123,7 @@ Code.initLanguage = function() {
   $('#btn_html').attr('title', Blockly.Msg['btn_html']);
   $('#btn_tint').attr('title', Blockly.Msg['btn_tint']);
   $('#btn_games').attr('title', Blockly.Msg['btn_games']);
+  $('#btn_midi').attr('title', Blockly.Msg['btn_midi']);
   $("xml").find("category").each(function() {
 	if (!$(this).attr('id')) {
 	  $(this).attr('id', $(this).attr('name'));

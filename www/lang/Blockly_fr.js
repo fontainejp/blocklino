@@ -299,6 +299,11 @@ Blockly.Msg.TEXT_LENGTH_TOOLTIP = "retourne le nombre de lettres (espaces compri
 Blockly.Msg.TEXT_PRINT_TITLE = "afficher %1";
 Blockly.Msg.TEXT_PRINT_TOOLTIP = "Afficher le texte, le nombre ou une autre valeur spécifié";
 Blockly.Msg.TEXT_TEXT_TOOLTIP = "Une lettre, un mot ou une phrase";
+//color
+Blockly.Msg.COLOR_rvb = "avec R";
+Blockly.Msg.COLOR_v = "V";
+Blockly.Msg.COLOR_b = "B";
+//other
 Blockly.Msg.TODAY = "Aujourd'hui";
 Blockly.Msg.UNDO = "Annuler";
 Blockly.Msg.VARIABLES_AS="de type";
@@ -308,9 +313,9 @@ Blockly.Msg.VARIABLES_GET_TOOLTIP = "retourne la valeur de cette variable";
 Blockly.Msg.VARIABLES_SET = "mettre la variable";
 Blockly.Msg.VARIABLES_SET_CREATE_GET = "Créer le bloc %1";
 Blockly.Msg.VARIABLES_SET_TOOLTIP = "Fixe la variable à la valeur indiquée";
-Blockly.Msg.var_set_init="définir la variable";
+Blockly.Msg.var_set_init="déclarer la variable";
 Blockly.Msg.var_set_init_tooltip="Déclare et initialise la variable du type et de la valeur indiqués";
-Blockly.Msg.ARDUINO_VAR_CONST="définir la constante";
+Blockly.Msg.ARDUINO_VAR_CONST="déclarer la constante";
 Blockly.Msg.ARDUINO_VAR_CONST_tooltip="Déclare une constante du type et de la valeur indiqués";
 Blockly.Msg.VARIABLE_ALREADY_EXISTS = "Une variable appelée %1 existe déjà";
 Blockly.Msg.PROCEDURES_DEFRETURN_TITLE = "";

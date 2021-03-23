@@ -1,6 +1,6 @@
 {
  "name": "Blocklino",
- "version": "1.9.1",
+ "version": "1.9.2",
  "description": "environnement de développement pour langage graphique",
  "author": "Fontaine Jean Philippe",
  "license": "CC0-1.0",
@@ -141,6 +141,7 @@
   "electron-updater": "4.0.6",
   "ftp": "0.3.10",
   "serialport": "7.1.4",
-  "tableify": "1.1.0"
+  "tableify": "1.1.0",
+  "node-stream-zip": "1.12.0"
  }
 }

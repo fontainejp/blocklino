@@ -55,7 +55,7 @@ Blockly.Blocks['style'] = {
             ],
             "previousStatement": "header",
             "nextStatement": "header",
-            "colour": 120
+            "colour": "#727272"
         });
     }
 };
@@ -81,7 +81,7 @@ Blockly.Blocks['stylearg'] = {
             ],
             "previousStatement": "args",
             "nextStatement": "args",
-            "colour": 120
+            "colour": "#727272"
         });
     }
 };
@@ -113,7 +113,7 @@ Blockly.Blocks['cssitem'] = {
             ],
             "previousStatement": "style",
             "nextStatement": "style",
-            "colour": 120
+            "colour": "#727272"
         });
     }
 };
@@ -143,7 +143,7 @@ Blockly.Blocks['othercss'] = {
 			],
 			"previousStatement": "stylecontent",
 			"nextStatement": "stylecontent",
-			"colour": 120
+			"colour": "#727272"
 		});
 	}
 };
@@ -167,7 +167,7 @@ Blockly.Blocks['fontfamily'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
@@ -189,7 +189,7 @@ Blockly.Blocks['fontsize'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
@@ -236,7 +236,7 @@ Blockly.Blocks['fontweight'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
@@ -244,31 +244,70 @@ Blockly.html['fontweight'] = function (block) {
     var weight = block.getFieldValue('weight');
     return `font-weight: ${weight};\n`;
 };
+// Border Collapse
+Blockly.Blocks['display'] = {
+    init: function () {
+        this.jsonInit({
+            "message0": 'display: %1 ;',
+            "args0": [
+                {
+                    "type": "field_dropdown",
+                    "name": "content",
+                    "options": [
+                        [
+                            "block",
+							"block"
+                        ],
+                        [
+                            "inline",
+							"inline"
+                        ],
+                        [
+                            "none",
+							"none"
+                        ]
+					]
+                }
+            ],
+            "previousStatement": "stylecontent",
+            "nextStatement": "stylecontent",
+            "colour": "#00929F"
+        });
+    }
+};
+Blockly.html['display'] = function (block) {
+    var content = block.getFieldValue('content');
+    return 'display: ' + fullEscape(content) + ';\n';
+};
 // Margin
 Blockly.Blocks['margin'] = {
     init: function () {
         this.jsonInit({
-            "message0": 'margin - %1 : %2 ;',
+            "message0": '%1 : %2 ;',
             "args0": [
                 {
                     "type": "field_dropdown",
                     "name": "direction",
                     "options": [
                         [
-                            "top",
-                            "top"
+                            "margin",
+                            "margin"
                         ],
                         [
-                            "right",
-                            "right"
+                            "margin-top",
+                            "margin-top"
                         ],
                         [
-                            "bottom",
-                            "bottom"
+                            "margin-right",
+                            "margin-right"
                         ],
                         [
-                            "left",
-                            "left"
+                            "margin-bottom",
+                            "margin-bottom"
+                        ],
+                        [
+                            "margin-left",
+                            "margin-left"
                         ]
                     ]
                 },
@@ -280,40 +319,44 @@ Blockly.Blocks['margin'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
 Blockly.html['margin'] = function (block) {
     var direction = block.getFieldValue('direction');
     var value = block.getFieldValue('value');
-    return 'margin-' + direction + ': ' + fullEscape(value) + ';\n';
+    return direction + ': ' + fullEscape(value) + ';\n';
 };
 // Padding
 Blockly.Blocks['padding'] = {
     init: function () {
         this.jsonInit({
-            "message0": 'padding - %1 : %2 ;',
+            "message0": '%1 : %2 ;',
             "args0": [
                 {
                     "type": "field_dropdown",
                     "name": "direction",
                     "options": [
                         [
-                            "top",
-                            "top"
+                            "padding",
+                            "padding"
                         ],
                         [
-                            "right",
-                            "right"
+                            "padding-top",
+                            "padding-top"
                         ],
                         [
-                            "bottom",
-                            "bottom"
+                            "padding-right",
+                            "padding-right"
                         ],
                         [
-                            "left",
-                            "left"
+                            "padding-bottom",
+                            "padding-bottom"
+                        ],
+                        [
+                            "padding-left",
+                            "padding-left"
                         ]
                     ]
                 },
@@ -325,14 +368,14 @@ Blockly.Blocks['padding'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
 Blockly.html['padding'] = function (block) {
     var direction = block.getFieldValue('direction');
     var value = block.getFieldValue('value');
-    return 'padding-' + direction + ': ' + fullEscape(value) + ';\n';
+    return direction + ': ' + fullEscape(value) + ';\n';
 };
 // Text decoration
 Blockly.Blocks['textdecoration'] = {
@@ -352,7 +395,7 @@ Blockly.Blocks['textdecoration'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
@@ -381,7 +424,7 @@ Blockly.Blocks['texttransform'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
@@ -408,7 +451,7 @@ Blockly.Blocks['textalign'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         })
     }
 };
@@ -430,7 +473,7 @@ Blockly.Blocks['bgcolor-new'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
@@ -500,7 +543,7 @@ Blockly.Blocks['border-new'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
@@ -515,27 +558,31 @@ Blockly.html['border-new'] = function (block) {
 Blockly.Blocks['borderedge-new'] = {
     init: function () {
         this.jsonInit({
-            "message0": "border- %1 : %2 px %3 %4",
+            "message0": "%1: %2 px %3 %4",
             "args0": [
                 {
                     "type": "field_dropdown",
                     "name": "edge",
                     "options": [
                         [
-                            "top",
-                            "top"
+                            "border",
+                            "border"
                         ],
                         [
-                            "bottom",
-                            "bottom"
+                            "border-top",
+                            "border-top"
                         ],
                         [
-                            "left",
-                            "left"
+                            "border-bottom",
+                            "border-bottom"
                         ],
                         [
-                            "right",
-                            "right"
+                            "border-left",
+                            "border-left"
+                        ],
+                        [
+                            "border-right",
+                            "border-right"
                         ]
                     ]
                 },
@@ -594,7 +641,7 @@ Blockly.Blocks['borderedge-new'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         })
     }
 };
@@ -604,7 +651,7 @@ Blockly.html['borderedge-new'] = function (block) {
     var type = block.getFieldValue('type');
     var color = Blockly.html.statementToCode(block, 'color', Blockly.html.ORDER_ATOMIC).trim();
 
-    return `border-${edge}: ${width}px ${type} ${color};\n`;
+    return `${edge}: ${width}px ${type} ${color};\n`;
 };
 // Border radius
 Blockly.Blocks['borderrad'] = {
@@ -620,7 +667,7 @@ Blockly.Blocks['borderrad'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
@@ -651,7 +698,7 @@ Blockly.Blocks['bordercollapse'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
@@ -687,7 +734,7 @@ Blockly.Blocks['widthheightnum'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
@@ -717,7 +764,7 @@ Blockly.Blocks['float'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
@@ -779,7 +826,7 @@ Blockly.Blocks['verticalalign'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         })
     }
 };
@@ -801,7 +848,7 @@ Blockly.Blocks['color-new'] = {
             ],
             "previousStatement": "stylecontent",
             "nextStatement": "stylecontent",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
@@ -822,7 +869,7 @@ Blockly.Blocks['hex_picker'] = {
                 }
             ],
             "output": "color",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
@@ -868,7 +915,7 @@ Blockly.Blocks['rgba_picker'] = {
                 }
             ],
             "output": "color",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };
@@ -892,7 +939,7 @@ Blockly.Blocks['color_picker'] = {
                 }
             ],
             "output": "color",
-            "colour": 290
+            "colour": "#00929F"
         });
     }
 };

@@ -5,9 +5,6 @@ body {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	margin: 0
 }
-.btn_color {
-	color: gray;
-}
 #toptitle {
     -webkit-app-region: drag;
 	height: 41px;
@@ -20,7 +17,6 @@ body {
 }
 #title {
 	position: fixed;
-	top: 5px;
 	left: 5px;
 	color: white
 }
@@ -69,15 +65,14 @@ body {
     position: relative;
     float: left;
 	padding: 5px;
-	width: 50%;
+	width: 55%;
 	height: 100%
 }
 #blockly_r{
-	border-left: gray 1px solid;
     position: relative;
     float: left;
 	height: 100%;
-	width: 50%
+	width: 45%
 }
 #content_code {
 	font-size: 14px;
@@ -87,6 +82,12 @@ body {
     right: 5px;
     bottom: 5px;
     left: 5px
+}
+.tooltip-inner{
+	background-color: #5cb85c;
+}
+.btn_color {
+	color: gray;
 }
 .btn-minmaxgreen { 
   color: #fff; 
@@ -106,19 +107,23 @@ body {
   line-height: 0;
   padding: 0
 }
-.blocklySvg {
-	background-color: #fff;
-	border-top: none !important
-}
 .blocklyToolboxDiv {
-	color: black;
 	background-color: #fff  !important;
-	margin-left: 5px;
 	opacity: 0.8 
 }
-.blocklyTreeRow:not(.blocklyTreeSelected):hover { 
-	background-color: #fff; 
+.blocklyTreeRow {
+	height: 30px !important;
+	line-height: 30px !important
 }
-.blocklyFlyoutBackground {
-	fill: #fff !important
+.blocklyScrollbarHandle {
+	fill: #5cb85c;
+}
+.blocklyScrollbarBackground:hover+.blocklyScrollbarHandle, .blocklyScrollbarHandle:hover {
+	fill: #5cb85c;
+}
+.blocklyFlyout .blocklyScrollbarHandle {
+	fill: #5cb85c;
+}
+.blocklyFlyout .blocklyScrollbarBackground:hover+.blocklyScrollbarHandle, .blocklyFlyout .blocklyScrollbarHandle:hover {
+	fill: #5cb85c;
 }

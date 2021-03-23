@@ -28,7 +28,7 @@ Blockly.Arduino["controls_for"]=function(block){
     var argument2 = Blockly.Arduino.valueToCode(block, "BY", Blockly.Arduino.ORDER_ASSIGNMENT);
     var branch = Blockly.Arduino.statementToCode(block, "DO");
     if (Blockly.Arduino.INFINITE_LOOP_TRAP) branch = Blockly.Arduino.INFINITE_LOOP_TRAP.replace(/%1/g, "'" + block.id + "'") + branch;
-    return "for (" + variable0 + "=" + argument0 + " ; " + variable0 + "<=" + argument1 + " ; " + variable0 + "=" + variable0 + "+" + argument2 + ") {\n" + branch + "}\n"
+    return "for (" + variable0 + "=" + argument0 + "; " + variable0 + "<=" + argument1 + "; " + variable0 + "=" + variable0 + "+" + argument2 + ") {\n" + branch + "}\n"
 };
 Blockly.Arduino["controls_if"]=function(block){
     var n = 0;
@@ -51,7 +51,7 @@ Blockly.Arduino["controls_repeat_ext"]=function(block){
     var branch = Blockly.Arduino.statementToCode(block, "DO");
     if (Blockly.Arduino.INFINITE_LOOP_TRAP) branch = Blockly.Arduino.INFINITE_LOOP_TRAP.replace(/%1/g, "'" + block.id + "'") + branch;
     var loopVar = Blockly.Arduino.variableDB_.getName("count", Blockly.Variables.NAME_TYPE);
-    var code = "for (int " + loopVar + "=0 ; " + loopVar + "<" + repeats + " ; " + loopVar + "++) {\n" + branch + "}\n";
+    var code = "for (int " + loopVar + "=0; " + loopVar + "<" + repeats + "; " + loopVar + "++) {\n" + branch + "}\n";
     return code
 };
 Blockly.Arduino["controls_whileUntil"]=function(block){
@@ -339,6 +339,13 @@ Blockly.Arduino['variables_set_init']=function(block){
 	var varName = Blockly.Arduino.variableDB_.getName(block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
 	var typeBlock = Blockly.Arduino.getArduinoType_(Blockly.Types[block.getFieldValue('VARIABLE_SETTYPE_TYPE')]);
 	Blockly.Arduino.variables_[varName] = typeBlock + ' ' + varName + ' = ' + argument0 + ';';
+	return "";
+};
+Blockly.Arduino['variables_set_init_volatile']=function(block){
+	var argument0 = Blockly.Arduino.valueToCode(block, 'VALUE', Blockly.Arduino.ORDER_ASSIGNMENT);
+	var varName = Blockly.Arduino.variableDB_.getName(block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
+	var typeBlock = Blockly.Arduino.getArduinoType_(Blockly.Types[block.getFieldValue('VARIABLE_SETTYPE_TYPE')]);
+	Blockly.Arduino.variables_[varName] = 'volatile ' + typeBlock + ' ' + varName + ' = ' + argument0 + ';';
 	return "";
 };
 Blockly.Arduino["base_define_const"]=function(block){
