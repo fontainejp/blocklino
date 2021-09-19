@@ -9,14 +9,14 @@ document.getElementById('btn_quit').onclick = function() {
 	close()
 }
 document.getElementById('btn_variable').onclick = function() {
-	ipcRenderer.send("closeDialog", document.getElementById("var_name").value)
+	ipcRenderer.send("closeDialog", input.value)
 	close()
 }
 window.onload=function() {
-	document.getElementById("var_name").focus()
+	input.focus()
 	var options = ipcRenderer.sendSync("openDialog", "")
 	var params = JSON.parse(options)
 	document.getElementById("title").innerHTML = params.label
-	document.getElementById("var_name").value = params.value
+	input.value = params.value
 	document.getElementById("btn_variable").innerText = params.ok 
 }

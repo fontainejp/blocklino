@@ -1,0 +1,39 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <toolbox>toolbox_arduino_all</toolbox>
+  <block type="base_loop" id="LHq[UW.X$:%%7/2(p[JQ" x="72" y="95">
+    <statement name="LOOP">
+      <block type="controls_if" id="7/lU6%j8My[%.Dh^TquR">
+        <mutation else="1"></mutation>
+        <value name="IF0">
+          <block type="inout_bp" id="u._ThgM:{H::EFtp%b;`">
+            <value name="PIN">
+              <block type="math_number" id="D-Zof[!d!:jU|]a=oi}J">
+                <field name="NUM">6</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="digital_write" id="UTxXKBX0.!1)530!jGy8">
+            <field name="STAT">LOW</field>
+            <value name="PIN">
+              <block type="math_number" id="d^J,bSO6F008m$+9%Vwc">
+                <field name="NUM">7</field>
+              </block>
+            </value>
+          </block>
+        </statement>
+        <statement name="ELSE">
+          <block type="digital_write" id="!k2rO(.H+u[{M{PoKqpV">
+            <field name="STAT">HIGH</field>
+            <value name="PIN">
+              <block type="math_number" id="L7+Jg|EvaJou%}e*Q{W$">
+                <field name="NUM">7</field>
+              </block>
+            </value>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>

@@ -1,0 +1,73 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <toolbox>toolbox_arduino_all</toolbox>
+  <block type="serial_init" id="2h,`{|5gr?b3-3?hxn[!" x="226" y="151">
+    <field name="pin">0</field>
+    <field name="SPEED">9600</field>
+  </block>
+  <block type="base_loop" id="^yT}+B!rygZxw9{G30+x" x="61" y="251">
+    <statement name="LOOP">
+      <block type="serial_write" id="j=RY[v.Oa!C;YPZ71/+)">
+        <value name="CONTENT">
+          <block type="text" id="DO=.G%Q}Ok%-P;xjkH3[">
+            <field name="TEXT">Hum : </field>
+          </block>
+        </value>
+        <next>
+          <block type="serial_write" id="5=I~C]gO](.CLK%=lL4a">
+            <value name="CONTENT">
+              <block type="dht11" id="hMP$DAj9gnMn%mqgF=}j">
+                <field name="choix">h</field>
+                <value name="PIN">
+                  <block type="math_number" id="WIlb?%+eet.q.}zr.XH0">
+                    <field name="NUM">2</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="serial_writeln" id="[bumRE$gK|-ApD3S~G-n">
+                <next>
+                  <block type="serial_write" id="$xpLUG:0#P2VXDO+I9^S">
+                    <value name="CONTENT">
+                      <block type="text" id=",7^[J0gQh%|:diY|LL|)">
+                        <field name="TEXT">Temp : </field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="serial_write" id="a8?)9K]pp[Nb//tOT`5L">
+                        <value name="CONTENT">
+                          <block type="dht11" id="04ayx|A`]ydx~O#($w=L">
+                            <field name="choix">t</field>
+                            <value name="PIN">
+                              <block type="math_number" id=";,dpnKK9p]4haO;e;1BZ">
+                                <field name="NUM">2</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="serial_writeln" id="K{KWltWWOtYVU$pmHlTY">
+                            <next>
+                              <block type="base_delay" id="$8h}E4qdBI6BxAZ;y5=w">
+                                <field name="unite">s</field>
+                                <value name="DELAY_TIME">
+                                  <block type="math_number" id="/|},Z9)TfYEscfaL+-p2">
+                                    <field name="NUM">2</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

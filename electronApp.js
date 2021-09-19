@@ -1,7 +1,7 @@
 var {electron, ipcMain, app, BrowserWindow, globalShortcut, dialog} = require('electron')
 var { autoUpdater } = require("electron-updater")
 var path = require('path')
-var mainWindow, termWindow, factoryWindow, promptWindow, promptOptions, promptAnswer, htmlWindow, gamesWindow
+var mainWindow, termWindow, factoryWindow, promptWindow, promptOptions, promptAnswer, htmlWindow, gamesWindow, viewWindow
 autoUpdater.autoDownload = false
 autoUpdater.logger = null
 function createWindow() {
@@ -61,6 +61,14 @@ function createGames() {
 		gamesWindow = null 
 	})
 }
+function createViewer(file) {
+	viewWindow = new BrowserWindow({width: 1000, height: 603, 'parent': htmlWindow, movable: true, frame: false, resizable: false, modal: true})
+	viewWindow.loadURL(path.join(__dirname, "../../www/view.html?url="+file))
+	viewWindow.setMenu(null)
+	viewWindow.on('closed', function () { 
+		viewWindow = null 
+	})
+}
 function promptModal(options, callback) {
 	promptOptions = options
 	promptWindow = new BrowserWindow({width:360, height: 135, 'parent': mainWindow, resizable: false, movable: true, frame: false, modal: true})
@@ -110,6 +118,9 @@ ipcMain.on("html", function() {
 })
 ipcMain.on("games", function() {
 	createGames()       
+})
+ipcMain.on("view", function(event, file) {
+	createViewer(file)
 })
 ipcMain.on("appendBlock", function(event, data1, data2, data3) {
     mainWindow.webContents.send('BlockAppended', data1, data2, data3)
@@ -245,7 +256,7 @@ ipcMain.on('addMedias', function(event) {
 	dialog.showOpenDialog(htmlWindow,{
 		title: 'Ajouter des médias (images, sons ou vidéos)',
 		buttonLabel: "Ajouter",
-		filters: [{ name: 'Médias', extensions: ['bmp', 'jpg', 'png', 'gif', 'mp3', 'mp4']}],
+		filters: [{ name: 'Médias', extensions: ['bmp', 'jpeg', 'jpg', 'png', 'gif', 'mp3', 'mp4', "avi"]}],
 		properties: ['openFile','multiSelections']
 	},
 	function(filename){

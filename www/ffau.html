@@ -5,14 +5,18 @@
 		<title> BLOCKLY-WEB </title>
 		<script src="js/blockly.min.js"></script>
 		<script src="js/ffau/generate_html.js"></script>
-		<script src="lang/context_menu.js"></script>
-		<script src="js/rvb.js"></script>
+		<script src="js/ffau/index.js"></script>
 		<script src="js/jquery.min.2.1.3.js" onload="window.$ = window.jQuery = module.exports;"></script>
 		<script src="js/bootstrap.toggle.min.js"></script>
 		<script src="js/bootstrap.min.3.3.6.js"></script>
+		<script src="lang/context_menu.js"></script>
 		<script src="blocs&generateurs/ffau/css.js"></script>
 		<script src="blocs&generateurs/ffau/html.js"></script>
-		<script src="js/ffau/index.js"></script>
+		<script src="blocs&generateurs/ffau/js.js"></script>
+		<script src="blocs&generateurs/ffau/blockly_blocs.js"></script>
+		<script src="blocs&generateurs/ffau/blockly_generateurs_js.js"></script>
+		<script src="blocs&generateurs/ffau/Blockly_fr.js"></script>
+		<script src="blocs&generateurs/ffau/Arduino_fr.js"></script>
 		<script src="js/ace/ace.js"></script>
 		<script src="js/ace/ext-language_tools.js"></script>
 		<link rel="stylesheet" href="css/bootstrap.toggle.min.css">
@@ -50,10 +54,11 @@
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">EXEMPLES</li>
 							<li class="divider"></li>
-							<li><a href="#" id="lien1"><i class="fa fa-html5 fa-fw"></i> Ma première page</a></li>
-							<li><a href="#" id="lien2"><i class="fa fa-image fa-fw"></i> Une page simple avec image</a></li>
-							<li><a href="#" id="lien3"><i class="fa fa-css3 fa-fw"></i> Une page avec FontAwesome</a></li>
-							<li><a href="#" id="lien4"><i class="fa fa-fa fa-fw"></i> utilisation de Bootstrap</a></li>
+							<li><a href="#" id="lien_hello"><i class="fa fa-book fa-fw"></i> Ma première page</a></li>
+							<li><a href="#" id="lien_ia"><i class="fa fa-image fa-fw"></i> Une page simple avec image</a></li>
+							<li><a href="#" id="lien_gafam"><i class="fa fa-css3 fa-fw"></i> Classe et CSS</a></li>
+							<li><a href="#" id="lien_zen"><i class="fa fa-fa fa-fw"></i> Bootstrap et Fontawesome</a></li>
+							<li><a href="#" id="lien_complexe"><i class="fa fa-html5 fa-fw"></i> Mon premier script</a></li>
 						</ul>
 					</div>
 					<button id="btn_open" class="btn btn-default"><i class="fa fa-folder-open fa-1_5x btn_color"></i></button>
@@ -70,12 +75,11 @@
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">MEDIA</li>
 							<li class="divider"></li>
-							<li><a href="#" id="lien5"><i class="fa fa-plus-circle fa-fw"></i> Ajouter</a></li>
-							<li><a href="#" id="lien6"><i class="fa fa-folder fa-fw"></i> Aperçu</a></li>
-							<li><a href="#" id="lien7"><i class="fa fa-minus-circle fa-fw"></i> Supprimer</a></li>
+							<li><a href="#" id="btn_add_media"><i class="fa fa-plus-circle fa-fw"></i> Ajouter</a></li>
+							<li><a href="#" id="btn_media_view"><i class="fa fa-eye fa-fw"></i> Aperçu</a></li>
 						</ul>
 					</div>
-					<button id="btn_download" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="aperçu local">
+					<button id="btn_download" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Download">
 						<i class="fa fa-download fa-1_5x btn_color"></i>
 					</button>
 					<button id="btn_upload" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Upload">
@@ -97,22 +101,7 @@
 			</div>
 			<iframe id="blockly_r" style="border:none"></iframe>
 		</div>
-	<!-- modal -->
-		<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
-					<span class="fa fa-image fa-2x" class="modal-title"> Média</span>
-				</div>
-				<div class="modal-body">
-					<table class="table table-hover">
-						<tbody id="span_image_dir"></tbody>
-					</table>
-				</div>
-			</div>
-		  </div>
-		</div>
+		<!-- modal -->
 		<div class="modal fade" id="ftpModal" tabindex="-1" role="dialog" aria-labelledby="ftpModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 			<div class="modal-content">
@@ -186,18 +175,13 @@
 							<option value="20px">20</option>
 							<option value="22px">22</option>
 						</select><br><br>
-						<!--label id="span_largeur">Largeur : </label>
-						<select id="largeur">
-							<option value="40%">40 %</option>
-							<option value="45%" selected="selected">45 %</option>
-							<option value="50%">50 %</option>
-							<option value="55%">55 %</option>
-							<option value="60%">60 %</option>
-						</select><br><br-->
-					</div>
-					<div class="modal-footer">
-						<button id="btn_reset" type="button" class="btn btn-danger"><i class='fa fa-trash-o fa-lg'></i> Vider le cache</button>
-						<button id="btn_valid_config" type="button" class="btn btn-primary">Valider</button>
+						<label id="span_fontsize">Cache : </label>
+						<button id="btn_html_explore" class="btn btn-default btn-xs">
+							<i class="fa fa-folder"></i> Aperçu
+						</button>
+						<button id="btn_reset" class="btn btn-danger btn-xs">
+							<i class="fa fa-trash-o" ></i> Vider
+						</button>
 					</div>
 				</div>
 			</div>
@@ -216,16 +200,21 @@
 		<category colour="#4a235a" name="Structure">
 			<block type="head"></block>
 			<block type="title"></block>
+			<block type="jquery"></block>
 			<block type="bootstrap"></block>
+			<block type="w3"></block>
 			<block type="fontawesome"></block>
+			<block type="initMap"></block>
 			<block type="body"></block>
 			<block type="linebreak"></block>
 			<block type="hline"></block>
-			<block type="balise"></block>
 			<block type="balise_orph"></block>
+			<block type="balise"></block>
 		</category>
 		<category colour="#bbbbbb" name="Texte">
 			<block type="emptytext"></block>
+			<block type="text"></block>
+			<block type="text_char"></block>
 			<block type="emptytext">
 				<field name='content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</field>
 			</block>
@@ -234,8 +223,9 @@
 			<block type="paragraph"></block>
 			<block type="header"></block>
 			<block type="divider"></block>
+			<block type="map"></block>
 		</category>
-		<category colour="#FFA500" name="en-ligne">
+		<category colour="#006000" name="en-ligne">
 			<block type="span"></block>
 			<block type="textmod"></block>
 			<block type="button"></block>
@@ -245,9 +235,7 @@
 		<category colour="#804000" name="Table">
 			<block type="table"></block>
 			<block type="tablerow"></block>
-			<block type="thead"></block>
 			<block type="tableheading"></block>
-			<block type="tbody"></block>
 			<block type="tabledata"></block>
 		</category>
 		<category colour="#FD6C9E" name="Liste">
@@ -259,6 +247,8 @@
 			<block type="form"></block>
 			<block type="input"></block>
 			<block type="label"></block>
+			<block type="select"></block>
+			<block type="option"></block>
 		</category>
 		<category colour="#00cc00" name="Media">
 			<block type="image"></block>
@@ -266,31 +256,24 @@
 			<block type="video_file"></block>
 			<block type="videos"></block>
 		</category>
-		<category colour="#727272" name="Modification">
-			<block type="args"></block>
+		<category colour="#727272" name="Attribut">
 			<block type="stylearg"></block>
 			<block type="class"></block>
-			<block type="id"></block>
-			<block type="emptyarg"></block>
+			<block type="id"></block>		
+			<block type="attr_title"></block>
+			<block type="tabindex"></block>
+			<block type="emptyarg"></block>	
+		</category>
+		<category colour="#00929F" name="CSS">
 			<block type="style"></block>
 			<block type="cssitem"></block>
 			<block type="othercss"></block>
-		</category>
-		<category colour="#00929F" name="CSS">
 			<category colour="#00929F" name="Texte">
 				<block type="fontsize"></block>
-				<block type="fontweight"></block>
+				<block type="fontfamily"></block>
 				<block type="textdecoration"></block>
 				<block type="texttransform"></block>
 				<block type="textalign"></block>
-			</category>
-			<category colour="#00929F" name="Arrangement">
-				<block type="display"></block>
-				<block type="margin"></block>
-				<block type="padding"></block>
-				<block type="float"></block>
-				<block type="verticalalign"></block>
-				<block type="widthheightnum"></block>
 			</category>
 			<category colour="#00929F" name="Couleur">
 				<block type="color_picker"></block>
@@ -298,32 +281,113 @@
 				<block type="rgba_picker"></block>
 				<block type="color-new"></block>
 				<block type="bgcolor-new"></block>
+				<block type="background"></block>
 			</category>
 			<category colour="#00929F" name="Bordure">
 				<block type="borderedge-new"></block>
 				<block type="borderrad"></block>
 				<block type="bordercollapse"></block>
 			</category>
+			<category colour="#00929F" name="Arrangement">
+				<block type="display"></block>
+				<block type="tblr"></block>
+				<block type="grid"></block>
+				<block type="position"></block>
+				<block type="margin"></block>
+				<block type="padding"></block>
+				<block type="float"></block>
+				<block type="verticalalign"></block>
+				<block type="widthheightnum"></block>
+			</category>
+			<category colour="#ffff33" name="Bootstrap">
+				<block type="role"></block>
+				<block type="B_data"></block>
+				<block type="B_class_modal"></block>
+				<block type="B_class_img"></block>
+				<block type="B_class_btn"></block>
+				<block type="B_class_dropdown"></block>
+				<block type="B_class_alert"></block>
+			</category>
+			<category colour="#66ff99" name="W3">
+				<block type="w3_class"></block>
+				<block type="w3_onclick"></block>
+				<block type="w3_btn"></block>
+				<block type="w3_color"></block>
+				<block type="w3_hover_color"></block>
+				<block type="w3_round"></block>
+				<block type="w3_tooltip"></block>
+				<block type="w3_modal"></block>
+				<block type="w3_panel"></block>
+				<block type="w3_dropdown"></block>
+			</category>
+		</category>
+		<category colour="#FF0000" name="JS">
+			<block type="balise_js"></block>
+			<block type="jquery_event"></block>
+			<block type="jquery_get"></block>
+			<block type="jquery_set"></block>
+			<block type="jquery_css_set"></block>
+			<category colour="#727272" name="Contrôle">
+				<block type="controls_if"></block>
+				<block type="controls_if"><mutation else="1"></mutation></block>
+				<block type="true_false"></block>
+				<block type="controls_repeat_ext"></block>
+				<block type="controls_whileUntil"></block>
+				<block type="logic_operation"></block>
+				<block type="controls_for"></block>
+				<block type="controls_switch"></block>
+				<block type="controls_flow_statements"></block>
+				<block type="logic_negate"></block>
+				<block type="logic_null"></block>
+			</category>
+			<category colour="#00cc00" name="Math">
+			    <block type="math_number"></block>
+			    <block type="math_xy"></block>
+				<block type="logic_compare"></block>
+				<block type="math_arithmetic"></block>
+				<block type="math_single"></block>
+				<block type="math_round"></block>
+				<block type="math_trig"></block>
+				<block type="math_constant"></block>
+				<block type="math_number_property"></block>
+				<block type="math_modulo"></block>
+				<block type="math_random_int"></block>
+			</category>
+			<category colour="#154360" name="OpenStreetMap">
+				<block type="viewMap"></block>
+				<block type="bindpopup"></block>
+				<block type="bindpopupHTML"></block>
+				<block type="scale"></block>
+				<block type="marker"></block>
+				<block type="line"></block>
+				<block type="circle"></block>
+				<block type="polygon"></block>
+				<block type="onclick"></block>
+				<block type="onRightclick"></block>
+				<block type="routing"></block>
+				<block type="HTMLoverlay"></block>
+			</category>
+			<category colour="#FFA500" custom="VARIABLE" name="Variable"></category>
 		</category>
 		</xml>
 	</body>
-<script>
-	ace.require("ace/ext/language_tools");
-	var editor = ace.edit("content_code");
-	editor.setTheme('ace/theme/sqlserver');
-	editor.session.setTabSize(2);
-	editor.setShowPrintMargin(false);
-	editor.session.setMode("ace/mode/html");
-	editor.session.on('change', function(){update()});
-	editor.setOptions({
-		enableBasicAutocompletion: true,
-		enableSnippets: true,
-		enableLiveAutocompletion: true
-	})
-	function update(){
-		var ace = editor.getValue();
-		document.getElementById("blockly_r").srcdoc = ace
-    }
-	require('../resources/app/ffau.js')
-</script>
+	<script>
+		ace.require("ace/ext/language_tools");
+		var editor = ace.edit("content_code");
+		editor.setTheme('ace/theme/sqlserver');
+		editor.session.setTabSize(2);
+		editor.setShowPrintMargin(false);
+		editor.session.setMode("ace/mode/html");
+		editor.session.on('change', function(){update()});
+		editor.setOptions({
+			enableBasicAutocompletion: true,
+			enableSnippets: true,
+			enableLiveAutocompletion: true
+		})
+		function update(){
+			var ace = editor.getValue();
+			document.getElementById("blockly_r").srcdoc = ace
+		}
+		require('../resources/app/ffau.js')
+	</script>
 </html>

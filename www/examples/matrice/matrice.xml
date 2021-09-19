@@ -28,7 +28,9 @@
       </block>
     </statement>
   </block>
-  <block type="matrice8x8_init" id="!lWo]t1ac79}TtGjpYz~" x="286" y="197">
+  <block type="matrice_init" id="6(Ms{48MRXMIcfGSpZPh" x="368" y="130">
+    <mutation matrix="8"></mutation>
+    <field name="matrix">8</field>
     <value name="DIN">
       <block type="math_number" id="5XZRx%[s/={49,)ndB2u">
         <field name="NUM">12</field>
@@ -45,7 +47,7 @@
       </block>
     </value>
   </block>
-  <block type="base_loop" id="fOi=JjS{526Se^jIS($V" x="291" y="391">
+  <block type="base_loop" id="fOi=JjS{526Se^jIS($V" x="353" y="391">
     <statement name="LOOP">
       <block type="matrice8x8_aff" id="9[[^9z=z(WS0lm^J%:t|">
         <field name="VAR">smile</field>

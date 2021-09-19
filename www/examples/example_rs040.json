@@ -1,0 +1,30 @@
+[
+    {
+        "source_url": "rs040/blink.xml",
+        "source_text": "faire clignoter une DEL",
+        "image": "./rs040/blink.png",
+        "link_url": "#modal_rs040_blink",
+        "visible": true
+    },
+	{
+        "source_url": "rs040/bp.xml",
+        "source_text": "éteindre une DEL avec un bouton poussoir",
+        "image": "./rs040/bp.png",
+        "link_url": "#modal_rs040_bp",
+        "visible": true
+    },
+	{
+        "source_url": "rs040/ligne.xml",
+        "source_text": "actionner un moteur quand une ligne est détectée",
+        "image": "./rs040/ligne.png",
+        "link_url": "#modal_rs040_ligne",
+        "visible": true
+    },
+	{
+        "source_url": "rs040/rvb.xml",
+        "source_text": "allumer une DEL avec plusieurs couleurs",
+        "image": "./rs040/rvb.png",
+        "link_url": "#modal_rs040_rvb",
+        "visible": true
+    }
+]

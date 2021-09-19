@@ -4,7 +4,7 @@ var Code = {};
 Code.LANGUAGE_NAME = {
 	'fr': 'Français',
 	'en': 'English'
-};
+}
 Code.LANGUAGE_RTL = ['ar', 'fa', 'he'];
 Code.getLang = function() {
   var lang = window.localStorage.lang;
@@ -13,10 +13,10 @@ Code.getLang = function() {
 	window.localStorage.lang = lang;
   }
   return lang
-};
+}
 Code.isRtl = function() {
   return Code.LANGUAGE_RTL.indexOf(Code.LANG) != -1;
-};
+}
 Code.LANG = Code.getLang();
 Code.initLanguage = function() {
   var rtl = Code.isRtl();
@@ -29,24 +29,22 @@ Code.initLanguage = function() {
   var comp = function(a, b) {
     if (a[0] > b[0]) return 1;
     if (a[0] < b[0]) return -1;
-    return 0;
-  };
+    return 0
+  }
   languages.sort(comp);
-  var languageMenu = $('#languageMenu');
-  languageMenu.empty();
+  $('#languageMenu').empty();
   for (var i = 0; i < languages.length; i++) {
     var tuple = languages[i];
     var lang = tuple[tuple.length - 1];
     var option = new Option(tuple[0], lang);
     if (lang == Code.LANG) option.selected = true;
-    languageMenu.append(option);
+    $('#languageMenu').append(option)
   }
-  $('#span_lib_view').text(Blockly.Msg['library_view']);
-  $('#span_lib_add').text(Blockly.Msg['library_add']);
   $('#titreOK').text(Blockly.Msg['message1']);
   $('#span_theme').text(Blockly.Msg['span_theme']);
   $('#span_renderer').text(Blockly.Msg['span_renderer']);
   $('#span_library').text(Blockly.Msg['span_library']);
+  $('#span_lib').text(Blockly.Msg['span_library']);
   $('#span_fontsize').text(Blockly.Msg['span_fontsize']);
   $('#span_card_connect').text(Blockly.Msg['span_card_connect']);
   $('#span_card_cpu').text(Blockly.Msg['span_card_cpu']);
@@ -57,6 +55,10 @@ Code.initLanguage = function() {
   $('#span_card_out_anal').text(Blockly.Msg['span_card_out_anal']);
   $('#span_card_ram').text(Blockly.Msg['span_card_ram']);
   $('#span_card_eeprom').text(Blockly.Msg['span_card_eeprom']);
+  $('#span_reset').text(Blockly.Msg['reset']);
+  $('#span_cache').text(Blockly.Msg['cache']);
+  $('#span_cache_title').text(Blockly.Msg['cache']);
+  $('#span_cache_view').text(Blockly.Msg['view']);
   $('#aboutBody').text(Blockly.Msg['aboutBody']);
   $('#aboutModalLabel').text(Blockly.Msg['aboutModalLabel']);
   $('#cardLabel').text(Blockly.Msg['cardLabel']);
@@ -85,6 +87,8 @@ Code.initLanguage = function() {
   $('#span_site').text(Blockly.Msg['span_site']);
   $('#span_forum').text(Blockly.Msg['span_forum']);
   $('#span_contact').text(Blockly.Msg['span_contact']);
+  $('#span_lib_view').text(Blockly.Msg['view']);
+  $('#span_lib_add').text(Blockly.Msg['library_add']);
   $('#btn_close_config').text(Blockly.Msg['btn_close']);
   $('#btn_valid_config').text(Blockly.Msg['btn_valid']);
   $('#btn_valid_config_ffau').text(Blockly.Msg['btn_valid']);
@@ -92,14 +96,12 @@ Code.initLanguage = function() {
   $('#btn_valid_msg').text(Blockly.Msg['btn_valid']);
   $('#btn_variable').text(Blockly.Msg['btn_variable']);
   $('#btn_detail').text(Blockly.Msg['details']);
-  $('#btn_reset').html(Blockly.Msg['reset']);
-  var prog = window.localStorage.prog;
-  if (prog != "python") {
+  if (window.localStorage.prog != "python") {
 	$('#btn_preview').attr('title', Blockly.Msg['btn_preview_ino']);
 	$('#btn_saveino').attr('title', Blockly.Msg['btn_save_ino']) 
   } else {
 	$('#btn_preview').attr('title', Blockly.Msg['btn_preview_py']);
-	$('#btn_saveino').attr('title', Blockly.Msg['btn_save_py']);   
+	$('#btn_saveino').attr('title', Blockly.Msg['btn_save_py']);  
   }
   $('#btn_verify').attr('title', Blockly.Msg['survol_check']);
   $('#btn_flash').attr('title', Blockly.Msg['survol_flash']);
@@ -127,10 +129,10 @@ Code.initLanguage = function() {
   $("xml").find("category").each(function() {
 	if (!$(this).attr('id')) {
 	  $(this).attr('id', $(this).attr('name'));
-	  $(this).attr('name', Blockly.Msg[$(this).attr('name')]);
+	  $(this).attr('name', Blockly.Msg[$(this).attr('name')])
 	}
-  });
-};
+  })
+}
 document.write('<script src="lang/msg_' + Code.LANG + '.js"></script>\n');
 document.write('<script src="lang/Blockly_' + Code.LANG + '.js"></script>\n');
 document.write('<script src="lang/Arduino_' + Code.LANG + '.js"></script>\n');

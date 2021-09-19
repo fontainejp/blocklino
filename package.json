@@ -83,24 +83,6 @@
     "name": "Web File",
     "role": "Editor",
     "icon": "build/www.ico"
-   },
-   {
-    "ext": "ino",
-    "name": "Arduino File",
-    "role": "Editor",
-    "icon": "build/ino.ico"
-   },
-   {
-    "ext": "py",
-    "name": "Python File",
-    "role": "Editor",
-    "icon": "build/py.ico"
-   },
-   {
-    "ext": "html",
-    "name": "HTML File",
-    "role": "Editor",
-    "icon": "build/html.ico"
    }
   ],
   "extraFiles": [

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <toolbox>
-	<parametre id="defaultCategories">CAT_LOGIC,CAT_MATH,CAT_TEXT,CAT_list,CAT_VARIABLES,CAT_FUNCTIONS,CAT_ARDUINO,CAT_ARDUINO_IN,CAT_ARDUINO_TIME,CAT_actionneur,CAT_ultrason,CAT_com</parametre>
+	<parametre id="defaultCategories">CAT_LOGIC,CAT_MATH,CAT_TEXT,CAT_list,CAT_VARIABLES,CAT_FUNCTIONS,CAT_ARDUINO,CAT_ARDUINO_IN,CAT_ARDUINO_TIME,CAT_aff,CAT_AUDIO,CAT_ultrason,CAT_com</parametre>
 	<category name="CAT_LOGIC" colour="#727272">
 		<block type="controls_if"></block>
         <block type="controls_repeat_ext"></block>
@@ -63,7 +63,7 @@
 		<block type="millis_start"></block>	
 		<block type="millis"></block>
 	</category>
-	<category name="CAT_actionneur" colour="#00929F">
+	<category name="CAT_aff" colour="#00929F">
 		<category name="CAT_ARDUINO_matrice8x8" colour="#00929F">
 			<block type="init_leds"></block>
 			<block type="show_leds"></block>
@@ -77,20 +77,20 @@
 			<block type="digital_write"></block>
 			<block type="pixel_init"></block>
 			<block type="pixel_setcolor"></block>
-			<block type="pixel_setcolor_rvb"></block>
 			<block type="pixel_clear"></block>
 		</category>
-		<!--category name="CAT_servo" colour="#00929f">
-			<block type="servo_move"></block>
-			<block type="servo_rot_continue_param"></block>
-		</category-->
-		<category name="CAT_DFPLAYER" colour="#00929F">
-			<block type="play_music"></block>
-			<block type="plays"></block>
-			<block type="silence"></block>
-			<block type="microbit_tone"></block>
-		</category>	
+		<category name="CAT_COLOR" colour="#804000">
+			<block type="colour"></block>
+			<block type="colour_rvb"></block>
+			<block type="colour_rvb_hex"></block>
+		</category>
 	</category>
+	<category name="CAT_AUDIO" colour="#00929F">
+		<block type="play_music"></block>
+		<block type="plays"></block>
+		<block type="silence"></block>
+		<block type="microbit_tone"></block>
+	</category>	
 	<category name="CAT_ultrason" colour="#00929F">
 		<category name="CAT_numerique" colour="#00929F">
 			<block type="io_isButtonPressed"></block>

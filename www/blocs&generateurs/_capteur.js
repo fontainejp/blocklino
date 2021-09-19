@@ -533,9 +533,8 @@ Blockly.Blocks["BME280"]={init:function(){
 Blockly.Arduino["BME280"]=function(block){
     Blockly.Arduino.includes_["bme280"]='#include <BME280.h>';
 	Blockly.Arduino.variables_["bme280"]="BME280 bme;";
-	Blockly.Arduino.setups_["bme280"]='bme.begin();';
-    var code="bme.readFloatPressure()";
-    return [code, Blockly.Arduino.ORDER_ATOMIC]
+	Blockly.Arduino.setups_["bme280"]='bme.begin();'
+    return ""
 };
 Blockly.Python["BME280"]=function(block){
     Blockly.Python.imports_["bme280"]='import bme280';

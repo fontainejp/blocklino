@@ -14,9 +14,9 @@ var portserie = document.getElementById('portserie')
 var messageDiv = document.getElementById('messageDIV')
 
 window.addEventListener('load', function load(event){
+	var electron = remote.getCurrentWindow()
 	localStorage.setItem("verif",false)
-	var window = remote.getCurrentWindow()
-	if(!window.isMaximized())window.maximize()
+	if(!electron.isMaximized())electron.maximize()
 	function itsOK(value){
 		messageDiv.style.color = '#009000'
 		if (value) {
@@ -120,19 +120,19 @@ window.addEventListener('load', function load(event){
 		})
 	})
 	$('#btn_quit').on('click', function(){
-		window.close()
+		electron.close()
 	})
 	$('#btn_max').on('click', function(){
-		if(window.isMaximized()){
-			window.unmaximize()
+		if(electron.isMaximized()){
+			electron.unmaximize()
 			$('#btn_max').html("<span class='fa fa-window-maximize fa-lg'></span>")
 		} else {
-			window.maximize()
+			electron.maximize()
 			$('#btn_max').html("<span class='fa fa-window-restore fa-lg'></span>")
 		}
 	})
 	$('#btn_min').on('click', function(){
-		window.minimize()
+		electron.minimize()
 	})
 	$('#btn_forum').on('click', function(){
 		shell.openExternal('http://blockly.technologiescollege.fr/forum/')
@@ -373,6 +373,7 @@ window.addEventListener('load', function load(event){
 	})
 	$('#btn_detail').on('click', function(){
 		$('#detailDIV').html(localStorage.getItem('detail'))
+		$(this).hide()
 	})
 	$('#btn_close_message').on('click', function(){
 		$('#detailDIV').html('')
@@ -412,7 +413,6 @@ window.addEventListener('load', function load(event){
 	$('#btn_library_view').on("click", function(){
 		fs.readdir(chemin+"/../compilation/arduino/libraries", (err, files) => {
 			var dir_img = document.getElementById('span_lib_dir') 
-			$("#span_lib_dir").empty()
 			if(files.length%3==0){
 				for (var i=0; i < files.length; i=i+3) dir_img.innerHTML += "<div class='col-md-4'>"+files[i]+"</div><div class='col-md-4'>"+files[i+1]+"</div><div class='col-md-4'>"+files[i+2]+"</div>"
 			}else{
@@ -425,9 +425,28 @@ window.addEventListener('load', function load(event){
 				}
 			}
 		})
+		//shell.openExternal(chemin+"\\..\\compilation\\arduino\\libraries\\")
 	})
 	$('#btn_library_add').on("click", function(){
 		ipcRenderer.send('addLIB')
+	})
+	$('#btn_cache_view').on("click", function(){
+		for (var i = 0; i < localStorage.length; i++){
+			$("#span_cache_dir").append(localStorage.key(i), " : ")
+			if (localStorage.getItem(localStorage.key(i)).length>55){
+				var newText = localStorage.getItem(localStorage.key(i)).substr(0,55)
+				$("#span_cache_dir").append(newText, " ...")
+			} else {
+				$("#span_cache_dir").append(localStorage.getItem(localStorage.key(i)))
+			}
+			$("#span_cache_dir").append("<br>")
+		}
+	})
+	$('#modal_cache').on('hidden.bs.modal', function(e) {
+		$("#span_cache_dir").empty()
+	})
+	$('#modal_lib').on('hidden.bs.modal', function(e) {
+		$("#span_lib_dir").empty()
 	})
 	ipcRenderer.on('addedLIB', function(event, path){
 		if (path === null){

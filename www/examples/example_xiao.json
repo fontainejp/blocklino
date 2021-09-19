@@ -1,0 +1,16 @@
+[
+    {
+        "source_url": "xiao/blink.bloc",
+        "source_text": "faire clignoter une DEL sur la broche 7",
+        "image": "./xiao/blink.png",
+        "link_url": "#modal_xiao_blink",
+        "visible": true
+    },
+	{
+        "source_url": "xiao/bp.bloc",
+        "source_text": "éteindre une DEL avec un bouton poussoir",
+        "image": "./xiao/bp.png",
+        "link_url": "#modal_xiao_bp",
+        "visible": true
+    }
+]

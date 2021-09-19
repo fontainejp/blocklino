@@ -1,0 +1,53 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <toolbox>toolbox_arduino_all</toolbox>
+  <block type="base_loop" id="*:z-s]uzsP37~bkr4`c8" x="373" y="132">
+    <statement name="LOOP">
+      <block type="servo_move" id="=iRPN*SfE*fvQ,3]gwlK">
+        <value name="DEGREE">
+          <block type="inout_angle_maths" id="tw,M)7=hOZ|[Fs%Df19C">
+            <field name="ANGLE">30</field>
+          </block>
+        </value>
+        <value name="PIN">
+          <block type="math_number" id="xM??e-!$o-UuQ4C:;`vb">
+            <field name="NUM">8</field>
+          </block>
+        </value>
+        <next>
+          <block type="base_delay" id="=bqkz{u_}{`MhmX-e:Ta">
+            <field name="unite">s</field>
+            <value name="DELAY_TIME">
+              <block type="math_number" id="4a`x3WYQsF#Ux@lM`C*^">
+                <field name="NUM">2</field>
+              </block>
+            </value>
+            <next>
+              <block type="servo_move" id="NlS/7k_ZaApO@Y=5Y;$Z">
+                <value name="DEGREE">
+                  <block type="inout_angle_maths" id="$L)O4gmh8(D4GxDxH;BC">
+                    <field name="ANGLE">150</field>
+                  </block>
+                </value>
+                <value name="PIN">
+                  <block type="math_number" id="h`;$2fp(82d%h`jV`6@v">
+                    <field name="NUM">8</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="base_delay" id="F@NLSB#a]]!*5y!+]hI-">
+                    <field name="unite">s</field>
+                    <value name="DELAY_TIME">
+                      <block type="math_number" id="+Kn~bQ[U$]Ae`%]ZR{(/">
+                        <field name="NUM">2</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

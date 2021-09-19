@@ -284,24 +284,18 @@ BlocklyDuino.change_card = function() {
 	window.localStorage.card = new_card
 }
 BlocklyDuino.discard = function() {
-	document.getElementById('span_file').textContent = ""
-	if (localStorage.getItem('content') == "off") {
-		if (window.confirm(Blockly.Msg['discard'])) {
+	if (window.confirm(Blockly.Msg['discard'])) {
+		$('#span_file').text("")
+		if (localStorage.getItem('content') == "off") {
 			if (window.localStorage.prog == "python") {
 				editor.setValue(BlocklyDuino.prog_py,1)
 			} else {
 				editor.setValue(BlocklyDuino.prog_ino,1)
 			}
-		}
-	} else {
-		if (window.location.search!="") {
+		} else {
+			if (window.location.search!="") window.location.search = "";
 			BlocklyDuino.workspace.clear();
-			window.location.search = "";
-		}
-		var count = BlocklyDuino.workspace.getAllBlocks().length;
-		if (count < 4 || window.confirm(Blockly.Msg['discard'])) {
-			BlocklyDuino.workspace.clear();
-			BlocklyDuino.workspace.render();
+			BlocklyDuino.workspace.render()
 		}
 	}
 }
@@ -606,13 +600,13 @@ BlocklyDuino.buildExamples = function() {
 BlocklyDuino.cardPicture_change = function() {
 	if ($("#pinout").val()) {
 		$('#arduino_card_mini_picture').attr("src", profile[$("#pinout").val()]['picture']);
-		document.getElementById("card_connect").textContent = profile[$("#pinout").val()]['usb'];
-		document.getElementById("card_cpu").textContent = profile[$("#pinout").val()]['cpu'];
-		document.getElementById("card_voltage").textContent = profile[$("#pinout").val()]['voltage'];
-		document.getElementById("card_inout").textContent = profile[$("#pinout").val()]['inout'];
-		document.getElementById("card_in_anal").textContent = profile[$("#pinout").val()]['in_anal'];
-		document.getElementById("card_out_anal").textContent = profile[$("#pinout").val()]['out_anal'];
-		document.getElementById("card_eeprom").textContent = profile[$("#pinout").val()]['eeprom'];
+		$("#card_connect").text(profile[$("#pinout").val()]['usb']);
+		$("#card_cpu").text(profile[$("#pinout").val()]['cpu']);
+		$("#card_voltage").text(profile[$("#pinout").val()]['voltage']);
+		$("#card_inout").text(profile[$("#pinout").val()]['inout']);
+		$("#card_in_anal").text(profile[$("#pinout").val()]['in_anal']);
+		$("#card_out_anal").text(profile[$("#pinout").val()]['out_anal']);
+		$("#card_eeprom").text(profile[$("#pinout").val()]['eeprom']);
 	}
 }
 Blockly.Variables.flyoutCategory = function(workspace) {

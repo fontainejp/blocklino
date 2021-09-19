@@ -1,0 +1,58 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <toolbox>toolbox_arduino_all</toolbox>
+  <block type="lcd_i2c" id="270rZhlWX[TK%8EkW`Dk" x="442" y="84"></block>
+  <block type="base_loop" id=",V7bYPYi9}`_27R#|4%U" x="129" y="187">
+    <statement name="LOOP">
+      <block type="LCD_Keypad_Shield_DFR_09_lc" id="~mCmk(vlLdUa+Q+uDkL9">
+        <field name="ligne">0</field>
+        <field name="colonne">12</field>
+        <value name="TEXT4">
+          <block type="text" id="eG|G;gDODcR#C}bJoc/~">
+            <field name="TEXT">Bonjour</field>
+          </block>
+        </value>
+        <next>
+          <block type="base_delay" id="_^,+L?MQ=u:=BIQ+;Ju@">
+            <field name="unite">s</field>
+            <value name="DELAY_TIME">
+              <block type="math_number" id="~v3H9+x1RZnMhEa~HPCi">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+            <next>
+              <block type="LCD_Keypad_Shield_DFR_09_RAZ" id="H,%t%7nE%*H$T*U]gc~e">
+                <next>
+                  <block type="LCD_Keypad_Shield_DFR_09" id="R7O8%4ZlbJ9Ry+y%Z`2l">
+                    <value name="TEXT1">
+                      <block type="text" id="$H9S/X=}fb8]QLJ5Vh`I">
+                        <field name="TEXT">College</field>
+                      </block>
+                    </value>
+                    <value name="TEXT2">
+                      <block type="text" id="Q`|`p;=lNck^6hbXi_D=">
+                        <field name="TEXT">Les Ormeaux</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="base_delay" id="`BuF]]CfX#!A[xA5muI9">
+                        <field name="unite">s</field>
+                        <value name="DELAY_TIME">
+                          <block type="math_number" id="!lmaDkYX1-z:j5h/[^5e">
+                            <field name="NUM">1</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="LCD_Keypad_Shield_DFR_09_RAZ" id="6(l3NHo2Z=t7da5en8ji"></block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

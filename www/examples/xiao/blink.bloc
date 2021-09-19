@@ -1,0 +1,45 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <toolbox>toolbox_arduino_all</toolbox>
+  <block type="base_loop" id="rAe3yca+~$zAPaVY8=$K" x="-58" y="120">
+    <statement name="LOOP">
+      <block type="digital_write" id="NM9r_^pN051,gi|Ex3~W">
+        <field name="STAT">HIGH</field>
+        <value name="PIN">
+          <block type="math_number" id="CUE$y?x!y@R=fX6HOgtK">
+            <field name="NUM">7</field>
+          </block>
+        </value>
+        <next>
+          <block type="base_delay" id="(RTV4Nxt}OArpLvc|;hB">
+            <field name="unite">s</field>
+            <value name="DELAY_TIME">
+              <block type="math_number" id="g@s$sjd_M6bj}kZq;m9h">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+            <next>
+              <block type="digital_write" id="k8ehChC)1;wyco9]8LiH">
+                <field name="STAT">LOW</field>
+                <value name="PIN">
+                  <block type="math_number" id="f$*OW85k[!Is81$)|#oK">
+                    <field name="NUM">7</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="base_delay" id=":,38A]Dt%!cQa0uLZhMc">
+                    <field name="unite">s</field>
+                    <value name="DELAY_TIME">
+                      <block type="math_number" id="}|sq!Qy6S!GCy0?ee9I9">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

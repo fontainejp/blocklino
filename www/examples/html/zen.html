@@ -7,48 +7,48 @@
     <script src="js/bootstrap.min.3.3.6.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.3.3.6.css">
     <link rel="stylesheet" href="css/fontawesome.css">
+    <style>
+      #bas{
+        position: fixed;
+        bottom: -15px;
+        width: 100%;
+      }
+    </style>
   </head>
-  <body style="text-align: center;">
-    <h1>  Zen</h1>
-    <div>
-      <q>
-        <em>  Moi et tous les êtres sur la Terre entière avons simultanément réalisé l’éveil</em>
-      </q>
-    </div>
-    <br>
-    <div>
-      <img src="media/zen.jpg" class="img-thumbnail" style="margin: 0 2em 1em 2em;
-            float: right;">
-      <p style="text-align: justify;
-            padding-left: 2em;
-            padding-right: 2em;">
-        Mouvement de pensée bouddhique implanté au Japon qui prône l&#039;enseignement direct de maître à élève, la recherche de l&#039;illumination intérieure de l&#039;individu, délivré des illusions sensibles, des excès du rationalisme, dans la coïncidence spontanée avec l&#039;essence de l&#039;Être au moyen de la méditation (notamment sur des phrases paradoxales), de certaines postures corporelles, du travail manuel, de la pauvreté, et qui a joué un rôle important dans la civilisation japonaise et extrême-orientale. Le Zen souligne que son enseignement réside au-delà des mots puisqu&#039;il le définit ainsi: une transmission extérieure aux Écritures, ne dépendant ni des mots ni des lettres, s&#039;adressant directement à l&#039;âme de l&#039;homme, procédant par le regard intérieur et l&#039;accession à l&#039;état du Bouddha.
-      </p>
-      <audio controls>
+  <body style="text-align: center">
+    <h1>Zen</h1>
+    <p>
+      <blockquote>
+        <q> Moi et tous les êtres sur la Terre entière avons simultanément réalisé l’éveil </q>
+      </blockquote>
+    </p>
+    <p style="text-align: justify">
+      <img src="media/zen.jpg" class="img-thumbnail"  style="float: right; margin: 1em;">
+      Mouvement de pensée bouddhique implanté au Japon qui prône l&#039;enseignement direct de maître à élève, la recherche de l&#039;illumination intérieure de l&#039;individu, délivré des illusions sensibles, des excès du rationalisme, dans la coïncidence spontanée avec l&#039;essence de l&#039;Être au moyen de la méditation (notamment sur des phrases paradoxales), de certaines postures corporelles, du travail manuel, de la pauvreté, et qui a joué un rôle important dans la civilisation japonaise et extrême-orientale. Le Zen souligne que son enseignement réside au-delà des mots puisqu&#039;il le définit ainsi: une transmission extérieure aux Écritures, ne dépendant ni des mots ni des lettres, s&#039;adressant directement à l&#039;âme de l&#039;homme, procédant par le regard intérieur et l&#039;accession à l&#039;état du Bouddha.
+    </p>
+    <audio controls>
       <source src="media/acqua.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <div style="position: fixed;
-          bottom: 0;
-          background-color: #ccccff;
-          width: 100%;">
+    </audio>
+    <div id="bas"  class="alert alert-success">
       <p>
-        <i class="fa fa-copyright"></i>
-        <em>   2019 - Réalisé par</em>
-        <a href="https://www.qwant.com/?l=fr" target="_blank">  JP</a>
+        Réalisé par
+        <a href="https://fontainejp.github.io/"> JP </a>
       </p>
       <p>
-        avec <i class="fa fa-font-awesome fa-lg"></i> <i class="fa fa-html5 fa-1_5x"></i> <i class="fa fa-css3 fa-lg"></i>
-      </p>
-      <p>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#message">  <i class="fa fa-heart"></i> j&#039;aime</button>
+        <button class="btn btn-danger"  data-toggle="modal"  data-target="#message">
+          <i class="fa fa-heart"></i>
+          j&#039;aime
+        </button>
       </p>
     </div>
-    <div id="message" class="modal fade" tabindex="-1">
+    <div id="message"  class="modal fade"  tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
-            Merci pour votre soutien <i class="fa fa-smile-o fa-lg"></i></div>
+            <i class="fa fa-smile-o fa-lg"></i>
+            <br>
+            merci pour votre soutien
+          </div>
         </div>
       </div>
     </div>

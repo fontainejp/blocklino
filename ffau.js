@@ -4,29 +4,31 @@ var fs = require("fs")
 var path = require("path")
 var ftpClient = require('ftp')
 var ffau = new Ffau()
-var chemin = process.resourcesPath // .../resources/
-var base = ["acqua.mp3","bunny.mp4","zen.jpg","neuronne.jpg","no_photo.png"]
+var electron = remote.getCurrentWindow()
+var urlFile = getStringParamFromUrl('url', '')
+var base = ["acqua.mp3", "bunny.mp4", "zen.jpg", "neuronne.jpg", "no_photo.png"]
 var contentHTML = localStorage.getItem('contentHTML')
 var size = localStorage.getItem('size')
 var theme = localStorage.getItem('theme')
 var largeur = localStorage.getItem("largeur")
+var dirHTML = path.join(__dirname, "../../compilation/html/")
+var dirMEDIA = path.join(__dirname, "../../compilation/html/media/")
 var HTML_content = "on"
 var HTML_size = "14px"
-var HTML_largeur = "45%"
 var new_code = '<!DOCTYPE HTML>\n<html lang="fr">\n\n</html>'
 	
 function getStringParamFromUrl(name, defaultValue){
 	var val = location.search.match(new RegExp('[?&]' + name + '=([^&]+)'))
 	return val ? decodeURIComponent(val[1].replace(/\+/g, '%20')) : defaultValue
 }
-function initFFAU() {
+function initFFAU(){
 	ffau.ffauWorkspace.clear()
 	var rootBlock = ffau.ffauWorkspace.newBlock('html')
 	rootBlock.initSvg()
 	rootBlock.render()
 	rootBlock.setDeletable(false)
 }
-function loadWWW(file) {
+function loadWWW(file){
 	var xml = Blockly.Xml.textToDom(file)
 	ffau.ffauWorkspace.clear()
 	Blockly.Xml.domToWorkspace(xml, ffau.ffauWorkspace)
@@ -36,14 +38,14 @@ function clearUrl(){
 	window.location.search = ""
 }
 function clear_media_dir(){
-	fs.readdir(chemin+"/../compilation/html/media", function(err, files){
+	fs.readdir(dirMEDIA, function(err, files){
 		base.forEach(function(file){
 			var pos = files.indexOf(file)
 			files.splice(pos,1)
 		})
 		if (files.length!=0){
 			files.forEach(function(file){
-				fs.unlink(chemin+"/../compilation/html/media/"+file, function(err){ if (err) return console.log(err)})
+				fs.unlink(dirMEDIA + file, function(err){ if (err) return console.log(err)})
 			})
 		}
 	})
@@ -106,20 +108,14 @@ function theme_monokai(){
 window.addEventListener('unload', clearUrl, false)
 
 window.addEventListener('load', function load(event){
-	if (largeur === undefined) {
-		$('#largeur').val(HTML_largeur)
-		localStorage.setItem("largeur", HTML_largeur)
-	} else {
-		$('#largeur').val(largeur)
-	}
-	if (size === undefined) {
+	if (size === undefined){
 		$('#fontsize').val(BlocklyDuino.size)
 		localStorage.setItem("size", HTML_size)
 	} else {
 		$('#fontsize').val(size)
 		$('#content_code').css("font-size",size)
 	}
-	if ((theme === undefined)||(theme=="sqlserver")) {
+	if ((theme === undefined)||(theme=="sqlserver")){
 		$('#theme').val("sqlserver")
 		theme_sqlserver()
 		localStorage.setItem("theme", "sqlserver")
@@ -142,15 +138,6 @@ window.addEventListener('load', function load(event){
 		}
 		$('#btn_search').addClass("hidden")
 	}
-	$('[data-toggle="tooltip"]').tooltip()
-	$("html").attr('dir', 'ltr')
-	$('#btn_search').addClass("hidden")
-	var window = remote.getCurrentWindow()
-	if(!window.isMaximized())window.maximize()
-	ffau.renderBlockly(document.getElementById('blocklyDiv'), document.getElementById('toolbox'))
-	ffau.addEvent()
-	initFFAU()
-	var urlFile = getStringParamFromUrl('url', '')
 	if (urlFile){
 		var file = urlFile.split("\\")
 		var id = file.length - 1 
@@ -168,35 +155,13 @@ window.addEventListener('load', function load(event){
 			}, 'text')
 		}
 	}
-	$('#btn_valid_config').on('click', function(){
-		$("#configModal").modal("hide")
-	})
-	$('#largeur').on('change', function(){
-		localStorage.setItem("largeur", $('#largeur').val()) 
-		switch ($('#largeur').val()) {
-			case "40%":
-				$('#blockly_l').css("width", "60%")
-				$('#blockly_r').css("width", "40%")
-				break
-			case "45%":
-				$('#blockly_l').css("width", "55%")
-				$('#blockly_r').css("width", "45%")
-				break
-			case "50%":
-				$('#blockly_l').css("width", "50%")
-				$('#blockly_r').css("width", "50%")
-				break
-			case "55%":
-				$('#blockly_l').css("width", "45%")
-				$('#blockly_r').css("width", "55%")
-				break
-			case "60%":
-				$('#blockly_l').css("width", "40%")
-				$('#blockly_r').css("width", "60%")
-				ffau.ffauWorkspace.render()
-				break
-		}
-	})
+	if(!electron.isMaximized()) electron.maximize()
+	$('[data-toggle="tooltip"]').tooltip()
+	$("html").attr('dir', 'ltr')
+	$('#btn_search').addClass("hidden")
+	ffau.renderBlockly(document.getElementById('blocklyDiv'), document.getElementById('toolbox'))
+	ffau.addEvent()
+	initFFAU()
 	$('#theme').on("change", function(){
 		var new_theme = $(this).val()
 		editor.setTheme('ace/theme/' + new_theme)
@@ -208,15 +173,14 @@ window.addEventListener('load', function load(event){
 		}
 	})
 	$('#btn_reset').on('click', function(){
-		fs.readdir(chemin+"/../compilation/html", function(err, files){
+		fs.readdir(dirHTML, function(err, files){
 			if (files.length!=0){
 				files.forEach(function(file){
-					if (path.extname(file)==".html")	fs.unlink(chemin+"/../compilation/html/"+file, function(err){if (err) return console.log(err)})
+					if (path.extname(file)==".html")	fs.unlink(dirHTML + file, function(err){if (err) return console.log(err)})
 				})
 			}
 		})
 		clear_media_dir()
-		$("#configModal").modal("hide")
 	})
 	$('#btn_upload').on('click', function(){
 		if (localStorage.getItem('contentHTML')=="on"){
@@ -248,8 +212,7 @@ window.addEventListener('load', function load(event){
 		var Ftp = new ftpClient()
 		Ftp.connect({host: localStorage.getItem('host'), port: Number(localStorage.getItem('portFtp')), user: localStorage.getItem('id'), password: localStorage.getItem('pwd')})
 		var data = document.getElementById('blockly_r').srcdoc
-		var path = chemin+'/../compilation/html/'
-		var localFile = path + maPage.replace(/\s/g, '_') + ".html"
+		var localFile = dirHTML + maPage.replace(/\s/g, '_') + ".html"
 		var remoteFile = maPage.replace(/\s/g, '_') + ".html"
 		var local = []
 		fs.writeFile(localFile, data, function(err){
@@ -258,7 +221,7 @@ window.addEventListener('load', function load(event){
 		Ftp.on("ready", function(){
 			$('#ftp_connect').html('<i class="fa fa-link fa-1_5x fa-fw" style="color: green"></i> connecté')
 			$('#ftp_transfert').html('<i class="fa fa-spinner fa-pulse fa-1_5x fa-fw"></i> transfert...')
-			fs.readdir(chemin + "/../compilation/html/media/", function (err, files){
+			fs.readdir(dirMEDIA, function (err, files){
 				if (err) return console.log(err)
 				base.forEach(function(file){
 					var pos = files.indexOf(file)
@@ -267,7 +230,7 @@ window.addEventListener('load', function load(event){
 				local = files
 				console.log(local)
 				local.forEach(function(file){
-					Ftp.put(chemin+'/../compilation/html/media/'+file, 'media/'+file, function(result){
+					Ftp.put(dirMEDIA + file, 'media/' + file, function(result){
 						console.log("img: "+result)
 					})
 				})
@@ -280,36 +243,39 @@ window.addEventListener('load', function load(event){
 		})
 	})
 	$('#btn_download').on("click", function(){
-		if (localStorage.getItem('contentHTML')=="on"){
-			var iframe = document.getElementById('blockly_r')
-			var Bframe = (iframe.contentWindow || iframe.contentDocument)
-			maPage = Bframe.document.title
+		if (nameFile == ""){
+			$("#message").modal("show")
+			return
+		}
+		var data
+		var maPage = (document.getElementById('blockly_r').contentWindow.document.title || document.getElementById('blockly_r').contentDocument.document.title)
+		if (localStorage.getItem('contentHTML')=="off"){
+			data = editor.getValue()
+		} else {
+			data = document.getElementById('blockly_r').srcdoc
 		}
 		if (maPage === ""){
 			$("#message").modal("show")
 			return
 		}
-		var file = chemin+'/../compilation/html/'
-		file += maPage.replace(/\s/g, '_')
-		file += ".html"
-		var data = document.getElementById('blockly_r').srcdoc
-		fs.writeFile(file, data, function(err){
+		fs.writeFile(dirHTML + maPage + ".html", data, function(err){
 			if (err) return console.log(err)
-			shell.openExternal(file)
+			//ipcRenderer.send('view', maPage)
+			shell.openExternal(dirHTML + maPage + ".html")
 		})
 	})
 	$('#btn_min').on('click', function(){
-		window.minimize()
+		electron.minimize()
 	})
 	$('#btn_quit').on('click', function(){
-		window.close()
+		electron.close()
 	})
 	$('#btn_max').on('click', function(){
-		if(window.isMaximized()){
-            window.unmaximize()
+		if(electron.isMaximized()){
+            electron.unmaximize()
 			$('#btn_max').html("<span class='fa fa-window-maximize fa-lg'></span>")
         }else{
-            window.maximize()
+            electron.maximize()
 			$('#btn_max').html("<span class='fa fa-window-restore fa-lg'></span>")
         }
 	})
@@ -341,12 +307,13 @@ window.addEventListener('load', function load(event){
 		}
 	})
 	$('#btn_new').on('click', function(){
-		$('#span_file').text("")
-		if (localStorage.getItem('contentHTML')=="on") {
-			clearUrl()
-			initFFAU()
-		} else {
-			editor.setValue(new_code,1)
+		if (window.confirm(Blockly.Msg['discard'])) {
+			$('#span_file').text("")
+			if (localStorage.getItem('contentHTML')=="on") {
+				initFFAU()
+			} else {
+				editor.setValue(new_code,1)
+			}
 		}
 	})
 	$('#btn_search').on('click', function(){
@@ -375,76 +342,86 @@ window.addEventListener('load', function load(event){
 		}
 		reader.readAsText(files[0])
 	})
-	$('#lien1').on('click', function(){
-		if (localStorage.getItem("contentHTML")=="on") {
-			$.get("./examples/html/hello.www", function(data) { 
-				$('#span_file').text(" - hello.www")
-				if (data) loadWWW(data)
-			}, 'text')
-		} else {
-			$.get("./examples/html/hello.html", function(data) { 
-				$('#span_file').text(" - hello.html")
-				if (data) editor.setValue(data,1)
-			}, 'text')
+	$('#lien_hello').on('click', function(){
+		if (window.confirm(Blockly.Msg['discard'])) {
+			if (localStorage.getItem("contentHTML")=="on") {
+				$.get("./examples/html/hello.www", function(data) { 
+					$('#span_file').text(" - hello.www")
+					if (data) loadWWW(data)
+				}, 'text')
+			} else {
+				$.get("./examples/html/hello.html", function(data) { 
+					$('#span_file').text(" - hello.html")
+					if (data) editor.setValue(data,1)
+				}, 'text')
+			}
 		}
 	})
-	$('#lien2').on('click', function(){
-		if (localStorage.getItem("contentHTML")=="on") {
-			$.get("./examples/html/ia.www", function(data) { 
-				$('#span_file').text(" - ia.www")
-				if (data) loadWWW(data)
-			}, 'text')
-		} else {
-			$.get("./examples/html/ia.html", function(data) { 
-				$('#span_file').text(" - ia.html")
-				if (data) editor.setValue(data,1)
-			}, 'text')
+	$('#lien_ia').on('click', function(){
+		if (window.confirm(Blockly.Msg['discard'])) {
+			if (localStorage.getItem("contentHTML")=="on") {
+				$.get("./examples/html/ia.www", function(data) { 
+					$('#span_file').text(" - ia.www")
+					if (data) loadWWW(data)
+				}, 'text')
+			} else {
+				$.get("./examples/html/ia.html", function(data) { 
+					$('#span_file').text(" - ia.html")
+					if (data) editor.setValue(data,1)
+				}, 'text')
+			}
 		}
 	})
-	$('#lien3').on('click', function(){
-		if (localStorage.getItem("contentHTML")=="on") {
-			$.get("./examples/html/complexe.www", function(data) { 
-				$('#span_file').text(" - complexe.www")
-				if (data) loadWWW(data)
-			}, 'text')
-		} else {
-			$.get("./examples/html/complexe.html", function(data) { 
-				$('#span_file').text(" - complexe.html")
-				if (data) editor.setValue(data,1)
-			}, 'text')
+	$('#lien_gafam').on('click', function(){
+		if (window.confirm(Blockly.Msg['discard'])) {
+			if (localStorage.getItem("contentHTML")=="on") {
+				$.get("./examples/html/gafam.www", function(data) { 
+					$('#span_file').text(" - gafam.www")
+					if (data) loadWWW(data)
+				}, 'text')
+			} else {
+				$.get("./examples/html/gafam.html", function(data) { 
+					$('#span_file').text(" - gafam.html")
+					if (data) editor.setValue(data,1)
+				}, 'text')
+			}
 		}
 	})
-	$('#lien4').on('click', function(){
-		if (localStorage.getItem("contentHTML")=="on") {
-			$.get("./examples/html/zen.www", function(data) { 
-				$('#span_file').text(" - zen.www")
-				if (data) loadWWW(data)
-			}, 'text')
-		} else {
-			$.get("./examples/html/zen.html", function(data) { 
-				$('#span_file').text(" - zen.html")
-				if (data) editor.setValue(data,1)
-			}, 'text')
+	$('#lien_complexe').on('click', function(){
+		if (window.confirm(Blockly.Msg['discard'])) {
+			if (localStorage.getItem("contentHTML")=="on") {
+				$.get("./examples/html/complexe.www", function(data) { 
+					$('#span_file').text(" - complexe.www")
+					if (data) loadWWW(data)
+				}, 'text')
+			} else {
+				$.get("./examples/html/complexe.html", function(data) { 
+					$('#span_file').text(" - complexe.html")
+					if (data) editor.setValue(data,1)
+				}, 'text')
+			}
 		}
 	})
-	$('#lien5').on('click', function(){
+	$('#lien_zen').on('click', function(){
+		if (window.confirm(Blockly.Msg['discard'])) {
+			if (localStorage.getItem("contentHTML")=="on") {
+				$.get("./examples/html/zen.www", function(data) { 
+					$('#span_file').text(" - zen.www")
+					if (data) loadWWW(data)
+				}, 'text')
+			} else {
+				$.get("./examples/html/zen.html", function(data) { 
+					$('#span_file').text(" - zen.html")
+					if (data) editor.setValue(data,1)
+				}, 'text')
+			}
+		}
+	})
+	$('#btn_add_media').on('click', function(){
 		ipcRenderer.send('addMedias')
 	})
-	$('#lien6').on('click', function(){
-		fs.readdir(chemin+"/../compilation/html/media", (err, files) => {
-			var dir_img = document.getElementById('span_image_dir') 
-			$("#span_image_dir").empty()
-			if(files.length%2==0){
-				for (var i=0; i < files.length; i=i+2) dir_img.innerHTML += "<tr><td>"+files[i]+"</td><td>"+files[i+1]+"</td></tr>"
-			}else{
-				for (var i=0; i < files.length-1; i=i+2) dir_img.innerHTML += "<tr><td>"+files[i]+"</td><td>"+files[i+1]+"</td></tr>"
-				dir_img.innerHTML += "<tr><td>"+files[files.length-1]+"</td></tr>"
-			}
-			$("#imageModal").modal("show")
-		})
-	})
-	$('#lien7').on('click', function(){
-		clear_media_dir()
+	$('#btn_media_view').on('click', function(){
+		ipcRenderer.send('view','_media_')
 	})
 	$('#codeORblock').on("change", function(){
 		var data = document.getElementById('blockly_r').srcdoc
@@ -465,7 +442,13 @@ window.addEventListener('load', function load(event){
 	$('#fontsize').on("change", function(){
 		$('#content_code').css("font-size", $(this).val())
 		localStorage.setItem("size", $(this).val())
-	});
+	})
+	$('#btn_html_view').on("click", function(){
+		ipcRenderer.send('view','_html_')
+	})
+	$('#btn_html_explore').on("click", function(){
+		shell.openExternal(dirHTML)
+	})
 	ipcRenderer.on('saved-png-html', function(event, path){
 		if (path === null){
 			return
@@ -497,14 +480,14 @@ window.addEventListener('load', function load(event){
 			}
 		}
 	})
-	ipcRenderer.on('addedMedias', function(event, path){
-		if (path === null){
+	ipcRenderer.on('addedMedias', function(event, file){
+		if (file === null){
 			return
 		} else {
-			path.forEach(function(pt) {
+			file.forEach(function(pt) {
 				var name = pt.substring(pt.lastIndexOf("\\"))
-				fs.copyFile(pt, chemin+'/../compilation/html/media/'+name, function(err){ if (err) return console.log(err)})
-				fs.copyFile(pt, chemin+'/../www/media/'+name, function(err){ if (err) return console.log(err)})
+				fs.copyFile(pt, path.join(__dirname, "../../www/media" , name), function(err){ if (err) return console.log(err)})
+				fs.copyFile(pt, dirMEDIA + name, function(err){ if (err) return console.log(err)})
 			})
 		}
 	})

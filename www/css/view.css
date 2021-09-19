@@ -1,0 +1,62 @@
+@CHARSET "UTF-8";
+body {
+	background-color: #fff;
+	height: 100%;
+	width: 100%;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	margin: 0
+}
+#toptitle {
+    -webkit-app-region: drag;
+	height: 45px;
+	text-align: center;
+	line-height: 45px;
+	vertical-align: middle;
+	background-color: #5cb85c;
+	padding: 0;
+	margin: 0
+}
+#title {
+	position: fixed;
+	left: 5px;
+	color: white
+}
+#title-bar-btns {
+	-webkit-app-region: no-drag;
+	position: fixed;
+	right: 0px
+}
+#content{
+    position: absolute;
+	top: 45px;
+    height: 93%;
+    width: 100%;
+    overflow: hidden;
+    border: none;
+	padding: 5px;
+	margin: 0
+}
+a{
+	color: #5cb85c;
+	text-decoration: none
+}
+a:hover{
+	background-color: #5cb85c;
+	color: white;
+	text-decoration: none
+}
+.btn-group {
+	-webkit-app-region: no-drag
+}
+.btn_color {
+	color: gray
+}
+.btn-quitgreen { 
+  color: #fff; 
+  width: 40px;
+  height: 40px;
+  background-color: #5cb85c; 
+  border-color: #5cb85c; 
+  line-height: 0;
+  padding: 0
+}

@@ -1,0 +1,40 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <toolbox>toolbox_arduino_all</toolbox>
+  <block type="serial_init" id="(ow4bu4GiEzdt@n+LUa@" x="297" y="15">
+    <field name="pin">0</field>
+    <field name="SPEED">19200</field>
+  </block>
+  <block type="base_loop" id="_)GOllsHD0[5,7!J=(@9" x="75" y="171">
+    <statement name="LOOP">
+      <block type="serial_write" id="Ee?v)h]M2R6WrgK,$XqT">
+        <value name="CONTENT">
+          <block type="text" id="{hk]bnchW(teg.:.FCwB">
+            <field name="TEXT">Valeur : </field>
+          </block>
+        </value>
+        <next>
+          <block type="serial_write" id="Ot;y2*f5e,ewsya:~k_I">
+            <value name="CONTENT">
+              <block type="potentiometre" id="$R-Z$pq=lAg]%/(rRn~|">
+                <field name="broche">A0</field>
+              </block>
+            </value>
+            <next>
+              <block type="base_delay" id="{PlH}I)j9S|oW8^=/6+n">
+                <field name="unite">s</field>
+                <value name="DELAY_TIME">
+                  <block type="math_number" id="/;3V[6+r,[w1LjmvQ7x}">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="serial_writeln" id="F!x9!f`cm-d|ufQg]-,6"></block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

@@ -1,4 +1,4 @@
-#include <LedControl.h>
+#include <matrX.h>
 
 byte smile[]={
  B00000000,
@@ -22,27 +22,16 @@ byte triste[]={
 
 
 
-LedControl lc=LedControl(12,11,10,1);
-
-void afficher(byte s[]) {
-  for (char i=0; i<8; i++) {
-    lc.setRow(0,i,s[i]);
-  }
-}
-void effacer () {
-  lc.clearDisplay(0);
-}
+Matrice_SPI matrice;
 
 void setup() {
-  lc.shutdown(0,false);
-  lc.setIntensity(0,1);
-  lc.clearDisplay(0);
+  matrice.initialisation(12, 11, 10, 1);
 }
 
 void loop() {
-  afficher(smile);
+  matrice.afficher(smile, 0);
   delay(1*1000);
-  afficher(triste);
+  matrice.afficher(triste, 0);
   delay(1*1000);
 
 }

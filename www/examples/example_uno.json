@@ -1,0 +1,58 @@
+[
+    {
+        "source_url": "uno/blink.xml",
+        "source_text": "faire clignoter une DEL",
+        "image": "./uno/blink.png",
+        "link_url": "#modal_blink",
+        "visible": true
+    },
+	{
+        "source_url": "uno/bp.xml",
+        "source_text": "éteindre une DEL avec un bouton poussoir",
+        "image": "./uno/bp.png",
+        "link_url": "#modal_bp",
+        "visible": true
+    },
+	{
+        "source_url": "uno/buzzer.xml",
+        "source_text": "jouer 'joyeux anniversaire'",
+        "image": "./uno/buzzer.png",
+        "link_url": "#modal_buzzer",
+        "visible": true
+    },
+    {
+        "source_url": "uno/matrice.xml",
+        "source_text": "faire un smiley avec une matrice de DEL",
+        "image": "./uno/matrice.png",
+        "link_url": "#modal_matrice",
+        "visible": true
+    },
+	{
+        "source_url": "uno/dht.xml",
+        "source_text": "afficher l'humidité et la température",
+        "image": "./uno/dht.png",
+        "link_url": "#modal_dht",
+        "visible": true
+    },
+	{
+        "source_url": "uno/lcd.xml",
+        "source_text": "afficher un message sur un écran LCD",
+        "image": "./uno/lcd.png",
+        "link_url": "#modal_lcd",
+        "visible": true
+    },
+	{
+        "source_url": "uno/potar.xml",
+        "source_text": "afficher la valeur d'un potentiomètre",
+        "image": "./uno/potar.png",
+        "link_url": "#modal_potar",
+        "visible": true
+    },
+	{
+        "source_url": "uno/servo.xml",
+        "source_text": "déplacer un servomoteur",
+        "image": "./uno/servo.png",
+        "link_url": "#modal_servo",
+        "visible": true
+    }
+]
