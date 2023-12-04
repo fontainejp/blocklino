@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.3.3.6.css">
     <link rel="stylesheet" href="css/fontawesome.css">
     <script>
-      $(document).ready(function(){
+      window.addEventListener("load", function load(e){
         $("#bt1").click(function(){
           $("#p2").html("Vestibulum in nisi eget ipsum ornare rhoncus. Sed cursus ligula sit amet libero tincidunt, at ultricies lectus accumsan. In hac habitasse platea dictumst. Nam nec pretium lorem. Cras dapibus vitae diam quis porta. Donec ut pharetra erat, sed ornare ligula. Donec vulputate aliquam tellus, non luctus lorem. Donec congue auctor nibh, vitae porttitor nulla iaculis at. Phasellus vitae tempus ante. Vivamus volutpat ac elit nec tristique. Quisque eu ligula arcu. Suspendisse non turpis nec orci fringilla malesuada. Maecenas pharetra vulputate rutrum. Aenean sed lacus aliquet, consequat nisi mattis, porttitor tellus. Proin hendrerit rutrum luctus. Proin a rhoncus orci.");
           $("#p1").show();
@@ -34,8 +34,12 @@
     </script>
   </head>
   <body>
-    <h1>Mon premier script</h1>
-    <h3>Cliquer sur l&#039;un des boutons suivant</h3>
+    <h1>
+		Mon premier script
+	</h1>
+    <h3>
+		Cliquer sur l&#039;un des boutons suivant
+	</h3>
     <div class="btn-group">
       <button class="btn btn-success" id="bt1">
         <i class="fa fa-thumbs-o-up fa-lg"></i>
@@ -56,7 +60,9 @@
         <i class="fa fa-exclamation-triangle fa-lg"></i>
       </button>
     </div>
-    <h4>Lorem ipsum</h4>
+    <h4>
+		Lorem ipsum
+	</h4>
     <p id="p1">
       dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </p>

@@ -583,21 +583,12 @@ void Adafruit_Microbit_BLESerial::_received(
 
 /*************************************************************************************************/
 
-const uint8_t MICROBIT_SMILE[5] = {B00000000, B01010000, B00000000, B10001000,
-                                   B01110000};
+const uint8_t Adafruit_Microbit::HEART_SMALL[5] = {B00000, B01010, B01110, B00100, B00000};
 
-const uint8_t Adafruit_Microbit_Matrix::EMPTYHEART[5] = {
-    B01010, B10101, B10001, B01010, B00100,
-};
+const uint8_t Adafruit_Microbit::HAPPY[5] = {B00000, B01010, B00000, B10001, B01110};
 
-const uint8_t Adafruit_Microbit_Matrix::HEART[5] = {
-    B01010, B11111, B11111, B01110, B00100,
-};
+const uint8_t Adafruit_Microbit::HEART[5] = {B01010, B11111, B11111, B01110, B00100};
 
-const uint8_t Adafruit_Microbit_Matrix::NO[5] = {
-    B10001, B01010, B00100, B01010, B10001,
-};
+const uint8_t Adafruit_Microbit::SAD[5] = {B00000, B01010, B00000, B01110, B10001};
 
-const uint8_t Adafruit_Microbit_Matrix::YES[5] = {
-    B00000, B00001, B00010, B10100, B01000,
-};
+const uint8_t Adafruit_Microbit::CHESSBOARD[5] = {B10101, B01010, B10101, B01010, B10101};

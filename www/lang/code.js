@@ -63,12 +63,9 @@ Code.initLanguage = function() {
   $('#aboutModalLabel').text(Blockly.Msg['aboutModalLabel']);
   $('#cardLabel').text(Blockly.Msg['cardLabel']);
   $('#aboutcardLabel').text(Blockly.Msg['aboutcardLabel']);
-  $('#configModalLabel').text(Blockly.Msg['configModalLabel']);
-  $('#imageModalLabel').text(Blockly.Msg['imageModalLabel']);
-  $('#colorModalLabel').text(Blockly.Msg['btn_tint']);
+  $('#configModalLabel').text(Blockly.Msg['btn_config']);
   $('#usbModalLabel').text(Blockly.Msg['usbLabel']);
-  $('#versionModalLabel').text(Blockly.Msg['versionModalLabel']); 
-  $('#exampleModalLabel').text(Blockly.Msg['exampleModalLabel']); 
+  $('#exampleModalLabel').text(Blockly.Msg['btn_example']); 
   $('#variableModalLabel').text(Blockly.Msg['variableModalLabel']);
   $('#variablebody').text(Blockly.Msg['variablebody']);
   $('#labelToolboxDefinition').text(Blockly.Msg['labelToolboxDefinition']); 
@@ -89,13 +86,20 @@ Code.initLanguage = function() {
   $('#span_contact').text(Blockly.Msg['span_contact']);
   $('#span_lib_view').text(Blockly.Msg['view']);
   $('#span_lib_add').text(Blockly.Msg['library_add']);
-  $('#btn_close_config').text(Blockly.Msg['btn_close']);
   $('#btn_valid_config').text(Blockly.Msg['btn_valid']);
   $('#btn_valid_config_ffau').text(Blockly.Msg['btn_valid']);
   $('#btn_close_msg').text(Blockly.Msg['btn_close']);
   $('#btn_valid_msg').text(Blockly.Msg['btn_valid']);
   $('#btn_variable').text(Blockly.Msg['btn_variable']);
   $('#btn_detail').text(Blockly.Msg['details']);
+  $('#btn_download').text(Blockly.Msg['flash']);
+  $('#span_html').text(Blockly.Msg['btn_html']);
+  $('#span_games').text(Blockly.Msg['btn_games']);
+  $('#span_midi').text(Blockly.Msg['btn_midi']);
+  $('#span_turtle').text(Blockly.Msg['btn_turtle']);
+  $('#span_factory').text(Blockly.Msg['btn_factory']);
+  $('#span_local_check').text(Blockly.Msg['span_local_check']);
+  $('#span_local_go').text(Blockly.Msg['span_local_go']);
   if (window.localStorage.prog != "python") {
 	$('#btn_preview').attr('title', Blockly.Msg['btn_preview_ino']);
 	$('#btn_saveino').attr('title', Blockly.Msg['btn_save_ino']) 
@@ -118,14 +122,11 @@ Code.initLanguage = function() {
   $('#btn_saveXML').attr('title', Blockly.Msg['btn_saveXML']);
   $('#btn_fakeload').attr('title', Blockly.Msg['btn_fakeload']);
   $('#btn_term').attr('title', Blockly.Msg['btn_term']);
-  $('#btn_factory').attr('title', Blockly.Msg['btn_factory']);
   $('#btn_config').attr('title', Blockly.Msg['btn_config']);
   $('#btn_about').attr('title', Blockly.Msg['btn_about']);
   $('#btn_example').attr('title', Blockly.Msg['btn_example']);
-  $('#btn_html').attr('title', Blockly.Msg['btn_html']);
-  $('#btn_tint').attr('title', Blockly.Msg['btn_tint']);
-  $('#btn_games').attr('title', Blockly.Msg['btn_games']);
-  $('#btn_midi').attr('title', Blockly.Msg['btn_midi']);
+  $('#btn_tools').attr('title', Blockly.Msg['btn_tools']);
+  $('#btn_processing').attr('title', Blockly.Msg['btn_processing']);
   $("xml").find("category").each(function() {
 	if (!$(this).attr('id')) {
 	  $(this).attr('id', $(this).attr('name'));
@@ -138,3 +139,4 @@ document.write('<script src="lang/Blockly_' + Code.LANG + '.js"></script>\n');
 document.write('<script src="lang/Arduino_' + Code.LANG + '.js"></script>\n');
 document.write('<script src="lang/microbit_' + Code.LANG + '.js"></script>\n');
 document.write('<script src="lang/fresnel_' + Code.LANG + '.js"></script>\n');
+if (window.localStorage.distant_url.indexOf('https://') !== -1) document.write('<script src="blocs&generateurs/mes_blocs.js"></script>\n')

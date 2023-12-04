@@ -1,21 +1,24 @@
-﻿var { ipcRenderer, shell, clipboard } = require("electron")
-var remote = require('electron').remote
+﻿var { ipcRenderer, shell, clipboard } = require('electron')
 var { exec } = require('child_process')
+var remote = require('electron').remote
 var sp = require('serialport')
 var fs = require('fs')
 var tableify = require('tableify')
 var StreamZip = require('node-stream-zip')
-//var http = require('http')
-//var host = '192.168.0.29'
 var appVersion = window.require('electron').remote.app.getVersion()
-var chemin = process.resourcesPath // .../resources/
 var checkBox = document.getElementById('verifyUpdate')
 var portserie = document.getElementById('portserie')
 var messageDiv = document.getElementById('messageDIV')
+var chemin = process.resourcesPath // .../resources/
 
 window.addEventListener('load', function load(event){
 	var electron = remote.getCurrentWindow()
 	localStorage.setItem("verif",false)
+	var list = []
+	$("#toolbox").find("category").each(function(i) {
+		list.push($(this).attr("name"))
+	})
+	localStorage.setItem("choice",list)	
 	if(!electron.isMaximized())electron.maximize()
 	function itsOK(value){
 		messageDiv.style.color = '#009000'
@@ -28,6 +31,40 @@ window.addEventListener('load', function load(event){
 			$('#btn_close_message').css('display', "inline")
 			if (localStorage.getItem('prog') != "python") $('#btn_detail').css("display", "block")
 		}	
+	}
+	function download(url, dest) {
+		// on créé un stream d'écriture qui nous permettra
+		// d'écrire au fur et à mesure que les données sont téléchargées
+		const file = fs.createWriteStream(dest)
+		// on lance le téléchargement
+		const request = https.get(url, (response) => {
+			// on vérifie la validité du code de réponse HTTP
+			if (response.statusCode !== 200) {
+				return window.localStorage.console = 'Response status was ' + response.statusCode ;
+			}
+			// écrit directement le fichier téléchargé
+			response.pipe(file)
+			// lorsque le téléchargement est terminé
+			// on appelle le callback
+			file.on('finish', () => {
+				// close étant asynchrone,
+				// le console.log est appelé lorsque close a terminé
+				file.close(window.localStorage.console = "téléchargé")
+			})
+		})
+		// check for request error too
+		request.on('error', (err) => {
+			fs.unlink(dest)
+			window.localStorage.console = err.message
+		})
+		// si on rencontre une erreur lors de l'écriture du fichier
+		// on efface le fichier puis on passe l'erreur au callback
+		file.on('error', (err) => {
+			// on efface le fichier sans attendre son effacement
+			// on ne vérifie pas non plus les erreur pour l'effacement
+			fs.unlink(dest)
+			window.localStorage.console = err.message
+		})
 	}
 	sp.list(function(err,ports){
 		if (ports.length === 0) {
@@ -120,7 +157,7 @@ window.addEventListener('load', function load(event){
 		})
 	})
 	$('#btn_quit').on('click', function(){
-		electron.close()
+		if (window.confirm(Blockly.Msg.quit)) electron.close()
 	})
 	$('#btn_max').on('click', function(){
 		if(electron.isMaximized()){
@@ -172,13 +209,25 @@ window.addEventListener('load', function load(event){
 		if (localStorage.getItem("prog") == "python") { ipcRenderer.send("repl") } else { ipcRenderer.send("prompt") }
 	})
 	$('#btn_html').on('click', function(){
-		ipcRenderer.send("html")	
+		//ipcRenderer.send("html")	
+		exec('BLOCKLY-WEB', {cwd: chemin+'/../compilation/web/'}, function(err, stdout, stderr){
+			// error
+		})
 	})
 	$('#btn_factory').on('click', function(){
 		ipcRenderer.send("factory")
 	})
 	$('#btn_games').on('click', function(){
-		ipcRenderer.send("games")
+		//ipcRenderer.send("games")
+		exec('BLOCKLY-GAMES', {cwd: chemin+'/../compilation/games/'}, function(err, stdout, stderr){
+			// error
+		})
+	})
+	$('#btn_turtle').on('click', function(){
+		//ipcRenderer.send("turtle")
+		exec('TURTLE', {cwd: chemin+'/../compilation/turtle/'}, function(err, stdout, stderr){
+			// error
+		})
 	})
 	$('#btn_verify').on('click', function(){
 		if (localStorage.getItem('content') == "off") {
@@ -410,7 +459,7 @@ window.addEventListener('load', function load(event){
 			// error
 		})
 	})
-	$('#btn_library_view').on("click", function(){
+	$('#btn_library_view').on('click', function(){
 		fs.readdir(chemin+"/../compilation/arduino/libraries", (err, files) => {
 			var dir_img = document.getElementById('span_lib_dir') 
 			if(files.length%3==0){
@@ -427,19 +476,39 @@ window.addEventListener('load', function load(event){
 		})
 		//shell.openExternal(chemin+"\\..\\compilation\\arduino\\libraries\\")
 	})
-	$('#btn_library_add').on("click", function(){
+	$('#btn_library_add').on('click', function(){
 		ipcRenderer.send('addLIB')
 	})
-	$('#btn_cache_view').on("click", function(){
+	$('#btn_cache_view').on('click', function(){
 		for (var i = 0; i < localStorage.length; i++){
 			$("#span_cache_dir").append(localStorage.key(i), " : ")
-			if (localStorage.getItem(localStorage.key(i)).length>55){
-				var newText = localStorage.getItem(localStorage.key(i)).substr(0,55)
+			if (localStorage.getItem(localStorage.key(i)).length>58){
+				var newText = localStorage.getItem(localStorage.key(i)).substr(0,58)
 				$("#span_cache_dir").append(newText, " ...")
 			} else {
 				$("#span_cache_dir").append(localStorage.getItem(localStorage.key(i)))
 			}
 			$("#span_cache_dir").append("<br>")
+		}
+	})
+	$('#btn_distant').on('click', function(){
+		if ($("#distant_adress").val().indexOf('https://') !== -1) {
+			localStorage.setItem("distant_url", $("#distant_adress").val())
+			$.ajax({
+				type: "GET",
+				url: $("#distant_adress").val(),
+				async : false
+			})
+			.done(function(data){
+				localStorage.setItem("distant_file", "ok")
+				fs.writeFile(chemin+'/../www/blocs&generateurs/mes_blocs.js', data, function(err){
+					if (err) return console.log(err)
+				})
+			})
+			.fail(function(data) {
+				localStorage.setItem("distant_file", "erreur")
+			})
+			location.reload()
 		}
 	})
 	$('#modal_cache').on('hidden.bs.modal', function(e) {
@@ -598,7 +667,7 @@ window.addEventListener('load', function load(event){
 		}
 	})
 	ipcRenderer.on('BlockAppended', function(event, bloc, appendData, index){
-		var cat = $("#toolbox").children("category")
+		var cat = $("#toolbox").find("category")
 		var newBlock = document.createElement("block")
 		var attr = document.createAttribute("type")
 		attr.value = bloc
@@ -617,16 +686,6 @@ window.addEventListener('load', function load(event){
 		nBlock.initSvg()
 		nBlock.render()
 		Blockly.getMainWorkspace().updateToolbox(BlocklyDuino.buildToolbox())
+		$("#toggle").show()
 	})
-	/*var requestListener = function (req, res) {
-		res.setHeader("Content-Type", "text/html")
-		res.writeHead(200)
-		res.end("bravo bryan !")
-	}
-	var server = http.createServer(requestListener)
-	server.listen(8000, host, function(){
-		console.log("Server is running,")
-		console.log("ip : ",host)
-		console.log("port : ",8000)
-	})*/
 })

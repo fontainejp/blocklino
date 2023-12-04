@@ -89,6 +89,7 @@ Blockly.Python["base_define"]=function(block){
 	return""
 };
 Blockly.Python["base_setup_loop"]=function(){return""};
+Blockly.Python["coder"]=function(){return""};
 /*	temps  */
 Blockly.Python["base_delay"]=function(block){
 	var carte = localStorage.getItem('card');

@@ -16,7 +16,11 @@ Blockly.Arduino["colour"]=function(block){
 	return [code, Blockly.Arduino.ORDER_ATOMIC]
 };
 Blockly.Python["colour"]=function(block){
-	
+	var value_colour = block.getFieldValue('_colour');
+	var colorR=value_colour[1] + value_colour[2], colorG=value_colour[3] + value_colour[4], colorB=value_colour[5] + value_colour[6];
+	var red=parseInt(colorR,16), green=parseInt(colorG,16), blue=parseInt(colorB,16);
+	var code = red+', '+green+', '+blue;
+	return [code, Blockly.Python.ORDER_ATOMIC]
 };
 //////////
 Blockly.Blocks["colour_rvb"]={init:function(){
@@ -40,7 +44,11 @@ Blockly.Arduino["colour_rvb"]=function(block){
 	return [code, Blockly.Arduino.ORDER_ATOMIC]
 };
 Blockly.Python["colour_rvb"]=function(block){
-	
+	var value_r = Blockly.Python.valueToCode(block, '_r', Blockly.Python.ORDER_ATOMIC);
+	var value_v = Blockly.Python.valueToCode(block, '_v', Blockly.Python.ORDER_ATOMIC);
+	var value_b = Blockly.Python.valueToCode(block, '_b', Blockly.Python.ORDER_ATOMIC);
+	var code = value_r+', '+value_v+', '+value_b;
+	return [code, Blockly.Python.ORDER_ATOMIC]	
 };
 //////////
 Blockly.Blocks["colour_rvb_hex"]={init:function(){
@@ -59,5 +67,9 @@ Blockly.Arduino["colour_rvb_hex"]=function(block){
 	return [code, Blockly.Arduino.ORDER_ATOMIC]
 };
 Blockly.Python["colour_rvb_hex"]=function(block){
-	
+	var value_colour = block.getFieldValue('_text');
+	var colorR=value_colour[0] + value_colour[1], colorG=value_colour[2] + value_colour[3], colorB=value_colour[4] + value_colour[5];
+	var red=parseInt(colorR,16), green=parseInt(colorG,16), blue=parseInt(colorB,16);
+	var code = red+', '+green+', '+blue;
+	return [code, Blockly.Python.ORDER_ATOMIC]
 };

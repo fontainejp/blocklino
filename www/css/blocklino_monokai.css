@@ -43,6 +43,9 @@ body {
 .btn_color {
 	color: white;
 }
+.btn_color_menu {
+	color: gray;
+}
 .arduino_card_mini_picture_div {
 	position:absolute;
 	top:5px;

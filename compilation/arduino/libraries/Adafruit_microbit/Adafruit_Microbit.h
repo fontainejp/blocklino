@@ -26,11 +26,6 @@ public:
   void print(int i);
   void print(double f, int precision = 3);
 
-  static const uint8_t EMPTYHEART[5], ///< an empty heart icon
-      HEART[5],                       ///< full heart icon
-      NO[5],                          ///< X icon
-      YES[5];                         ///< Check icon
-
 private:
   void startTimer();
 
@@ -94,5 +89,10 @@ public:
   void begin(void);
 
   uint8_t getDieTemp(void);
+  static const uint8_t HEART_SMALL[5], 
+      HEART[5],
+      HAPPY[5],
+      SAD[5],
+      CHESSBOARD[5]; 
 };
 #endif

@@ -30,6 +30,14 @@ Blockly.Blocks["soft_write"]={init:function(){
         this.setNextStatement(true, null);
         this.setTooltip(Blockly.Msg.SSERIAL_Write_tooltip)}
 };
+Blockly.Blocks["soft_print"]={init:function(){
+        this.setHelpUrl(Blockly.Msg.HELPURL);
+        this.setColour("#006000");
+        this.appendValueInput("CONTENT").appendField(Blockly.Msg.SSERIAL_Write);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip(Blockly.Msg.SSERIAL_Write_tooltip)}
+};
 Blockly.Blocks["soft_available"]={init:function(){
         this.setHelpUrl(Blockly.Msg.HELPURL);
         this.setColour("#006000");
@@ -310,6 +318,17 @@ Blockly.Blocks['base_code_entree']={init:function(){
     this.setColour("#4a235a");
 	this.setHelpUrl(Blockly.Msg.HELPURL);this.setTooltip(Blockly.Msg.code_tooltip)}
 };
+Blockly.Blocks["coder"]={init:function(){
+	this.appendDummyInput().appendField("code");
+	//this.appendDummyInput();
+	this.setHelpUrl(Blockly.Msg.HELPURL);
+    this.setColour("#4a235a");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip(Blockly.Msg.code_tooltip);
+	this.setCoderText("");
+	}
+};
 /*	temps  */
 Blockly.Blocks["millis"]={init:function(){
 	var prog = window.localStorage.prog;
@@ -355,7 +374,8 @@ Blockly.Blocks["base_delay"]={init:function(){
         this.setInputsInline(true);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
-        this.setTooltip(Blockly.Msg.ARDUINO_BASE_DELAY_TOOLTIP)}
+        this.setTooltip(Blockly.Msg.ARDUINO_BASE_DELAY_TOOLTIP);
+	}
 };
 Blockly.Blocks["inout_pulsein"]={init:function(){
         this.setColour("#bbbbbb");
@@ -387,11 +407,19 @@ Blockly.Blocks["bluetooth_init"]={init:function(){
         this.setTooltip(Blockly.Msg.bluetooth_init_tooltip)}
 };
 Blockly.Blocks["bluetooth_a"]={init:function(){
-        this.appendValueInput("data_s").setCheck("Number").appendField(Blockly.Msg.bluetooth2);
+        this.appendValueInput("data_s").appendField(Blockly.Msg.bluetooth2);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setColour("#006000");
         this.setTooltip(Blockly.Msg.bluetooth2_tooltip);
+        this.setHelpUrl(Blockly.Msg.bluetooth_helpurl)}
+};
+Blockly.Blocks["bluetooth_print"]={init:function(){
+        this.appendValueInput("data_s").appendField(Blockly.Msg.bluetooth_print);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour("#006000");
+        this.setTooltip(Blockly.Msg.bluetooth_print_tooltip);
         this.setHelpUrl(Blockly.Msg.bluetooth_helpurl)}
 };
 Blockly.Blocks["bluetooth_b"]={init:function(){
@@ -714,7 +742,7 @@ Blockly.Blocks["esp8266_create_container"]={init:function(){
 };
 /*  stockage  */
 Blockly.Blocks['eeprom_write']={init:function(){
-    this.appendValueInput("val").setCheck("Number")
+    this.appendValueInput("val")
         .appendField(Blockly.Msg.STOCK1);
 	this.appendValueInput("adr")
         .setCheck("Number")

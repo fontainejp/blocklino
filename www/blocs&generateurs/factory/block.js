@@ -137,7 +137,7 @@ Blockly.Blocks['field_static'] = { init: function() {
     this.setColour("#00cc00");
     this.appendDummyInput()
         .appendField('texte')
-        .appendField(new Blockly.FieldTextInput(''), 'TEXT');
+        .appendField(new Blockly.FieldTextInput('action'), 'TEXT');
     this.setPreviousStatement(true, 'Field');
     this.setNextStatement(true, 'Field')}
 };
@@ -145,7 +145,7 @@ Blockly.Blocks['field_input'] = { init: function() {
     this.setColour("#00cc00");
     this.appendDummyInput()
         .appendField('texte pour utilisateur')
-        .appendField(new Blockly.FieldTextInput(''), 'TEXT')
+        .appendField(new Blockly.FieldTextInput('abc'), 'TEXT')
         .appendField(',')
         .appendField(new Blockly.FieldTextInput('_text'), 'FIELDNAME');
     this.setPreviousStatement(true, 'Field');

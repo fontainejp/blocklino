@@ -1,15 +1,16 @@
 'use strict';
 
 var BlocklyDuino = {};
+var mes_blocs = [];
 BlocklyDuino.selectedToolbox = "toolbox_arduino_all";
 BlocklyDuino.selectedCard = "uno";
 BlocklyDuino.content = "on";
-BlocklyDuino.contentHTML = "on";
 BlocklyDuino.theme = "sqlserver";
 BlocklyDuino.renderer = "blockly";
 BlocklyDuino.size = "14px";
 BlocklyDuino.workspace = null;
 BlocklyDuino.loadOnce = "";
+BlocklyDuino.distant_url = "";
 BlocklyDuino.prog_ino = "/* C/C++ */\n\nvoid setup() {\n\n}\nvoid loop() {\n\n}";
 BlocklyDuino.prog_py = "# Python\n\nwhile True:\n  \n";
 BlocklyDuino.prog_microbit = "# Python\n\nfrom microbit import *\n\nwhile True:\n  \n";
@@ -22,13 +23,14 @@ BlocklyDuino.init = function() {
 	if ($("#toolboxes").val()=="toolbox_fresnel_all") {
 		bTD[0].style.width = "290px"
 	} else {
-		bTD[0].style.width = "160px"
+		bTD[0].style.width = "180px"
 	}
 	BlocklyDuino.bindFunctions();
 	BlocklyDuino.workspace.render();
 	BlocklyDuino.workspace.addChangeListener(BlocklyDuino.renderArduinoCodePreview);
 	BlocklyDuino.loadFile();
 	$('[data-toggle="tooltip"]').tooltip();
+	$('[rel="tooltip"]').tooltip({trigger: "hover"});
 	window.addEventListener('unload', BlocklyDuino.backupBlocks, false)
 }
 BlocklyDuino.backupBlocks = function() {
@@ -154,7 +156,9 @@ BlocklyDuino.loadConfig = function() {
 	var theme = window.localStorage.theme;
 	var renderer = window.localStorage.renderer;
 	var size = window.localStorage.size;
-	if (card===undefined) {
+	var toolboxs = window.localStorage.toolbox;
+	var distant_url = window.localStorage.distant_url;
+	if (card === undefined) {
 		window.localStorage.card = BlocklyDuino.selectedCard;
 		window.localStorage.prog = profile[BlocklyDuino.selectedCard].prog;
 		window.localStorage.toolbox = BlocklyDuino.selectedToolbox;
@@ -170,7 +174,7 @@ BlocklyDuino.loadConfig = function() {
 		$("#toolboxes").val(toolbox);
 		BlocklyDuino.loadToolboxDefinition(toolbox);
 	}
-	if (content===undefined) {
+	if (content === undefined) {
 		window.localStorage.content = BlocklyDuino.content;
 		$('#codeORblock').bootstrapToggle(BlocklyDuino.content);
 		$('#btn_search').addClass("hidden")
@@ -202,7 +206,18 @@ BlocklyDuino.loadConfig = function() {
 		$('#fontsize').val(size);
 		document.getElementById('content_code').style.fontSize = size
 	}
+	if (toolboxs == "toolbox_fresnel_all") {
+		$('#btn_bin').removeClass("hidden");
+	} else {
+		$('#btn_bin').addClass("hidden");
+	}
+	if (distant_url === undefined) {
+		window.localStorage.distant_url = BlocklyDuino.distant_url
+	} else {
+		$("#distant_adress").attr("placeholder", window.localStorage.distant_url)
+	}
 	if (renderer === undefined) {
+		renderer = BlocklyDuino.renderer
 		window.localStorage.renderer = BlocklyDuino.renderer
 	}
 }
@@ -286,7 +301,7 @@ BlocklyDuino.change_card = function() {
 BlocklyDuino.discard = function() {
 	if (window.confirm(Blockly.Msg['discard'])) {
 		$('#span_file').text("")
-		if (localStorage.getItem('content') == "off") {
+		if (window.localStorage.content == "off") {
 			if (window.localStorage.prog == "python") {
 				editor.setValue(BlocklyDuino.prog_py,1)
 			} else {
@@ -300,14 +315,14 @@ BlocklyDuino.discard = function() {
 	}
 }
 BlocklyDuino.Undo = function() {
-	if (localStorage.getItem("content") == "on") {
+	if (window.localStorage.content == "on") {
 		Blockly.mainWorkspace.undo(0)
 	} else {
 		editor.undo()
 	}
 }
 BlocklyDuino.Redo = function() {
-	if (localStorage.getItem("content") == "on") {
+	if (window.localStorage.content == "on") {
 		Blockly.mainWorkspace.undo(1)
 	} else {
 		editor.redo()
@@ -319,6 +334,7 @@ BlocklyDuino.search = function() {
 BlocklyDuino.bindFunctions = function() {
 	$('#fontsize').on("change", function(){
 		document.getElementById('content_code').style.fontSize = $(this).val();
+		document.getElementById('fenetre_term').style.fontSize = $(this).val();
 		window.localStorage.size = $(this).val()
 	});
 	$('#theme').on("change", BlocklyDuino.apply_theme);
@@ -404,8 +420,6 @@ BlocklyDuino.theme_monokai = function () {
 	document.getElementById("btn_fakeload").className = document.getElementById("btn_fakeload").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
 	document.getElementById("btn_saveXML").className = document.getElementById("btn_saveXML").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
 	document.getElementById("btn_config").className = document.getElementById("btn_config").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
-	document.getElementById("btn_html").className = document.getElementById("btn_html").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
-	document.getElementById("btn_factory").className = document.getElementById("btn_factory").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
 	document.getElementById("btn_card").className = document.getElementById("btn_card").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
 	document.getElementById("btn_usb").className = document.getElementById("btn_usb").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
 	document.getElementById("btn_about").className = document.getElementById("btn_about").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
@@ -416,12 +430,11 @@ BlocklyDuino.theme_monokai = function () {
 	document.getElementById("btn_saveino").className = document.getElementById("btn_saveino").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
 	document.getElementById("btn_copy").className = document.getElementById("btn_copy").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
 	document.getElementById("btn_search").className = document.getElementById("btn_search").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
-	document.getElementById("btn_tint").className = document.getElementById("btn_tint").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
 	document.getElementById("btn_term").className = document.getElementById("btn_term").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
 	document.getElementById("btn_verify").className = document.getElementById("btn_verify").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
 	document.getElementById("btn_bin").className = document.getElementById("btn_bin").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
-	document.getElementById("btn_games").className = document.getElementById("btn_games").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
-	document.getElementById("btn_midi").className = document.getElementById("btn_midi").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
+	document.getElementById("btn_tools").className = document.getElementById("btn_tools").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
+	document.getElementById("btn_factory").className = document.getElementById("btn_factory").className.replace( /(?:^|\s)btn-default(?!\S)/g , ' btn-secondary' );
 }
 BlocklyDuino.theme_sqlserver = function () {
 	document.getElementById("theme_css").href = "css/blocklino_sqlserver.css";
@@ -431,8 +444,6 @@ BlocklyDuino.theme_sqlserver = function () {
 	document.getElementById("btn_fakeload").className = document.getElementById("btn_fakeload").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
 	document.getElementById("btn_saveXML").className = document.getElementById("btn_saveXML").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
 	document.getElementById("btn_config").className = document.getElementById("btn_config").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
-	document.getElementById("btn_html").className = document.getElementById("btn_html").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
-	document.getElementById("btn_factory").className = document.getElementById("btn_factory").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
 	document.getElementById("btn_card").className = document.getElementById("btn_card").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
 	document.getElementById("btn_usb").className = document.getElementById("btn_usb").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
 	document.getElementById("btn_about").className = document.getElementById("btn_about").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
@@ -443,12 +454,11 @@ BlocklyDuino.theme_sqlserver = function () {
 	document.getElementById("btn_saveino").className = document.getElementById("btn_saveino").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );	
 	document.getElementById("btn_copy").className = document.getElementById("btn_copy").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );	
 	document.getElementById("btn_search").className = document.getElementById("btn_search").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );	
-	document.getElementById("btn_tint").className = document.getElementById("btn_tint").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
 	document.getElementById("btn_term").className = document.getElementById("btn_term").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
 	document.getElementById("btn_verify").className = document.getElementById("btn_verify").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
 	document.getElementById("btn_bin").className = document.getElementById("btn_bin").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
-	document.getElementById("btn_games").className = document.getElementById("btn_games").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
-	document.getElementById("btn_midi").className = document.getElementById("btn_midi").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
+	document.getElementById("btn_tools").className = document.getElementById("btn_tools").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
+	document.getElementById("btn_factory").className = document.getElementById("btn_factory").className.replace( /(?:^|\s)btn-secondary(?!\S)/g , ' btn-default' );
 }
 BlocklyDuino.apply_theme = function () {
 	var new_theme = $('#theme').val();
@@ -474,8 +484,7 @@ BlocklyDuino.checkAll = function () {
         $('#modal-body-config input:checkbox[id^=checkbox_]').each(function() {
             this.checked = true;
         });
-    } 
-      else {
+    } else {
       $('#modal-body-config input:checkbox[id^=checkbox_]').each(function() {
             this.checked = false;
         });
@@ -523,9 +532,11 @@ BlocklyDuino.changeToolbox = function() {
 	$('#configModal').modal('hide');
 	var bTD = document.getElementsByClassName('blocklyToolboxDiv');
 	if ($("#toolboxes").val()=="toolbox_fresnel_all") {
+		$('#btn_bin').removeClass("hidden");
 		bTD[0].style.width = "290px"
 	} else {
-		bTD[0].style.width = "160px"
+		$('#btn_bin').addClass("hidden");
+		bTD[0].style.width = "180px"
 	}
 	if (new_lang != window.localStorage.lang){
 		window.localStorage.lang = new_lang;
@@ -558,17 +569,28 @@ BlocklyDuino.loadToolboxDefinition = function(toolboxFile) {
 		url: "./toolbox/" + toolboxFile + ".xml",
 		dataType: "xml",
 		async : false
-	}).done(function(data){
+	})
+	.done(function(data){
 		var toolboxXml = '<xml id="toolbox" style="display: none">' + $(data).find('toolbox').html() + '</xml>';
+		//console.log($(data).find('toolbox').html())
 		$("#toolbox").remove();
 		$('body').append(toolboxXml);	
 		$("xml").find("category").each(function() {
-			if (!$(this).attr('id')) {
-				$(this).attr('id', $(this).attr('name'));
-				$(this).attr('name', Blockly.Msg[$(this).attr('name')])
+			if (!$(this).attr("id")) {
+				$(this).attr("id", $(this).attr("name"));
+				$(this).attr("name", Blockly.Msg[$(this).attr("name")])
 			}
 		})
-	}).fail(function(data) {
+		var cat = $("#toolbox").find("category")
+		mes_blocs.forEach(function(bloc){
+			var newBlock = document.createElement("block")
+			var attr = document.createAttribute("type")
+			attr.value = bloc
+			newBlock.setAttributeNode(attr)
+			cat[cat.length-1].appendChild(newBlock)
+		})
+	})
+	.fail(function(data) {
 		$("#toolbox").remove()
 	})
 }
@@ -585,17 +607,34 @@ BlocklyDuino.buildExamples = function() {
 			$("#includedContent").empty();
 			$.each(data, function(i, example){
 				if (example.visible) {
-					var line = "<tr><td>"
-							   + "<a href='?url=./examples/"+example.source_url+"'>" + example.source_text + "</a>"
-							   + "</td><td>"
-							   + "<a href='"+example.link_url+"' data-toggle='modal'>"
-							   + "<img class='vignette' src='./examples/"+example.image+"'></a>"
-							   + "</td></tr>";
+					var line = "<tr><td><input type='button' onClick='BlocklyDuino.sure(\""
+								+ example.source_url + "\",\"" + example.name + "\")' value='>'></td>"
+							    + "<td>" + example.source_text
+							    + "</td><td>"
+							    + "<a href='"+example.link_url+"' data-toggle='modal'>"
+							    + "<img class='vignette' src='./examples/"+example.image+"'></a>"
+							    + "</td></tr>";
 					$("#includedContent").append(line);
 				}
-			});
+			})
 		}
-	});
+	})
+}
+BlocklyDuino.sure=function(theLink, theName){
+	if (window.confirm(Blockly.Msg['discard'])) {
+		$("#exampleModal").modal("hide");
+		if (window.localStorage.content=="on") {
+			$.get(theLink, function(data) { 
+				$('#span_file').text(" - "+ theName);
+				if (data) BlocklyDuino.loadBlocks(data);
+			}, 'text')
+		} else {
+			$.get(theLink+".ino", function(data) { 
+				$('#span_file').text(" - "+ theName)
+				if (data) editor.setValue(data,1)
+			}, 'text')
+		}
+	}
 }
 BlocklyDuino.cardPicture_change = function() {
 	if ($("#pinout").val()) {

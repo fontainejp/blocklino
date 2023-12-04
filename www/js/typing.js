@@ -160,3 +160,7 @@ Blockly.Blocks.soft_write.getBlockType = function() {
 Blockly.Blocks.soft_available.getBlockType = function() {
 	return Blockly.Types.BOOLEAN;
 };
+// structure
+Blockly.Blocks.coder.getBlockType = function() {
+	return Blockly.Types.BOOLEAN;
+};

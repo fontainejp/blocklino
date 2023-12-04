@@ -1180,7 +1180,7 @@ Blockly.Blocks["inout_angle_maths"] = {
         this.setHelpUrl(Blockly.Msg.HELPURL);
         this.appendDummyInput("").appendField(new Blockly.FieldAngle("90"), "ANGLE");
         this.setOutput(true, "Number");
-        this.setTooltip("un angle.")
+        this.setTooltip("angle")
     }
 };
 Blockly.Blocks["intervalle"] = {

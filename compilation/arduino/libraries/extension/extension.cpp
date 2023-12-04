@@ -59,6 +59,14 @@ void Extension::bargraphe_allumer(float del){
 	setData(_state);
 }
 
+void Extension::bargraphe_number(unsigned char led) {
+	unsigned char _state[]={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+    led = max(1, min(10, led));
+	led--;
+	_state[led] = ~(~0 << (unsigned char)(8));
+    setData(_state);
+}
+
 void Extension::rvb(byte pinR, byte pinV, byte pinB){
 	pinMode(pinR, OUTPUT);
 	pinMode(pinV, OUTPUT);

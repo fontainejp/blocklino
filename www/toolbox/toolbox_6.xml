@@ -13,7 +13,7 @@
 		<block type="base_define"></block>
 	</category>
 	<category name="CAT_ARDUINO_TIME" colour="#bbbbbb">
-			<block type="base_delay"></block>
+		<block type="base_delay"></block>
 	</category>
 	<category name="CAT_del" colour="#00929F">
 		<block type="inout_buildin_led"></block>
@@ -27,11 +27,11 @@
 		<block type="LCD_Keypad_Shield_DFR_09_RAZ"></block>
 	</category>
 	<category name="CAT_ARDUINO_matrice8x8" colour="#00929F">
-			<block type="matrice_init"></block>
-			<block type="matrice_symbole"></block>
-			<block type="matrice8x8_aff"></block>
-			<block type="matrice8x8_efface"></block>
-		</category>
+		<block type="matrice_init"></block>
+		<block type="matrice_symbole"></block>
+		<block type="matrice8x8_aff"></block>
+		<block type="matrice8x8_efface"></block>
+	</category>
 	<category name="CAT_servo" colour="#00929F">
 		<block type="servo_move"></block>
 	</category>

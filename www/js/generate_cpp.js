@@ -218,11 +218,14 @@ Blockly.Arduino.quote_ = function(string) {
 };
 Blockly.Arduino.scrub_ = function(block, code) {
   if (code === null) { return ''; }
-  var commentCode = '';
+  var commentCode = '', coderCode='';
   if (!block.outputConnection || !block.outputConnection.targetConnection) {
-    var comment = block.getCommentText();
+    var comment = block.getCommentText(), coder = block.getCoderText();
     if (comment) {
       commentCode += this.prefixLines(comment, '// ') + '\n';
+    }
+    if (coder) {
+      coderCode += this.prefixLines(coder, '') + '\n';
     }
     for (var x = 0; x < block.inputList.length; x++) {
       if (block.inputList[x].type == Blockly.INPUT_VALUE) {
@@ -235,10 +238,21 @@ Blockly.Arduino.scrub_ = function(block, code) {
         }
       }
     }
+    for (var x = 0; x < block.inputList.length; x++) {
+      if (block.inputList[x].type == Blockly.INPUT_VALUE) {
+        var childBlock = block.inputList[x].connection.targetBlock();
+        if (childBlock) {
+          var coder = this.allNestedCodes(childBlock);
+          if (coder) {
+            coderCode += this.prefixLines(coder, '');
+          }
+        }
+      }
+    }
   }
   var nextBlock = block.nextConnection && block.nextConnection.targetBlock();
   var nextCode = this.blockToCode(nextBlock);
-  return commentCode + code + nextCode;
+  return commentCode + coderCode + code + nextCode;
 };
 Blockly.Arduino.getArduinoType_ = function(typeBlockly) {
   switch (typeBlockly.typeId) {

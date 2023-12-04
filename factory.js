@@ -1,7 +1,8 @@
 var remote = require('electron').remote 
-var { ipcRenderer } = require("electron")
+var { ipcRenderer, clipboard } = require('electron')
 var fs = require('fs')
-var chemin = process.resourcesPath // .../resources/
+var mediaFactory = process.resourcesPath + "/../www/media/factory/"
+var blockFactory = process.resourcesPath + "/../www/blocs&generateurs/factory/"
 
 function loadBF(file) {
 	$.get(file, function(data){ 
@@ -10,16 +11,18 @@ function loadBF(file) {
 			mainWorkspace.clear()
 			Blockly.Xml.domToWorkspace(xml, mainWorkspace)
 			mainWorkspace.render()
-			var elem = xml.getElementsByTagName("language")[0]
+			var elem = $(xml).find("language")[0]
 			var node = elem.childNodes[0]
 			localStorage.setItem("code_bf", node.nodeValue)
+			editor.setValue(node.nodeValue,1)
 		}
-	}, 'text')
+	}, "text")
 }
 
 window.addEventListener('load', function load(event){
 	var window = remote.getCurrentWindow()
 	if(!window.isMaximized())window.maximize()
+	$('[rel="tooltip"]').tooltip({trigger: "hover"})
 	$('#btn_quit').on('click', function(){
 		window.close()
 	})
@@ -33,21 +36,23 @@ window.addEventListener('load', function load(event){
         }
 	})
 	$('#btn_append').on('click', function(){
-		$("#message").modal("show")
-		$('#messageDiv').html("")
-		var i = 0
-		var cat = localStorage.getItem("toolboxids").split(",")
-		var selectTool = document.createElement("select")
-		selectTool.size = "7"
-		selectTool.multiple = "multiple"
-		selectTool.id = "toolchoice"
-		for (var i = 0; i < cat.length; i++) { 
+		$('#message').modal("show")
+		var selectList = document.createElement("select")
+		selectList.size = "10"
+		selectList.id = "toolchoice"
+		var messageDiv = document.getElementById('messageDIV')
+		messageDiv.append(selectList)
+		var list = localStorage.getItem('choice').split(",")
+		var sel = document.getElementById('toolchoice')
+		for (var i = 0; i < list.length; i++) { 
 			var opt = document.createElement('option')
-			opt.value = i;
-            opt.innerHTML = Blockly.Msg[cat[i]]
-			selectTool.appendChild(opt)
+			opt.value = i
+            opt.innerHTML = list[i]
+			sel.append(opt)
 		}
-		document.getElementById('messageDIV').appendChild(selectTool)
+	})
+	$('#message').on('hidden.bs.modal', function(e) {
+		$("#messageDIV").empty()
 	})
 	$('#btn_appendOK').on('click', function(){
 		if ($("#toolchoice").val()) {
@@ -58,11 +63,11 @@ window.addEventListener('load', function load(event){
 			new_element.appendChild(document.createTextNode(dataG))
 			xml.insertBefore(new_element, xml.childNodes[0])
 			var dataX = Blockly.Xml.domToPrettyText(xml)
-			fs.writeFileSync(chemin+'/../www/blocs&generateurs/factory/' +blockType+ '.bf', dataX)
+			fs.writeFileSync(blockFactory + blockType + '.bf', dataX)
 			var appendData = dataB + "\n" + dataG + "\n////////////////////\n"
-			fs.appendFileSync(chemin+'/../www/blocs&generateurs/factory/append.js', appendData)
+			fs.appendFileSync(blockFactory + "append.js", appendData)
 			var place = $("#toolchoice").val()
-			ipcRenderer.send("appendBlock", blockType, appendData, place[0])
+			ipcRenderer.send("appendBlock", blockType, appendData, place)
 			window.close()
 		} else $("#message").modal("hide")
 	})
@@ -89,6 +94,29 @@ window.addEventListener('load', function load(event){
 	$('#btn_open').on('click', function(){
 		ipcRenderer.send('openBF')
 	})
+	$('#btn_media').on('click', function(){
+		var list = document.getElementById("menu_media")
+		var files = fs.readdirSync(mediaFactory)
+		if (list.childNodes.length>3) for (var i=0 ; i<files.length ; i++) list.removeChild(list.lastChild)
+		files.forEach(function(file) {
+			var li = document.createElement("li")
+			var link = document.createElement("a")
+			var text = document.createTextNode(file)
+			link.appendChild(text)
+			link.href = "#"
+			link.onclick = function () {
+				var rootBlock = mainWorkspace.newBlock('field_image')
+				rootBlock.setFieldValue(file, 'SRC')
+				rootBlock.initSvg()
+				rootBlock.render()
+			}
+			li.appendChild(link)
+			list.appendChild(li)
+		})
+	})
+	$('#btn_export').on('click', function(){
+		ipcRenderer.send('export-js')
+	})
 	$('#lien1').on('click', function(){
 		loadBF("./examples/factory/model1.bf")
 		$("#exampleModal").modal("hide")
@@ -109,7 +137,7 @@ window.addEventListener('load', function load(event){
 		ipcRenderer.send('addImg')
 	})
 	$('#lien6').on('click', function(){
-		fs.readdir(chemin+"/../www/media/factory", function(err, files) {
+		fs.readdir(mediaFactory, function(err, files) {
 			var dir_img = document.getElementById('span_image_dir') 
 			$("#span_image_dir").empty()
 			if(files.length%2==0){
@@ -122,12 +150,12 @@ window.addEventListener('load', function load(event){
 		})
 	})
 	$('#lien7').on('click', function(){
-		fs.readdir(chemin+"/../www/media/factory", function(err, files){
+		fs.readdir(mediaFactory, function(err, files){
 			var file1 = files.filter(word => word!="gamepad.png")
 			var file2 = file1.filter(word => word!="keyboard.png")
 			file2.forEach(function(file){
 				if (file2.length!=0){
-					fs.unlink(chemin+"/../www/media/factory/"+file, function(err){ if (err) return console.log(err)})
+					fs.unlink(mediaFactory+file, function(err){ if (err) return console.log(err)})
 				}
 			})
 		})
@@ -142,7 +170,7 @@ window.addEventListener('load', function load(event){
 		} else {
 			path.forEach(function(pt) {
 				var name = pt.substring(pt.lastIndexOf("\\"))
-				fs.copyFile(pt, chemin+'/../www/media/factory/'+name, function(err){ if (err) return console.log(err)})
+				fs.copyFile(pt, mediaFactory+name, function(err){ if (err) return console.log(err)})
 			})
 		}
 	})
@@ -191,6 +219,16 @@ window.addEventListener('load', function load(event){
 					if (err) return console.log(err)
 				})
 			}
+		}
+	})
+	ipcRenderer.on('saved-js', function(event, path){
+		if (path === null) {
+			return
+		} else {
+			var code = $("#languagePre").text() + "\n" + editor.getValue()
+			fs.writeFile(path, code, function(err){
+				if (err) return console.log(err)
+			})
 		}
 	})
 	ipcRenderer.on('openedBF', function(event, path){

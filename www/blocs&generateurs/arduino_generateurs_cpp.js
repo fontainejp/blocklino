@@ -143,6 +143,10 @@ Blockly.Arduino["bluetooth_a"]=function(block){
     var value_data_s=Blockly.Arduino.valueToCode(block, "data_s", Blockly.Arduino.ORDER_NONE);
     return "if (bluetooth.available() > 0) {\n  bluetooth.write(" + value_data_s + ");\n}\n"
 };
+Blockly.Arduino["bluetooth_print"]=function(block){
+    var value_data_s=Blockly.Arduino.valueToCode(block, "data_s", Blockly.Arduino.ORDER_NONE);
+    return "if (bluetooth.available() > 0) {\n  bluetooth.print(" + value_data_s + ");\n}\n"
+};
 Blockly.Arduino["bluetooth_b"]=function(block){
     var n=0;
     var argument=Blockly.Arduino.valueToCode(block, "CASE" + n, Blockly.Arduino.ORDER_NONE);
@@ -196,6 +200,9 @@ Blockly.Arduino["base_begin"]=function(block){
 Blockly.Arduino['base_code_entree']=function(block){
 	var code=block.getFieldValue("TEXT");
 	return [code, Blockly.Arduino.ORDER_ATOMIC] ;
+};
+Blockly.Arduino["coder"]=function(block){
+    return ""
 };
 /*  temps  */
 Blockly.Arduino["inout_pulsein"]=function(block){

@@ -1,0 +1,11 @@
+#lineWidth, #brush, #lines, #polygon, #circle, #clear {
+	width: 3em;
+}
+#jcanvas{
+	border: 1px solid black;
+}
+.selected{
+	width: 3em;
+	-webkit-box-shadow: 1px 1px 1px;
+	background: gray;
+}

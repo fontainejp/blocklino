@@ -4,7 +4,7 @@
 class Midi {
 public:
 	Midi();
-	void initialisation()
+	void initialisation();
 	void send(byte command, byte MIDInote, byte MIDIvelocity);
 	void send(byte command, byte para);
 };
