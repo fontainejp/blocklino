@@ -156,8 +156,12 @@ window.addEventListener('load', function load(event){
 			}
 		})
 	})
+	$('#btn_new').on("click", function(){
+		ipcRenderer.send("new")
+	})
 	$('#btn_quit').on('click', function(){
-		if (window.confirm(Blockly.Msg.quit)) electron.close()
+		//if (window.confirm(Blockly.Msg.quit)) electron.close()
+		ipcRenderer.send("close")
 	})
 	$('#btn_max').on('click', function(){
 		if(electron.isMaximized()){
@@ -516,6 +520,31 @@ window.addEventListener('load', function load(event){
 	})
 	$('#modal_lib').on('hidden.bs.modal', function(e) {
 		$("#span_lib_dir").empty()
+	})
+	ipcRenderer.on('newed', function(event, response){
+		if (response === 0){
+			$('#span_file').text("")
+			if (localStorage.setItem("content", "off")) {
+				if (localStorage.setItem("prog", "python")) {
+					editor.setValue(BlocklyDuino.prog_py,1)
+				} else {
+					editor.setValue(BlocklyDuino.prog_ino,1)
+				}
+			} else {
+				if (window.location.search!="") window.location.search = "";
+				BlocklyDuino.workspace.clear();
+				BlocklyDuino.workspace.render()
+			}
+		} else {
+			return
+		}
+	})
+	ipcRenderer.on('closed', function(event, response){
+		if (response === 0){
+			electron.close()
+		} else {
+			return
+		}
 	})
 	ipcRenderer.on('addedLIB', function(event, path){
 		if (path === null){

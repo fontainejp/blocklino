@@ -208,6 +208,32 @@ ipcMain.on('save-csv', function(event) {
 		event.sender.send('saved-csv', filename)
 	})
 })
+ipcMain.on('close', function(event) {
+	dialog.showMessageBox(mainWindow,{
+		type: 'none',
+		title: 'Quitter',
+		message: 'Etes-vous certain de vouloir quitter ce programme ?',
+		buttons: ['oui', 'non'],
+		cancelId: 1,
+		noLink: true
+	},
+	function(buttonIndex)  {
+		event.sender.send('closed', buttonIndex)
+	})
+})
+ipcMain.on('new', function(event) {
+	dialog.showMessageBox(mainWindow,{
+		type: 'none',
+		title: 'Nouveau',
+		message: 'Etes-vous certain de vouloir quitter ce programme ?',
+		buttons: ['oui', 'non'],
+		cancelId: 1,
+		noLink: true
+	},
+	function(buttonIndex)  {
+		event.sender.send('newed', buttonIndex)
+	})
+})
 ipcMain.on('addMedias', function(event) {
 	dialog.showOpenDialog(htmlWindow,{
 		title: 'Ajouter des images/audios/vidéos',

@@ -298,22 +298,6 @@ BlocklyDuino.change_card = function() {
 	}
 	window.localStorage.card = new_card
 }
-BlocklyDuino.discard = function() {
-	if (window.confirm(Blockly.Msg['discard'])) {
-		$('#span_file').text("")
-		if (window.localStorage.content == "off") {
-			if (window.localStorage.prog == "python") {
-				editor.setValue(BlocklyDuino.prog_py,1)
-			} else {
-				editor.setValue(BlocklyDuino.prog_ino,1)
-			}
-		} else {
-			if (window.location.search!="") window.location.search = "";
-			BlocklyDuino.workspace.clear();
-			BlocklyDuino.workspace.render()
-		}
-	}
-}
 BlocklyDuino.Undo = function() {
 	if (window.localStorage.content == "on") {
 		Blockly.mainWorkspace.undo(0)
@@ -347,7 +331,6 @@ BlocklyDuino.bindFunctions = function() {
 		var modalParent = $(this).attr('data-modal-parent');
 		$(modalParent).css('opacity', 1)
 	});
-	$('#btn_new').on("click", BlocklyDuino.discard);
 	$('#btn_undo').on("click", BlocklyDuino.Undo);
 	$('#btn_redo').on("click", BlocklyDuino.Redo);
 	$('#btn_search').on("click", BlocklyDuino.search);

@@ -21,7 +21,7 @@
         <field name="ALIGN">LEFT</field>
         <statement name="FIELDS">
           <block type="field_image" id="JjX^HkDRcWzFVpWT+m+H">
-            <field name="SRC">keyboard.png</field>
+            <field name="SRC">keyboard-o.png</field>
             <field name="WIDTH">14</field>
             <field name="HEIGHT">14</field>
             <field name="ALT">*</field>
