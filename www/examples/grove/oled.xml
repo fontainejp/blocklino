@@ -1,0 +1,29 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <toolbox>toolbox_arduino_all</toolbox>
+  <block type="oled_init" id="z%y${n*n0R11r#tH.dd@" x="297" y="45">
+    <field name="orientation">0</field>
+    <field name="mode">t</field>
+  </block>
+  <block type="base_loop" id="o;k!n%18g3o@Tu1#kh9a" x="252" y="212">
+    <statement name="LOOP">
+      <block type="oled_police" id="p;h^pV:n/h3R_aHY]]Rz">
+        <field name="police">u8x8_font_chroma48medium8_r</field>
+        <next>
+          <block type="oled_aff" id=",fc`MC42l^jk7zl+Zvnq">
+            <value name="TEXT4">
+              <block type="text" id="KGcV8z{k=TF=0w1W64,S">
+                <field name="TEXT">Hello world !</field>
+              </block>
+            </value>
+            <value name="xy">
+              <block type="math_xy" id="GF]HLIP5Pc95)7:1il[D">
+                <field name="NUMX">10</field>
+                <field name="NUMY">10</field>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

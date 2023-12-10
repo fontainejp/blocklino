@@ -54,5 +54,21 @@
         "link_url": "#modal_potar",
         "name": "POTENTIOMETRE",
         "visible": true
+    },
+	{
+        "source_url": "./examples/grove/oled.xml",
+        "source_text": "afficher un texte sur un écran OLED",
+        "image": "./grove/oled.jpeg",
+        "link_url": "#modal_grove_oled",
+        "name": "grove_OLED",
+        "visible": true
+    },
+	{
+        "source_url": "./examples/grove/mp3.xml",
+        "source_text": "écouter les 10 premières secondes de 2 chansons",
+        "image": "./grove/mp3.jpg",
+        "link_url": "#modal_grove_mp3",
+        "name": "grove_MP3",
+        "visible": true
     }
 ]

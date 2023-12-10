@@ -1,0 +1,51 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <toolbox>toolbox_arduino_all</toolbox>
+  <block type="grove_mp3_init" id="nqE2;@;b9cp,vG-xJY7b" x="55" y="-52">
+    <field name="COM">2,3</field>
+    <value name="Volume">
+      <block type="math_number" id="W_vq4JY=;Qp^(!$#Xvud">
+        <field name="NUM">5</field>
+      </block>
+    </value>
+  </block>
+  <block type="base_loop" id="mLi$}Rql4sU#`fd;$njf" x="199" y="84">
+    <statement name="LOOP">
+      <block type="grove_mp3_play_track" id="@q$]yCNT{VJwE:(u:R%/">
+        <value name="num">
+          <block type="text" id="f)F7]AM4p~Dux6lg?[h_">
+            <field name="TEXT">titre1</field>
+          </block>
+        </value>
+        <next>
+          <block type="base_delay" id="|UNTflt)Afegd!I+)c+R">
+            <field name="unite">s</field>
+            <value name="DELAY_TIME">
+              <block type="math_number" id="BRT|Wj@!#)}9=caJDp+1">
+                <field name="NUM">10</field>
+              </block>
+            </value>
+            <next>
+              <block type="grove_mp3_play_track" id="Zv4IdIL!bw!U:;@:Mhx*">
+                <value name="num">
+                  <block type="text" id="JCf99s~tGHlDl5pZcVaO">
+                    <field name="TEXT">titre2</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="base_delay" id="*/!eu6/o@N:Y?0ox(NWL">
+                    <field name="unite">s</field>
+                    <value name="DELAY_TIME">
+                      <block type="math_number" id="DRk#Ds[txa#Kk.DT`[|?">
+                        <field name="NUM">10</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>
