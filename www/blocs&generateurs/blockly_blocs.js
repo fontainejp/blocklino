@@ -852,6 +852,15 @@ Blockly.Blocks["math_number"] = {
         this.setTooltip(Blockly.Msg.MATH_NUMBER_TOOLTIP)
     }
 };
+Blockly.Blocks["math_hex"] = {
+    init: function() {
+        this.setHelpUrl(Blockly.Msg.HELPURL);
+        this.setColour(Blockly.Blocks.math.HUE);
+        this.appendDummyInput().appendField("0x").appendField(new Blockly.FieldTextInput("ff"), "NUM");
+        this.setOutput(true, "Number");
+        this.setTooltip(Blockly.Msg.MATH_HEX_TOOLTIP)
+    }
+};
 Blockly.Blocks["math_arithmetic"] = {
     init: function() {
         var OPERATORS = [

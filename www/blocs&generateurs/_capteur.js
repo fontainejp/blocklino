@@ -240,7 +240,7 @@ Blockly.Blocks["dht20"]={init:function(){
 			.appendField(new Blockly.FieldDropdown(Blockly.Msg.menudht), "choix");
         this.setColour("#00929F");
         this.setOutput(true, "Number");
-        this.setTooltip(Blockly.Msg.dht22_tooltip)}
+        this.setTooltip(Blockly.Msg.dht20_tooltip)}
 }
 Blockly.Arduino["dht20"]=function(block){
     var choice=block.getFieldValue("choix");

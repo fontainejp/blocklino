@@ -317,22 +317,27 @@ Blockly.Blocks["grove_mp3_init"]={
 			.setCheck("Number").appendField(Blockly.Msg.lp2i_mp3_Volume);
         this.setInputsInline(false);
         this.setColour("#727272");
-        this.setTooltip(Blockly.Msg.lp2i_mp3_tooltip)
+        this.setTooltip(Blockly.Msg.GROVE_mp3_tooltip)
 	}
 };
 Blockly.Arduino["grove_mp3_init"]=function(block){
 	var com_value=block.getFieldValue('COM');
     var vol=Blockly.Arduino.valueToCode(block, "Volume", Blockly.Arduino.ORDER_ATOMIC);
-	var volume = parseInt(vol); 
-	var volume_hex ;
-	if (volume>30){
-		volume_hex="0x1F";
-	}else{
-		volume_hex="0x"+volume.toString(16);
+	var code = "Mp3Player.volume(" +vol+ ");\n" ;
+	var firstChild = this.getChildren()[0];
+	if (firstChild) if (!firstChild.getFieldValue('VAR')) {
+		var volume = parseInt(vol); 
+		var volume_hex ;
+		if (volume>30){
+			volume_hex="0x1F";
+		}else{
+			volume_hex="0x"+volume.toString(16);
+		}
+		code = "Mp3Player.volume(" +volume_hex+ ");\n"
 	}
 	Blockly.Arduino.includes_["GROVE_MP3"]='#include "WT2003S_Player.h"\n#include "SoftwareSerial.h"';
 	Blockly.Arduino.definitions_["GROVE_MP3"]="SoftwareSerial COMSerial("+com_value+");\nWT2003S<SoftwareSerial> Mp3Player;";
-	Blockly.Arduino.setups_["GROVE_MP3"]="COMSerial.begin(9600);\n  Mp3Player.init(COMSerial);\n  Mp3Player.volume(" +volume_hex+ ");";
+	Blockly.Arduino.setups_["GROVE_MP3"]="COMSerial.begin(9600);\n  Mp3Player.init(COMSerial);\n  " +code;
 	return ""
 };
 Blockly.Python["grove_mp3_init"]=function(block){
@@ -360,18 +365,23 @@ Blockly.Blocks["grove_mp3_volume"]={init:function(){
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setColour("#727272");
-        this.setTooltip(Blockly.Msg.lp2i_mp3_vol_tooltip)}
+        this.setTooltip(Blockly.Msg.GROVE_mp3_vol_tooltip)}
 };
 Blockly.Arduino["grove_mp3_volume"]=function(block){
     var vol=Blockly.Arduino.valueToCode(block, "Volume", Blockly.Arduino.ORDER_ATOMIC);
-	var volume = parseInt(vol); 
-	var volume_hex ;
-	if (volume>30){
-		volume_hex="0x1F";
-	}else{
-		volume_hex="0x"+volume.toString(16);
+	var code = "Mp3Player.volume(" +vol+ ");\n" ;
+	var firstChild = this.getChildren()[0];
+	if (firstChild) if (!firstChild.getFieldValue('VAR')) {
+		var volume = parseInt(vol); 
+		var volume_hex ;
+		if (volume>30){
+			volume_hex="0x1F";
+		}else{
+			volume_hex="0x"+volume.toString(16);
+		}
+		code = "Mp3Player.volume(" +volume_hex+ ");\n"
 	}
-	return "Mp3Player.volume(" +volume_hex+ ");\n"
+	return code
 };
 Blockly.Python["grove_mp3_volume"]=function(block){
     var vol=Blockly.Python.valueToCode(block, "Volume", Blockly.Python.ORDER_ATOMIC);

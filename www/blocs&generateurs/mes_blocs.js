@@ -48,7 +48,7 @@ Blockly.Arduino['print_message']=function(block){
 ////////////////////
 Blockly.Blocks['ir_remote']={init:function(){
     this.appendDummyInput()
-        .appendField(new Blockly.FieldImage("media/factory/keyboard.png", 14, 14, "*"))
+        .appendField(new Blockly.FieldImage("media/factory/keyboard-o.png", 14, 14, "*"))
         .appendField("Télécommande");
     this.appendDummyInput()
         .setAlign(Blockly.ALIGN_RIGHT)

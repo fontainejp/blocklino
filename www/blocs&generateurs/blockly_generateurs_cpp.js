@@ -149,6 +149,10 @@ Blockly.Arduino["math_number"]=function(block){
     var order = code < 0 ? Blockly.Arduino.ORDER_UNARY_PREFIX : Blockly.Arduino.ORDER_ATOMIC;
     return [code, order]
 };
+Blockly.Arduino["math_hex"]=function(block){
+    var code = block.getFieldValue("NUM");
+    return ["0x"+code, Blockly.Arduino.ORDER_ATOMIC]
+};
 Blockly.Arduino["math_arithmetic"]=function(block){
     var mode = block.getFieldValue("OP");
     var tuple = Blockly.Arduino.math_arithmetic.OPERATORS[mode];
