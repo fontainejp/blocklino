@@ -126,7 +126,6 @@ Code.initLanguage = function() {
   $('#btn_about').attr('title', Blockly.Msg['btn_about']);
   $('#btn_example').attr('title', Blockly.Msg['btn_example']);
   $('#btn_tools').attr('title', Blockly.Msg['btn_tools']);
-  $('#btn_processing').attr('title', Blockly.Msg['btn_processing']);
   $("xml").find("category").each(function() {
 	if (!$(this).attr('id')) {
 	  $(this).attr('id', $(this).attr('name'));

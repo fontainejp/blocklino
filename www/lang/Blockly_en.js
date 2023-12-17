@@ -236,6 +236,7 @@ Blockly.Msg.MATH_TRIG_TOOLTIP_ATAN = "returns the arctangent of a number";
 Blockly.Msg.MATH_TRIG_TOOLTIP_COS = "returns the cosine of an angle in degrees";
 Blockly.Msg.MATH_TRIG_TOOLTIP_SIN = "returns the sine of an angle in degrees";
 Blockly.Msg.MATH_TRIG_TOOLTIP_TAN = "returns the tangent of an angle in degrees";
+Blockly.Msg.MATH_HEX_TOOLTIP = "a hexadecimal number (0xff=255)";
 Blockly.Msg.NEW_VARIABLE = "Create a variable";
 Blockly.Msg.NEW_VARIABLE_TITLE = "New name of the variable";
 Blockly.Msg.ORDINAL_NUMBER_SUFFIX = ""; // untranslated
