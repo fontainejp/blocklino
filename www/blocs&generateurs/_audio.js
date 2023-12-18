@@ -336,8 +336,15 @@ Blockly.Arduino["grove_mp3_init"]=function(block){
 		code = "Mp3Player.volume(" +volume_hex+ ");\n"
 	}
 	Blockly.Arduino.includes_["GROVE_MP3"]='#include "WT2003S_Player.h"\n#include "SoftwareSerial.h"';
-	Blockly.Arduino.definitions_["GROVE_MP3"]="SoftwareSerial COMSerial("+com_value+");\nWT2003S<SoftwareSerial> Mp3Player;";
-	Blockly.Arduino.setups_["GROVE_MP3"]="COMSerial.begin(9600);\n  Mp3Player.init(COMSerial);\n  " +code;
+	if (com_value=="0,1") {
+		Blockly.Arduino.includes_["GROVE_MP3"]='#include "WT2003S_Player.h"';
+		Blockly.Arduino.definitions_["GROVE_MP3"]="WT2003S<HardwareSerial> Mp3Player;";
+		Blockly.Arduino.setups_["GROVE_MP3"]="Serial.begin(9600);\n  Mp3Player.init(Serial);\n  " +code;
+	} else {
+		Blockly.Arduino.includes_["GROVE_MP3"]='#include "WT2003S_Player.h"\n#include "SoftwareSerial.h"';
+		Blockly.Arduino.definitions_["GROVE_MP3"]="SoftwareSerial COMSerial("+com_value+");\nWT2003S<SoftwareSerial> Mp3Player;";
+		Blockly.Arduino.setups_["GROVE_MP3"]="COMSerial.begin(9600);\n  Mp3Player.init(COMSerial);\n  " +code;
+	}
 	return ""
 };
 Blockly.Python["grove_mp3_init"]=function(block){
