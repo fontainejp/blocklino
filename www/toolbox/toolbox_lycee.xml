@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <toolbox>
-	<parametre id="defaultCategories">CAT_LOGIC,CAT_MATH,CAT_TEXT,CAT_list,CAT_VARIABLES,CAT_FUNCTIONS,CAT_ARDUINO,CAT_ARDUINO_IN,CAT_ARDUINO_TIME,CAT_actionneur,CAT_ultrason,CAT_com,CAT_iot</parametre>
+	<parametre id="defaultCategories">
+	CAT_LOGIC,CAT_MATH,CAT_TEXT,CAT_list,CAT_VARIABLES,CAT_FUNCTIONS,CAT_ARDUINO,CAT_ARDUINO_IN,CAT_ARDUINO_TIME,CAT_actionneur,CAT_ultrason,CAT_com,CAT_iot,CAT_MYBLOCKS
+</parametre>
     <category name="CAT_LOGIC" colour="#727272">
 		<block type="controls_if"></block>
         <block type="controls_repeat_ext"></block>
@@ -189,6 +191,8 @@
 			<block type="bgcolor"></block>
 			<block type="border"></block>
 		</category>
-	</category>="CAT_divers"  colour="#000000">
 	</category>
+	<category name="CAT_MYBLOCKS" colour="#4488FF">
+		
+	</category>	
 </toolbox>

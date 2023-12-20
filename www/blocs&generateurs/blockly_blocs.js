@@ -614,6 +614,27 @@ Blockly.Blocks["variables_set"] = {
         return Blockly.Types.getChildBlockType(this)
     }
 };
+Blockly.Blocks['variables_set_string'] = {
+    init: function() {
+        this.appendValueInput("VALUE")
+            .appendField(Blockly.Msg.var_set_init)
+            .appendField(new Blockly.FieldVariable(Blockly.Msg.VARIABLES_DEFAULT_NAME), 'VAR')
+            .appendField(Blockly.Msg.VARIABLES_AS)
+            .appendField("texte")
+            .appendField(Blockly.Msg._AT);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(Blockly.Blocks.variables.HUE);
+        this.setHelpUrl(Blockly.Msg.HELPURL);
+        this.setTooltip(Blockly.Msg.var_set_init_tooltip);
+        this.contextMenuMsg_ = Blockly.Msg.VARIABLES_GET_CREATE_SET
+    },
+    contextMenuType_: 'variables_set',
+    customContextMenu: Blockly.Blocks["variables_get"].customContextMenu,
+    getVarType: function(varName) {
+        return Blockly.Types.getChildBlockType(this)
+    }
+};
 Blockly.Blocks['variables_set_init'] = {
     init: function() {
         this.appendValueInput("VALUE")

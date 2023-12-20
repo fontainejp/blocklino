@@ -345,6 +345,13 @@ Blockly.Arduino['variables_set_init']=function(block){
 	Blockly.Arduino.variables_[varName] = typeBlock + ' ' + varName + ' = ' + argument0 + ';';
 	return "";
 };
+Blockly.Arduino['variables_set_string']=function(block){
+	var argument0 = Blockly.Arduino.valueToCode(block, 'VALUE', Blockly.Arduino.ORDER_ASSIGNMENT);
+	var varName = Blockly.Arduino.variableDB_.getName(block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
+	var typeBlock = Blockly.Arduino.getArduinoType_(Blockly.Types["CHARACTER"]);
+	Blockly.Arduino.variables_[varName] = typeBlock + ' ' + varName + '[] = ' + argument0 + ';';
+	return "";
+};
 Blockly.Arduino['variables_set_init_volatile']=function(block){
 	var argument0 = Blockly.Arduino.valueToCode(block, 'VALUE', Blockly.Arduino.ORDER_ASSIGNMENT);
 	var varName = Blockly.Arduino.variableDB_.getName(block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);

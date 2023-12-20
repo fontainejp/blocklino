@@ -653,6 +653,15 @@ Blockly.Variables.flyoutCategory = function(workspace) {
 				block.appendChild(field);
 				xmlList.push(block);
 			}
+			if (Blockly.Blocks['variables_set_string']) {
+				var block = goog.dom.createDom('block');
+				block.setAttribute('type', 'variables_set_string');
+				block.setAttribute('gap', 8);
+				var field = goog.dom.createDom('field', null, variableList[0]);
+				field.setAttribute('name', 'VAR');
+				block.appendChild(field);
+				xmlList.push(block);
+			}
 			if (Blockly.Blocks['variables_set_init']) {
 				var block = goog.dom.createDom('block');
 				block.setAttribute('type', 'variables_set_init');

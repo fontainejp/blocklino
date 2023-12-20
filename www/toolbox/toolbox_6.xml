@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <toolbox>
-	<parametre id="defaultCategories">CAT_MATH,CAT_TEXT,CAT_ARDUINO,CAT_ARDUINO_TIME,CAT_del,CAT_DFRobot_SHIELD_LCDKEYPAD,CAT_ARDUINO_matrice8x8,CAT_servo</parametre>
+	<parametre id="defaultCategories">
+		CAT_MATH,CAT_TEXT,CAT_ARDUINO,CAT_ARDUINO_TIME,CAT_del,CAT_DFRobot_SHIELD_LCDKEYPAD,CAT_ARDUINO_matrice8x8,CAT_servo,CAT_MYBLOCKS
+	</parametre>
     <category name="CAT_MATH" colour="#00cc00">
         <block type="math_number"></block>
 		<block type="inout_angle_maths"></block>
@@ -17,9 +19,16 @@
 	</category>
 	<category name="CAT_del" colour="#00929F">
 		<block type="inout_buildin_led"></block>
-		<block type="digital_write"></block>
+		<block type="digital_write">
+			<value name="PIN">
+				<shadow type="math_number">
+					<field name="NUM">4</field>
+				</shadow>
+			</value>
+		</block>
 		<block type="bargraphe"></block>
 		<block type="bargraphe_allume"></block>
+		<block type="bargraphe_number"></block>
 	</category>
 	<category name="CAT_DFRobot_SHIELD_LCDKEYPAD" colour="#00929F">
 		<block type="lcd_i2c"></block>
@@ -34,5 +43,8 @@
 	</category>
 	<category name="CAT_servo" colour="#00929F">
 		<block type="servo_move"></block>
+	</category>
+	<category name="CAT_MYBLOCKS" colour="#4488FF">
+		
 	</category>
 </toolbox>
