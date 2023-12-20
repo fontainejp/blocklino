@@ -32,7 +32,7 @@
   "postinstall": "electron-builder install-app-deps",
   "start": "electron .",
   "compiler": "build --win --ia32",
-  "publier": "build --win --ia32 -p always",
+  "publier": "build --win --ia32 -p always"
  },
  "build": {
   "appId": "com.electron.blocklino",
