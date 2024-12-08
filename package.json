@@ -100,7 +100,7 @@
   "electron-builder": "20.39.0"
  },
  "dependencies": {
-  "ajv": "6.10.0",
+  "ajv": "6.12.3",
   "child_process": "1.0.2",
   "electron-updater": "4.0.6",
   "serialport": "7.1.4",
