@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="fr">
+<html>
 	<head>
 		<meta charset="utf-8">
 		<title> BLOCKLINO </title>
@@ -29,7 +29,9 @@
 		<script src="blocs&generateurs/_capteur.js"></script>
 		<script src="blocs&generateurs/_iot.js"></script>
 		<script src="blocs&generateurs/_microbit.js"></script>
-		<script src="blocs&generateurs/factory/append.js"></script>
+		<script src="blocs&generateurs/user/append.js"></script>
+		<script src="blocs&generateurs/user/local.js"></script>
+		<script src="blocs&generateurs/user/online.js"></script>
 		<script src="blocs&generateurs/FRESNEL/arduino_conversion_blocs.js"></script>
 		<script src="blocs&generateurs/FRESNEL/Addon_Arduino.js"></script>
 		<script src="blocs&generateurs/FRESNEL/Bitwise_operators_blocs.js"></script>
@@ -78,8 +80,8 @@
 					<li role="presentation" class="active"><a href="#content_blocks" aria-controls="content_blocks" role="tab" data-toggle="tab"></a></li>
 					<li role="presentation"><a href="#content_code" aria-controls="content_code" role="tab" data-toggle="tab"></a></li>
 				</ul>
-				<input type="file" id="load" accept=".bloc,.xml,.py,.ino" style="display:none">
-				<input id="codeORblock" checked data-toggle="toggle" data-on="<img src='media/icon.png' width='20px'>" data-off="<i class='fa fa-code fa-1_5x'></i>" data-onstyle="default" data-offstyle="default" type="checkbox">
+				<input type="file" id="load" accept=".bloc,.xml" style="display:none">
+				<input id="codeORblock" checked data-toggle="toggle" data-on="<img src='media/logo.png' width='20px'>" data-off="<i class='fa fa-code fa-1_5x'></i>" data-onstyle="default" data-offstyle="default" type="checkbox">
 			</div>
 			<div id="btn_center" class="btn-toolbar">
 				<div class="btn-group">
@@ -100,9 +102,6 @@
 					<button id="btn_config" class="btn btn-default btn_color" data-toggle="modal" data-target="#configModal">
 						<i class="fa fa-cog fa-1_5x"></i>
 					</button>
-					<button id="btn_factory" class="btn btn-default btn_color">
-						<i class="fa fa-industry fa-1_5x"></i>
-					</button>
 					<div class="btn-group">
 						<button id="btn_tools" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 							<i class="fa fa-list-ul fa-1_5x btn_color"></i>
@@ -122,7 +121,7 @@
 					<button id="btn_card" class="btn btn-default btn_color" data-toggle="modal" data-target="#cardModal">
 						<i class="fa fa-microchip fa-1_5x"></i>
 					</button>	
-					<select class="my_select" id="boards" onchange="BlocklyDuino.change_card()">
+					<select class="my_select" id="boards">
 						<optgroup label="C / C++">
 							<option value="leonardo" >Arduino Léonardo</option>
 							<option value="mega" >Arduino Méga 2560</option>
@@ -140,7 +139,7 @@
 							<option value="esp8266" >ESP 8266</option>
 							<option value="esp32" >ESP 32</option>
 							<option value="microbit" >micro:bit</option>
-							<option value="pyboard" >Pyboard</option>
+							<option value="maker_pi" >Maker Pi RP2040</option>
 						</optgroup>
 					</select>
 				</div>
@@ -200,7 +199,7 @@
 			<div role="tabpanel" id="content_code" class="tab-pane fade"></div>
 		</div>
 		<!-- modal -->
-		<div class="modal fade" id="usbModal" tabindex="-1" role="dialog" aria-labelledby="usbModalLabel" aria-hidden="true">
+		<div class="modal fade" id="usbModal" tabindex="-1" role="dialog" aria-hidden="true">
 		  <div class="modal-dialog modal-lg">
 			<div class="modal-content">
 			  <div class="modal-header">
@@ -228,7 +227,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
+		<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-hidden="true">
 		  <div class="modal-dialog">
 			<div class="modal-content">
 			  <div class="modal-header">
@@ -238,7 +237,7 @@
 			  <div class="modal-body">
 				<div class="container-fluid">
 					<div class="row">
-					  <div class="col-md-4"><img src="media/logo.png" width="128px"></div>
+					  <div class="col-md-4"><img src="media/logo.png"></div>
 					  <div class="col-md-8">
 						<span id="span_version1"></span><span id="span_version2"></span><br><br>
 						<span id="aboutBody"></span><br><br>
@@ -249,7 +248,7 @@
 							<i class='fa fa-comments'></i><span id="span_forum"></span>
 						</button>
 						<button id="btn_contact" class="btn btn-default">
-							<i class='fa fa-bug'></i><span id="span_contact"></span>
+							<i class='fa fa-exclamation-triangle'></i><span id="span_contact"></span>
 						</button>
 					  </div>
 					</div>
@@ -262,7 +261,7 @@
 			</div>
 		  </div>
 		</div>
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
 		  <div class="modal-dialog modal-lg">
 			<div class="modal-content">
 			  <div class="modal-header">
@@ -279,7 +278,7 @@
 			</div>
 		  </div>
 		</div>
-		<div class="modal fade" id="cardModal" tabindex="-1" role="dialog" aria-labelledby="cardLabel" aria-hidden="true">
+		<div class="modal fade" id="cardModal" tabindex="-1" role="dialog" aria-hidden="true">
 		  <div class="modal-dialog modal-md">
 			<div class="modal-content">
 			  <div class="modal-header">
@@ -308,7 +307,7 @@
 						<option value="esp8266" >ESP 8266</option>
 						<option value="esp32" >ESP 32</option>
 						<option value="microbit" >micro:bit</option>
-						<option value="pyboard" >Pyboard</option>
+						<option value="maker_pi" >Maker Pi RP2040</option>
 					</optgroup>
 				</select>
 				<br><br>
@@ -324,7 +323,7 @@
 			</div>
 		  </div>
 		</div>
-		<div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
+		<div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-hidden="true">
 		  <div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -347,6 +346,19 @@
 								<option value="22px">22</option>
 							</select>
 							<br><br>
+							<label id="span_theme"></label>
+							<select id="theme">
+								<option value="monokai">Sombre</option>
+								<option value="sqlserver" selected="selected">Clair</option>
+							</select>
+							<br><br>
+							<label id="labelToolboxDefinition"></label>
+							<select id="toolboxes">
+								<option value="toolbox_arduino_all" selected="selected">collège</option>
+								<option value="toolbox_fresnel_all">lycée</option>
+							</select>
+						</div>
+						<div class="col-md-6">
 							<label id="span_library"></label>
 							<button id="btn_library_view" type="button" class="btn btn-xs btn-default"  data-toggle="modal" href="#modal_lib">
 								<i class='fa fa-eye'></i><span id="span_lib_view"></span>
@@ -355,53 +367,48 @@
 								<i class='fa fa-plus-circle'></i><span id="span_lib_add"></span>
 							</button>
 							<br><br>
-							<label id="labelToolboxDefinition"></label>
-							<select id="toolboxes">
-								<option value="toolbox_6">1</option>
-								<option value="toolbox_arduino_all" selected="selected">2</option>
-								<option value="toolbox_fresnel_all">3</option>
-								<!--option value="toolbox_microbit">4</option>
-								<option value="toolbox_lycee">5</option-->
-							</select>
-						</div>
-						<div class="col-md-6">
-							<label id="span_theme"></label>
-							<select id="theme">
-								<option value="monokai">Sombre</option>
-								<option value="sqlserver" selected="selected">Clair</option>
-							</select>
-							<br><br>
-							<!--label id="span_renderer"></label>
-							<select id="renderer">
-								<option value="zelos">Scratch</option>
-								<option value="blockly" selected="selected">Blockly</option>
-							</select>
-							<br><br-->
-							<label id="span_cache"></label>
-							<button id="btn_cache_view" type="button" class="btn btn-xs btn-default" data-toggle="modal" href="#modal_cache">
-								<i class='fa fa-eye'></i><span id="span_cache_view"></span>
+							<button id="btn_collapse" type="button" class="btn btn-sm btn-default" data-toggle="collapse" href="#cachecache" aria-expanded="false">
+								<i class='fa fa-arrows-v'></i>
 							</button>
-							<button id="btn_reset" type="button" class="btn btn-xs btn-danger">
-								<i class='fa fa-trash-o'></i><span id="span_reset"></span>
+							<button id="btn_cache_view" type="button" class="btn btn-sm btn-default">
+								<i class='fa fa-database'></i>
 							</button>
-							<br><br>
-							<br><br>
-							<span id="span_select_all"></span><input type="checkbox" name="select_all" id="select_all">
+							<button id="btn_console" type="button" class="btn btn-sm btn-default">
+								<i class='fa fa-chevron-right'></i>
+							</button>
+							
 						</div>
 					</div>
+					<div class="collapse" id="cachecache">
+						<input type="checkbox" name="select_all" id="select_all">
+						<span id="span_select_all"></span>
+						<div id="modal-body-config"></div>
+					</div>
 					<br>
-					<div id="modal-body-config"></div>
-					<br>
-					<label id="span_local_check"></label>
+					<label id="span_local_online_factory"></label>
 					<div class="input-group">
-						<input type="text" class="form-control" id="distant_adress" placeholder="https://adresse.com/bloc.js">
+						<span class="input-group-addon">
+							<i class='fa fa-cloud'></i>
+						</span>
+						<input type="text" class="form-control" id="online_input" placeholder="https://">
 						<span class="input-group-btn">
-							<button id="btn_distant" type="button" class="btn btn-default">
-								<i class='fa fa-refresh'></i><span id="span_local_go"></span>
+							<button id="btn_add_block" type="button" class="btn btn-default">
+								<i class='fa fa-level-down fa-lg'></i>
 							</button>
 						</span>
 					</div>
-					
+					<br>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<i class='fa fa-file fa-lg'></i>
+						</span>
+						<input type="text" class="form-control" id="local_input" placeholder="Aucun fichier">
+					</div>
+					<br>
+					<button id="btn_factory" class="btn btn-default active" type="button">
+						<i class="fa fa-industry fa-1_5x"></i>
+					</button>
+					<span id="span_make_it"></span>
 				</div>
 				<div class="modal-footer">
 					<button id="btn_valid_config" type="button" class="btn btn-default"></button>

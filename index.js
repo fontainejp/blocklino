@@ -5,67 +5,84 @@ var sp = require('serialport')
 var fs = require('fs')
 var tableify = require('tableify')
 var StreamZip = require('node-stream-zip')
-var appVersion = window.require('electron').remote.app.getVersion()
+var appVersion = remote.app.getVersion()
 var checkBox = document.getElementById('verifyUpdate')
 var portserie = document.getElementById('portserie')
 var messageDiv = document.getElementById('messageDIV')
 var chemin = process.resourcesPath // .../resources/
+var electronApp = remote.getCurrentWindow()
+var new_card
+var new_prog
 
-window.addEventListener('load', function load(event){
-	var electron = remote.getCurrentWindow()
-	localStorage.setItem("verif",false)
+function choice() {
 	var list = []
 	$("#toolbox").find("category").each(function(i) {
 		list.push($(this).attr("name"))
 	})
-	localStorage.setItem("choice",list)	
-	if(!electron.isMaximized())electron.maximize()
-	function itsOK(value){
-		messageDiv.style.color = '#009000'
-		if (value) {
-			messageDiv.innerHTML = Blockly.Msg.upload + ': OK' 
-			$('#btn_close_message').css('display', "inline")
-			if (localStorage.getItem('prog') != "python") $('#btn_detail').css("display", "block")
-		} else {
-			messageDiv.innerHTML = Blockly.Msg.check + ': OK'
-			$('#btn_close_message').css('display', "inline")
-			if (localStorage.getItem('prog') != "python") $('#btn_detail').css("display", "block")
-		}	
-	}
-	function download(url, dest) {
-		// on créé un stream d'écriture qui nous permettra
-		// d'écrire au fur et à mesure que les données sont téléchargées
-		const file = fs.createWriteStream(dest)
-		// on lance le téléchargement
-		const request = https.get(url, (response) => {
-			// on vérifie la validité du code de réponse HTTP
-			if (response.statusCode !== 200) {
-				return window.localStorage.console = 'Response status was ' + response.statusCode ;
-			}
-			// écrit directement le fichier téléchargé
-			response.pipe(file)
-			// lorsque le téléchargement est terminé
-			// on appelle le callback
-			file.on('finish', () => {
-				// close étant asynchrone,
-				// le console.log est appelé lorsque close a terminé
-				file.close(window.localStorage.console = "téléchargé")
-			})
+	localStorage.setItem("choice",list)
+}
+function version() {
+	$('#span_title2').text(appVersion)
+	$('#span_version2').text(appVersion)
+}
+function import_file(path, file, index) {
+	$.ajax({
+		type: "GET",
+		url: path,
+		async : false
+	})
+	.done(function(data){
+		localStorage.setItem("file_download", "ok")
+		localStorage.setItem("file_path", path)
+		fs.appendFileSync(file, data, function(err){
+			if (err) return console.log(err)
 		})
-		// check for request error too
-		request.on('error', (err) => {
-			fs.unlink(dest)
-			window.localStorage.console = err.message
+		var avant = Object.keys(Blockly.Blocks).length
+		eval(data)
+		var apres = Object.keys(Blockly.Blocks).length
+		var ecart = apres-avant
+		var liste = []
+		for (let i = 0; i < ecart; i++){
+			liste.push(Object.keys(Blockly.Blocks)[apres-1-i])
+		}
+		var cat = $("#toolbox").find("category")
+		liste.forEach(function(bloc){
+			var newBlock = document.createElement("block")
+			var attr = document.createAttribute("type")
+			attr.value = bloc
+			newBlock.setAttributeNode(attr)
+			cat[index].appendChild(newBlock)
 		})
-		// si on rencontre une erreur lors de l'écriture du fichier
-		// on efface le fichier puis on passe l'erreur au callback
-		file.on('error', (err) => {
-			// on efface le fichier sans attendre son effacement
-			// on ne vérifie pas non plus les erreur pour l'effacement
-			fs.unlink(dest)
-			window.localStorage.console = err.message
+		var tool = localStorage.getItem("toolbox")
+		var code = '<?xml version="1.0" encoding="utf-8" ?>\n<toolbox>'
+		code += document.getElementById('toolbox').innerHTML
+		code += "</toolbox>"
+		fs.writeFile(chemin+"/../www/toolbox/"+tool+".xml", code, function(err){
+			if (err) return console.log(err)
 		})
-	}
+	})
+	.fail(function(data) {
+		localStorage.setItem("file_download", "erreur")
+		localStorage.setItem("file_path", path)
+	})
+}
+function itsOK(value){
+	messageDiv.style.color = '#009000'
+	if (value) {
+		messageDiv.innerHTML = Blockly.Msg.upload + ': OK' 
+		$('#btn_close_message').css('display', "inline")
+		if (localStorage.getItem('prog') != "python") $('#btn_detail').css("display", "block")
+	} else {
+		messageDiv.innerHTML = Blockly.Msg.check + ': OK'
+		$('#btn_close_message').css('display', "inline")
+		if (localStorage.getItem('prog') != "python") $('#btn_detail').css("display", "block")
+	}	
+}
+
+window.addEventListener('load', function load(event){
+	if(!electronApp.isMaximized())electronApp.maximize()
+	choice()
+	version()
 	sp.list(function(err,ports){
 		if (ports.length === 0) {
 			$('#usb').html(Blockly.Msg.usb)
@@ -88,23 +105,12 @@ window.addEventListener('load', function load(event){
 				portserie.appendChild(opt)
 			}
 		})
-		localStorage.setItem("nb_com",ports.length)
+		BlocklyDuino.nb_com = ports.length
 		if (portserie.options.length > 1) {
 			portserie.selectedIndex = 1
-			localStorage.setItem("com",portserie.options[1].value)
+			BlocklyDuino.com = portserie.options[1].value
 		} else {
-			localStorage.setItem("com","com")
-		}
-	})
-	checkBox.addEventListener('change', function(event){
-		if (event.target.checked) {
-			fs.writeFile(chemin+'/../config.json', '{ "update": "true" }', function(err){
-				if (err) return console.log(err)
-			})
-		} else {
-			fs.writeFile(chemin+'/../config.json', '{ "update": "false" }', function(err){
-				if (err) return console.log(err)
-			})
+			BlocklyDuino.com = "com"
 		}
 	})
 	$.ajax({
@@ -113,7 +119,7 @@ window.addEventListener('load', function load(event){
 	    dataType: "json",
 	    success : function(data) {
 			$.each(data, function(i, update){
-				if (update=="true") {
+				if (update == "true") {
 					$('#verifyUpdate').prop('checked', true)
 					checkBox.dispatchEvent(new Event('change'))
 					ipcRenderer.send("version")
@@ -124,12 +130,23 @@ window.addEventListener('load', function load(event){
 			})
 		}
 	})
-	$('#span_title2').text(appVersion)
-	$('#span_version2').text(appVersion)
+	// checkBox
+	$('#verifyUpdate').on('change', function(event){
+		if (event.target.checked) {
+			fs.writeFile(chemin+'/../config.json', '{ "update": "true" }', function(err){
+				if (err) return console.log(err)
+			})
+		} else {
+			fs.writeFile(chemin+'/../config.json', '{ "update": "false" }', function(err){
+				if (err) return console.log(err)
+			})
+		}
+	})
+	// select
 	$('#portserie').mouseover(function(){
 		sp.list(function(err,ports){
-			var nb_com = localStorage.getItem("nb_com"), menu_opt = portserie.getElementsByTagName('option')
-			if(ports.length > nb_com){
+			var menu_opt = portserie.getElementsByTagName('option')
+			if(ports.length > BlocklyDuino.nb_com){
 				for (var i=0; i<ports.length; i++) {
 					delete ports[i]["pnpId"]
 					delete ports[i]["locationId"]
@@ -141,39 +158,69 @@ window.addEventListener('load', function load(event){
 						opt.value = port.comName
 						opt.text = port.comName
 						portserie.appendChild(opt)
-						localStorage.setItem("com",port.comName)
+						BlocklyDuino.com = port.comName
 					}
 				})
-				localStorage.setItem("nb_com",ports.length)
-				localStorage.setItem("com",portserie.options[1].value)
+				BlocklyDuino.nb_com = ports.length
+				BlocklyDuino.com = portserie.options[1].value
 			}
-			if(ports.length < nb_com){
+			if(ports.length < BlocklyDuino.nb_com){
 				while(menu_opt[1]) {
 					portserie.removeChild(menu_opt[1])
 				}
-				localStorage.setItem("com","com")
-				localStorage.setItem("nb_com",ports.length)
+				BlocklyDuino.com = "com"
+				BlocklyDuino.nb_com = ports.length
 			}
 		})
 	})
+	$('#boards').on('change', function(event){
+		$("#boards").blur()
+		new_card = $("#boards").val()
+		new_prog = window.profile[new_card].prog
+		if (window.profile[new_card].cpu != window.profile[localStorage.getItem('card')].cpu) {
+			ipcRenderer.send("card")
+		}
+	})
+	// Button
 	$('#btn_new').on("click", function(){
-		ipcRenderer.send("new")
+		ipcRenderer.send("new", "", "")
+	})
+	$('#btn_example').on("click", function(){
+		$.ajax({
+			cache: false,
+			url: "./examples/examples.json",
+			dataType: "json",
+			success :  function(data) {
+				$("#includedContent").empty();
+				$.each(data, function(i, example){
+					if (example.visible) {
+						var line = "<tr><td><input type='button' onClick='ipcRenderer.send(\"new\",\""
+									+ example.source_url + "\",\"" + example.name + "\")' value='>'></td>"
+									+ "<td>" + example.source_text
+									+ "</td><td>"
+									+ "<a href='"+example.link_url+"' data-toggle='modal'>"
+									+ "<img class='vignette' src='./examples/"+example.image+"'></a>"
+									+ "</td></tr>";
+						$("#includedContent").append(line);
+					}
+				})
+			}
+		})
 	})
 	$('#btn_quit').on('click', function(){
-		//if (window.confirm(Blockly.Msg.quit)) electron.close()
 		ipcRenderer.send("close")
 	})
 	$('#btn_max').on('click', function(){
-		if(electron.isMaximized()){
-			electron.unmaximize()
+		if(electronApp.isMaximized()){
+			electronApp.unmaximize()
 			$('#btn_max').html("<span class='fa fa-window-maximize fa-lg'></span>")
 		} else {
-			electron.maximize()
+			electronApp.maximize()
 			$('#btn_max').html("<span class='fa fa-window-restore fa-lg'></span>")
 		}
 	})
 	$('#btn_min').on('click', function(){
-		electron.minimize()
+		electronApp.minimize()
 	})
 	$('#btn_forum').on('click', function(){
 		shell.openExternal('http://blockly.technologiescollege.fr/forum/')
@@ -188,14 +235,14 @@ window.addEventListener('load', function load(event){
 		clipboard.writeText($('#pre_previewArduino').text())
 	})
 	$('#btn_bin').on('click', function(){
-		if (localStorage.getItem('verif') == "false"){
+		if (BlocklyDuino.verif == false){
 			$("#message").modal("show")
 			messageDiv.style.color = '#000000'
 			messageDiv.innerHTML = Blockly.Msg.verif
 			$('#btn_close_message').css('display', "inline")
 			return
 		}
-		localStorage.setItem("verif",false)
+		BlocklyDuino.verif = false
 		ipcRenderer.send('save-bin') 
 	})
 	$('#btn_version').on('click', function(){
@@ -203,7 +250,7 @@ window.addEventListener('load', function load(event){
 		ipcRenderer.send("version")
 	})
 	$('#btn_term').on('click', function(){
-		if (portserie.value=="com"){
+		if (portserie.value == "com"){
 			$("#message").modal("show")
 			messageDiv.style.color = '#000000'
 			messageDiv.innerHTML = Blockly.Msg.com2 
@@ -213,12 +260,11 @@ window.addEventListener('load', function load(event){
 		if (localStorage.getItem("prog") == "python") { ipcRenderer.send("repl") } else { ipcRenderer.send("prompt") }
 	})
 	$('#btn_html').on('click', function(){
-		//ipcRenderer.send("html")	
-		exec('BLOCKLY-WEB', {cwd: chemin+'/../compilation/web/'}, function(err, stdout, stderr){
-			// error
-		})
+		ipcRenderer.send("HTML")	
+		//exec('BLOCKLY-WEB', {cwd: chemin+'/../compilation/web/'}, function(err, stdout, stderr){/* error*/})
 	})
 	$('#btn_factory').on('click', function(){
+		$('#configModal').modal('hide')
 		ipcRenderer.send("factory")
 	})
 	$('#btn_games').on('click', function(){
@@ -228,13 +274,11 @@ window.addEventListener('load', function load(event){
 		})
 	})
 	$('#btn_turtle').on('click', function(){
-		//ipcRenderer.send("turtle")
-		exec('TURTLE', {cwd: chemin+'/../compilation/turtle/'}, function(err, stdout, stderr){
-			// error
-		})
+		ipcRenderer.send("turtle")
+		//exec('TURTLE', {cwd: chemin+'/../compilation/turtle/'}, function(err, stdout, stderr){/* error*/})
 	})
 	$('#btn_verify').on('click', function(){
-		if (localStorage.getItem('content') == "off") {
+		if (BlocklyDuino.content == "off") {
 			var data = editor.getValue()
 			if (data.includes("Serial")) {
 				var tab_data = data.split("\n")
@@ -252,7 +296,7 @@ window.addEventListener('load', function load(event){
 		var carte = localStorage.getItem('card')
 		var cpu = profile[carte].cpu
 		var prog = localStorage.getItem('prog')
-		var com = portserie.value
+		//var com = portserie.value
 		messageDiv.style.color = '#000000'
 		messageDiv.innerHTML = Blockly.Msg.check + '<i class="fa fa-spinner fa-pulse fa-1_5x fa-fw"></i>'
 		if (prog == "python") {
@@ -290,7 +334,7 @@ window.addEventListener('load', function load(event){
 						})
 						return
 					}
-					localStorage.setItem('detail', stdout.toString())
+					BlocklyDuino.detail = stdout.toString()
 					itsOK(0)
 				})
 			} else {
@@ -310,15 +354,15 @@ window.addEventListener('load', function load(event){
 						})
 						return
 					}
-					localStorage.setItem('detail', stdout.toString())
+					BlocklyDuino.detail = stdout.toString()
 					itsOK(0)
 				})
 			}
 		}
-		localStorage.setItem("verif",true)
+		BlocklyDuino.verif = true
 	})
 	$('#btn_flash').on('click', function(){
-		if (localStorage.getItem('content') == "off") {
+		if (BlocklyDuino.content == "off") {
 			var data = editor.getValue()
 		} else {
 			var data = $('#pre_previewArduino').text()
@@ -327,14 +371,14 @@ window.addEventListener('load', function load(event){
 		var prog = profile[carte].prog
 		var speed = profile[carte].speed
 		var cpu = profile[carte].cpu
-		var com = portserie.value 
+		var com = portserie.value
 		if ( com == "com" ){
 			messageDiv.style.color = '#000000'
 			messageDiv.innerHTML = Blockly.Msg.com2 
 			$('#btn_close_message').css('display', "inline")
 			return
 		}
-		if ( localStorage.getItem('verif') == "false" ){
+		if ( BlocklyDuino.verif == false ){
 			messageDiv.style.color = '#000000'
 			messageDiv.innerHTML = Blockly.Msg.verif 
 			$('#btn_close_message').css('display', "inline")
@@ -348,14 +392,14 @@ window.addEventListener('load', function load(event){
 				var fullHexStr = ""
 				exec('wmic logicaldisk get volumename', function(err, stdout){
 					if (err) return console.log(err)
-					localStorage.setItem("volumename", stdout.split('\r\r\n').map(value => value.trim()))
+					BlocklyDuino.volumename = stdout.split('\r\r\n').map(value => value.trim())
 				})
 				exec('wmic logicaldisk get name', function(err, stdout){
 					if (err) return console.log(err)
-					localStorage.setItem("name", stdout.split('\r\r\n').map(value => value.trim()))
+					BlocklyDuino.name = stdout.split('\r\r\n').map(value => value.trim())
 				})
-				var volume = localStorage.getItem("volumename")
-				var drive = localStorage.getItem("name")
+				var volume = BlocklyDuino.volumename
+				var drive = BlocklyDuino.name
 				var volumeN = volume.split(',')
 				var driveN = drive.split(',')
 				var count = volumeN.length
@@ -398,7 +442,7 @@ window.addEventListener('load', function load(event){
 			if ( cpu == "cortexM0" ) {
 				exec('flash_microbit.bat ', {cwd: chemin+'/../compilation/arduino'} , function(err, stdout, stderr){
 					if (stderr) console.log(stderr)
-					localStorage.setItem('detail', stdout.toString())
+					BlocklyDuino.detail = stdout.toString()
 					if (err) {
 						messageDiv.style.color = '#ff0000'
 						messageDiv.innerHTML = err.toString() 
@@ -411,7 +455,7 @@ window.addEventListener('load', function load(event){
 				exec('flash.bat ' + cpu + ' ' + prog + ' '+ com + ' ' + speed, {cwd: chemin+'/../compilation/arduino'} , function(err, stdout, stderr){
 					var erreur = stderr.toString().replace(/##################################################/g,"").replace(/|/g,"")
 					var errors = erreur.split("avrdude:")
-					localStorage.setItem('detail', errors)
+					BlocklyDuino.detail = errors
 					if (err) {
 						messageDiv.style.color = '#ff0000'
 						messageDiv.innerHTML = err.toString() + "<br> "
@@ -422,15 +466,15 @@ window.addEventListener('load', function load(event){
 				})
 			}
 		}
-		localStorage.setItem("verif",false)
+		BlocklyDuino.verif = false
 	})
 	$('#btn_detail').on('click', function(){
-		$('#detailDIV').html(localStorage.getItem('detail'))
+		$('#detailDIV').html(BlocklyDuino.detail)
 		$(this).hide()
 	})
 	$('#btn_close_message').on('click', function(){
 		$('#detailDIV').html('')
-		localStorage.setItem('detail', '')
+		BlocklyDuino.detail = ""
 		$('#btn_detail').css("display", "none")
 		$('#btn_close_message').css("display", "none")
 		$('#message').modal('hide')
@@ -439,7 +483,7 @@ window.addEventListener('load', function load(event){
 		if (localStorage.getItem("prog") == "python") { ipcRenderer.send('save-py') } else { ipcRenderer.send('save-ino') }
 	})
 	$('#btn_saveXML').on('click', function(){
-		if (localStorage.getItem("content") == "on") {
+		if (BlocklyDuino.content == "on") {
 			ipcRenderer.send('save-bloc') 
 		} else {
 			if (localStorage.getItem("prog") == "python") { ipcRenderer.send('save-py') } else { ipcRenderer.send('save-ino') }
@@ -484,64 +528,75 @@ window.addEventListener('load', function load(event){
 		ipcRenderer.send('addLIB')
 	})
 	$('#btn_cache_view').on('click', function(){
-		for (var i = 0; i < localStorage.length; i++){
-			$("#span_cache_dir").append(localStorage.key(i), " : ")
-			if (localStorage.getItem(localStorage.key(i)).length>58){
-				var newText = localStorage.getItem(localStorage.key(i)).substr(0,58)
-				$("#span_cache_dir").append(newText, " ...")
-			} else {
-				$("#span_cache_dir").append(localStorage.getItem(localStorage.key(i)))
-			}
-			$("#span_cache_dir").append("<br>")
+		console.log (localStorage)
+	})
+	$('#btn_add_block').on('click', function(){
+		if ($("#online_input").val()) {
+			import_file($("#online_input").val(), chemin + "/../www/blocs&generateurs/user/online.js",35)
+			location.reload()
+		} else {
+			console.log("adresse incorrecte")
 		}
 	})
-	$('#btn_distant').on('click', function(){
-		if ($("#distant_adress").val().indexOf('https://') !== -1) {
-			localStorage.setItem("distant_url", $("#distant_adress").val())
-			$.ajax({
-				type: "GET",
-				url: $("#distant_adress").val(),
-				async : false
-			})
-			.done(function(data){
-				localStorage.setItem("distant_file", "ok")
-				fs.writeFile(chemin+'/../www/blocs&generateurs/mes_blocs.js', data, function(err){
-					if (err) return console.log(err)
-				})
-			})
-			.fail(function(data) {
-				localStorage.setItem("distant_file", "erreur")
-			})
+	$('#btn_console').on('click', function(){
+		electronApp.toggleDevTools()
+	})
+	// modal
+	$('#modal_cache').on('hidden.bs.modal', function() {
+		$("#span_cache_dir").empty()
+	})
+	$('#modal_lib').on('hidden.bs.modal', function() {
+		$("#span_lib_dir").empty()
+	})
+	// input text
+	$('#local_input').on('click', function() {
+		ipcRenderer.send('addJS')
+	})
+	ipcRenderer.on('added-js', function(event, path){
+		if (path === null){
+			return
+		} else {
+			$("#local_input").attr("placeholder", path)
+			import_file(path, chemin + "/../www/blocs&generateurs/user/local.js",34)
 			location.reload()
 		}
 	})
-	$('#modal_cache').on('hidden.bs.modal', function(e) {
-		$("#span_cache_dir").empty()
-	})
-	$('#modal_lib').on('hidden.bs.modal', function(e) {
-		$("#span_lib_dir").empty()
-	})
-	ipcRenderer.on('newed', function(event, response){
+	ipcRenderer.on('newed', function(event, response, theLink, theName){
 		if (response === 0){
-			$('#span_file').text("")
-			if (localStorage.setItem("content", "off")) {
-				if (localStorage.setItem("prog", "python")) {
-					editor.setValue(BlocklyDuino.prog_py,1)
+			if (theLink!="") {
+				$("#exampleModal").modal("hide");
+				if (BlocklyDuino.content == "on") {
+					$.get(theLink, function(data) { 
+						$('#span_file').text(" - "+ theName);
+						if (data) BlocklyDuino.loadBlocks(data);
+					}, 'text')
 				} else {
-					editor.setValue(BlocklyDuino.prog_ino,1)
+					$.get(theLink+".ino", function(data) { 
+						$('#span_file').text(" - "+ theName)
+						if (data) editor.setValue(data,1)
+					}, 'text')
 				}
 			} else {
-				if (window.location.search!="") window.location.search = "";
-				BlocklyDuino.workspace.clear();
-				BlocklyDuino.workspace.render()
-			}
+				$('#span_file').text("")
+				if (BlocklyDuino.content == "off") {
+					if (localStorage.setItem("prog", "python")) {
+						editor.setValue(BlocklyDuino.prog_py,1)
+					} else {
+						editor.setValue(BlocklyDuino.prog_ino,1)
+					}
+				} else {
+					if (window.location.search!="") window.location.search = "";
+					BlocklyDuino.workspace.clear();
+					BlocklyDuino.workspace.render()
+				}
+			}			
 		} else {
 			return
 		}
 	})
 	ipcRenderer.on('closed', function(event, response){
 		if (response === 0){
-			electron.close()
+			electronApp.close()
 		} else {
 			return
 		}
@@ -569,7 +624,7 @@ window.addEventListener('load', function load(event){
 		}
 	})
 	ipcRenderer.on('saved-ino', function(event, path){
-		if (localStorage.getItem('content') == "off") {
+		if (BlocklyDuino.content == "off") {
 			var code = editor.getValue()
 		} else {
 			var code = $('#pre_previewArduino').text()
@@ -586,7 +641,7 @@ window.addEventListener('load', function load(event){
 		}
 	})
 	ipcRenderer.on('saved-py', function(event, path){
-		if (localStorage.getItem('content') == "off") {
+		if (BlocklyDuino.content == "off") {
 			var code = editor.getValue()
 		} else {
 			var code = $('#pre_previewArduino').text()
@@ -716,5 +771,65 @@ window.addEventListener('load', function load(event){
 		nBlock.render()
 		Blockly.getMainWorkspace().updateToolbox(BlocklyDuino.buildToolbox())
 		$("#toggle").show()
+	})
+	ipcRenderer.on('newCard', function(event, response){
+		if (response === 0){
+			localStorage.setItem("card", new_card)
+			BlocklyDuino.selectedCard = new_card
+			localStorage.setItem("prog", new_prog)
+			BlocklyDuino.prog = new_prog
+			$('#arduino_card_mini_picture').attr("src", profile[new_card]['picture'])
+			$('#span_file').text("")
+			if (BlocklyDuino.content == "on") {
+				if (new_prog != "python") {
+					$('#btn_preview').attr('title', Blockly.Msg['btn_preview_ino'])
+					$('#btn_saveino').attr('title', Blockly.Msg['btn_save_ino'])
+					var new_toolbox = "toolbox_arduino_all"
+					localStorage.setItem("toolbox", new_toolbox)
+					BlocklyDuino.workspace.clear()
+					BlocklyDuino.loadToolboxDefinition(new_toolbox)
+					Blockly.getMainWorkspace().updateToolbox(BlocklyDuino.buildToolbox())
+					BlocklyDuino.workspace.render()
+				} else {
+					$('#btn_preview').attr('title', Blockly.Msg['btn_preview_py'])
+					$('#btn_saveino').attr('title', Blockly.Msg['btn_save_py'])
+					if ( window.profile[new_card].cpu == "cortexM0" ) {
+						var new_toolbox = "toolbox_microbit"
+					} else {
+						var new_toolbox = "toolbox_lycee"
+					}
+					localStorage.setItem("toolbox", new_toolbox)
+					BlocklyDuino.workspace.clear()
+					BlocklyDuino.loadToolboxDefinition(new_toolbox)
+					Blockly.getMainWorkspace().updateToolbox(BlocklyDuino.buildToolbox())
+					BlocklyDuino.workspace.render()
+				}
+			} else {
+				if (new_prog != "python") {
+					editor.session.setMode("ace/mode/c_cpp")
+					editor.setOptions({
+						enableBasicAutocompletion: true,
+						enableSnippets: true,
+						enableLiveAutocompletion: true
+					})
+					editor.setValue(BlocklyDuino.prog_ino,1)
+				} else {
+					editor.session.setMode("ace/mode/python")
+					editor.setOptions({
+							enableBasicAutocompletion: true,
+							enableSnippets: true,
+							enableLiveAutocompletion: true
+						})
+					if ( profile[new_card].cpu == "cortexM0" ) {
+						editor.setValue(BlocklyDuino.prog_microbit,1)
+					} else {
+						editor.setValue(BlocklyDuino.prog_py,1)
+					}
+				}
+			}
+		} else {
+			$("#boards").val(localStorage.card)
+			return
+		}
 	})
 })

@@ -63,11 +63,8 @@ pre {
 	background-color: #d9534f;
 }
 .my_select{
-	height: 22px;  
-	border-top-right-radius: 3px; 
-	border-bottom-right-radius: 3px;
-	border-left-width: 0px;
-	color: gray
+	vertical-align: middle;
+	border-color: #d9534f
 }
 .btn_color {
 	color: gray;

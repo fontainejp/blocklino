@@ -1,0 +1,73 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="reset" id="]IP3P_):eA;4KZNW!re%" x="32" y="172">
+    <next>
+      <block type="controls_repeat_ext" id="?1e1Tmuh`CxI@*Qh)rvP">
+        <value name="TIMES">
+          <block type="math_number" id="~m24Ez9nZl[+4iC!``V5">
+            <field name="NUM">3</field>
+          </block>
+        </value>
+        <statement name="DO">
+          <block type="gauche_droite" id="W~D{J1MI?|=mqrE@SNK3">
+            <field name="action">td</field>
+            <value name="ANGLE">
+              <block type="sophus_angle" id="OTW-d}T6jb=e2DZ#c{O|">
+                <field name="NAME">90</field>
+              </block>
+            </value>
+            <next>
+              <block type="avancer_reculer" id="X^x,m4M]-g^93=e2Fse~">
+                <field name="action">av</field>
+                <value name="NAME">
+                  <block type="math_number" id="*.n|v;v1N{%=_E)LO[aB">
+                    <field name="NUM">60</field>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+        <next>
+          <block type="gauche_droite" id=")sNrZ8-SzbC7KUX~Ko8r">
+            <field name="action">td</field>
+            <value name="ANGLE">
+              <block type="sophus_angle" id="!*N6g-EY~.3OOOk-bWy0">
+                <field name="NAME">30</field>
+              </block>
+            </value>
+            <next>
+              <block type="avancer_reculer" id="Rw3)NS2mU8#B/ssnB*h5">
+                <field name="action">av</field>
+                <value name="NAME">
+                  <block type="math_number" id="#U@F?IyblclnMpWn~|C+">
+                    <field name="NUM">60</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="gauche_droite" id="N1?+p[7]+yeUptsOG]NH">
+                    <field name="action">td</field>
+                    <value name="ANGLE">
+                      <block type="sophus_angle" id="-Tt422P6-c@alArMP4__">
+                        <field name="NAME">120</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="avancer_reculer" id="XHkg`0`01V1#f}e22,7S">
+                        <field name="action">av</field>
+                        <value name="NAME">
+                          <block type="math_number" id="*yeJhqn5ImC]}|)?(WZU">
+                            <field name="NUM">60</field>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

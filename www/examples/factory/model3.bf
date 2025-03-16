@@ -1,11 +1,11 @@
 ﻿<xml xmlns="http://www.w3.org/1999/xhtml">
   <language>Blockly.Arduino['button_is_pressed']=function(block){
-    var value_statement = Blockly.Arduino.statementToCode(block, '_statement');
-    var value_dropdown = block.getFieldValue('_dropdown');
-    Blockly.Arduino.includes_['lib'] = '#include "Esplora.h";';
-    var code = 'if (Esplora.readButton('+value_dropdown+')) {\n  '+value_statement+'\n};';
+    var value_statement = Blockly.Arduino.statementToCode(block, '_statement')
+    var value_dropdown = block.getFieldValue('_dropdown')
+    Blockly.Arduino.includes_['lib'] = '#include "Esplora.h";'
+    var code = 'if (Esplora.readButton('+value_dropdown+')) {\n  '+value_statement+'\n};'
     return code
-};
+}
   </language>
   <block type="factory_base" id="icqte[+jHGl+MEWT,~Lr" deletable="false" movable="false" x="0" y="0">
     <mutation connections="BOTH"></mutation>

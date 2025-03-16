@@ -1,9 +1,9 @@
 ﻿<xml xmlns="http://www.w3.org/1999/xhtml">
   <language>Blockly.Arduino['vitesse_serie']=function(block){
-    var value_dropdown = block.getFieldValue('_dropdown');
-    var code = value_dropdown;
-    return [code, Blockly.Arduino.ORDER_ATOMIC];
-};
+    var value_dropdown = block.getFieldValue('_dropdown')
+    var code = value_dropdown
+    return [code, Blockly.Arduino.ORDER_ATOMIC]
+}
   </language>
   <block type="factory_base" id="icqte[+jHGl+MEWT,~Lr" deletable="false" movable="false" x="0" y="0">
     <mutation connections="LEFT"></mutation>

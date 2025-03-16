@@ -27,10 +27,11 @@ body {
 }
 #header {
     position: absolute;
-    top: 40px;
 	background: #fff;
-	height: 40px;
-    width: 100%
+	height: 41px;
+    width: 100%;
+	padding: 0;
+	margin: 0
 }
 #btn_right {
 	position: absolute;
@@ -53,26 +54,33 @@ body {
 #container {
 	background-color: #fff;
     position: absolute;
-    top: 85px;
+    top: 41px;
     bottom: 0;
-    width: 100%
+    width: 100%;
+	padding: 0;
+	margin: 0
 }
 #blocklyDiv{
-	height: 100%
+	position: relative;
+	height: 100%;
+	width: 100%;
+	left: 5px
 }
 #blockly_l{
 	background-color: white;
     position: relative;
     float: left;
-	padding: 5px;
 	width: 55%;
-	height: 100%
+	height: 100%;
+	padding: 0;
+	margin: 0
 }
 #blockly_r{
     position: relative;
-    float: left;
+    float: right;
 	height: 100%;
-	width: 45%
+	width: 45%;
+	border: none
 }
 #content_code {
 	font-size: 14px;
@@ -82,6 +90,16 @@ body {
     right: 5px;
     bottom: 5px;
     left: 5px
+}
+#divBody {
+	background-color: #fff;
+    position: absolute;
+    top: 45px;
+    bottom: 0px;
+    width: 100%
+}
+#toolbox {
+	display:none
 }
 .tooltip-inner{
 	background-color: #5cb85c;
@@ -127,136 +145,3 @@ body {
 .blocklyFlyout .blocklyScrollbarBackground:hover+.blocklyScrollbarHandle, .blocklyFlyout .blocklyScrollbarHandle:hover {
 	fill: #5cb85c;
 }
-#floating-button{
-        width: 55px;
-        height: 55px;
-        border-radius: 50%;
-        background: #db4437;
-        position: fixed;
-        cursor: pointer;
-        box-shadow: 0px 2px 5px #666;
-      }
-#container-floating{
-        position: fixed;
-        width: 56px;
-        height: 56px;
-        z-index: 50;
-      }
-#container-floating:hover{
-        height: 400px;
-        width: 90px;
-      }
-#container-floating:hover .first{
-        animation: plus-in 0.15s linear;
-        animation-fill-mode: forwards;
-      }
-#container-floating:hover .second{
-        animation: edit-in 0.2s;
-        animation-delay: 0.1s;
-        animation-fill-mode: forwards;
-      }
-#container-floating:hover .nds{
-        animation: bounce-in 0.1s linear;
-        animation-fill-mode:  forwards;
-      }
-      .first{
-        color: white;
-        position: absolute;
-        top: 0;
-        display: block;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        text-align: center;
-        padding: 0;
-        margin: 0;
-        line-height: 55px;
-        animation: plus-out 0.3s;
-        transition: all 0.3s;
-      }
-      .other{
-        color: white;
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin: 0;
-        top: 0;
-        bottom: 0;
-        text-align: center;
-        line-height: 40px;
-      }
-      .second{
-        color: white;
-        position: absolute;
-        top: 0;
-        display: block;
-        bottom: 0;
-        left: 0;
-        display: block;
-        right: 0;
-        padding: 0;
-        opacity: 0;
-        text-align: center;
-        margin: auto;
-        line-height: 55px;
-        transform: rotateZ(-70deg);
-        transition: all 0.3s;
-        animation: edit-out 0.3s;
-      }
-      .nds{
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        position: fixed;
-        z-index: 300;
-        transform:  scale(0);
-        cursor: pointer;
-      }
-      .nd1{
-        background: #d3a411;
-        left: 40px;
-        top: 120px;
-        animation-delay: 0.3s;
-        animation: bounce-out 0.3s linear;
-        animation-fill-mode:  forwards;
-      }
-      .nd2{
-        background: #3c80f6;
-        left: 40px;
-        top: 180px;
-        animation-delay: 0.2s;
-        animation: bounce-out 0.2s linear;
-        animation-fill-mode:  forwards;
-      }
-      .nd3{
-        background: #ba68c8;
-        left: 40px;
-        top: 240px;
-        animation-delay: 0.1s;
-        animation: bounce-out 0.1s linear;
-        animation-fill-mode:  forwards;
-      }
-      @keyframes edit-in{
-          from {opacity: 0; transform: rotateZ(-70deg);}
-          to {opacity: 1; transform: rotateZ(0deg);}
-      }
-      @keyframes edit-out{
-          from {opacity: 1; transform: rotateZ(0deg);}
-          to {opacity: 0; transform: rotateZ(-70deg);}
-      }
-      @keyframes plus-in{
-          from {opacity: 1; transform: rotateZ(0deg);}
-          to {opacity: 0; transform: rotateZ(180deg);}
-      }
-      @keyframes plus-out{
-          from {opacity: 0; transform: rotateZ(180deg);}
-          to {opacity: 1; transform: rotateZ(0deg);}
-      }
-      @keyframes bounce-in{
-          from {opacity: 0;}
-          to {opacity: 1; transform: scale(1);}
-      }
-      @keyframes bounce-out{
-          from {opacity: 1; transform: scale(1);}
-          to {opacity: 0; transform: scale(0);}
-      }

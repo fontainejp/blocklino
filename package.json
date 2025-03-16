@@ -1,6 +1,6 @@
 {
   "name": "Blocklino",
-  "version": "1.9.5",
+  "version": "1.9.6",
   "description": "environnement de développement pour langage graphique",
   "author": "Fontaine Jean Philippe",
   "license": "CC0-1.0",
@@ -52,11 +52,7 @@
    "include": "build/blocklino.nsh"
   },
   "win": {
-   "target": [
-    "nsis",
-    "portable",
-    "zip"
-   ],
+   "target": "nsis"
    "icon": "build/app.ico"
   },
   "fileAssociations": [
@@ -65,6 +61,24 @@
     "name": "BLOC File",
     "role": "Editor",
     "icon": "build/bloc.ico"
+   },
+   {
+    "ext": "bf",
+    "name": "Factory File",
+    "role": "Editor",
+    "icon": "build/bf.ico"
+   },
+   {
+    "ext": "ttl",
+    "name": "Turtle File",
+    "role": "Editor",
+    "icon": "build/ttl.ico"
+   },
+   {
+    "ext": "www",
+    "name": "WEB File",
+    "role": "Editor",
+    "icon": "build/www.ico"
    }
   ],
   "extraFiles": [

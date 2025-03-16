@@ -27,10 +27,11 @@ body {
 }
 #header {
     position: absolute;
-    top: 40px;
 	background-color: #2f3129;
-	height: 40px;
-    width: 100%
+	height: 41px;
+    width: 100%;
+	padding: 0;
+	margin: 0
 }
 #btn_right {
 	position: absolute;
@@ -53,27 +54,34 @@ body {
 #container {
 	background-color: #2f3129;
     position: absolute;
-    top: 85px;
+    top: 41px;
     bottom: 0;
-    width: 100%
+    width: 100%;
+	padding: 0;
+	margin: 0
 }
 #blocklyDiv{
-	height: 100%
+	position: relative;
+	height: 100%;
+	width:100%;
+	left:5px
 }
 #blockly_l{
 	background-color: #2f3129;
     position: relative;
     float: left;
-	padding: 5px;
+	padding: 0;
 	width: 55%;
-	height: 100%
+	height: 100%;
+	margin: 0
 }
 #blockly_r{
 	background-color: white;
     position: relative;
-    float: left;
+    float: right;
 	height: 100%;
-	width: 45%
+	width: 45%;
+	border: none
 }
 #content_code {
 	background-color: #2f3129;
@@ -84,6 +92,16 @@ body {
     right: 5px;
     bottom: 5px;
     left: 5px
+}
+#divBody {
+	background-color: #fff;
+    position: absolute;
+    top: 45px;
+    bottom: 0px;
+    width: 100%
+}
+#toolbox {
+	display:none
 }
 .tooltip-inner{
 	background-color: #5cb85c;

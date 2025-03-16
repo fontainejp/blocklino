@@ -511,9 +511,17 @@
 		</category>
 		<sep></sep>
 	</category>
-	<category name="CAT_MYBLOCKS" colour="#4488FF">
+	<category name="Mes blocs" colour="#4488FF" id="CAT_MYBLOCKS">
+		<category name="- usine à blocs" colour="#4488FF" id="CAT_FACTORY">	
 		
-	</category>	
+		</category>	
+		<category name="- local" colour="#4488FF" id="CAT_LOCAL">	
+			
+		</category>
+		<category name="- en ligne" colour="#4488FF" id="CAT_ONLINE">	
+			
+		</category>	
+	</category>		
 </toolbox>
 
 

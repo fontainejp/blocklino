@@ -1,11 +1,11 @@
 <xml xmlns="http://www.w3.org/1999/xhtml">
   <language>Blockly.Arduino['print_message']=function(block){
-    var value_text = block.getFieldValue('_dropdown');
-    var value_block = Blockly.Arduino.valueToCode(block, '_block', Blockly.Arduino.ORDER_ATOMIC);
-    Blockly.Arduino.setups_['setup'] = 'Serial.begin('+value_block+');';
-    var code = 'Serial.println("'+value_text+'");\n';
+    var value_text = block.getFieldValue('_dropdown')
+    var value_block = Blockly.Arduino.valueToCode(block, '_block', Blockly.Arduino.ORDER_ATOMIC)
+    Blockly.Arduino.setups_['setup'] = 'Serial.begin('+value_block+');'
+    var code = 'Serial.println("'+value_text+'");\n'
     return code
-};
+}
   </language>
   <block type="factory_base" id="icqte[+jHGl+MEWT,~Lr" deletable="false" movable="false" x="0" y="0">
     <mutation connections="BOTH"></mutation>

@@ -1,0 +1,116 @@
+@CHARSET "UTF-8";
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	background-color: white;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+#toptitle {
+    -webkit-app-region: drag;
+	background-color: #5bc0de;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 41px;
+	height: 41px;
+	padding: 0;
+	margin: 0
+}
+#title {
+	position: fixed;
+	left: 5px;
+	color: white;
+}
+#title-bar-btns {
+	-webkit-app-region: no-drag;
+	position: fixed;
+	right: 0px
+}
+#container {
+	background-color: #fff;
+    position: absolute;
+    top: 41px;
+    bottom: 0;
+    width: 100%;
+	padding: 0;
+	margin: 0;
+}
+#blockly_l{
+	background-color: white;
+    position: relative;
+    float: left;
+	width: 50%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+#btn_center {
+	background-color: white;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	z-index: 10;
+}
+#blocklyDiv {
+	background-color: white;
+    position: absolute;
+	float: left;
+	width: 100%;
+    top: 45px;
+	left: 5px;
+    bottom: 0px;
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+#leSVG{
+	background-color: #F0FFFF;
+    position: relative;
+	float: right;
+	height: 640px;
+	width: 640px;
+	border: none;
+    top: 4px;
+	right: 5px;
+}
+#toolbox, #loadText, #sortieJS {
+	display: none
+}
+.error{
+	color: #ff0000;
+}
+.btn-quit { 
+  color: #fff; 
+  width: 40px;
+  height: 40px;
+  background-color: #5bc0de; 
+  border-color: #5bc0de; 
+  line-height: 0;
+  padding: 0
+}
+.tooltip-inner{
+	background-color: #5bc0de;
+}
+.btn_color {
+	color: gray;
+}
+.blocklyToolboxDiv {
+	background-color: #fff  !important;
+	opacity: 0.8 
+}
+.blocklyTreeRow {
+	height: 30px !important;
+	line-height: 30px !important
+}
+.blocklyScrollbarHandle {
+	fill: #5bc0de;
+}
+.blocklyScrollbarBackground:hover+.blocklyScrollbarHandle, .blocklyScrollbarHandle:hover {
+	fill: #5bc0de;
+}
+.blocklyFlyout .blocklyScrollbarHandle {
+	fill: #5bc0de;
+}
+.blocklyFlyout .blocklyScrollbarBackground:hover+.blocklyScrollbarHandle, .blocklyFlyout .blocklyScrollbarHandle:hover {
+	fill: #5bc0de;
+}

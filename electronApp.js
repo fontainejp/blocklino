@@ -1,69 +1,65 @@
 var {electron, ipcMain, app, BrowserWindow, globalShortcut, dialog} = require('electron')
 var { autoUpdater } = require("electron-updater")
 var path = require('path')
-var mainWindow, termWindow, promptWindow, promptOptions, promptAnswer
+var mainWindow, termWindow, promptWindow, promptOptions, promptAnswer, htmlWindow, ttlWindow, factoryWindow
+
 autoUpdater.autoDownload = false
 autoUpdater.logger = null
-function createWindow() {
-	if (process.platform == 'win32' && process.argv.length >= 2) {
-		var file = process.argv[1]
-		if (file.endsWith("bloc")||file.endsWith("ino")||file.endsWith("py")) {
-			mainWindow = new BrowserWindow({width: 1000, height: 625, icon: '../../www/media/icon.png', frame: false, movable: true})
-			mainWindow.loadURL(path.join(__dirname, '../../www/index.html?url='+file))
-		}
-        if (file.endsWith("www")||file.endsWith("html")) {
-			mainWindow = new BrowserWindow({width: 1000, height: 625, frame: false, movable: true})
-			mainWindow.loadURL(path.join(__dirname, '../../www/ffau.html?url='+file))
-		}
-        if (file.endsWith("ttl")) {
-			mainWindow = new BrowserWindow({width: 1310, height: 691, frame: false, movable: true, resizable: false})
-			mainWindow.loadURL(path.join(__dirname, '../../www/turtle.html?url='+file))
-		}
-	} else {
-		mainWindow = new BrowserWindow( {webPreferences: {
-      sandbox: false
-    },width: 1000, height: 625, icon: '../../www/media/icon.png', frame: false, movable: true})
-		mainWindow.loadURL(path.join(__dirname, '../../www/index.html'))
-	}
-	mainWindow.setMenu(null)
-	mainWindow.on('closed', function () {
-		mainWindow = null
-	})
-}
-function createTerm() {
-	termWindow = new BrowserWindow({width: 640, height: 560, 'parent': mainWindow, resizable: false, movable: true, frame: false, modal: true}) 
-	termWindow.loadURL(path.join(__dirname, "../../www/term.html"))
-	termWindow.setMenu(null)
-	termWindow.on('closed', function () { 
-		termWindow = null 
-	})
-}
-function createRepl() {
-	termWindow = new BrowserWindow({width: 640, height: 515, 'parent': mainWindow, resizable: false, movable: true, frame: false, modal: true}) 
-	termWindow.loadURL(path.join(__dirname, "../../www/repl.html"))
-	termWindow.setMenu(null)
-	termWindow.on('closed', function () { 
-		termWindow = null 
-	})
-}
-function createfactory() {
+
+function createFactory() {
 	factoryWindow = new BrowserWindow({width: 1000, height: 625, 'parent': mainWindow, resizable: true, movable: true, frame: false})
 	factoryWindow.loadURL(path.join(__dirname, "../../www/factory.html"))
 	factoryWindow.setMenu(null)
 	factoryWindow.on('closed', function () { 
 		factoryWindow = null 
-	})
+	})   
+}
+function createWindow() {
+	if (process.argv.length >= 2) {
+		var file = process.argv[1]
+		if (file.endsWith("bloc")||file.endsWith("xml")) {
+			mainWindow = new BrowserWindow({width: 1000, height: 625, frame: false, movable: true})
+			mainWindow.loadURL(path.join(__dirname, '../../www/index.html?url='+file))
+			mainWindow.setMenu(null)
+			mainWindow.on('closed', function () {
+				mainWindow = null
+			})
+		}
+        if (file.endsWith("www")) {
+			htmlWindow = new BrowserWindow({width: 1000, height: 625, frame: false, movable: true})
+			htmlWindow.loadURL(path.join(__dirname, '../../www/ffau.html?url='+file))
+			htmlWindow.setMenu(null)
+			htmlWindow.on('closed', function () {
+				htmlWindow = null
+			})
+		}
+        if (file.endsWith("ttl")) {
+			ttlWindow = new BrowserWindow({width: 1310, height: 691, frame: false, movable: true, resizable: false})
+			ttlWindow.loadURL(path.join(__dirname, '../../www/turtle.html?url='+file))
+			ttlWindow.setMenu(null)
+			ttlWindow.on('closed', function () {
+				ttlWindow = null
+			})
+		}
+		if (file.endsWith("bf")) {
+			mainWindow = new BrowserWindow({width: 1000, height: 625, frame: false, movable: true})
+			mainWindow.loadURL(path.join(__dirname, '../../www/index.html'))
+			mainWindow.setMenu(null)
+			mainWindow.on('closed', function () {
+				mainWindow = null
+			})
+			createFactory()
+		}
+	} else {
+		mainWindow = new BrowserWindow({width: 1000, height: 625, frame: false, movable: true})
+		mainWindow.loadURL(path.join(__dirname, '../../www/index.html'))
+		mainWindow.setMenu(null)
+		mainWindow.on('closed', function () {
+			mainWindow = null
+		})
+	}
 }
 function promptModal(options, callback) {
-	promptOptions = options
-	promptWindow = new BrowserWindow({width:360, height: 135, 'parent': mainWindow, resizable: false, movable: true, frame: false, modal: true})
-	promptWindow.loadURL(path.join(__dirname, "../../www/modalVar.html"))
-	promptWindow.on('closed', function () { 
-		promptWindow = null 
-		callback(promptAnswer)
-	})
-}
-function Modalprompt(options, callback) {
 	promptOptions = options
 	promptWindow = new BrowserWindow({width:360, height: 135, 'parent': mainWindow, resizable: false, movable: true, frame: false, modal: true})
 	promptWindow.loadURL(path.join(__dirname, "../../www/modalVar.html"))
@@ -78,35 +74,54 @@ function open_console(mainWindow = BrowserWindow.getFocusedWindow()) {
 function refresh(mainWindow = BrowserWindow.getFocusedWindow()) {
 	mainWindow.webContents.reloadIgnoringCache()
 }
+
 app.on('ready',  function() {
 	createWindow()
 	globalShortcut.register('F8', open_console)
 	globalShortcut.register('F5', refresh)
 })
-app.on('activate', function() {
-	if (mainWindow === null) createWindow()
-})
 app.on('window-all-closed', function() {
 	globalShortcut.unregisterAll()
-	if (mainWindow) {
-		mainWindow.webContents.executeJavaScript('localStorage.setItem("loadOnceBlocks", "")')
-	}
-	if (process.platform !== 'darwin') app.quit()
+	if (mainWindow) mainWindow.webContents.executeJavaScript('localStorage.setItem("loadOnceBlocks", "")')
+	app.quit()
 })
 ipcMain.on("version", function() {
 	autoUpdater.checkForUpdates()  
 })
 ipcMain.on("prompt", function() {
-	createTerm()  
+	termWindow = new BrowserWindow({width: 640, height: 560, 'parent': mainWindow, resizable: false, movable: true, frame: false, modal: true}) 
+	termWindow.loadURL(path.join(__dirname, "../../www/term.html"))
+	termWindow.setMenu(null)
+	termWindow.on('closed', function () { 
+		termWindow = null 
+	})
 })
 ipcMain.on("repl", function() {
-	createRepl()  
+	termWindow = new BrowserWindow({width: 640, height: 515, 'parent': mainWindow, resizable: false, movable: true, frame: false, modal: true}) 
+	termWindow.loadURL(path.join(__dirname, "../../www/repl.html"))
+	termWindow.setMenu(null)
+	termWindow.on('closed', function () { 
+		termWindow = null 
+	})
 })
 ipcMain.on("factory", function() {
-	createfactory()       
+	createFactory()
 })
-ipcMain.on("view", function(event, file) {
-	createViewer(file)
+ipcMain.on("HTML", function() {
+	htmlWindow = new BrowserWindow({width: 1000, height: 625, resizable: true, movable: true, frame: false})
+	htmlWindow.loadURL(path.join(__dirname, "../../www/ffau.html"))
+	htmlWindow.setMenu(null)
+	htmlWindow.on('closed', function () { 
+		htmlWindow = null 
+	})    
+})
+ipcMain.on("turtle", function() {
+	ttlWindow = new BrowserWindow({width: 1310, height: 691, resizable: false, movable: true, frame: false})
+	ttlWindow.loadURL(path.join(__dirname, "../../www/turtle.html"))
+	ttlWindow.setMenu(null)
+	ttlWindow.on('closed', function () { 
+		ttlWindow = null 
+	})    
 })
 ipcMain.on("appendBlock", function(event, data1, data2, data3) {
     mainWindow.webContents.send('BlockAppended', data1, data2, data3)
@@ -188,9 +203,39 @@ ipcMain.on('save-bloc', function(event) {
 		event.sender.send('saved-bloc', filename)
 	})
 })
+ipcMain.on('save-www', function(event) {
+	dialog.showSaveDialog(htmlWindow,{
+		title: 'Enregistrer au format .WWW',
+		defaultPath: 'Programme',
+		filters: [{ name: 'Blockly-Web', extensions: ['www'] }]
+	},
+	function(filename){
+		event.sender.send('saved-www', filename)
+	})
+})
+ipcMain.on('save-html', function(event) {
+	dialog.showSaveDialog(htmlWindow,{
+		title: 'Enregistrer au format .HTML',
+		defaultPath: 'Programme',
+		filters: [{ name: 'Page Web', extensions: ['html'] }]
+	},
+	function(filename){
+		event.sender.send('saved-html', filename)
+	})
+})
+ipcMain.on('save-svg', function(event) {
+	dialog.showSaveDialog(ttlWindow,{
+		title: 'Enregistrer au format .SVG',
+		defaultPath: 'Capture',
+		filters: [{ name: 'Image', extensions: ['svg'] }]
+	},
+	function(filename){
+		event.sender.send('saved-svg', filename)
+	})
+})
 ipcMain.on('save-bf', function(event) {
 	dialog.showSaveDialog(factoryWindow,{
-		title: 'Enregistrer au format .bf',
+		title: 'Enregistrer au format .BF',
 		defaultPath: 'Bloc.bf',
 		filters: [{ name: 'Blockly-Factory', extensions: ['bf'] }]
 	},
@@ -198,9 +243,19 @@ ipcMain.on('save-bf', function(event) {
 		event.sender.send('saved-bf', filename)
 	})
 })
+ipcMain.on('save-ttl', function(event) {
+	dialog.showSaveDialog(ttlWindow,{
+		title: 'Enregistrer au format .TTL',
+		defaultPath: 'Programme',
+		filters: [{ name: 'Turtle', extensions: ['ttl'] }]
+	},
+	function(filename){
+		event.sender.send('saved-ttl', filename)
+	})
+})
 ipcMain.on('save-csv', function(event) {
 	dialog.showSaveDialog(mainWindow,{
-		title: 'Exporter les données au format CSV',
+		title: 'Exporter les données au format .CSV',
 		defaultPath: 'Programme',
 		filters: [{ name: 'donnees', extensions: ['csv'] }]
 	},
@@ -208,9 +263,87 @@ ipcMain.on('save-csv', function(event) {
 		event.sender.send('saved-csv', filename)
 	})
 })
+ipcMain.on('closeHTML', function(event) {
+	dialog.showMessageBox(htmlWindow,{
+		type: 'warning',
+		title: 'Quitter',
+		message: 'Etes-vous certain de vouloir quitter ce programme ?',
+		buttons: ['oui', 'non'],
+		cancelId: 1,
+		noLink: true
+	},
+	function(buttonIndex)  {
+		event.sender.send('closedHTML', buttonIndex)
+	})
+})
+ipcMain.on('closeTTL', function(event) {
+	dialog.showMessageBox(ttlWindow,{
+		type: 'warning',
+		title: 'Quitter',
+		message: 'Etes-vous certain de vouloir quitter ce programme ?',
+		buttons: ['oui', 'non'],
+		cancelId: 1,
+		noLink: true
+	},
+	function(buttonIndex)  {
+		event.sender.send('closedTTL', buttonIndex)
+	})
+})
+ipcMain.on('newHTML', function(event) {
+	dialog.showMessageBox(htmlWindow,{
+		type: 'question',
+		title: 'Nouveau programme',
+		message: 'Voulez-vous remplacer le programme actuel ?',
+		buttons: ['oui', 'non'],
+		cancelId: 1,
+		noLink: true
+	},
+	function(buttonIndex)  {
+		event.sender.send('newedHTML', buttonIndex)
+	})
+})
+ipcMain.on('newTTL', function(event) {
+	dialog.showMessageBox(ttlWindow,{
+		type: 'question',
+		title: 'Nouveau programme',
+		message: 'Voulez-vous remplacer le programme actuel ?',
+		buttons: ['oui', 'non'],
+		cancelId: 1,
+		noLink: true
+	},
+	function(buttonIndex)  {
+		event.sender.send('newedTTL', buttonIndex)
+	})
+})
+ipcMain.on('example', function(event, file) {
+	dialog.showMessageBox(htmlWindow,{
+		type: 'question',
+		title: 'Nouveau programme',
+		message: 'Voulez-vous remplacer le programme actuel ?',
+		buttons: ['oui', 'non'],
+		cancelId: 1,
+		noLink: true
+	},
+	function(buttonIndex)  {
+		event.sender.send('myExample', buttonIndex, file)
+	})
+})
+ipcMain.on('exampleTTL', function(event, file) {
+	dialog.showMessageBox(ttlWindow,{
+		type: 'question',
+		title: 'Nouveau programme',
+		message: 'Voulez-vous remplacer le programme actuel ?',
+		buttons: ['oui', 'non'],
+		cancelId: 1,
+		noLink: true
+	},
+	function(buttonIndex)  {
+		event.sender.send('myExample', buttonIndex, file)
+	})
+})
 ipcMain.on('close', function(event) {
 	dialog.showMessageBox(mainWindow,{
-		type: 'none',
+		type: 'warning',
 		title: 'Quitter',
 		message: 'Etes-vous certain de vouloir quitter ce programme ?',
 		buttons: ['oui', 'non'],
@@ -221,35 +354,48 @@ ipcMain.on('close', function(event) {
 		event.sender.send('closed', buttonIndex)
 	})
 })
-ipcMain.on('new', function(event) {
+ipcMain.on('new', function(event, theLink, theName) {
 	dialog.showMessageBox(mainWindow,{
-		type: 'none',
-		title: 'Nouveau',
-		message: 'Etes-vous certain de vouloir quitter ce programme ?',
+		type: 'question',
+		title: 'Nouveau programme',
+		message: 'Voulez-vous remplacer le programme actuel ?',
 		buttons: ['oui', 'non'],
 		cancelId: 1,
 		noLink: true
 	},
 	function(buttonIndex)  {
-		event.sender.send('newed', buttonIndex)
+		event.sender.send('newed', buttonIndex, theLink, theName)
 	})
 })
-ipcMain.on('addMedias', function(event) {
-	dialog.showOpenDialog(htmlWindow,{
-		title: 'Ajouter des images/audios/vidéos',
+ipcMain.on('card', function(event) {
+	dialog.showMessageBox(mainWindow,{
+		type: 'question',
+		title: 'Nouvelle carte',
+		message: 'Changer de carte ?',
+		buttons: ['oui', 'non'],
+		cancelId: 1,
+		noLink: true
+	},
+	function(buttonIndex)  {
+		event.sender.send('newCard', buttonIndex)
+	})
+})
+ipcMain.on('addJS', function(event) {
+	dialog.showOpenDialog(mainWindow,{
+		title: 'Ajouter des Blocks',
 		buttonLabel: "Ajouter",
-		filters: [{ name: 'Médias', extensions: ['bmp', 'jpeg', 'jpg', 'png', 'gif', 'mp3', 'mp4', 'avi']}],
+		filters: [{ name: 'JavaScript', extensions: ['js']}],
 		properties: ['openFile','multiSelections']
 	},
 	function(filename){
-		event.sender.send('addedMedias', filename)
+		event.sender.send('added-js', filename)
 	})
 })
 ipcMain.on('addImg', function(event) {
 	dialog.showOpenDialog(factoryWindow,{
 		title: 'Ajouter des images',
 		buttonLabel: "Ajouter",
-		filters: [{ name: 'Images', extensions: ['bmp', 'jpg', 'png', 'gif']}],
+		filters: [{ name: 'Images', extensions: ['bmp','jpg','png','gif']}],
 		properties: ['openFile','multiSelections']
 	},
 	function(filename){

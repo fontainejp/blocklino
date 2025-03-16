@@ -1,9 +1,16 @@
 var remote = require('electron').remote 
-var { ipcRenderer, clipboard } = require('electron')
+var { ipcRenderer } = require('electron')
 var fs = require('fs')
+var electronApp = remote.getCurrentWindow()
 var mediaFactory = process.resourcesPath + "/../www/media/factory/"
 var blockFactory = process.resourcesPath + "/../www/blocs&generateurs/factory/"
+var userBlock = process.resourcesPath + "/../www/blocs&generateurs/user/"
+var code_bf
 
+function initFactory() {
+	if(!electronApp.isMaximized()) electronApp.maximize()
+	$('[rel="tooltip"]').tooltip({trigger: "hover"})
+}
 function loadBF(file) {
 	$.get(file, function(data){ 
 		if (data) {
@@ -13,63 +20,39 @@ function loadBF(file) {
 			mainWorkspace.render()
 			var elem = $(xml).find("language")[0]
 			var node = elem.childNodes[0]
-			localStorage.setItem("code_bf", node.nodeValue)
-			editor.setValue(node.nodeValue,1)
+			code_bf = node.nodeValue
 		}
 	}, "text")
+	$("#message").modal("show")
 }
 
 window.addEventListener('load', function load(event){
-	var window = remote.getCurrentWindow()
-	if(!window.isMaximized())window.maximize()
-	$('[rel="tooltip"]').tooltip({trigger: "hover"})
+	initFactory()
 	$('#btn_quit').on('click', function(){
-		window.close()
+		ipcRenderer.send("close")
 	})
 	$('#btn_max').on('click', function(){
-		if(window.isMaximized()){
-            window.unmaximize()
+		if(electronApp.isMaximized()){
+            electronApp.unmaximize()
 			$('#btn_max').html("<span class='fa fa-window-maximize fa-lg'></span>")
         }else{
-            window.maximize()
+            electronApp.maximize()
 			$('#btn_max').html("<span class='fa fa-window-restore fa-lg'></span>")
         }
 	})
 	$('#btn_append').on('click', function(){
-		$('#message').modal("show")
-		var selectList = document.createElement("select")
-		selectList.size = "10"
-		selectList.id = "toolchoice"
-		var messageDiv = document.getElementById('messageDIV')
-		messageDiv.append(selectList)
-		var list = localStorage.getItem('choice').split(",")
-		var sel = document.getElementById('toolchoice')
-		for (var i = 0; i < list.length; i++) { 
-			var opt = document.createElement('option')
-			opt.value = i
-            opt.innerHTML = list[i]
-			sel.append(opt)
-		}
-	})
-	$('#message').on('hidden.bs.modal', function(e) {
-		$("#messageDIV").empty()
-	})
-	$('#btn_appendOK').on('click', function(){
-		if ($("#toolchoice").val()) {
-			var dataB = $('#languagePre').text()
-			var dataG = editor.getValue()
-			var xml = Blockly.Xml.workspaceToDom(mainWorkspace)
-			var new_element = document.createElement("language")
-			new_element.appendChild(document.createTextNode(dataG))
-			xml.insertBefore(new_element, xml.childNodes[0])
-			var dataX = Blockly.Xml.domToPrettyText(xml)
-			fs.writeFileSync(blockFactory + blockType + '.bf', dataX)
-			var appendData = dataB + "\n" + dataG + "\n////////////////////\n"
-			fs.appendFileSync(blockFactory + "append.js", appendData)
-			var place = $("#toolchoice").val()
-			ipcRenderer.send("appendBlock", blockType, appendData, place)
-			window.close()
-		} else $("#message").modal("hide")
+		var dataB = $('#languagePre').text()
+		var dataG = editor.getValue()
+		var xml = Blockly.Xml.workspaceToDom(mainWorkspace)
+		var new_element = document.createElement("language")
+		new_element.appendChild(document.createTextNode(dataG))
+		xml.insertBefore(new_element, xml.childNodes[0])
+		var dataX = Blockly.Xml.domToPrettyText(xml)
+		fs.writeFileSync(blockFactory + blockType + '.bf', dataX)
+		var appendData = dataB + "\n" + dataG + "\n////////////////////\n"
+		fs.appendFileSync(userBlock + "append.js", appendData)
+		ipcRenderer.send("appendBlock", blockType, appendData, 33)
+		window.close()
 	})
 	$('#btn_redo').on('click', function(){
 		mainWorkspace.undo(1)
@@ -117,6 +100,10 @@ window.addEventListener('load', function load(event){
 	$('#btn_export').on('click', function(){
 		ipcRenderer.send('export-js')
 	})
+	$('#btn_messageOK').on('click', function(){
+		$("#message").modal("hide")
+		editor.setValue(code_bf,1)
+	})
 	$('#lien1').on('click', function(){
 		loadBF("./examples/factory/model1.bf")
 		$("#exampleModal").modal("hide")
@@ -136,19 +123,6 @@ window.addEventListener('load', function load(event){
 	$('#lien5').on('click', function(){
 		ipcRenderer.send('addImg')
 	})
-	$('#lien6').on('click', function(){
-		fs.readdir(mediaFactory, function(err, files) {
-			var dir_img = document.getElementById('span_image_dir') 
-			$("#span_image_dir").empty()
-			if(files.length%2==0){
-				for (var i=0; i < files.length; i=i+2) dir_img.innerHTML += "<tr><td>"+files[i]+"</td><td>"+files[i+1]+"</td></tr>"
-			}else{
-				for (var i=0; i < files.length-1; i=i+2) dir_img.innerHTML += "<tr><td>"+files[i]+"</td><td>"+files[i+1]+"</td></tr>"
-				dir_img.innerHTML += "<tr><td>"+files[files.length-1]+"</td></tr>"
-			}
-			$("#imageModal").modal("show")
-		})
-	})
 	$('#lien7').on('click', function(){
 		fs.readdir(mediaFactory, function(err, files){
 			var file1 = files.filter(word => word!="gamepad.png")
@@ -160,9 +134,8 @@ window.addEventListener('load', function load(event){
 			})
 		})
 	})
-	$('#btn_open_code').on('click', function(){
-		var code = localStorage.getItem("code_bf")
-		editor.setValue(code,1)
+	$('#addBlock').on('hidden.bs.modal', function(e) {
+		$("#messageDIV").empty()
 	})
 	ipcRenderer.on('added-img', function(event, path){
 		if (path === null){
@@ -233,5 +206,12 @@ window.addEventListener('load', function load(event){
 	})
 	ipcRenderer.on('openedBF', function(event, path){
 		if (path) loadBF(path)
+	})
+	ipcRenderer.on('closed', function(event, response){
+		if (response === 0){
+			electronApp.close()
+		} else {
+			return
+		}
 	})
 })

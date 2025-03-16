@@ -1,15 +1,15 @@
 ﻿<xml xmlns="http://www.w3.org/1999/xhtml">
   <language>Blockly.Arduino['ir_remote']=function(block){
-    var value_check = block.getFieldValue('_check') == 'TRUE';
-    var value_block = Blockly.Arduino.valueToCode(block, '_block', Blockly.Arduino.ORDER_ATOMIC);
-    Blockly.Arduino.includes_['irremote'] = '#include "IRremote.h";';
-    Blockly.Arduino.definitions_['irrecv'] = 'IRrecv irrecv('+value_block+');';
+    var value_check = block.getFieldValue('_check') == 'TRUE'
+    var value_block = Blockly.Arduino.valueToCode(block, '_block', Blockly.Arduino.ORDER_ATOMIC)
+    Blockly.Arduino.includes_['irremote'] = '#include "IRremote.h";'
+    Blockly.Arduino.definitions_['irrecv'] = 'IRrecv irrecv('+value_block+');'
     if (value_check) {
-		Blockly.Arduino.definitions_['results'] = 'decode_results results;';
+		Blockly.Arduino.definitions_['results'] = 'decode_results results;'
 	}
-    Blockly.Arduino.setups_['setup'] = 'irrecv.enableIRIn();';
+    Blockly.Arduino.setups_['setup'] = 'irrecv.enableIRIn();'
     return ''
-};
+}
   </language>
   <block type="factory_base" id="icqte[+jHGl+MEWT,~Lr" deletable="false" movable="false" x="0" y="0">
     <mutation connections="NONE"></mutation>

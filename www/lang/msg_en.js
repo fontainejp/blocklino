@@ -64,10 +64,12 @@ Blockly.Msg.CAT_html = "- HTML";
 Blockly.Msg.CAT_DFPLAYER="- DFPlayer mini";
 Blockly.Msg.CAT_GROVE_MP3="- Grove MP3 v3";
 Blockly.Msg.CAT_MYBLOCKS="My blocks";
+Blockly.Msg.CAT_FACTORY="- factory";
+Blockly.Msg.CAT_ONLINE="- online";
+Blockly.Msg.CAT_LOCAL="- local";
 // button
 Blockly.Msg.usbLabel= " Availables USB Ports ";
 Blockly.Msg.btn_turtle=" TURTLE ";
-Blockly.Msg.btn_processing=" Processing ";
 Blockly.Msg.btn_tools=" Tools ";
 Blockly.Msg.btn_config= " Preferences ";
 Blockly.Msg.btn_about= " About ";
@@ -107,11 +109,9 @@ Blockly.Msg.labelToolboxDefinition= " Level  ";
 Blockly.Msg.span_select_all= " Check all categories ";
 Blockly.Msg.view = " Preview";
 Blockly.Msg.library_add = " Add";
-Blockly.Msg.reset = " Clear";
-Blockly.Msg.cache = " Cache ";
 Blockly.Msg.btn_valid= " Validate ";
-Blockly.Msg.span_local_go=" Reload";
-Blockly.Msg.span_local_check=" Use distant server ";
+Blockly.Msg.span_local_online_factory=" Add other blocks ";
+Blockly.Msg.span_make_it=" Make it with Blockly-Factory";
 // card
 Blockly.Msg.cardLabel= " Availables boards ";
 Blockly.Msg.span_card_connect= "Connector : ";
@@ -139,7 +139,7 @@ Blockly.Msg.span_update= " Check for startup updates ";
 Blockly.Msg.span_blocklino= " BLOCKLINO ";
 Blockly.Msg.span_site= " The site ";
 Blockly.Msg.span_forum= " The Forum ";
-Blockly.Msg.span_contact= " a problem ! ";
+Blockly.Msg.span_contact= " a problem ";
 // variable
 Blockly.Msg.variablebody= "Name for the variable ";
 Blockly.Msg.variableModalLabel= " Variable ";

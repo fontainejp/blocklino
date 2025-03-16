@@ -1,0 +1,415 @@
+﻿<!DOCTYPE HTML>
+<html lang="fr" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title> BLOCKLY-WEB </title>
+		<script src="js/blockly.min.js"></script>
+		<script src="js/ffau/generate_html.js"></script>
+		<script src="js/ffau/index.js"></script>
+		<script src="js/jquery.min.2.1.3.js" onload="window.$ = window.jQuery = module.exports;"></script>
+		<script src="js/bootstrap.toggle.min.js"></script>
+		<script src="js/bootstrap.min.3.3.6.js"></script>
+		<script src="lang/context_menu.js"></script>
+		<script src="blocs&generateurs/ffau/css.js"></script>
+		<script src="blocs&generateurs/ffau/html.js"></script>
+		<script src="blocs&generateurs/ffau/js.js"></script>
+		<script src="blocs&generateurs/ffau/blockly_blocs.js"></script>
+		<script src="blocs&generateurs/ffau/blockly_generateurs_js.js"></script>
+		<script src="blocs&generateurs/ffau/Blockly_fr.js"></script>
+		<script src="js/ace/ace.js"></script>
+		<script src="js/ace/ext-language_tools.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.toggle.min.css">
+		<link rel="stylesheet" href="css/bootstrap.min.3.3.6.css">
+		<link rel="stylesheet" href="css/fontawesome.css">
+		<link id="theme_css" rel="stylesheet" href="css/ffau_sqlserver.css">
+	</head>
+	<body>
+		<div id="toptitle">
+			<div id="title">
+				<i class="fa fa-globe fa-1_75x fa-fw"></i><strong> BLOCKLY-WEB</strong><span id="span_title2"></span><em><span id="span_file"></span></em>
+			</div>
+			<div id="title-bar-btns">
+				<button id="btn_min" type="button" class="btn btn-minmaxgreen"><i class="fa fa-window-minimize fa-lg"></i></button>
+				<button id="btn_max" type="button" class="btn btn-minmaxgreen"><i class="fa fa-window-restore fa-lg"></i></button>
+				<button id="btn_quit" type="button" class="btn btn-quitgreen"><i class="fa fa-times fa-1_75x"></i></button>
+			</div>
+		</div>
+		<div id="container" >
+			<div id="blockly_l" >
+				<div id="header">
+					<div id="btn_left">
+						<ul class="nav nav-tabs" role="tablist" style="display:none">
+							<li role="presentation" class="active"><a href="#blocklyDiv" aria-controls="blocklyDiv" role="tab" data-toggle="tab"></a></li>
+							<li role="presentation"><a href="#content_code" aria-controls="content_code" role="tab" data-toggle="tab"></a></li>
+						</ul>
+						<input type="file" id="loadText" accept=".www" style="display:none">
+						<input id="codeORblock" checked data-toggle="toggle" data-onstyle="default" data-offstyle="default" data-on="<img src='media/logo.png' style='height:20px'>" data-off="<i class='fa fa-code fa-1_5x'></i>" type="checkbox">
+					</div>
+					<div id="btn_center" class="btn-toolbar">
+						<div class="btn-group">
+							<button id="btn_new" class="btn btn-default" rel="tooltip" data-placement="bottom" title="Nouveau fichier">
+								<i class="fa fa-file fa-1_5x btn_color"></i>
+							</button>
+							<div class="btn-group">
+								<button id="btn_example" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									<i class="fa fa-file-text fa-1_5x btn_color"></i>
+								</button>
+								<ul class="dropdown-menu">
+									<li class="dropdown-header">EXEMPLES</li>
+									<li class="divider"></li>
+									<li><a href="#" id="lien_hello">Ma première page</a></li>
+									<li><a href="#" id="lien_ia">Une page simple avec image</a></li>
+									<li><a href="#" id="lien_gafam">Classe et CSS</a></li>
+									<li><a href="#" id="lien_zen">Bootstrap et Fontawesome</a></li>
+									<li><a href="#" id="lien_complexe">Mon premier script</a></li>
+								</ul>
+							</div>
+							<button id="btn_open" class="btn btn-default" rel="tooltip" data-placement="bottom" title="Ouvrir">
+								<i class="fa fa-folder-open fa-1_5x btn_color"></i>
+							</button>
+							<button id="btn_save" class="btn btn-default" rel="tooltip" data-placement="bottom" title="Enregistrer/Sauvegarder">
+								<i class="fa fa-cloud-download fa-1_5x btn_color"></i>
+							</button>
+						</div>
+						<div class="btn-group">
+							<button id="btn_config" class="btn btn-default" data-toggle="modal" data-target="#configModal">
+								<i class="fa fa-cog fa-1_5x btn_color"></i>
+							</button>
+							<div class="btn-group">
+								<button id="btn_media" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									<i class="fa fa-image fa-1_5x btn_color"></i>
+								</button>
+								<ul class="dropdown-menu scrollable-menu" id="menu_media">
+									<li class="dropdown-header">MEDIA</li>
+									<li class="divider"></li>
+									<li><a href="#" id="btn_media1"><i class="fa fa-music fa-fw"></i> acqua.mp3</a></li>
+									<li><a href="#" id="btn_media2"><i class="fa fa-file-image-o fa-fw"></i> allume.png</a></li>
+									<li><a href="#" id="btn_media3"><i class="fa fa-video-camera fa-fw"></i> aube.mp4</a></li>
+									<li><a href="#" id="btn_media4"><i class="fa fa-file-image-o fa-fw"></i> beige.gif</a></li>
+									<li><a href="#" id="btn_media5"><i class="fa fa-file-image-o fa-fw"></i> college.jpg</a></li>
+									<li><a href="#" id="btn_media6"><i class="fa fa-file-image-o fa-fw"></i> earth.jpg</a></li>
+									<li><a href="#" id="btn_media7"><i class="fa fa-file-image-o fa-fw"></i> eteint.jpg</a></li>
+									<li><a href="#" id="btn_media8"><i class="fa fa-file-image-o fa-fw"></i> neuronne.jpg</a></li>
+									<li><a href="#" id="btn_media9"><i class="fa fa-file-image-o fa-fw"></i> ordinateur.png</a></li>
+									<li><a href="#" id="btn_media10"><i class="fa fa-file-image-o fa-fw"></i> portable.png</a></li>
+									<li><a href="#" id="btn_media11"><i class="fa fa-file-image-o fa-fw"></i> zen.jpg</a></li>
+								</ul>
+							</div>
+							<button id="btn_download" class="btn btn-default" rel="tooltip" data-placement="bottom" title="Download">
+								<i class="fa fa-download fa-1_5x btn_color"></i>
+							</button>
+						</div>
+						<div class="btn-group">
+							<button id="btn_undo" class="btn btn-default"><i class="fa fa-undo fa-1_5x btn_color"></i></button>
+							<button id="btn_search" class="btn btn-default"><i class="fa fa-binoculars fa-1_5x btn_color"></i></button>
+							<button id="btn_redo" class="btn btn-default"><i class="fa fa-repeat fa-1_5x btn_color"></i></button>
+						</div>
+					</div>
+				</div>
+				<div id="divBody" class="tab-content">
+					<div role="tabpanel" id="blocklyDiv" class="tab-pane fade in active" ></div>
+					<div role="tabpanel" id="content_code" class="tab-pane fade" onChange="update()"></div>
+				</div>
+			</div>
+			<iframe id="blockly_r"></iframe>
+		</div>
+		<!-- modal -->
+		<div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&#215;</span>
+						</button>
+						<span class="fa fa-cog fa-2x" class="modal-title"> Préférences</span>
+					</div>
+					<div class="modal-body" >
+						<p>
+							<label class="col-xs-3 control-label">Thème</label>
+							<select id="theme">
+								<option value="monokai">Sombre</option>
+								<option value="sqlserver" selected="selected">Clair</option>
+							</select>
+						</p>
+						<p>
+							<label class="col-xs-3 control-label">Police</label>
+							<select id="fontsize">
+								<option value="12px">12px</option>
+								<option value="14px" selected="selected">14px</option>
+								<option value="16px">16px</option>
+								<option value="18px">18px</option>
+								<option value="20px">20px</option>
+								<option value="22px">22px</option>
+							</select>
+						</p>
+						<p>
+							<label class="col-xs-3 control-label">Taille de l'aperçu</label>
+							<select id="viewsize">
+								<option value="33">petit</option>
+								<option value="45" selected="selected">moyen</option>
+								<option value="55">grand</option>
+							</select>
+						</p>
+						<p>
+							<label class="col-xs-3 control-label">Fichiers</label>
+							<button id="btn_html_explore" class="btn btn-default btn-sm">
+								<i class="fa fa-folder"></i> explorer
+							</button>
+							<button id="btn_reset" class="btn btn-danger btn-sm">
+								<i class="fa fa-trash-o" ></i>effacer
+							</button>
+						</p>
+						<p>
+							<label class="col-xs-3 control-label">Console</label>
+							<button id="btn_console" type="button" class="btn btn-sm btn-default">
+								<i class='fa fa-chevron-right'></i>
+							</button>
+						</p>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="message" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-body" >
+						Pour avoir un aperçu de la page il faut lui donner un nouveau titre.<br>
+						Utiliser les balises HEAD et TITLE !
+					</div>  
+				</div>
+			</div>
+		</div>
+		<!-- modal child -->
+		<div class="modal fade modal-child" id="modal_cache" data-modal-parent="#configModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
+						<i class="fmodal-title fa fa-hdd-o fa-2x" class=""> localstorage</i>
+					</div>
+					<div class="modal-body">
+						<span id="span_cache_dir"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<xml id="toolbox" >
+			<category colour="#4a235a" name="Structure">
+				<block type="html"></block>
+				<block type="head"></block>
+				<block type="title"></block>
+				<block type="link_head"></block>
+				<block type="script_head"></block>
+				<block type="body"></block>
+				<block type="linebreak"></block>
+				<block type="hline"></block>
+				<block type="balise"></block>
+				<block type="balise_set"></block>
+				<block type="balise_get"></block>
+			</category>
+			<category colour="#787746" name="en-bloc">
+				<block type="paragraph"></block>
+				<block type="header"></block>
+				<block type="divider"></block>
+				<block type="map"></block>
+				<block type="canvas"></block>
+			</category>
+			<category colour="#006000" name="en-ligne">
+				<block type="span"></block>
+				<block type="textmod"></block>
+				<block type="button"></block>
+				<block type="link"></block>
+				<block type="icon"></block>
+				<block type="progress"></block>
+			</category>
+			<category colour="#bbbbbb" name="Texte">
+				<block type="emptytext"></block>
+				<block type="emptytext">
+					<field name='content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</field>
+				</block>
+				<block type="emptytext">
+					<field name='content'>Cras eu sodales tortor, blandit efficitur orci. Proin aliquam quam eu libero viverra, id gravida erat placerat. Quisque consequat nunc sed sollicitudin sodales. Phasellus eget sapien sit amet nunc vulputate mollis. Praesent id elit leo. Suspendisse non nunc at magna porta maximus. Nulla sit amet risus eu quam tincidunt euismod et a metus. Maecenas vitae justo eget libero maximus hendrerit. Donec porttitor ut dui eu malesuada. Suspendisse at molestie erat, ac imperdiet libero. Phasellus sit amet mi ante. Nunc elit nunc, feugiat quis lectus egestas, placerat tincidunt tortor.</field>
+				</block>
+				<block type="text"></block>
+				<block type="text_2"></block>
+				<block type="text">
+					<field name='TEXT'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</field>
+				</block>
+				<block type="text">
+					<field name='TEXT'>Cras eu sodales tortor, blandit efficitur orci. Proin aliquam quam eu libero viverra, id gravida erat placerat. Quisque consequat nunc sed sollicitudin sodales. Phasellus eget sapien sit amet nunc vulputate mollis. Praesent id elit leo. Suspendisse non nunc at magna porta maximus. Nulla sit amet risus eu quam tincidunt euismod et a metus. Maecenas vitae justo eget libero maximus hendrerit. Donec porttitor ut dui eu malesuada. Suspendisse at molestie erat, ac imperdiet libero. Phasellus sit amet mi ante. Nunc elit nunc, feugiat quis lectus egestas, placerat tincidunt tortor.</field>
+				</block>
+			</category>
+			<category colour="#00cc00" name="Media">
+				<block type="image"></block>
+				<block type="audios"></block>
+				<block type="video_file"></block>
+				<block type="videos"></block>
+			</category>
+			<category colour="#FD6C9E" name="Liste">
+				<block type="unorderedlist"></block>
+				<block type="orderedlist"></block>
+				<block type="listitem"></block>
+			</category>
+			<category colour="#804000" name="Table">
+				<block type="table"></block>
+				<block type="tablerow"></block>
+				<block type="tableheading"></block>
+				<block type="tabledata"></block>
+			</category>
+			<category colour="#154360" name="Formulaire">
+				<block type="form"></block>
+				<block type="textarea"></block>
+				<block type="input"></block>
+				<block type="label"></block>
+				<block type="select"></block>
+				<block type="option"></block>
+			</category>
+			<category colour="#727272" name="Attribut">
+				<block type="stylearg"></block>
+				<block type="class"></block>
+				<block type="class_"></block>
+				<block type="id"></block>		
+				<block type="attr_title"></block>
+				<block type="tabindex"></block>
+				<block type="role"></block>
+				<block type="emptyarg"></block>	
+				<block type="selected"></block>	
+			</category>
+			<category colour="#00929F" name="CSS">
+				<block type="style"></block>
+				<block type="cssitem"></block>
+				<block type="othercss"></block>
+				<category colour="#00929F" name="Texte">
+					<block type="fontsize"></block>
+					<block type="fontfamily"></block>
+					<block type="textdecoration"></block>
+					<block type="texttransform"></block>
+					<block type="textalign"></block>
+					<block type="textindent"></block>
+				</category>
+				<category colour="#00929F" name="Couleur">
+					<block type="color_picker"></block>
+					<block type="hex_picker"></block>
+					<block type="rgba_picker"></block>
+					<block type="color-new"></block>
+					<block type="bgcolor-new"></block>
+					<block type="background"></block>
+				</category>
+				<category colour="#00929F" name="Bordure">
+					<block type="borderedge-new"></block>
+					<block type="borderrad"></block>
+					<block type="bordercollapse"></block>
+				</category>
+				<category colour="#00929F" name="Arrangement">
+					<block type="display"></block>
+					<block type="tblr"></block>
+					<block type="grid"></block>
+					<block type="position"></block>
+					<block type="margin"></block>
+					<block type="padding"></block>
+					<block type="float"></block>
+					<block type="verticalalign"></block>
+					<block type="widthheightnum"></block>
+				</category>
+				<category colour="#FFA500" name="Bootstrap">
+					<block type="B_class_btn"></block>
+					<block type="B_class_img"></block>
+					<block type="B_class_modal"></block>
+					<block type="B_class_dropdown"></block>
+					<block type="B_class_alert"></block>
+					<block type="B_data"></block>
+				</category>
+				<category colour="#EEDD22" name="W3">
+					<block type="w3_btn"></block>
+					<block type="w3_color"></block>
+					<block type="w3_hover_color"></block>
+					<block type="w3_round"></block>
+					<block type="w3_tooltip"></block>
+					<block type="w3_modal"></block>
+					<block type="w3_panel"></block>
+					<block type="w3_card"></block>
+					<block type="w3_dropdown"></block>
+					<block type="w3_onclick"></block>
+				</category>
+			</category>
+			<category colour="#FF0000" name="JS">
+				<block type="balise_js"></block>
+				<block type="jquery_event"></block>
+				<block type="jquery_get"></block>
+				<block type="jquery_set"></block>
+				<block type="jquery_css_set"></block>
+				<block type="jquery_code"></block>
+				<block type="jquery_alert"></block>
+				<block type="jquery_key"></block>
+				<block type="setInterval"></block>
+				<category colour="#727272" name="Contrôle">
+					<block type="controls_if"></block>
+					<block type="controls_if"><mutation else="1"></mutation></block>
+					<block type="true_false"></block>
+					<block type="controls_repeat_ext"></block>
+					<block type="controls_whileUntil"></block>
+					<block type="logic_operation"></block>
+					<block type="controls_for"></block>
+					<block type="controls_switch"></block>
+					<block type="controls_flow_statements"></block>
+					<block type="logic_negate"></block>
+					<block type="logic_null"></block>
+				</category>
+				<category colour="#00cc00" name="Math">
+					<block type="math_number"></block>
+					<block type="math_xy"></block>
+					<block type="logic_compare"></block>
+					<block type="math_arithmetic"></block>
+					<block type="math_single"></block>
+					<block type="math_round"></block>
+					<block type="math_trig"></block>
+					<block type="math_constant"></block>
+					<block type="math_number_property"></block>
+					<block type="math_modulo"></block>
+					<block type="math_random_int"></block>
+				</category>
+				<category colour="#154360" name="OpenStreetMap">
+					<block type="viewMap"></block>
+					<block type="bindpopup"></block>
+					<block type="bindpopupHTML"></block>
+					<block type="scale"></block>
+					<block type="marker"></block>
+					<block type="line"></block>
+					<block type="circle"></block>
+					<block type="polygon"></block>
+					<block type="onclick"></block>
+					<block type="onRightclick"></block>
+					<block type="routing"></block>
+					<block type="HTMLoverlay"></block>
+				</category>
+				<category colour="#cc33cc" name="Canvas">
+					<block type="Scanvas"></block>
+					<block type="ctx_rect"></block>
+					<block type="ctx_line"></block>
+					<block type="ctx_arc"></block>
+					<block type="ctx_text"></block>
+				</category>
+				<category colour="#FFA500" custom="VARIABLE" name="Variable"></category>
+			</category>
+		</xml>
+	</body>
+	<script>
+		ace.require("ace/ext/language_tools");
+		var editor = ace.edit("content_code");
+		editor.setTheme('ace/theme/sqlserver');
+		editor.session.setTabSize(2);
+		editor.setShowPrintMargin(false);
+		editor.session.setMode("ace/mode/html");
+		editor.session.on('change', function(){update()});
+		editor.setOptions({
+			enableBasicAutocompletion: true,
+			enableSnippets: true,
+			enableLiveAutocompletion: true
+		})
+		function update(){
+			var ace = editor.getValue();
+			document.getElementById("blockly_r").srcdoc = ace
+		}
+		require('../resources/app/ffau.js')
+	</script>
+</html>

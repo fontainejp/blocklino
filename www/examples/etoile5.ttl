@@ -1,0 +1,33 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="reset" id="]IP3P_):eA;4KZNW!re%" x="32" y="172">
+    <next>
+      <block type="controls_repeat_ext" id="?1e1Tmuh`CxI@*Qh)rvP">
+        <value name="TIMES">
+          <block type="math_number" id="~m24Ez9nZl[+4iC!``V5">
+            <field name="NUM">5</field>
+          </block>
+        </value>
+        <statement name="DO">
+          <block type="avancer_reculer" id="X^x,m4M]-g^93=e2Fse~">
+            <field name="action">av</field>
+            <value name="NAME">
+              <block type="math_number" id="*.n|v;v1N{%=_E)LO[aB">
+                <field name="NUM">100</field>
+              </block>
+            </value>
+            <next>
+              <block type="gauche_droite" id="W~D{J1MI?|=mqrE@SNK3">
+                <field name="action">td</field>
+                <value name="ANGLE">
+                  <block type="sophus_angle" id="OTW-d}T6jb=e2DZ#c{O|">
+                    <field name="NAME">144</field>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </next>
+  </block>
+</xml>

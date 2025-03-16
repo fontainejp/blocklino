@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <toolbox>
-	<parametre id="defaultCategories">
-		CAT_LOGIC,CAT_MATH,CAT_TEXT,CAT_TAB,CAT_VARIABLES,CAT_FUNCTIONS,CAT_ARDUINO,CAT_ARDUINO_IN,CAT_ARDUINO_TIME,CAT_aff,CAT_actionneur,CAT_ultrason,CAT_AUDIO,CAT_com,CAT_STOCKAGE,CAT_MYBLOCKS
-	</parametre>
-    <category name="CAT_LOGIC" colour="#727272">
+	<parametre id="defaultCategories">CAT_LOGIC,CAT_MATH,CAT_TEXT,CAT_TAB,CAT_VARIABLES,CAT_FUNCTIONS,CAT_ARDUINO,CAT_ARDUINO_IN,CAT_ARDUINO_TIME,CAT_aff,CAT_actionneur,CAT_ultrason,CAT_AUDIO,CAT_com,CAT_STOCKAGE,CAT_MYBLOCKS</parametre>
+    <category name="CAT_LOGIC" colour="#727272" >
 		<block type="controls_if"></block>
 		<block type="controls_if"><mutation else="1"></mutation></block>
         <block type="controls_repeat_ext"></block>
@@ -16,7 +14,7 @@
         <block type="logic_negate"></block>
         <block type="logic_null"></block>
 	</category>
-    <category name="CAT_MATH" colour="#00cc00">
+    <category name="CAT_MATH" colour="#00cc00" >
         <block type="math_number"></block>
         <block type="math_hex"></block>
 		<block type="inout_angle_maths"></block>
@@ -32,22 +30,22 @@
         <block type="math_modulo"></block>
 		<block type="math_random_int"></block>
     </category>
-    <category name="CAT_TEXT" colour="#FD6C9E">
+    <category name="CAT_TEXT" colour="#FD6C9E" >
 		<block type="text"></block>
 		<block type="text_char"></block>
 		<block type="text_join"></block>
         <block type="text_length"></block>
         <block type="text_isEmpty"></block>
     </category>
-	<category name="CAT_TAB" colour="#804000">
+	<category name="CAT_TAB" colour="#804000" >
 		<block type="creer_tableau"></block>
 		<block type="array_create_with"></block>
 		<block type="fixer_tableau"></block>
 		<block type="array_getIndex"></block>
 		<block type="array_getsize"></block>
 	</category>
-    <category name="CAT_VARIABLES" custom="VARIABLE" colour="#FFA500"></category>
-    <category name="CAT_FUNCTIONS" custom="PROCEDURE" colour="#FF0000"></category>
+    <category name="CAT_VARIABLES" custom="VARIABLE" colour="#FFA500" ></category>
+    <category name="CAT_FUNCTIONS" custom="PROCEDURE" colour="#FF0000" ></category>
     <category name="CAT_ARDUINO" colour="#4a235a">
 		<block type="base_begin"></block>
 		<block type="base_loop"></block>
@@ -58,7 +56,7 @@
 		<block type="base_code"></block>
 		<block type="base_code_entree"></block>
 	</category>
-	<category name="CAT_ARDUINO_IN" colour="#787746">
+	<category name="CAT_ARDUINO_IN" colour="#787746" >
 		<block type="digital_read"></block>
 		<block type="inout_analog_read"></block>
 		<block type="inout_attachInterrupt"></block>
@@ -67,14 +65,14 @@
 		<block type="inout_analog_write"></block>
 		<block type="toggle"></block>
 	</category>	
-	<category name="CAT_ARDUINO_TIME" colour="#bbbbbb">			
+	<category name="CAT_ARDUINO_TIME" colour="#bbbbbb" >			
 		<block type="millis"></block>		
         <block type="inout_pulsein"></block>
 		<block type="base_delay"></block>
 		<block type="tempo_sans_delay"></block>
 	</category>
-	<category name="CAT_aff" colour="#00929F">	
-		<category name="CAT_del" colour="#00929F">
+	<category name="CAT_aff" colour="#00929F" >	
+		<category name="CAT_del" colour="#00929F" >
 			<block type="inout_buildin_led"></block>
 			<block type="digital_write"></block>
 			<block type="digital_write">
@@ -92,12 +90,12 @@
 			<block type="rvb_init"></block>
 			<block type="rvb_set"></block>
 		</category>
-		<category name="CAT_bargraphe" colour="#00929F">
+		<category name="CAT_bargraphe" colour="#00929F" >
 			<block type="bargraphe"></block>
 			<block type="bargraphe_allume"></block>
 			<block type="bargraphe_number"></block>
 		</category>
-		<category name="CAT_ARDUINO_matrice8x8" colour="#00929F">
+		<category name="CAT_ARDUINO_matrice8x8" colour="#00929F" >
 			<block type="matrice_init"></block>
 			<block type="matrice_symbole"></block>
 			<block type="matrice8x8_aff"></block>
@@ -105,7 +103,7 @@
 			<block type="matrice8x8_del"></block>
 			<block type="matrice_scroll"></block>
 		</category>
-		<category name="CAT_DFRobot_SHIELD_LCDKEYPAD" colour="#00929F">
+		<category name="CAT_DFRobot_SHIELD_LCDKEYPAD" colour="#00929F" >
 			<block type="lcd_i2c"></block>
 			<block type="lcd_color"></block>
 			<block type="LCD_Keypad_Shield_DFR_09"></block>
@@ -115,7 +113,7 @@
 			<block type="lcd_symbole"></block>
 			<block type="lcd"></block>
 		</category> 
-		<category name="CAT_OLED" colour="#00929F">
+		<category name="CAT_OLED" colour="#00929F" >
 			<block type="oled_init"></block>
 			<block type="oled_aff"></block>
 			<block type="oled_clear"></block>
@@ -128,14 +126,14 @@
 			<block type="oled_glyph"></block>
 			<block type="oled_bitmap"></block>
 		</category>
-		<category name="CAT_COLOR" colour="#804000">
+		<category name="CAT_COLOR" colour="#804000" >
 			<block type="colour"></block>
 			<block type="colour_rvb"></block>
 			<block type="colour_rvb_hex"></block>
 		</category>
 	</category>
-	<category name="CAT_actionneur" colour="#00929F">	
-		<category name="CAT_ARDUINO_moteur" colour="#00929f">
+	<category name="CAT_actionneur" colour="#00929F" >	
+		<category name="CAT_ARDUINO_moteur" colour="#00929f" >
 			<block type="moteur_dc"></block>
 			<block type="moteur_dc_stop"></block>
 			<block type="m_pap"></block>
@@ -144,12 +142,12 @@
 			<block type="moteur_stop"></block>
 			<block type="dagu_rs027"></block>
 		</category>	
-		<category name="CAT_servo" colour="#00929f">
+		<category name="CAT_servo" colour="#00929f" >
 			<block type="servo_move"></block>
 			<block type="servo_rot_continue_param"></block>
 		</category>
 	</category>
-	<category name="CAT_AUDIO" colour="#00929F">
+	<category name="CAT_AUDIO" colour="#00929F" >
 		<category name="CAT_DFPLAYER" colour="#00929F">
 			<block type="lp2i_mp3_init"></block>
 			<block type="lp2i_mp3_play"></block>
@@ -179,7 +177,7 @@
 			<block type="tone"></block>
 			<block type="notone"></block>
 		</category>
-		<category name="CAT_MIDI" colour="#00929F">
+		<category name="CAT_MIDI" colour="#00929F" >
 			<block type="midi"></block>
 			<block type="midi_change_instru"></block>
 			<block type="midi_instru"></block>
@@ -191,8 +189,8 @@
 			<block type="midi_stop_percu"></block>
 		</category>
 	</category>	
-	<category name="CAT_ultrason" colour="#00929F">
-		<category name="CAT_numerique" colour="#00929F">
+	<category name="CAT_ultrason" colour="#00929F" >
+		<category name="CAT_numerique" colour="#00929F" >
 			<block type="inout_bp"></block>
 			<block type="bp_grove">
 				<value name="PIN">
@@ -209,7 +207,7 @@
 			<block type="block_feu"></block>
 			<block type="inter"></block>
 		</category>
-		<category name="CAT_analogique" colour="#00929F">
+		<category name="CAT_analogique" colour="#00929F" >
 			<block type="dht11"></block>
 			<block type="BMP280_pressure"></block>
 			<block type="dht20"></block>
@@ -231,8 +229,8 @@
 			<block type="VL53L0X_distance"></block>
 		</category>
 	</category>
-	<category name="CAT_com" colour="#006000">
-		<category name="CAT_ARDUINO_COMM_SERIAL" colour="#006000">
+	<category name="CAT_com" colour="#006000" >
+		<category name="CAT_ARDUINO_COMM_SERIAL" colour="#006000" >
 			<block type="serial_init"></block>
 			<block type="serial_write"></block>	
 			<block type="serial_available"></block>
@@ -240,7 +238,7 @@
 			<block type="serial_read"></block>
 			<block type="serial_tab"></block>
 		</category>
-		<category name="CAT_ARDUINO_COMM_SOFTSERIAL" colour="#006000">
+		<category name="CAT_ARDUINO_COMM_SOFTSERIAL" colour="#006000" id="">
 			<block type="soft_init"></block>
 			<block type="soft_write"></block>
 			<block type="soft_available"></block>
@@ -248,7 +246,7 @@
 			<block type="serial_line"></block>
 			<block type="serial_tab"></block>
 		</category>
-		<category name="CAT_bluetooth" colour="#006000">
+		<category name="CAT_bluetooth" colour="#006000" id="">
 			<block type="bluetooth_init"></block>
 			<block type="bluetooth_a"></block>
 			<block type="bluetooth_print"></block>
@@ -257,11 +255,16 @@
 			<block type="bluetooth_b"></block>
 		</category>
 	</category>
-	<category name="CAT_STOCKAGE" colour="#154360">	
+	<category name="CAT_STOCKAGE" colour="#154360" >	
 		<block type="eeprom_read"></block>		
         <block type="eeprom_write"></block>
 	</category>	
-	<category name="CAT_MYBLOCKS" colour="#4488FF">
-		
-	</category>	
+	<category name="CAT_MYBLOCKS" colour="#4488FF" >
+		<category name="CAT_FACTORY" colour="#4488FF" >
+		</category>
+		<category name="CAT_LOCAL" colour="#4488FF" >	
+		</category>
+		<category name="CAT_ONLINE" colour="#4488FF" >	
+		</category>	
+	</category>		
 </toolbox>
