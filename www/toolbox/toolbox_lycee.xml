@@ -192,7 +192,12 @@
 			<block type="border"></block>
 		</category>
 	</category>
-	<category name="CAT_MYBLOCKS" colour="#4488FF">
-		
-	</category>	
+	<category name="CAT_MYBLOCKS" colour="#4488FF" >
+		<category name="CAT_FACTORY" colour="#4488FF" >
+		</category>
+		<category name="CAT_LOCAL" colour="#4488FF" >	
+		</category>
+		<category name="CAT_ONLINE" colour="#4488FF" >	
+		</category>	
+	</category>		
 </toolbox>

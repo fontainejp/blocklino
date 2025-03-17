@@ -52,7 +52,7 @@
    "include": "build/blocklino.nsh"
   },
   "win": {
-   "target": "nsis"
+   "target": "nsis",
    "icon": "build/app.ico"
   },
   "fileAssociations": [
